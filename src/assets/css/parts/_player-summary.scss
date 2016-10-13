@@ -1,0 +1,39 @@
+/* This is not being included in main.scss yet, as it's commented out */
+
+.player__summary {
+  > div {
+    padding: .75em $player-content-padding;
+    text-align: center;
+    @include inset-shadow();
+  }
+
+  .highly-skilled {
+    background: #D50000;
+    color: white;
+  }
+
+  .skilled {
+    background: #F44336;
+    color: white;
+  }
+
+  .above-average {
+    background: #FF9800;
+    color: white;
+  }
+
+  .average {
+    background: #00B0FF;
+    color: white;
+  }
+
+  .below-average {
+    background: #8BC34A;
+    color: white;
+  }
+
+  .has-other-qualities {
+    background: #00C853;
+    color: white;
+  }
+}

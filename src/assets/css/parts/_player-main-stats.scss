@@ -1,0 +1,25 @@
+.player-main-stats {
+  padding: $player-content-padding;
+  border-top: 1px solid #eee;
+
+  .player.with-overlay & {
+    @include overlay-modifiers();
+  }
+
+  .player-quick-look.is-hidden + & {
+    @include inset-shadow();
+    border-top: 0;
+  }
+}
+
+.player-main-stats__streak {
+  width: 10px;
+  height: 10px;
+  margin-left: .1em;
+}
+
+.player-main-stats__lighthouse {
+  i {
+    font-size: .9em;
+  }
+}

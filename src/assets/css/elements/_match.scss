@@ -1,0 +1,26 @@
+.match {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+}
+
+.match--win {
+  background: $success;
+}
+
+.match--loss {
+  border: 2px solid $fail;
+  position: relative;
+
+  /*&:after {
+    @include icon();
+    @include align-both();
+    left: 55%;
+    top: 55%;
+    position: absolute;
+    font-size: .8em;
+    content: "\e14c";
+    color: $fail;
+  }*/ // Looks like shit, needs work
+}

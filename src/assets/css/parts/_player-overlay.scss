@@ -1,0 +1,64 @@
+.player-overlay {
+  z-index: 1;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: $player-card-border-radius;
+  transition: opacity ease .2s, transform ease .2s;
+  transform: scale(1.05);
+  opacity: 0;
+  pointer-events: none;
+
+  .player.with-overlay & {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+}
+
+@media all and (max-width: 992px) {
+  .edit-player__btn {
+    opacity: 0.6;
+    animation: hintTouch 4s;
+
+    .player__info:hover & {
+      opacity: 1;
+    }
+  }
+}
+
+.player-overlay__close {
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  transition: opacity ease .2s;
+  cursor: pointer;
+  position: absolute;
+  margin-top: $player-content-padding;
+  margin-left: $player-content-padding;
+  left: 0;
+  top: 0;
+  height: #{$player-emblem-size - 2 * $player-content-padding};
+  width: #{$player-emblem-size - 2 * $player-content-padding};
+  text-shadow: $text-shadow;
+
+  i {
+    position: relative;
+    @include align-both();
+    overflow: hidden;
+  }
+}
+
+.player-overlay-content__header {
+  text-transform: uppercase;
+  color: #999;
+  margin: $player-content-padding 0;
+}
+
+.player-overlay__content {
+  text-align: center;
+  @include mild-inset-shadow();
+  padding: $player-content-padding;
+}

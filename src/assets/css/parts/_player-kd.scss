@@ -1,0 +1,41 @@
+.player-kd {
+  padding-left: 10px;
+  width: calc(25% - 5px);
+}
+
+.player-kd__kd {
+  letter-spacing: -1px;
+  font-weight: normal;
+  font-size: 1.5em;
+  line-height: 40px;
+  position: relative;
+
+  &:before,
+  &:after {
+    position: absolute;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 1em;
+    letter-spacing: normal;
+    text-transform: none;
+    word-wrap: normal;
+    color: #bbb;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    left: -8px;
+    top: 50%;
+    text-align: center;
+  }
+
+  &:before {
+    transform: translate(-100%, -10px);
+    content: "\e5c7";
+  }
+
+  &:after {
+    transform: translate(-100%, -3px);
+    content: "\e5c5";
+  }
+}

@@ -1,0 +1,225 @@
+.player-tabs {
+  overflow: hidden;
+
+  .player.with-overlay & {
+    @include overlay-modifiers();
+  }
+
+  .player.is-virgin & ul li {
+    @include overlay-modifiers();
+    pointer-events: none;
+  }
+
+  div:not(.my-dtr) .player.is-virgin & ul li:first-child {
+    filter: blur(0);
+  }
+
+  .my-dtr .player.is-virgin & {
+    @include overlay-modifiers();
+    pointer-events: none;
+  }
+
+  ul {
+    overflow: hidden;
+    margin-bottom: -1px;
+    background: #90A4AE;
+  }
+
+  li {
+    width: 33.33%;
+    @include inset-shadow();
+    text-align: center;
+    background: #90A4AE;
+
+    a,
+    a:hover,
+    a:focus {
+      border-radius: 0;
+      font-size: .9em;
+      color: #fff !important;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-family: 'Roboto Condensed';
+      transition: box-shadow linear .1s;
+      white-space: nowrap;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &:first-child {
+      width: 33.34%;
+    }
+
+    &:first-child:nth-last-child(1) {
+      display: none;
+    }
+
+    &:first-child:nth-last-child(2),
+    &:first-child:nth-last-child(2) ~ li {
+        width: 50%;
+    }
+  }
+
+  li.active {
+    z-index: 1;
+    position: relative;
+  }
+
+  li.active a,
+  li.active a:hover,
+  li.active a:focus {
+    color: #666 !important;
+    box-shadow: 0px 0px 8px 0 rgba(0,0,0,0.5);
+  }
+
+  .tab-content {
+    height: auto;
+  }
+
+  &.is-hidden div[class^="player-tab--"] {
+    @include inset-shadow();
+  }
+}
+
+.player-tab__section {
+  padding: $player-content-padding;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, .7);
+}
+
+.player-tab--equipped {
+  @include tab-background($equipped-background);
+
+  ul &.active {
+    background: $equipped-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($equipped-background, 50%);
+    }
+  }
+}
+
+.player-tab--last-matches {
+  @include tab-background($last-matches-background);
+
+  &.is-loading:before {
+    display: block;
+    content: '';
+    min-height: 30em;
+    background: url('/assets/img/loading.svg') center center no-repeat;
+    background-size: 3em 3em;
+  }
+
+  ul &.active {
+    background: $last-matches-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($last-matches-background, 50%);
+    }
+  }
+}
+
+.player-tab--stats {
+  @include tab-background($stats-background);
+
+  ul &.active {
+    background: $stats-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($stats-background, 50%);
+    }
+  }
+}
+
+.player-tab--maps {
+  @include tab-background($maps-background);
+
+  ul &.active {
+    background: $maps-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($maps-background, 50%);
+    }
+  }
+}
+
+.player-tab--this-week {
+  @include tab-background-minor($this-week-background);
+
+  ul &.active {
+    background: $this-week-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($this-week-background, 50%);
+    }
+  }
+}
+
+.player-tab--map-based {
+  @include tab-background-minor($map-based-background);
+
+  ul &.active {
+    background: $map-based-background;
+
+    a,
+    a:focus,
+    a:active,
+    a:hover {
+      color: darken($map-based-background, 50%);
+    }
+  }
+}
+
+.player-tab--this-week,
+.player-tab--map-based {
+  position: relative;
+  &.is-irrelevant {
+    .player-tab__section {
+      opacity: .25;
+    }
+  }
+
+	&.is-irrelevant:before {
+		position: absolute;
+		content: "";
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		text-align: center;
+		width: 100%;
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 100%);
+		z-index: 1;
+	}
+
+	&.is-irrelevant:after {
+		position: absolute;
+		content: "No matches played";
+		left: 50%;
+		top: 50%;
+		@extend .data-label;
+		z-index: 2;
+		transform: translate(-50%, -50%);
+		padding: .75em 1.5em;
+		background: white;
+		border-radius: .5em;
+		@include shadow(1);
+	}
+}

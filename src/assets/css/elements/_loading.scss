@@ -1,0 +1,57 @@
+#loading-bar .bar {
+  background: $trials-gold;
+}
+
+#loading-bar .peg {
+  box-shadow: $trials-gold 1px 0 6px 1px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color: $trials-gold;
+  border-left-color: $trials-gold;
+}
+
+.destiny-spinner,
+.destiny-spinner:before,
+.destiny-spinner:after {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.destiny-spinner {
+  margin: 0 auto;
+  position: relative;
+  background: transparent;
+}
+
+.destiny-spinner:before,
+.destiny-spinner:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: "";
+  border: 15px solid #efefef;
+  opacity: 0.5;
+  animation: 3s rotate infinite linear;
+}
+
+.destiny-spinner:before {
+  border-left-color: transparent;
+}
+
+.destiny-spinner:after {
+  top: 16.5%;
+  left: 16.5%;
+  width: 100px;
+  height: 100px;
+  border-right-color: transparent;
+  opacity: 0.2;
+  animation-direction: reverse;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

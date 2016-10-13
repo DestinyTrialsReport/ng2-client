@@ -1,0 +1,50 @@
+.platform-toggle {
+  text-align: left;
+
+  label {
+    margin-bottom: 0;
+  }
+
+  .platform-toggle__btn {
+    padding: 0 .25em 4px .25em;
+  }
+
+  .togglebutton {
+    display: flex;
+    align-items: center;
+  }
+
+  .toggle {
+    margin-left: 8px;
+  }
+
+  .togglebutton label input[type=checkbox]+.toggle,
+  .togglebutton-default label input[type=checkbox]+.toggle {
+    background: transparentize($playstation-main, 0.5);
+
+    &:after {
+      background: $playstation-main;
+    }
+  }
+
+  .togglebutton label input[type=checkbox]:checked+.toggle,
+  .togglebutton-default label input[type=checkbox]:checked+.toggle {
+    background: transparentize($xbox-main, 0.5);
+
+    &:after {
+      background: $xbox-main;
+    }
+  }
+}
+
+.platform-toggle__name {
+  img {
+    height: 1.3em;
+    filter: brightness(.8);
+    transition: filter linear .5s;
+  }
+
+  &.is-active img {
+    filter: brightness(2);
+  }
+}

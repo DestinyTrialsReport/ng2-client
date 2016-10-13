@@ -1,0 +1,33 @@
+.select {
+	position: relative;
+	width: 50%;
+	background: #fafafa;
+	@include shadow(1);
+	border-radius: .3em;
+	margin-bottom: 1em;
+	transition: box-shadow ease-in-out .2s;
+
+	&:hover {
+		@include shadow(2);
+	}
+
+	&:after {
+		position: absolute;
+		@include icon;
+		content: "\E5CF";
+		pointer-events: none;
+		top: 50%;
+		right: 0;
+		font-size: 1.5em;
+		transform: translate(-.3em, -50%);
+	}
+}
+
+select {
+	cursor: pointer;
+	width: 100%;
+	appearance: none;
+	padding: .8em 1.3em;
+	border: 0;
+	background: transparent;
+}

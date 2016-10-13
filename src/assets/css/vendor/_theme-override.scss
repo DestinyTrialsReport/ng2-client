@@ -1,0 +1,21 @@
+.form-control,
+.form-control:focus,
+.form-control.focus {
+  background-image: linear-gradient($primary, $primary), linear-gradient(#d2d2d2, #d2d2d2)
+}
+
+a,
+a:hover,
+a:focus {
+  color: $primary;
+}
+
+.togglebutton label input[type=checkbox]:checked + .toggle,
+.togglebutton-default label input[type=checkbox]:checked + .toggle {
+  background-color: transparentize($success, .5);
+}
+
+.togglebutton label input[type=checkbox]:checked + .toggle:after,
+.togglebutton-default label input[type=checkbox]:checked + .toggle:after {
+  background-color: $success;
+}

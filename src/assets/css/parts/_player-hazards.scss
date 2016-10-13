@@ -1,0 +1,55 @@
+.player-hazards {
+  padding: $player-content-padding;
+  white-space: nowrap;
+  overflow-x: auto;
+  border-top: 1px solid #eee;
+  line-height: 1;
+
+  .player.with-overlay & {
+    @include overlay-modifiers();
+  }
+}
+
+.player-hazard {
+  background: $hazard-background;
+  color: white;
+  font-size: .8em;
+  display: inline-block;
+  padding: 1px 3px;
+  border-radius: 3px;
+  margin-right: 3px;
+  line-height: 1.3;
+  font-weight: normal;
+
+  & + .player-hazard--none {
+    display: none;
+  }
+}
+
+.weapon__hazards .player-hazard {
+  background: $hazard-background;
+}
+
+.player-hazard--developer {
+  background: white;
+  text-shadow: none;
+  color: #2196F3;
+}
+
+.player-hazard--donator {
+  background: white;
+  text-shadow: none;
+  color: $success;
+}
+
+.player-hazard--charity1 {
+  background: white;
+  text-shadow: none;
+  color: #651FFF;
+}
+
+.player-hazard--none {
+  border: 1px solid #B0BEC5;
+  background: white;
+  color: #B0BEC5;
+}

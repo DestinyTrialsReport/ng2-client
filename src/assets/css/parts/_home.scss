@@ -1,0 +1,96 @@
+.home {
+  display: flex;
+  //padding: 1em;
+  max-width: 1080px;
+  margin: 0 auto;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.home__content {
+  display: flex;
+  align-self: center;
+}
+
+.home__main {
+  width: 70%;
+  flex-grow: 3;
+  background: url('/assets/img/loading.svg') center center no-repeat;
+  background-size: 3em 3em;
+}
+
+.home__aside {
+  width: 30%;
+  flex-grow: 1;
+  align-items: center;
+  order: -1;
+}
+
+.home__main,
+.home__aside {
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+
+  > .block {
+    flex-grow: 1;
+  }
+}
+
+.blog-image {
+  margin-left: -2em;
+  margin-top: -2em;
+  margin-right: -2em;
+  margin-bottom: 1.5em;
+}
+
+.block__title--lighthouse {
+  margin-top: 0;
+  box-shadow: inset 0 10px 8px -10px rgba(0, 0, 0, 0.75);
+}
+
+.shadow--lighthouse__middle {
+  box-shadow: inset 0 10px 10px 0 rgba(0, 0, 0, 0.75);
+}
+
+@media all and (min-width: 961px) {
+  .home__main {
+    width: 50em;
+  }
+}
+
+@media all and (max-width: 960px) {
+
+  .home {
+    margin: 0 auto;
+  }
+
+  .home__content {
+    display: block;
+  }
+
+  .home__main,
+  .home__aside {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+  }
+
+  .home__aside {
+    margin-top: 1em;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1441px) {
+  .home__main,
+  .home__aside {
+    min-height: 90vh;
+  }
+}
+
+@media all and (min-width: 1441px) {
+  .home {
+    max-width: 1323px;
+  }
+}

@@ -1,0 +1,136 @@
+<header>
+  <div class="header__content shadow-z-2">
+    <div class="title-bar" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
+      <div class="title-bar__content">
+        <div class="title-bar__title">
+          <a href="/" target="_self">
+            D<span class="hide-on-small">estiny</span><span class="highlight">T<span class="hide-on-small">rials</span></span>R<span class="hide-on-small">eport</span>
+          </a>
+        </div>
+        <div class="platform-toggle">
+          <div class="togglebutton">
+            <label class="platform-toggle__name"><img src="assets/img/ps.svg" alt="PlayStation"></label>
+            <label class="platform-toggle__btn">
+              <input type="checkbox">
+            </label>
+            <label class="platform-toggle__name"><img src="assets/img/xbox.svg" alt="Xbox"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-search">
+      <div class="main-search__content">
+        <div class="main-search__fireteam">
+          <!--<form>-->
+          <div class="main-search__row">
+            <div class="main-search__input">
+              <input type="text" class="form-control" [value]="query" (keyup)="search($event.target.value)"
+                     autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Enter Gamertag">
+            </div>
+            <div class="main-search__controls">
+              <div class="main-search__refresh">
+                <button class="btn btn-default btn-icon" type="button">
+                  <i class="material-icons">&#xE86A;</i>
+                </button>
+              </div>
+              <div class="main-search__submit">
+                <button type="submit" class="btn btn-default btn-icon">
+                  <i class="material-icons">&#xE163;</i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--</form>-->
+          <!--<div>-->
+          <!--<form role="form" ng-submit="">-->
+          <!--<div class="main-search__row">-->
+          <!--<div class="main-search__input">-->
+          <!--<input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false">-->
+          <!--<ul class="dropdown-menu">-->
+          <!--<li class="dropdown-menu__label"> recent teammates</li>-->
+          <!--<li >-->
+          <!--<a href="#"></a>-->
+          <!--</li>-->
+          <!--</ul>-->
+          <!--</div>-->
+          <!--<div class="main-search__controls">-->
+          <!--<div class="main-search__submit">-->
+          <!--<button type="submit" class="btn btn-default btn-icon"><i class="material-icons">&#xE163;</i></button>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</form>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-map"
+         [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
+      <div class="controls-map__content">
+        <div class="controls-map__title stat">
+          <span [innerHtml]="(currentMap$ | async)?.activityName"></span>
+          <span class="map-cycle-popover">
+          <i class="material-icons icon--small">&#xE148;</i>
+        </span>
+          <label></label>
+        </div>
+        <button type="button" class="btn btn-flat btn-sm">
+          Overview
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="settings-btn shadow-z-1">
+    <button type="button" class="btn btn-inline">
+      <i class="material-icons icon--small">&#xE8B8;</i> Language &amp; Settings
+    </button>
+    <div class="settings__master">
+      <label class="data-label">Ignore custom<br>card settings</label>
+      <span class="togglebutton">
+    <label>
+      <input type="checkbox">
+    </label>
+  </span>
+    </div>
+  </div>
+</header>
+
+<footer>
+  <div class="block__footer-dark block__footer--ad-dark" style="min-width:336px;min-height:280px">
+    <div class="ad" style="min-width:336px;min-height:280px">
+      <!--<adsense ad-client="ca-pub-7408805581120581" ad-slot="8795722555" inline-style="display:inline-block;width:336px;height:280px"></adsense>-->
+    </div>
+  </div>
+
+  <div class="donate">
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MNKJ7R6TA4XJE" target="_blank">
+      <div class="donate__title">
+        Help us run this site, donate with <img src="/assets/img/paypal.svg" alt="PayPal">
+      </div>
+      <div class="donate__descr">
+        You get a sexy&nbsp;&nbsp;<div class="player-hazard player-hazard--donator">Donator</div>&nbsp;badge if you donate $1 or more and leave your gamertag with the donation!
+      </div>
+    </a>
+  </div>
+
+  <div class="colofon">
+    <div class="colofon__copyright">
+      © 2016 Destiny<span class="highlight">Trials</span>Report
+    </div>
+    <div class="colofon__twitter">
+      <a href="https://twitter.com/TrialsReport" target="_blank">
+        <img src="/assets/img/twitter.svg" alt="Twitter">
+      </a>
+    </div>
+    <div class="colofon__email">
+      <a href="mailto:destinytrialsreport@gmail.com" target="_blank"><i class="material-icons">&#xE158;</i></a>
+    </div>
+    <div class="colofon__contribute">
+      <a href="https://github.com/DestinyTrialsReport/DestinyTrialsReport" target="_blank">
+        <img src="/assets/img/github.svg" alt="GitHub">
+      </a>
+    </div>
+  </div>
+</footer>

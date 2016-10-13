@@ -1,0 +1,60 @@
+.btn-icon {
+  padding: 2px 8px;
+
+  i {
+    line-height: 1.5em;
+    font-size: 1.5em;
+  }
+}
+
+.btn-inline {
+  margin: 0;
+  display: inline-block;
+  color: inherit;
+
+  & + .btn-inline {
+    margin-left: .5rem;
+  }
+}
+
+.control-btn.btn.btn.btn {
+  display: none;
+  padding: 0;
+  align-items: center;
+  width: 2.5em;
+  height: 2.5em;
+  position: fixed;
+  right: 23px;
+  bottom: 23px;
+  z-index: 998;
+  background: #03A9F4;
+  color: white;
+
+  i {
+    transform: rotate(-180deg);
+    transition: transform ease-in-out .2s;
+    display: block;
+    font-size: 48px;
+    margin: .25em auto;
+  }
+
+  .focus-on-players & i {
+    transform: rotate(0deg);
+  }
+}
+
+#floating-action-button .btn {
+  margin: 20px;
+}
+#floating-action-button h2 {
+  padding: 14px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media all and (max-width: 1280px) {
+  .control-btn.btn.btn.btn {
+    display: block;
+  }
+}

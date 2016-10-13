@@ -1,0 +1,69 @@
+$graph-height: 7.5em;
+
+.kd-graph {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.kd-graph__container {
+  position: relative;
+  z-index: 1;
+  margin-left: 0px;
+  margin-right: 0px;
+  background: rgba(255,255,255,0.1);
+
+  .chart-container {
+    height: $graph-height;
+  }
+}
+
+.kd-graph__label {
+  padding: .8em $controls-padding;
+
+  label {
+    line-height: 1.4;
+    font-weight: 300;
+    font-size: 1em;
+    margin-bottom: 0;
+  }
+
+  > i {
+    float: right;
+    font-size: 1.4em;
+  }
+}
+
+.kd-graph__now-indicator {
+  height: $graph-height;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  z-index: 1;
+
+  label {
+    @extend .data-label;
+    bottom: 100%;
+    margin-top: 1em;
+    font-size: 1em;
+    position: absolute;
+  }
+}
+
+.kd-graph__day-indicator {
+  position: absolute;
+  z-index: -1;
+  height: $graph-height;
+
+  &:nth-child(odd) {
+    background: rgba(255,255,255,0.1);
+  }
+
+  label {
+    @extend .data-label;
+    color: #999;
+    position: absolute;
+    top: calc(100% - 2em);
+    margin-left: .75em;
+  }
+}

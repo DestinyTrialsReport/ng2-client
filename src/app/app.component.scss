@@ -1,0 +1,302 @@
+@import "../assets/css/vendor/bootstrap.css";
+@import '../assets/css/inc/vars';
+@import '../assets/css/inc/fonts';
+@import '../assets/css/inc/colors';
+@import '../assets/css/inc/icons';
+@import '../assets/css/inc/mixins';
+@import '../assets/css/inc/animations';
+
+@import '../assets/css/vendor/theme-override';
+
+@import '../assets/css/main/layout';
+@import '../assets/css/main/typography';
+@import '../assets/css/main/buttons';
+
+@import '../assets/css/elements/loading';
+@import '../assets/css/elements/popover';
+@import '../assets/css/elements/tabs';
+@import '../assets/css/elements/stats';
+@import '../assets/css/elements/match';
+@import '../assets/css/elements/modal';
+@import '../assets/css/elements/carousel';
+@import '../assets/css/elements/dropdown-menu';
+@import '../assets/css/elements/block';
+@import '../assets/css/elements/select';
+
+// Main parts
+@import '../assets/css/parts/controls';
+@import '../assets/css/parts/title-bar';
+@import '../assets/css/parts/main-search';
+@import '../assets/css/parts/blog-post';
+@import '../assets/css/parts/player-overlay';
+@import '../assets/css/parts/current-map';
+@import '../assets/css/parts/platform-toggle';
+@import '../assets/css/parts/donate';
+@import '../assets/css/parts/colofon';
+@import '../assets/css/parts/home';
+@import '../assets/css/parts/maps';
+@import '../assets/css/parts/home-aside';
+@import '../assets/css/parts/top-weapons';
+@import '../assets/css/parts/first-in-lighthouse';
+@import '../assets/css/parts/settings';
+@import '../assets/css/parts/kd-graph';
+
+// Player card
+@import '../assets/css/parts/player';
+@import '../assets/css/parts/edit-player';
+@import '../assets/css/parts/player-overview';
+@import '../assets/css/parts/player-quick-look';
+@import '../assets/css/parts/player-main-stats';
+@import '../assets/css/parts/player-this-week';
+@import '../assets/css/parts/player-hazards';
+@import '../assets/css/parts/recent-players';
+
+// Equipped tab
+@import '../assets/css/parts/player-weapons';
+@import '../assets/css/parts/player-cooldowns';
+@import '../assets/css/parts/player-perks';
+@import '../assets/css/parts/player-armor';
+
+// Last matches tab
+@import '../assets/css/parts/player-last-matches';
+
+// Stats tab
+@import '../assets/css/parts/player-stats';
+
+// Maps tab
+@import '../assets/css/parts/player-maps';
+
+$offset: 187;
+$duration: 1.4s;
+
+.blur {
+  filter: blur(2px);
+}
+
+.hide {
+  display: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.d-block {
+  display: block;
+}
+
+.spinner {
+  position: relative;
+  left: 40%;
+  top: 60%;
+  animation: rotator $duration linear infinite;
+}
+
+.active-player {
+  background-color: #ECEFF1;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite,
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% { stroke: #4285F4; }
+  25% { stroke: #DE3E35; }
+  50% { stroke: #F7C223; }
+  75% { stroke: #1B9A59; }
+  100% { stroke: #4285F4; }
+}
+
+@keyframes dash {
+  0% { stroke-dashoffset: $offset; }
+  50% {
+    stroke-dashoffset: $offset/4;
+    transform:rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: $offset;
+    transform:rotate(450deg);
+  }
+}
+
+.btn-fab-left {
+  left: -90px !important;
+}
+
+.btn-fab-right {
+  right: -90px !important;
+}
+
+.btn-fab-map {
+  background-color: white !important;
+  top: 35% !important;
+  font-size: 41px !important;
+  width: 80px !important;
+  height: 80px !important;
+  position: fixed !important;
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-300%);
+    animation-play-state: paused;
+  }
+
+  51% {
+    opacity: 0;
+  }
+
+  52% {
+    opacity: 0;
+    transform: translateX(300%);
+  }
+
+
+  53% {
+    opacity: 1;
+    transform: translateX(300%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(300%);
+    animation-play-state: paused;
+  }
+
+  51% {
+    opacity: 0;
+  }
+
+  52% {
+    opacity: 0;
+    transform: translateX(-300%);
+  }
+
+
+  53% {
+    opacity: 1;
+    transform: translateX(-300%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide-left {
+  animation-duration: .6s;
+  animation-name: slideLeft;
+}
+
+.slide-right {
+  animation-duration: .6s;
+  animation-name: slideRight;
+}
+
+.modal-content {
+  //backface-visibility: hidden;
+}
+
+.faded {
+  color: #999;
+}
+
+.new-badge {
+  position: absolute;
+  right: 7px;
+  top: -12px;
+  padding: 2px 3px;
+  border-radius: 2px;
+  background: #fe6363;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+@media (max-width: 780px) {
+  .btn-fab-left {
+    left: 0 !important;
+    z-index: 1;
+  }
+  .btn-fab-right {
+    right: 0 !important;
+    z-index: 1;
+  }
+  .btn-fab-map {
+    padding: 0 !important;
+    background-color: transparent !important;
+    top: 36% !important;
+    font-size: 32px !important;
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .btn.btn-fab {
+    box-shadow: none !important;
+    i {
+      font-size: 44px;
+    }
+  }
+  .modal-stats {
+    width: 100%;
+  }
+  .modal-hero__stats {
+    font-size: 1em;
+  }
+}
+
+.highlight-change {
+  background-color: rgba(255,215,0, 1);
+  transition: background-color 20s cubic-bezier(0,1,1,1);
+}
+
+.highlight-fade {
+  background-color: rgba(255,215,0,0);
+}
+
+.loading-spinner {
+  background: url(/assets/img/loading.svg) center center no-repeat;
+  background-size: 3em 3em;
+}
+
+.loading-spinner-sm {
+  background: url(/assets/img/loading.svg) center center no-repeat;
+  background-size: 2em 2em;
+}

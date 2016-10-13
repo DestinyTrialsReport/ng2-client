@@ -1,0 +1,86 @@
+header {
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+}
+
+.header-bar {
+  padding: .75em 0;
+
+  .header-bar__content {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.header__content {
+}
+
+.domain-switch {
+  border-bottom: 1px solid darken($header-bg, 5%);
+  padding: .5em;
+
+  .btn.btn.btn {
+    color: $controls-btn-color;
+    padding: 0.5em 0px;
+  }
+}
+
+.controls-map {
+  box-shadow: inset 0 120px 50px -60px rgba(0, 0, 0, 0.75);
+  padding: $controls-padding .5em 1.35em $controls-padding;
+  background: center bottom no-repeat;
+  background-size: auto 20em;
+
+  &.is-week-23 {
+    background-position-x: 100%;
+    background-size: auto 13.5em;
+  }
+}
+
+.controls-map__content {
+  display: flex;
+  align-items: center;
+
+  > button.btn.btn.btn {
+    color: #aaa;
+    margin: 0;
+  }
+}
+
+.controls-map__title {
+  flex-grow: 1;
+  color: #ccc;
+  font-size: 1em;
+}
+
+.ad {
+  padding: 1em;
+  overflow: hidden;
+
+  > div:empty:before {
+    font-size: .9em;
+    display: block;
+    color: #777;
+    font-family: 'Roboto Condensed';
+    content: "Please consider turning off your ad blocker, it's one of our ways to keep this site running. Plus, you are missing out on some fabulous deals!!!"
+  }
+}
+
+@media all and (max-width: 320px) {
+  .ad {
+    padding: 0;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 380px) {
+  .ad {
+    padding: .5em;
+  }
+}
+
+@media all and (max-height: 909px) {
+  header {
+    flex-grow: 0;
+  }
+}

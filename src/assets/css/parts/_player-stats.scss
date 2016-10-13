@@ -1,0 +1,15 @@
+.player-stats__main {
+  .stat {
+    text-align: center;
+
+    span {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.player-stats__bests {
+  .stat-row__header {
+    margin-top: 0;
+  }
+}
