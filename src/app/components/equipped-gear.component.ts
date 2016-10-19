@@ -12,7 +12,7 @@ import {ARMOR_BUCKETS} from "../services/constants";
     ])
   ],
   template: `
-    <div class="row" [@visibilityChanged]="items ? 'shown' : 'hidden'">
+    <div class="row" [@visibilityChanged]="loaded ? 'shown' : 'hidden'">
       <div class="weapon col-xs-12" *ngFor="let item of items">
         <div [ngClass]="{
               armor__img: armorBuckets.indexOf(item.bucketHash) > -1,
@@ -26,12 +26,8 @@ import {ARMOR_BUCKETS} from "../services/constants";
           </div>
           
           <div class="weapon__perks">
-            <div class="weapon-perk" *ngFor="let node of item?.steps"
-                 [tooltipHtml]="nodePopover" [tooltipContext]="node" [tooltipClass]="'popover'">
-              <i class="weapon-perk__icon">
-                <img class="img-responsive" [src]="'https://www.bungie.net/common/destiny_content/icons/' + node?.i" [alt]="node?.n">
-              </i>
-              <template #nodePopover let-model="node">
+            <div class="weapon-perk" *ngFor="let node of item?.steps">
+             <template #nodePopover let-model="node">
                 <div class="popover-title">
                   <span [innerHtml]="node?.n"></span>
                 </div>
@@ -39,6 +35,9 @@ import {ARMOR_BUCKETS} from "../services/constants";
                   <span [innerHtml]="node?.d"></span>
                 </div>
               </template>
+              <i class="weapon-perk__icon" [tooltipHtml]="nodePopover" [tooltipContext]="node" [tooltipClass]="'popover'">
+                <img class="img-responsive" [src]="'https://www.bungie.net/common/destiny_content/icons/' + node?.i" [alt]="node?.n">
+              </i>
             </div>
           </div>
         </div>
@@ -49,5 +48,6 @@ import {ARMOR_BUCKETS} from "../services/constants";
 })
 export class EquippedGearComponent {
   armorBuckets: number[] = ARMOR_BUCKETS;
+  @Input() loaded: boolean;
   @Input() items: Item[];
 }

@@ -1,56 +1,61 @@
-import {Component, ChangeDetectionStrategy}  from '@angular/core';
+import {Component, ChangeDetectionStrategy, style, state, animate, transition, trigger}  from '@angular/core';
 import {MapsService}          from "../services/maps.service";
 import {AppState}             from "../reducers/index";
 import {Store}                from "@ngrx/store";
 import {Observable}           from "rxjs/Observable";
 import * as mapActions        from "../actions/maps.actions";
-import {CurrentMap, MapInfo}  from "../models/map-stats.model";
+import { MapInfo }            from "../models/map-stats.model";
 
 @Component({
   selector: '[maps]',
+  host: {
+    'class': 'home'
+  },
+  animations: [
+    trigger('direction', [
+      state('left',  style({transform: 'translate3d(5em, 0, 0)', opacity: 0})),
+      state('right-done',  style({transform: 'translate3d(5em, 0, 0)', opacity: 1})),
+      state('left-done',  style({transform: 'translate3d(-5em, 0, 0)', opacity: 1})),
+      state('right', style({transform: 'translate3d(-5em, 0, 0)', opacity: 0})),
+      transition('* => *', animate('.3s ease-in-out, opacity linear'))
+    ])
+  ],
   templateUrl: 'maps.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MapsComponent {
-  maxWeek:number;
-  currentMap$: Observable<CurrentMap>;
+  maxWeek: number;
+  onWeek: number;
+  slideMap:string;
   mapInfo$: Observable<MapInfo>;
-  isLastMap: number = .2;
-  isFirstMap: number = 1;
-  mapName: string;
-  mapImage: string;
-  mapRef: string;
-  mapWeek: number;
 
   constructor(public mapService: MapsService,
               private store: Store<AppState>) {
-    this.mapInfo$ = store.select(state => state.map.mapInfo);
+    this.mapInfo$ = store.select(state => state['map'].mapInfo);
     store.select(state => state.map.currentMap).subscribe(map => {
-      this.mapName = map.activityName;
-      this.mapImage = 'https://www.bungie.net' + map.pgcrImage;
-      this.mapWeek = parseInt(map.week);
       this.maxWeek = parseInt(map.week);
-      this.mapRef = map.referenceId;
-      this.store.dispatch(new mapActions.SearchMapAction(43));
+      this.onWeek = parseInt(map.week);
     });
   }
 
   previousMap() {
-    let prevWeek:number = this.maxWeek - 1;
+    let prevWeek:number = this.onWeek - 1;
     if (prevWeek > 1) {
-      this.store.dispatch(new mapActions.SearchMapAction(prevWeek));
-    } else {
-      this.isFirstMap = 1;
+      this.onWeek = prevWeek;
+      this.slideMap = 'left';
+      Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
+        .subscribe(() => this.slideMap = 'right-done');
     }
   }
 
   nextMap() {
-    let nextWeek:number = this.maxWeek + 1;
-    if (nextWeek < 46) {
-      this.store.dispatch(new mapActions.SearchMapAction(nextWeek));
-    } else {
-      this.isLastMap = .2;
+    let nextWeek:number = this.onWeek + 1;
+    if (nextWeek <= this.maxWeek) {
+      this.onWeek = nextWeek;
+      this.slideMap = 'right';
+      Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
+        .subscribe(() => this.slideMap = 'left-done');
     }
   }
 }

@@ -1,13 +1,19 @@
 import {MapsService} from "./services/maps.service";
 import {ManifestService} from "./services/manifest.service";
-import {AppResolver} from "./app.resolver";
 import {PlayerService} from "./services/player.service";
-import {DOMEvents} from "./dom.events";
+import {APP_INITIALIZER} from "@angular/core";
+
+export function manifestFactory(manifestService: ManifestService): () => void {
+  return () => manifestService.loadManifest();
+}
 
 export const APP_PROVIDERS = [
-  DOMEvents,
-  AppResolver,
   MapsService,
+  PlayerService,
   ManifestService,
-  PlayerService
+  {provide: APP_INITIALIZER,
+    useFactory: manifestFactory,
+    deps: [ManifestService],
+    multi: true
+  },
 ];

@@ -16,7 +16,10 @@ import {EquippedGearComponent} from "./components/equipped-gear.component";
 import {ActivityChartPipe} from "./pipes/activity-chart.pipe";
 import {SubclassComponent} from "./components/subclass.component";
 import {ClassStatsComponent} from "./components/class-stats.component";
-import {ClassStatName} from "./pipes/class-stats.pipe";
+import {
+  FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats,
+  FilterClassArmor
+} from "./pipes/filter-items.pipe";
 
 export const APP_DECLERATIONS = [
   ControlComponent,
@@ -39,6 +42,10 @@ export const APP_DECLERATIONS = [
   SubclassComponent,
   ClassStatsComponent,
   ActivityChartPipe,
-  ClassStatName,
+  FilterSubclass,
+  FilterWeapons,
+  FilterArmor,
+  FilterClassStats,
+  FilterClassArmor,
   ClassStatsComponent
 ];

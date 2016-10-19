@@ -7,6 +7,7 @@ import { Activity }       from "../models/activity.model";
 import { Player }         from "../models/player.model";
 import * as fromRoot      from '../reducers';
 import * as playerActions from '../actions/player.actions';
+import {SearchState} from "../reducers/search.reducer";
 
 @Component({
   selector: 'report',
@@ -16,49 +17,40 @@ import * as playerActions from '../actions/player.actions';
   styleUrls: ['../app.component.css'],
   animations: [
     trigger('player1Visibility', [
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
+      state('true' , style({display: 'block', opacity: 1})),
+      state('false', style({display: 'none',  opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ]),
     trigger('player2Visibility', [
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
+      state('true' , style({display: 'block', opacity: 1})),
+      state('false', style({display: 'none',  opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ]),
     trigger('player3Visibility', [
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
+      state('true' , style({display: 'block', opacity: 1})),
+      state('false', style({display: 'none',  opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ])
   ],
   template: `
-  <div [ngSwitch]="(player1Loaded | async)">
-    <div class="players-wrapper" *ngSwitchCase="true">
+    <div class="players-wrapper">
       <div class="player-shift-focus player-shift-focus--left"></div>
       <div class="player-shift-focus player-shift-focus--right"></div>
       <div class="players">
-        <div id="player1" class="player-container" [@player1Visibility]="(player1Loaded | async)" player></div>
-        <div id="player2" class="player-container" [@player2Visibility]="(player2Loaded | async)" player></div>
-        <div id="player3" class="player-container" [@player3Visibility]="(player3Loaded | async)" player></div>
+        <div id="player1" style="opacity: 0;" class="player-container" [@player1Visibility]="(players | async)?.player1?.player" player></div>
+        <div id="player2" style="opacity: 0;" class="player-container" [@player2Visibility]="(players | async)?.player2?.player" player></div>
+        <div id="player3" style="opacity: 0;" class="player-container" [@player3Visibility]="(players | async)?.player3?.player" player></div>
       </div>
     </div>
-    <div class="home__content" *ngSwitchCase="false" maps></div>
-  </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportComponent {
 
-  player1:  Observable<Player>;
-  player2:  Observable<Player>;
-  player3:  Observable<Player>;
-
-  player1Loaded:  Observable<boolean>;
-  player2Loaded:  Observable<boolean>;
-  player3Loaded:  Observable<boolean>;
+  players:  Observable<SearchState>;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.AppState>,
@@ -85,26 +77,9 @@ export class ReportComponent {
         }
       }).subscribe();
 
-    this.player1 = this.store.select(s => s.players.player1)
+    this.players = this.store.select(s => s.search)
       .distinctUntilChanged()
       .share();
-
-    this.player2 = this.store.select(s => s.players.player2)
-      .distinctUntilChanged()
-      .share();
-
-    this.player3 = this.store.select(s => s.players.player3)
-      .distinctUntilChanged()
-      .share();
-
-    this.player1Loaded = this.player1
-      .map(player => !!player);
-
-    this.player2Loaded = this.player2
-      .map(player => !!player);
-
-    this.player3Loaded = this.player3
-      .map(player => !!player);
 
     this.route.params.subscribe(params => {
       // this.platform = 'ps';

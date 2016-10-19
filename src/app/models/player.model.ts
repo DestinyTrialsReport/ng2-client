@@ -68,11 +68,11 @@ export interface ClassStat {
   name: string;
   value: number;
   normalized: number;
-  tier: number;
-  tiers: number[];
-  cooldown: number;
+  tier?: number;
+  tiers?: number[];
+  cooldown?: number;
   percentage: number;
-  remaining: number;
+  remaining?: number;
 }
 
   // constructor(stat: any, name: string, hasTier:boolean) {

@@ -46,11 +46,8 @@ if (PROD) {
 
 const PORT = port;
 
-console.log('PRODUCTION BUILD: ', PROD);
-console.log('AOT: ', AOT);
 if (DEV_SERVER) {
   testDll();
-  console.log(`Starting dev server on: http://${HOST}:${PORT}`);
 }
 
 const CONSTANTS = {
@@ -74,9 +71,7 @@ const DLL_VENDORS = [
   '@ngrx/core',
   '@ngrx/core/add/operator/select.js',
   '@ngrx/effects',
-  '@ngrx/router-store',
   '@ngrx/store',
-  '@ngrx/db',
   '@ngrx/store-devtools',
   '@ngrx/store-log-monitor',
   'ngrx-store-freeze',
@@ -173,7 +168,8 @@ const clientConfig = function webpackConfig(): WebpackConfig {
       new NoErrorsPlugin(),
       new UglifyJsPlugin({
         beautify: false,
-        comments: false
+        comments: false,
+        compress:true
       }),
       new CompressionPlugin({
         asset: '[path].gz[query]',
@@ -271,5 +267,4 @@ const clientConfig = function webpackConfig(): WebpackConfig {
 } ();
 
 
-DLL ? console.log('BUILDING DLLs') : console.log('BUILDING APP');
 module.exports = clientConfig;

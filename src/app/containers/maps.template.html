@@ -1,19 +1,20 @@
-<!--<div class="home__content">-->
+<div class="home__content">
   <article class="home__main">
     <!--<div class="maps block blog-post shadow-z-1 {{mapInfoAnimClass}}">-->
-    <div class="maps block blog-post shadow-z-1">
-      <div class="modal-hero blog-image" [ngStyle]="{'background-image': 'url(' + mapImage + ')'}">
+    <div class="maps block blog-post shadow-z-1" [@direction]="slideMap">
+      <div class="modal-hero blog-image"
+           [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (mapInfo$ | async)?.pgcrImage + ')'}">
         <div class="modal-hero__header">
-          <h2 class="modal-hero__title" [innerHtml]="mapName"></h2>
+          <h2 class="modal-hero__title" [innerHtml]="(mapInfo$ | async)?.name"></h2>
           <span class="map-cycle-popover">
             <i class="material-icons md-16">&#xE148;</i>
           </span>
-          <p class="modal-hero__description stat" [innerHtml]="(currentMap$ | async)?.weekText"></p>
+          <p class="modal-hero__description stat" [innerHtml]="(mapInfo$ | async)?.weekText"></p>
         </div>
         <div class="modal-hero__switch">
           <div class="modal-hero__switch__btns">
-            <a href="#" [style.opacity]="isFirstMap" (click)="previousMap()"><i class="material-icons">&#xE5CB;</i></a>
-            <a href="#" [style.opacity]="isLastMap" (click)="nextMap()"><i class="material-icons">&#xE5CC;</i></a>
+            <a href="#" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2" (click)="previousMap()"><i class="material-icons">&#xE5CB;</i></a>
+            <a href="#" [style.opacity]="(mapInfo$ | async)?.week == '47' ? .2 : 1" (click)="nextMap()"><i class="material-icons">&#xE5CC;</i></a>
           </div>
           <label>Other weeks</label>
         </div>
@@ -146,4 +147,4 @@
     </div>
 
   </div>
-<!--</div>-->
+</div>

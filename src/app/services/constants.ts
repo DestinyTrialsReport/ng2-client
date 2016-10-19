@@ -73,3 +73,153 @@ export const HIDDEN_NODES: any = [
   3985040583, // Disciplinarian
   4197414939  // Inverse Shadow
 ];
+
+
+export const CRUCIBLE_MAPS: any = {
+  "284635225": {
+    "name": "The Burning Shrine",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_burning_shrine.jpg",
+      "mapImage": "/assets/img/maps/the_burning_shrine.jpg"
+  },
+    "443057682": {
+    "name": "Skyshock",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_skyshock.jpg"
+  },
+    "469270447": {
+    "name": "Memento",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/memento.jpg"
+  },
+    "637046772": {
+    "name": "Thieves' Den",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/thieves_den.jpg"
+  },
+    "1448094960": {
+    "name": "The Dungeons",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_dungeons.jpg"
+  },
+    "1478347980": {
+    "name": "Campus Martius",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Campus_Martius.jpg"
+  },
+    "1709749894": {
+    "name": "Skyline",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/skyline.jpg"
+  },
+    "1719392441": {
+    "name": "Crossroads",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crossroads.jpg"
+  },
+    "1851417512": {
+    "name": "The Drifter",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_drifter.jpg"
+  },
+    "2037022373": {
+    "name": "Vertigo",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/vertigo.jpg"
+  },
+    "2082069870": {
+    "name": "The Anomaly",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_anomaly.jpg",
+      "mapImage": "/assets/img/maps/the_anomaly.jpg"
+  },
+    "2243240710": {
+    "name": "Infinite Descent",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Infinite_Descent.jpg"
+  },
+    "2332037858": {
+    "name": "Widow's Court",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/widows_court.jpg",
+      "mapImage": "/assets/img/maps/widows_court.jpg"
+  },
+    "2430076725": {
+    "name": "Blind Watch",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_blind_watch.jpg",
+      "mapImage": "/assets/img/maps/blind_watch.jpg"
+  },
+    "2507231345": {
+    "name": "Frontier",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/frontier.jpg"
+  },
+    "2680821721": {
+    "name": "The Cauldron",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_cauldron.jpg"
+  },
+    "3053288711": {
+    "name": "Floating Gardens",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/floating_gardens.jpg"
+  },
+    "3101475152": {
+    "name": "Firebase Delphi",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg",
+      "mapImage": "/assets/img/maps/firebase_delphi.jpg"
+  },
+    "3156370656": {
+    "name": "Sector 618",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/sector_618.jpg"
+  },
+    "3277621970": {
+    "name": "The Timekeeper",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/timekeeper.jpg",
+      "mapImage": "/assets/img/maps/the_timekeeper.jpg"
+  },
+    "3292667877": {
+    "name": "Asylum",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_asylum.jpg",
+      "mapImage": "/assets/img/maps/asylum.jpg"
+  },
+    "3412406993": {
+    "name": "Cathedral of Dusk",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/cathedral_of_dusk.jpg"
+  },
+    "3602734434": {
+    "name": "Bannerfall",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/bannerfall.jpg",
+      "mapImage": "/assets/img/maps/bannerfall.jpg"
+  },
+    "3817155567": {
+    "name": "Twilight Gap",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_twilight_gap_2.jpg",
+      "mapImage": "/assets/img/maps/twilight_gap.jpg"
+  },
+    "3848655103": {
+    "name": "Black Shield",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/black_shield.jpg"
+  },
+    "3856604751": {
+    "name": "First Light",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_first_light.jpg",
+      "mapImage": "/assets/img/maps/first_light.jpg"
+  },
+    "3918359338": {
+    "name": "Icarus",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/icarus.jpg"
+  },
+    "4105918304": {
+    "name": "Last Exit",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/last_exit.jpg"
+  },
+    "4107311671": {
+    "name": "Rusted Lands",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_rusted_lands.jpg",
+      "mapImage": "/assets/img/maps/rusted_lands.jpg"
+  },
+    "4163254808": {
+    "name": "Shores of Time",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_shores_of_time.jpg",
+      "mapImage": "/assets/img/maps/shores_of_time.jpg"
+  },
+    "4200263342": {
+    "name": "Bastion",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_bastion.jpg",
+      "mapImage": "/assets/img/maps/bastion.jpg"
+  },
+    "4260139097": {
+    "name": "Pantheon",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_pantheon.jpg"
+  },
+    "4287936726": {
+    "name": "Exodus Blue",
+      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg",
+      "mapImage": "/assets/img/maps/exodus_blue.jpg"
+  }
+};

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
-import {Input, Output}    from "@angular/core/src/metadata/directives";
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Input}    from "@angular/core/src/metadata/directives";
 import {AppState}         from "../reducers/index";
 import {Store}            from "@ngrx/store";
 import {CurrentMap}       from "../models/map-stats.model";

@@ -4,7 +4,7 @@ import {Item} from "../models/inventory.model";
 @Component({
   selector: '[subclass-stats]',
   template: `
-    <div class="row">
+    <div class="row" *ngFor="let subclass of inventory">
       <template ngFor let-node [ngForOf]="subclass?.steps">
         <div class="player-perk col-xs-6" 
           *ngIf="([5, 7].indexOf(node.c) < 0) && !([2, 3, 4].indexOf(node.c) > -1 && node.r == 0)"
@@ -23,7 +23,7 @@ import {Item} from "../models/inventory.model";
   `
 })
 export class SubclassComponent {
-  @Input() subclass: Item;
+  @Input() inventory: Item[];
 
   constructor() {
   }

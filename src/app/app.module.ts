@@ -21,7 +21,7 @@ import { APP_PROVIDERS } from './app.providers';
 import { AppComponent } from './app.component';
 
 import { AppState } from './reducers';
-import {Ng2Webstorage} from "./ng2-webstorage/app";
+import { Ng2Webstorage } from 'ng2-webstorage';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import {Ng2Webstorage} from "./ng2-webstorage/app";
 export class AppModule {
   constructor(public appRef: ApplicationRef,
     private _store: Store<AppState>) { }
-
   hmrOnInit(store) {
     if (!store || !store.rootState) return;
 

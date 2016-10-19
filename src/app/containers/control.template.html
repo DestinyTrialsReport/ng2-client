@@ -41,6 +41,25 @@
               </div>
             </div>
           </div>
+
+          <div class="main-search__row">
+            <div class="main-search__input">
+              <input type="text" class="form-control" [value]="query" (keyup)="search($event.target.value)"
+                     autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Enter Gamertag">
+            </div>
+            <div class="main-search__controls">
+              <div class="main-search__refresh">
+                <button class="btn btn-default btn-icon" type="button">
+                  <i class="material-icons">&#xE86A;</i>
+                </button>
+              </div>
+              <div class="main-search__submit">
+                <button type="submit" class="btn btn-default btn-icon">
+                  <i class="material-icons">&#xE163;</i>
+                </button>
+              </div>
+            </div>
+          </div>
           <!--</form>-->
           <!--<div>-->
           <!--<form role="form" ng-submit="">-->

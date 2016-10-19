@@ -37,7 +37,8 @@ export class PlayerEffects {
         .catch((err) => of(new player.SearchFailed(err)));
     });
 
-  @Effect() account$ = this.actions$
+  @Effect()
+  account$ = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
@@ -50,16 +51,16 @@ export class PlayerEffects {
         .catch((err) => of(new player.SearchFailed(err)));
     });
 
-  @Effect()
-  activities$ = this.actions$
-    .ofType(player.ActionTypes.SEARCH_ACCOUNT)
-    .map<[Player, string]>(action => action.payload)
-    .mergeMap(payload =>
-      this.playerService.activities(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
-        // .throttleTime(1000)
-        .map((res: any) => new activities.ActivityActions([res, payload[1]]))
-        .catch((err) => of(new player.SearchFailed(err)))
-    );
+  // @Effect()
+  // activities$ = this.actions$
+  //   .ofType(player.ActionTypes.SEARCH_ACCOUNT)
+  //   .map<[Player, string]>(action => action.payload)
+  //   .mergeMap(payload =>
+  //     this.playerService.activities(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
+  //       // .throttleTime(1000)
+  //       .map((res: any) => new activities.ActivityActions([res, payload[1]]))
+  //       .catch((err) => of(new player.SearchFailed(err)))
+  //   );
 
   @Effect()
   inventory$ = this.actions$
@@ -99,14 +100,14 @@ export class PlayerEffects {
         .catch((err) => of(new player.SearchFailed(err)))
     });
 
-  @Effect()
-  bngStats$ = this.actions$
-    .ofType(player.ActionTypes.SEARCH_ACCOUNT)
-    .map<[Player, string]>(action => action.payload)
-    .mergeMap(payload =>
-      this.playerService.bngStats(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
-        // .throttleTime(1000)
-        .map((res: any) => new stats.BngStatActions([res, payload[1]]))
-        .catch((err) => of(new player.SearchFailed(err)))
-    );
+  // @Effect()
+  // bngStats$ = this.actions$
+  //   .ofType(player.ActionTypes.SEARCH_ACCOUNT)
+  //   .map<[Player, string]>(action => action.payload)
+  //   .mergeMap(payload =>
+  //     this.playerService.bngStats(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
+  //       // .throttleTime(1000)
+  //       .map((res: any) => new stats.BngStatActions([res, payload[1]]))
+  //       .catch((err) => of(new player.SearchFailed(err)))
+  //   );
 }

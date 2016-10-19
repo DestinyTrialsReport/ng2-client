@@ -5,22 +5,30 @@ import { MOBILE } from './services/constants';
 
 @Component({
   selector: 'my-app',
-  host: {
-    'class': 'wrapper'
-  },
+  // host: {
+  //   'class': 'wrapper'
+  // },
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="controls-wrapper shadow-z-2">
-      <div class="controls" control></div>
-    </div>
-    <div class="content">
-      <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+    <div class="wrapper" [ngClass]="{'focus-on-players': showMenu}">
+      <div class="controls-wrapper shadow-z-2">
+        <div class="controls" control></div>
+      </div>
+      <div class="content">
+        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+      </div>
+      <div class="overlay" (click)="toggleMenu()"></div>
+      <button class="control-btn btn btn-fab btn-raised btn-material-grey"
+              (click)="toggleMenu()">
+        <i class="material-icons">&#xE5CE;</i>
+      </button>
     </div>
   `,
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterContentInit {
+  showMenu:boolean = false;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );
@@ -42,6 +50,10 @@ export class AppComponent implements AfterContentInit {
     //     this.sidenav.open();
     //   });
     // }
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 
   activateEvent(event) {

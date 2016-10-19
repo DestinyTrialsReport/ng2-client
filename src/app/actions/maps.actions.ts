@@ -9,6 +9,7 @@ export const ActionTypes = {
   SEARCH_MAP:       type('[Map] Search Map'),
   SEARCH_COMPLETE:  type('[Map] Search Map Complete'),
   SEARCH_FAILED:    type('[Map] Search Map Failed'),
+  LOAD_MAP_DATA:    type('[Map] Load Map Data'),
 };
 
 export class CurrentMapAction implements Action {
@@ -33,13 +34,19 @@ export class SearchMapAction implements Action {
 export class SearchCompleteAction implements Action {
   type = ActionTypes.SEARCH_COMPLETE;
 
-  constructor(public payload: MapData) { }
+  constructor(public payload: number) { }
 }
 
 export class SearchFailedAction implements Action {
   type = ActionTypes.SEARCH_FAILED;
 
-  constructor(public payload: any) { }
+  constructor(public payload: Error) { }
+}
+
+export class LoadMapDataAction implements Action {
+  type = ActionTypes.LOAD_MAP_DATA;
+
+  constructor(public payload: MapData) { }
 }
 
 export type Actions
@@ -47,4 +54,5 @@ export type Actions
   | SaveCurrentMapAction
   | CurrentMapAction
   | SearchCompleteAction
-  | SearchFailedAction;
+  | SearchFailedAction
+  | LoadMapDataAction;

@@ -25,13 +25,15 @@ export interface MapInfo {
 }
 
 export interface WeaponUsage {
-  weapon_type: string;
-  bucket: string;
+  // weapon_type: string;
+  bucket?: string;
   bucketHash?: number;
   bucketName?: string;
-  kills: string;
-  sum_kills: string;
+  kills: number;
+  sum_kills: number;
   file_name: string;
+  killPercentage?: number;
+  diffPercentage?: number;
   // constructor(data:any) {
   //   if (data) {
   //     this.weaponType = data.weapon_type;
