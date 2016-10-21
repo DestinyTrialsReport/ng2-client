@@ -22,6 +22,5 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/Observable';
 import 'rxjs/Subject';
-// import 'rxjs/Subscription';
 
 import '@ngrx/core/add/operator/select';

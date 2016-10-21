@@ -2,7 +2,6 @@
 import { Action } from '@ngrx/store';
 import {Player, BNGStats, DTRStats, GGGStats} from "../models/player.model";
 import * as playerActions from "../actions/player.actions";
-import { Observable} from 'rxjs/Observable';
 import {Activity} from "../models/activity.model";
 import {ItemDefinition} from "../models/manifest.model";
 
@@ -61,8 +60,4 @@ export function playerReducer(state = initialState, action: Action): PlayersStat
       return state;
     }
   }
-}
-
-export function getInventory(state$: Observable<PlayerState>) {
-  return state$.select(s => s.inventory);
 }

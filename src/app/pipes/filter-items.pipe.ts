@@ -39,9 +39,10 @@ export class FilterClassStats implements PipeTransform {
     for (let s = 0; s < 3; s++) {
       let name:string = showStats[s];
       let stat:ClassStat = stats[name];
-      let normalized:number = stat.value > 300 ? 300 : stat.value;
+      let value:number = stat ? stat.value : 0;
+      let normalized:number = value > 300 ? 300 : value;
       let tiers:number[] = [];
-      let remaining:number = stat.value;
+      let remaining:number = value;
       for (var t = 0; t < 5; t++) {
         remaining -= tiers[t] = remaining > 60 ? 60 : remaining;
       }
@@ -49,7 +50,7 @@ export class FilterClassStats implements PipeTransform {
       let tier:number = Math.floor(normalized / 60);
       filtered.push({
         name: name,
-        value: stat.value,
+        value: value,
         normalized: normalized,
         percentage: percentage,
         tier: tier,
@@ -71,11 +72,12 @@ export class FilterClassArmor implements PipeTransform {
     for (let s = 0; s < 3; s++) {
       let name:string = showStats[s];
       let stat:ClassStat = stats[name];
-      let normalized:number = stat.value > 10 ? 10 : stat.value;
+      let value:number = stat ? stat.value : 0;
+      let normalized:number = value > 10 ? 10 : value;
       let percentage:number = 100 * normalized / 10;
       filtered.push({
         name: name,
-        value: stat.value,
+        value: value,
         normalized: normalized,
         percentage: percentage
       });

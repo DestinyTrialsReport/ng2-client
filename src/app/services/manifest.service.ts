@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { empty } from 'rxjs/observable/empty';
 
 import { DTR_BASE_URL } from './constants';
 import { Step, Talent } from "../models/manifest.model";
@@ -12,6 +10,7 @@ import { LocalStorageService } from "ng2-webstorage";
 import { AppState } from "../reducers/index";
 import { Store } from "@ngrx/store";
 import * as mapActions from "../actions/maps.actions";
+import {CurrentMap} from "../models/map-stats.model";
 
 @Injectable()
 export class ManifestService {
@@ -22,9 +21,13 @@ export class ManifestService {
   manifestSteps:any;
 
   constructor(public http: Http,
-              private storage: LocalStorageService,
-              private store: Store<AppState>,
+              public storage: LocalStorageService,
+              public store: Store<AppState>,
               public mapService: MapsService) {
+    this.manifestVersion = this.storage.retrieve('manifestVersion');
+    this.manifestItems = this.storage.retrieve('manifestItems');
+    this.manifestTalents = this.storage.retrieve('manifestTalents');
+    this.manifestSteps = this.storage.retrieve('manifestSteps');
   }
 
   version(): Observable<any> {
@@ -52,39 +55,36 @@ export class ManifestService {
       .map(res => res.json());
   }
 
-  loadManifest(): Promise<any> {
-    this.manifestVersion = this.storage.retrieve('manifestVersion');
-    var observable = this.version().map(res => {
-      if (this.manifestVersion != res.version || !!this.manifestItems) {
-        console.log("manifest updated, reloading: ", res.version);
-        return Observable.forkJoin(
-          this.items(),
-          this.talent(),
-          this.steps(),
-          Observable.of(res.version),
-          this.mapService.currentMap()
-        )
-      } else {
-        console.log('Using stored manifest: ', this.manifestVersion);
-        return this.mapService.currentMap().subscribe(map => {
-          if (!map) {
-            return empty()
-          }
-          return of(this.store.dispatch(new mapActions.SaveCurrentMapAction(map)));
-        });
-      }
-    });
+  // Ugly but it works! D:
 
-      observable.subscribe((manifest) => {
-        if (manifest) {
-          if (manifest[0]) this.storage.store('manifestItems', manifest[0]);
-          if (manifest[1]) this.storage.store('manifestTalents', manifest[1]);
-          if (manifest[2]) this.storage.store('manifestSteps', manifest[2]);
-          if (manifest[3]) this.storage.store('manifestVersion', manifest[3]);
-          this.store.dispatch(new mapActions.SaveCurrentMapAction(manifest[4]));
+  public _loadManifest: () => Promise<Object> = () => {
+    return new Promise((resolve) => {
+      this.version().toPromise().then((data: any) => {
+        if (this.manifestVersion != data.version || !this.manifestItems) {
+          return Observable.forkJoin(
+            this.items().map(res => this.storage.store('manifestItems', res)),
+            this.talent().map(res => this.storage.store('manifestTalents', res)),
+            this.steps().map(res => this.storage.store('manifestSteps', res)),
+            Observable.of(data.version).map(res => this.storage.store('manifestVersion', res)),
+            this.mapService.currentMap().map(res => this.store.dispatch(new mapActions.SaveCurrentMapAction(res)))
+          )
+            .toPromise().then((data: [void, void, void, void, void]) => {
+              resolve(data);
+            })
+        } else {
+          return this.mapService.currentMap()
+            .toPromise().then((map: CurrentMap) => {
+              return Observable.of(this.store.dispatch(new mapActions.SaveCurrentMapAction(map)))
+                .toPromise().then((data: any) => {
+                  resolve(data);
+                });
+            });
         }
-      });
+      })
+    });
+  };
 
-    return observable.toPromise();
+  public loadManifest(): Promise<Object> {
+    return this._loadManifest();
   }
 }

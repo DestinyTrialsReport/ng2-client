@@ -64,7 +64,6 @@ export function mapsReducer(state = initialState, action: mapActions.Actions): M
     }
 
     case mapActions.ActionTypes.LOAD_MAP_DATA: {
-      console.log(action.payload)
       const payload: any = action.payload;
 
       if (!payload) {

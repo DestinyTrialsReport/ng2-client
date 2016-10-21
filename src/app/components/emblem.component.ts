@@ -1,6 +1,5 @@
-import {Component, ChangeDetectionStrategy, trigger, state, animate, transition, style} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, trigger, state, animate, transition, style} from '@angular/core';
 import {Player} from "../models/player.model";
-import {Input} from "@angular/core/src/metadata/directives";
 import {Item} from "../models/inventory.model";
 
 

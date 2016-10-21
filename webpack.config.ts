@@ -168,8 +168,7 @@ const clientConfig = function webpackConfig(): WebpackConfig {
       new NoErrorsPlugin(),
       new UglifyJsPlugin({
         beautify: false,
-        comments: false,
-        compress:true
+        comments: false
       }),
       new CompressionPlugin({
         asset: '[path].gz[query]',

@@ -22,11 +22,10 @@
     <div class="main-search">
       <div class="main-search__content">
         <div class="main-search__fireteam">
-          <!--<form>-->
           <div class="main-search__row">
             <div class="main-search__input">
               <input type="text" class="form-control" [value]="query" (keyup)="search($event.target.value)"
-                     autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Enter Gamertag">
+                     autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName">
             </div>
             <div class="main-search__controls">
               <div class="main-search__refresh">
@@ -42,45 +41,24 @@
             </div>
           </div>
 
-          <div class="main-search__row">
-            <div class="main-search__input">
-              <input type="text" class="form-control" [value]="query" (keyup)="search($event.target.value)"
-                     autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Enter Gamertag">
-            </div>
-            <div class="main-search__controls">
-              <div class="main-search__refresh">
-                <button class="btn btn-default btn-icon" type="button">
-                  <i class="material-icons">&#xE86A;</i>
-                </button>
-              </div>
-              <div class="main-search__submit">
-                <button type="submit" class="btn btn-default btn-icon">
-                  <i class="material-icons">&#xE163;</i>
-                </button>
+          <div *ngIf="(player2$ | async)?.displayName">
+            <div class="main-search__row">
+              <div class="main-search__input">
+                <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
+                       [placeholder]="(player2$ | async)?.displayName">
               </div>
             </div>
           </div>
-          <!--</form>-->
-          <!--<div>-->
-          <!--<form role="form" ng-submit="">-->
-          <!--<div class="main-search__row">-->
-          <!--<div class="main-search__input">-->
-          <!--<input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false">-->
-          <!--<ul class="dropdown-menu">-->
-          <!--<li class="dropdown-menu__label"> recent teammates</li>-->
-          <!--<li >-->
-          <!--<a href="#"></a>-->
-          <!--</li>-->
-          <!--</ul>-->
-          <!--</div>-->
-          <!--<div class="main-search__controls">-->
-          <!--<div class="main-search__submit">-->
-          <!--<button type="submit" class="btn btn-default btn-icon"><i class="material-icons">&#xE163;</i></button>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</form>-->
-          <!--</div>-->
+
+          <div *ngIf="(player3$ | async)?.displayName">
+            <div class="main-search__row">
+              <div class="main-search__input">
+                <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
+                       [placeholder]="(player3$ | async)?.displayName">
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

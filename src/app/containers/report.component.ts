@@ -17,20 +17,20 @@ import {SearchState} from "../reducers/search.reducer";
   styleUrls: ['../app.component.css'],
   animations: [
     trigger('player1Visibility', [
-      state('true' , style({display: 'block', opacity: 1})),
-      state('false', style({display: 'none',  opacity: 0})),
+      state('true' , style({opacity: 1})),
+      state('false', style({opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ]),
     trigger('player2Visibility', [
-      state('true' , style({display: 'block', opacity: 1})),
-      state('false', style({display: 'none',  opacity: 0})),
+      state('true' , style({opacity: 1})),
+      state('false', style({opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ]),
     trigger('player3Visibility', [
-      state('true' , style({display: 'block', opacity: 1})),
-      state('false', style({display: 'none',  opacity: 0})),
+      state('true' , style({opacity: 1})),
+      state('false', style({opacity: 0})),
       transition('1 => 0', animate('1s ease-in')),
       transition('0 => 1', animate('1s ease-out'))
     ])

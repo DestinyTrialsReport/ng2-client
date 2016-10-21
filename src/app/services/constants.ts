@@ -1,5 +1,4 @@
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
-export const API_BASE_URL: string = `http://${HOST}:${PORT}`;
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
 export const BUNGIE_BASE_URL: string = 'https://proxy.destinytrialsreport.com/platform/destiny';

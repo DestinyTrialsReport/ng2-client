@@ -3,7 +3,6 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../reducers/index";
 import {Observable} from "rxjs/Observable";
 import {WeaponUsage} from "../models/map-stats.model";
-import 'rxjs/add/operator/reduce';
 
 @Component({
   selector: 'weapon-usage',
@@ -83,7 +82,6 @@ import 'rxjs/add/operator/reduce';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeaponUsageComponent {
-  weaponSummary:any;
   percentageNoticeText:string = "Percentages are based on usage of weapon types in relation to total\
     kills in their category.<\hr/\>Difference to the average represents how\
     much more or less that specific weapon type is used on this map\

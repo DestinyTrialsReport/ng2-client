@@ -34,13 +34,13 @@ import {SearchState} from "../reducers/search.reducer";
         <tab heading="Equipped" customClass="player-tab--equipped">     
           <div class="player-tab--equipped">
           
-            <div class="player-tab__section"  style="min-height: 287.03px;"
+            <div class="player-tab__section" style="min-height: 287px;"
               [ngClass]="{'loading-spinner': !(loaded$ | async)?.inventory}"
               [items]="(inventory$ | async) | filterWeapons"
               [loaded]="(loaded$ | async)?.inventory" equipped-gear>
             </div>
             
-            <div class="player-tab__section" style="min-height: 108.07px;"
+            <div class="player-tab__section" style="min-height: 108px;"
               [ngClass]="{'loading-spinner': !(loaded$ | async)?.inventory}"
               [items]="(inventory$ | async) | filterArmor"
               [loaded]="(loaded$ | async)?.inventory" equipped-gear>

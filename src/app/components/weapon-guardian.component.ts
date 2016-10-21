@@ -1,7 +1,5 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {AppState} from "../reducers/index";
-import {Store} from "@ngrx/store";
 import {MapsService} from "../services/maps.service";
 
 @Component({
@@ -52,8 +50,7 @@ export class WeaponGuardianComponent {
   weaponStatsUrl:string = "https://guardian.gg/en/weapon-stats?platform=" + 2 +
   "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05';
 
-  constructor(public mapService: MapsService,
-              private store: Store<AppState>) {
+  constructor(public mapService: MapsService) {
     // this.mapService.getGuardianWeapons(2, '2016-09-02', '2016-09-05')
     //   .subscribe((res:GuardianWeapons) => {
     //     this.weapons = res;
