@@ -10,122 +10,109 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400|Roboto:300,400' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <style>#str-dlls { display: none }
-  .loader-icon,
-  .loader-icon:before,
-  .loader-icon:after {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-  }
+  <style>
+    #str-dlls { display: none }
 
-  .loader-icon {
-    margin: 0 auto;
-    position: relative;
-    opacity: 0.8;
-    margin-bottom: 10px;
-  }
+    .loading {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      z-index: 999;
+      background: #222;
 
-  .loader-icon:before,
-  .loader-icon:after {
-    position: absolute;
-    left: 0;
-    top: 0;
-    content: "";
-    opacity: 0.8;
-    animation: 10s rotate infinite linear;
-  }
+      -webkit-transition: opacity .3s linear;
+              transition: opacity .3s linear;
 
-  .loader-icon:before {
-    background: transparent url(assets/img/loader/triangles-min.png) no-repeat center;
-    background-size:cover;
-    border-left-color: transparent;
-  }
-
-  .loader-icon:after {
-    background: transparent url(assets/img/loader/whex-min.png) no-repeat center;
-    background-size:cover;
-    border-right-color: transparent;
-    animation-direction: reverse;
-  }
-
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+         -ms-flex-align: center;
+            align-items: center;
+       -webkit-box-pack: center;
+          -ms-flex-pack: center;
+        justify-content: center;
     }
-  }
 
-  @keyframes expand {
-    50% {
-      transform: scale(1.2);
+    .loader-icon-container {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+
+      -webkit-transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
-  }
 
-  .loading {
-    opacity: 0;
-    transition: opacity .4s ease-in-out;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: transparent;
-    z-index: -1;
-  }
+    my-app:not(:empty) + .loading {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-  my-app:empty + .loading {
-    opacity: 1;
-    z-index: 100;
-  }
+    my-app:not(:empty) + .loading .loader-icon-container {
+      -webkit-transform: scale(2);
+              transform: scale(2);
+    }
 
-  #pre-bootstrap {
-    background-color: #262626 ;
-    bottom: 0px ;
-    left: 0px ;
-    opacity: .9;
-    position: fixed ;
-    right: 0px ;
-    top: 0px ;
-    transition: all linear 300ms ;
-    -webkit-transition: all linear 300ms ;
-    z-index: 999999 ;
-  }
-  #pre-bootstrap.loaded {
-    opacity: 0.0 ;
-  }
-  #pre-bootstrap div.messaging {
-    color: #FFFFFF ;
-    font-family: monospace ;
-    left: 0px ;
-    margin-top: -37px ;
-    position: absolute ;
-    right: 0px ;
-    text-align: center ;
-    top: 40% ;
-  }
-  #pre-bootstrap h1 {
-    font-size: 26px ;
-    line-height: 35px ;
-    margin: 0px 0px 20px 0px ;
-  }
-  #pre-bootstrap p {
-    font-size: 18px ;
-    line-height: 14px ;
-    margin: 0px 0px 0px 0px ;
-  }
+    .loader-icon,
+    .loader-icon:before,
+    .loader-icon:after {
+      width: 125px;
+      height: 125px;
+    }
 
+    .loader-icon {
+      background: url(assets/img/loader/eye.png) no-repeat center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .loader-icon:before,
+    .loader-icon:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: "";
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      -webkit-animation: 10s rotate infinite linear;
+              animation: 10s rotate infinite linear;
+    }
+
+    .loader-icon:before {
+      background-image: url(assets/img/loader/triangles-min.png);
+    }
+
+    .loader-icon:after {
+      background-image: url(assets/img/loader/whex-min.png);
+      -webkit-animation-direction: reverse;
+              animation-direction: reverse;
+    }
+
+    @-webkit-keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
 <my-app></my-app>
-<div id="pre-bootstrap-container" class="loading">
-  <div id="pre-bootstrap">
-    <div class="messaging">
-      <div class="loader-icon" style="background: transparent url(assets/img/loader/eye-min.png) no-repeat center; background-size:cover;"></div>
-      <p>
-        Loading...
-      </p>
-    </div>
+<div class="loading">
+  <div class="loader-icon-container">
+    <div class="loader-icon"></div>
   </div>
 </div>
 <script type="text/javascript" src="hammer.min.js"></script>
