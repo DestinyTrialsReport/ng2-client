@@ -24,7 +24,7 @@
         <div class="main-search__fireteam">
           <div class="main-search__row">
             <div class="main-search__input">
-              <input type="text" class="form-control" [value]="query" (keyup)="search($event.target.value)"
+              <input type="text" class="form-control" [value]="query" (keyup)="search(2, $event.target.value)"
                      autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName">
             </div>
             <div class="main-search__controls">

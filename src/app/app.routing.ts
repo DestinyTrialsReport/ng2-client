@@ -7,6 +7,7 @@ import {MapsComponent} from "./containers/maps.component";
 
 export const routes: Routes = [
   { path: '', component: MapsComponent },
-  { path: 'ps/:player1', component: ReportComponent },
+  { path: 'ps/:player1',   component: ReportComponent, data : {platform : 2} },
+  { path: 'xbox/:player1', component: ReportComponent, data : {platform : 1} },
   { path: '**', component: NotFound404Component }
 ];

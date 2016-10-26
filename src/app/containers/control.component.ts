@@ -27,8 +27,8 @@ export class ControlComponent {
     this.player3$ = store.select(state => state.players.player3);
   }
 
-  search(query: string) {
-    this.store.dispatch(new playerActions.SearchPlayer([query, 'player1']));
+  search(platform: number, name: string) {
+    this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
   }
 
 }

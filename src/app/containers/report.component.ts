@@ -81,16 +81,29 @@ export class ReportComponent {
       .distinctUntilChanged()
       .share();
 
-    this.route.params.subscribe(params => {
-      // this.platform = 'ps';
-      if (params["player1"]) {
-        this.store.dispatch(new playerActions.SearchPlayer([params["player1"], 'player1']));
-      }
-    });
+    Observable.combineLatest(
+      this.route.params,
+      this.route.data,
+      (params, data) => {
+        if (params["player1"] && data["platform"]) {
+          return {
+            player: params["player1"],
+            platform: data["platform"]
+          }
+        }
+      })
+      .subscribe(data => this.store.dispatch(new playerActions.SearchPlayer([data.platform, data.player, 'player1'])));
+
+    // this.route.params.subscribe(params => {
+    //   // this.platform = 'ps';
+    //   if (params["player1"]) {
+    //     this.store.dispatch(new playerActions.SearchPlayer([params["player1"], 'player1']));
+    //   }
+    // });
   }
 
-  search(query: string) {
-    this.store.dispatch(new playerActions.SearchPlayer([query, 'player1']));
+  search(platform: number, name: string) {
+    this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
   }
 
 }

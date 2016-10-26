@@ -13,7 +13,7 @@ export const ActionTypes = {
 export class SearchPlayer implements Action {
   type = ActionTypes.SEARCH_PLAYER;
 
-  constructor(public payload: [string, string]) { }
+  constructor(public payload: [number, string, string]) { }
 }
 
 export class SearchCompleteAction implements Action {

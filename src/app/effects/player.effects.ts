@@ -23,17 +23,17 @@ export class PlayerEffects {
   search$ = this.actions$
     .ofType(player.ActionTypes.SEARCH_PLAYER)
     .debounceTime(300)
-    .map<[string, string]>(action => action.payload)
+    .map<[number, string, string]>(action => action.payload)
     .mergeMap(query => {
-      if (query[0] === '') {
+      if (query[1] === '') {
         return empty();
       }
 
       // const nextSearch$ = this.actions$.ofType(player.ActionTypes.SEARCH_PLAYER).skip(1);
 
-      return this.playerService.search(2, query[0])
+      return this.playerService.search(query[0], query[1])
         // .takeUntil(nextSearch$)
-        .map(searched => new player.SearchCompleteAction([searched, query[1]]))
+        .map(searched => new player.SearchCompleteAction([searched, query[2]]))
         .catch((err) => of(new player.SearchFailed(err)));
     });
 
