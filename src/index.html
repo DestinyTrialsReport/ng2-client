@@ -48,12 +48,12 @@
               transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
-    my-app:not(:empty) + .loading {
+    trials-report:not(:empty) + .loading {
       opacity: 0;
       pointer-events: none;
     }
 
-    my-app:not(:empty) + .loading .loader-icon-container {
+    trials-report:not(:empty) + .loading .loader-icon-container {
       -webkit-transform: scale(2);
               transform: scale(2);
     }
@@ -110,7 +110,7 @@
   </style>
 </head>
 <body>
-<my-app></my-app>
+<trials-report></trials-report>
 <div class="loading">
   <div class="loader-icon-container">
     <div class="loader-icon"></div>

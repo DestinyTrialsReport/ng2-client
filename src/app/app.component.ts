@@ -1,17 +1,17 @@
-import {AfterContentInit, Component, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
+import { AfterContentInit, Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MOBILE } from './services/constants';
 
 @Component({
-  selector: 'my-app',
+  selector: 'trials-report',
   // host: {
   //   'class': 'wrapper'
   // },
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="wrapper" [ngClass]="{'focus-on-players': showMenu}">
+    <div class="wrapper" [ngClass]="{'focus-on-players': !showMenu}">
       <div class="controls-wrapper shadow-z-2">
         <div class="controls" control></div>
       </div>
@@ -35,11 +35,8 @@ export class AppComponent implements AfterContentInit {
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
 
-  constructor(
-    public route: ActivatedRoute,
-    public router: Router
-  ) {
-
+  constructor(public route: ActivatedRoute,
+              public router: Router) {
   }
 
   ngAfterContentInit() {

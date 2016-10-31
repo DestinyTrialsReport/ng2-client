@@ -1,0 +1,23 @@
+@import '../../_variables';
+
+.not-found {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-found__content {
+  text-align: center;
+}
+
+.not-found__icon {
+  width: 125px;
+  height: 125px;
+}
+
+.not-found__title {
+  font-size: 1.25rem;
+  font-weight: 400;
+}

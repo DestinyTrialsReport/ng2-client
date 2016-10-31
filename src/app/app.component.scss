@@ -299,3 +299,17 @@ $duration: 1.4s;
   background: url(/assets/img/loading.svg) center center no-repeat;
   background-size: 2em 2em;
 }
+
+/* New */
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.component--block {
+  display: block;
+  width: 100%;
+}

@@ -12,7 +12,7 @@ import { MdSidenavModule } from '@angular2-material/sidenav';
 import { MdToolbarModule } from '@angular2-material/toolbar';
 
 import { AppComponent } from './app.component';
-import { NotFound404Component } from './not-found404.component';
+import { NotFound404Component } from './components/notfound404/notfound404.component';
 import { routes } from './app.routing';
 
 import 'rxjs/add/operator/takeUntil';

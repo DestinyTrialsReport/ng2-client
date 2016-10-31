@@ -1,4 +1,4 @@
-import { NotFound404Component } from './not-found404.component';
+import {NotFound404Component} from './components/notfound404/notfound404.component';
 import {MapsComponent} from "./containers/maps.component";
 import {WeaponUsageComponent} from "./components/weapon-usage.component";
 import {WeaponGuardianComponent} from "./components/weapon-guardian.component";
