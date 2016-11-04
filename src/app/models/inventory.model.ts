@@ -28,6 +28,7 @@ export interface Item {
 
 }
 
+
 export interface ItemNode {
   isActivated: boolean,
   stepIndex: number,

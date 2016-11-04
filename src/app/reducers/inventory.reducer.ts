@@ -44,9 +44,3 @@ export function inventoryReducer(state = initialState, action: inventoryActions.
     }
   }
 }
-
-export function getPlayerInventory(id:string) {
-  return (state$: Observable<AppState>) => {
-    return state$.select(s => s.inventory[id])
-  }
-}

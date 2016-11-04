@@ -8,6 +8,8 @@ import {Item}                     from "../models/inventory.model";
 import {StatState}                from "../reducers/stats.reducer";
 import {LocalStorageService} from 'ng2-webstorage';
 import {SearchState} from "../reducers/search.reducer";
+import {HIDDEN_NODES} from "../services/constants";
+import {Talent} from "../models/manifest.model";
 
 @Component({
   selector: '[player]',
@@ -20,7 +22,7 @@ import {SearchState} from "../reducers/search.reducer";
 
       <div 
         [activities]="(activities$ | async)" 
-        [statsBng]="  (stats$   | async)?.bungie" activities-chart>
+        [statsBng]="(stats$ | async)?.bungie" activities-chart>
       </div>
   
       <div 
@@ -46,23 +48,15 @@ import {SearchState} from "../reducers/search.reducer";
               [loaded]="(loaded$ | async)?.inventory" equipped-gear>
             </div>
             
-            <div 
-              [stats]="(player$ | async)?.characterBase?.stats | filterClassStats" class-stats>
+            <div [stats]="(player$ | async)?.characterBase?.stats | filterClassStats" class-stats>
             </div>
             
-            <div 
-              [stats]="(player$ | async)?.characterBase?.stats | filterClassArmor" class-stats>
+            <div [stats]="(player$ | async)?.characterBase?.stats | filterClassArmor" class-stats>
             </div>
             
-            <div class="player-tab__section" 
-              [inventory]="(inventory$ | async) | filterSubclass" subclass-stats>
+            <div class="player-tab__section" [inventory]="(inventory$ | async) | filterSubclass" subclass-stats>
             </div>
           
-            
-            <!--<div class="player-tab__section" *ngIf="(subclass$ | async)?.length < 1">-->
-              <!--<div class="row" style="min-height: 83.91px;"></div>-->
-            <!--</div>  -->
-            
           </div>
         </tab>
         <tab heading="Last Matches" class="player-tab--last-matches"></tab>
@@ -85,28 +79,49 @@ export class PlayerComponent {
               private storage: LocalStorageService) {
     this.player$ = store
       .select(s => s.players[el.nativeElement.id])
-      .distinctUntilChanged();
+      .distinctUntilChanged()
+      .share();
 
     this.activities$ = store
       .select(s => s.activities[el.nativeElement.id])
-      .distinctUntilChanged();
+      .distinctUntilChanged()
+      .share();
+
+    this.stats$ = store.select(s => s.stats[el.nativeElement.id])
+      .distinctUntilChanged()
+      .share();
 
     this.loaded$ = this.store.select(s => s.search[el.nativeElement.id])
       .distinctUntilChanged()
       .share();
 
-    this.inventory$ = fromRoot
-      .getPlayerInventory(
-        store,
-        el.nativeElement.id,
-        storage.retrieve('manifestItems'),
-        storage.retrieve('manifestTalents'),
-        storage.retrieve('manifestSteps')
-      )
+    this.inventory$ = store.select(s => s.inventory[el.nativeElement.id])
+      .map(items => {
+        let itemsDef:any = storage.retrieve('manifestItems');
+        let talents:any = storage.retrieve('manifestTalents');
+        let stepsDef:any = storage.retrieve('manifestSteps');
+        if (items && itemsDef) {
+          const itemsWithDefinitions: Item[] = items.map(item => Object.assign({}, item, itemsDef[item.itemHash]));
+          return itemsWithDefinitions.map(item => {
+              const talentTree:Talent[] = talents[item.talentGridHash];
+
+              return Object.assign({}, item, {
+                steps: item.nodes.map(node => {
+                  const talentNode:Talent = talentTree[node.nodeHash];
+                  return Object.assign({}, stepsDef[talentNode.s[node.stepIndex]], {
+                    h: talentNode.s[node.stepIndex],
+                    r: talentNode.r,
+                    c: talentNode.c
+                  });
+                })
+                  .filter(step => step.c > -1)
+                  .filter(step => HIDDEN_NODES.indexOf(step.h) < 0)
+              })
+            }
+          );
+        }
+      })
       .distinctUntilChanged()
       .share();
-
-    this.stats$ = store.select(s => s.stats[el.nativeElement.id])
-      .distinctUntilChanged();
   }
 }

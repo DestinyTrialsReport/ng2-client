@@ -1,56 +1,69 @@
-import {Component, ChangeDetectionStrategy, style, state, animate, transition, trigger} from '@angular/core';
+import {
+  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { Observable }     from "rxjs/Observable";
+import { Observable }     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
 import { PlayerService }  from "../services/player.service";
 import { Activity }       from "../models/activity.model";
-import { Player }         from "../models/player.model";
 import * as fromRoot      from '../reducers';
 import * as playerActions from '../actions/player.actions';
-import {SearchState} from "../reducers/search.reducer";
+import { SearchState } from "../reducers/search.reducer";
+import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 
 @Component({
   selector: 'report',
-  host: {
-    'class': 'home'
-  },
   styleUrls: ['../app.component.css'],
   animations: [
     trigger('player1Visibility', [
+      state('null' , style({opacity: 0})),
       state('true' , style({opacity: 1})),
       state('false', style({opacity: 0})),
-      transition('1 => 0', animate('1s ease-in')),
-      transition('0 => 1', animate('1s ease-out'))
+      transition('* => true', animate('1s ease-in'))
     ]),
     trigger('player2Visibility', [
+      state('null' , style({opacity: 0})),
       state('true' , style({opacity: 1})),
       state('false', style({opacity: 0})),
-      transition('1 => 0', animate('1s ease-in')),
-      transition('0 => 1', animate('1s ease-out'))
+      transition('* => true', animate('1s ease-in'))
     ]),
     trigger('player3Visibility', [
+      state('null' , style({opacity: 0})),
       state('true' , style({opacity: 1})),
       state('false', style({opacity: 0})),
-      transition('1 => 0', animate('1s ease-in')),
-      transition('0 => 1', animate('1s ease-out'))
+      transition('* => true', animate('1s ease-in'))
     ])
   ],
   template: `
-    <div class="players-wrapper">
-      <div class="player-shift-focus player-shift-focus--left"></div>
-      <div class="player-shift-focus player-shift-focus--right"></div>
-      <div class="players">
-        <div id="player1" style="opacity: 0;" class="player-container" [@player1Visibility]="(players | async)?.player1?.player" player></div>
-        <div id="player2" style="opacity: 0;" class="player-container" [@player2Visibility]="(players | async)?.player2?.player" player></div>
-        <div id="player3" style="opacity: 0;" class="player-container" [@player3Visibility]="(players | async)?.player3?.player" player></div>
+    <div class="players-wrapper" 
+    [ngClass]="{
+      'focus-on-player-one':   activePlayer === 1, 
+      'focus-on-player-two':   activePlayer === 2, 
+      'focus-on-player-three': activePlayer === 3
+      }">
+      <div class="players" 
+            id="playerContainer"
+           #playersWrapper
+           (mousedown)="onPanStart($event)"
+           (mousemove)="onPan($event)"
+           (mouseup)="onPanEnd($event)">
+        <div id="player1" class="player-container" [@player1Visibility]="(players | async)?.player1?.player" player></div>
+        <div id="player2" class="player-container" [@player2Visibility]="(players | async)?.player2?.player" player></div>
+        <div id="player3" class="player-container" [@player3Visibility]="(players | async)?.player3?.player" player></div>
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportComponent {
-
+export class ReportComponent implements AfterViewInit {
   players:  Observable<SearchState>;
+  isPanning: boolean;
+  currentState: number = 0;
+  startX: number = 0;
+  endX: number = 0;
+  activePlayer: number = 1;
+  outerWidth: number = window.outerWidth;
+  @ViewChild('playersWrapper') playersWrapper: any;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.AppState>,
@@ -62,20 +75,31 @@ export class ReportComponent {
       (activities, player) => {
         if (player && player.membershipId && activities && activities[0]) {
           const activity:Activity = activities[0];
-          const membershipId:string = player.membershipId;
-          const team:number = activity.values.team.basic.value;
-          const standing:number = activity.values.standing.basic.value;
-
-          playerService.pgcr(activity.activityDetails.instanceId).subscribe(pgcr => {
-            const teammates: Player[] = pgcr.entries.filter(entry => entry.values.team.basic.value === team)
-              .map(entry => entry.player.destinyUserInfo)
-              .filter(player => player.membershipId != membershipId);
-
-            this.store.dispatch(new playerActions.SearchCompleteAction([teammates[0], 'player2']));
-            this.store.dispatch(new playerActions.SearchCompleteAction([teammates[1], 'player3']));
-          })
+          return {
+            activity: activity,
+            membershipId:  player.membershipId,
+            team: activity.values.team.basic.value,
+          };
+          // const standing:number = activity.values.standing.basic.value;
         }
-      }).subscribe();
+      })
+      .subscribe(data => {
+        if (data) {
+          playerService.pgcr(data.activity.activityDetails.instanceId)
+            .map(pgcr => pgcr.entries
+              .filter(entry => entry.values.team.basic.value === data.team && entry.player.destinyUserInfo.membershipId != data.membershipId)
+              .map(entry => entry.player.destinyUserInfo)
+            )
+            .subscribe(teammates => {
+              this.store.dispatch(new playerActions.SearchCompleteAction([teammates[0], 'player2']));
+              return IntervalObservable.create(1000)
+                .take(1)
+                .subscribe(() => {
+                  this.store.dispatch(new playerActions.SearchCompleteAction([teammates[1], `player3`]));
+                });
+            });
+        }
+    });
 
     this.players = this.store.select(s => s.search)
       .distinctUntilChanged()
@@ -93,17 +117,53 @@ export class ReportComponent {
         }
       })
       .subscribe(data => this.store.dispatch(new playerActions.SearchPlayer([data.platform, data.player, 'player1'])));
-
-    // this.route.params.subscribe(params => {
-    //   // this.platform = 'ps';
-    //   if (params["player1"]) {
-    //     this.store.dispatch(new playerActions.SearchPlayer([params["player1"], 'player1']));
-    //   }
-    // });
   }
 
   search(platform: number, name: string) {
     this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
   }
 
+  onPanStart(event: MouseEvent) {
+    this.startX = event.x;
+    this.isPanning = true;
+    this.playersWrapper.nativeElement.style.transition = 'none';
+    this.playersWrapper.nativeElement.style['-webkit-transition'] = 'none';
+    if (this.activePlayer === 1) {
+      this.currentState = 0;
+    } else {
+      this.currentState = this.activePlayer === 2 ? -32.5 : -65.5;
+    }
+  }
+
+  onPan(event: MouseEvent) {
+    if (this.isPanning) {
+      let delta: number = (100 / this.outerWidth) * (event.x - this.startX);
+      this.playersWrapper.nativeElement.style.transform = `translate3d(${this.currentState + delta}%, 0px, 0px)`;
+    }
+  }
+
+  onPanEnd(event: MouseEvent) {
+    let delta: number = event.x - this.startX;
+    this.playersWrapper.nativeElement.style = '';
+    if (delta < -10) {
+      if (this.activePlayer === 1) {
+        this.activePlayer = 2;
+      } else if (this.activePlayer === 2) {
+        this.activePlayer = 3;
+      }
+    } else if (delta > 10) {
+      if (this.activePlayer === 2) {
+        this.activePlayer = 1;
+      } else if (this.activePlayer === 3) {
+        this.activePlayer = 2;
+      }
+    }
+    this.playersWrapper.nativeElement.style.transition = 'transform ease-out .3s,-webkit-transform ease-out .3s';
+    this.playersWrapper.nativeElement.style['-webkit-transition'] = '-webkit-transform ease-out .3s';
+    this.isPanning = false;
+  }
+
+  ngAfterViewInit() {
+
+  }
 }

@@ -20,8 +20,11 @@ import {
   FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats,
   FilterClassArmor
 } from "./pipes/filter-items.pipe";
+import {MyReportComponent} from "./containers/my-report.component";
 
-export const APP_DECLERATIONS = [
+
+export const APP_DECLARATIONS = [
+  MyReportComponent,
   ControlComponent,
   MapsComponent,
   NotFound404Component,

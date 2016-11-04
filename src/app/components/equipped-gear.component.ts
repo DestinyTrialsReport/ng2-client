@@ -6,13 +6,13 @@ import {ARMOR_BUCKETS} from "../services/constants";
   selector: '[equipped-gear]',
   animations: [
     trigger('visibilityChanged', [
-      state('shown' , style({ opacity: 1 })),
-      state('hidden', style({ opacity: 0 })),
+      state('true' , style({ opacity: 1 })),
+      state('false', style({ opacity: 0 })),
       transition('* => *', animate('.5s'))
     ])
   ],
   template: `
-    <div class="row" [@visibilityChanged]="loaded ? 'shown' : 'hidden'">
+    <div class="row" [@visibilityChanged]="loaded">
       <div class="weapon col-xs-12" *ngFor="let item of items">
         <div [ngClass]="{
               armor__img: armorBuckets.indexOf(item.bucketHash) > -1,

@@ -9,7 +9,8 @@ import {
   DEV_PORT, PROD_PORT, EXCLUDE_SOURCE_MAPS, HOST,
   USE_DEV_SERVER_PROXY, DEV_SERVER_PROXY_CONFIG, DEV_SERVER_WATCH_OPTIONS,
   DEV_SOURCE_MAPS, PROD_SOURCE_MAPS, STORE_DEV_TOOLS,
-  MY_COPY_FOLDERS, MY_VENDOR_DLLS, MY_CLIENT_PLUGINS, MY_CLIENT_PRODUCTION_PLUGINS, MY_CLIENT_RULES
+  MY_COPY_FOLDERS, MY_POLYFILL_DLLS, MY_VENDOR_DLLS, MY_CLIENT_PLUGINS,
+  MY_CLIENT_PRODUCTION_PLUGINS, MY_CLIENT_RULES
 } from './constants';
 
 const {
@@ -27,13 +28,15 @@ const { ForkCheckerPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const { hasProcessFlag, root, testDll } = require('./helpers.js');
 
-const EVENT = process.env.npm_lifecycle_event;
+const EVENT = process.env.npm_lifecycle_event || '';
 const AOT = EVENT.includes('aot');
 const DEV_SERVER = EVENT.includes('webdev');
 const DLL = EVENT.includes('dll');
+const E2E = EVENT.includes('e2e');
 const HMR = hasProcessFlag('hot');
 const PROD = EVENT.includes('prod');
 
@@ -177,8 +180,13 @@ const clientConfig = function webpackConfig(): WebpackConfig {
         threshold: 10240,
         minRatio: 0.8
       }),
-      ...MY_CLIENT_PRODUCTION_PLUGINS
+      ...MY_CLIENT_PRODUCTION_PLUGINS,
     );
+    if (!E2E) {
+      config.plugins.push(
+        new BundleAnalyzerPlugin()
+      );
+    }
   }
 
   config.cache = true;
@@ -202,7 +210,8 @@ const clientConfig = function webpackConfig(): WebpackConfig {
         'events',
         'webpack-dev-server/client/socket.js',
         'webpack/hot/emitter.js',
-        'zone.js/dist/long-stack-trace-zone.js'
+        'zone.js/dist/long-stack-trace-zone.js',
+        ...MY_POLYFILL_DLLS
       ],
       vendor: [...DLL_VENDORS]
     };
@@ -234,7 +243,9 @@ const clientConfig = function webpackConfig(): WebpackConfig {
   config.devServer = {
     contentBase: AOT ? './src/compiled' : './src',
     port: CONSTANTS.PORT,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+    },
     host: '0.0.0.0',
     watchOptions: DEV_SERVER_WATCH_OPTIONS
   };

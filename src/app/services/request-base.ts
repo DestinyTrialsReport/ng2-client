@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import {API_KEY} from "./constants";
 
 @Injectable()
 export class RequestBase {
@@ -7,7 +8,7 @@ export class RequestBase {
   noPreFlightHeaders = new Headers();
   options = new RequestOptions({
     headers: this.headers,
-    withCredentials: true
+    // withCredentials: true
   });
   optionsNoPre = new RequestOptions({
     headers: this.noPreFlightHeaders,
@@ -15,6 +16,7 @@ export class RequestBase {
   });
   constructor(public http: Http) {
     this.headers.append('Content-Type', 'application/json');
+    this.headers.append('X-Api-key', API_KEY);
     this.noPreFlightHeaders.append('Content-Type', 'text/plain');
   }
 }

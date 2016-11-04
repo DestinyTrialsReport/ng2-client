@@ -55,6 +55,13 @@ exports.MY_VENDOR_DLLS = [
   // this will speed up initial dev server build and incremental builds.
   // Be sure to run `npm run build:dll` if you make changes to this array.
 ]
+
+exports.MY_POLYFILL_DLLS = [
+  // list polyfills that you want to be included in your dlls files
+  // this will speed up initial dev server build and incremental builds.
+  // Be sure to run `npm run build:dll` if you make changes to this array.
+]
+
 exports.MY_CLIENT_PLUGINS = [
   // use this to import your own webpack config Client plugins.
 ]

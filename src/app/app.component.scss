@@ -65,6 +65,11 @@
 // Maps tab
 @import '../assets/css/parts/player-maps';
 
+// using Modernizer CSS classes to detect if browser supports the W3C Touch Events API
+:host-context(.mod-touchevents) [md-button]:hover::after, [md-icon-button]:hover::after {
+  content: none;
+}
+
 $offset: 187;
 $duration: 1.4s;
 
