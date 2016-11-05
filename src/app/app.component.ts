@@ -5,9 +5,6 @@ import { MOBILE } from './services/constants';
 
 @Component({
   selector: 'trials-report',
-  // host: {
-  //   'class': 'wrapper'
-  // },
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
