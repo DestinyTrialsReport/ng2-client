@@ -7,7 +7,7 @@ import {PlayerComponent} from "./containers/player.component";
 import {Emblem} from "./components/emblem.component";
 import {ActivityChartComponent} from "./components/activities-chart.component";
 import {ReportComponent} from "./containers/report.component";
-import {ControlComponent} from "./containers/control.component";
+import {MenuComponent} from "./components/menu/menu.component";
 import {WinPercentagePipe} from "./pipes/win-percentage.pipe";
 import {SumFlawlessPipe} from "./pipes/sum-flawless.pipe";
 import {StreakPipe, StreakIconPipe} from "./pipes/streak.pipe";
@@ -22,7 +22,7 @@ import {
 } from "./pipes/filter-items.pipe";
 
 export const APP_DECLERATIONS = [
-  ControlComponent,
+  MenuComponent,
   MapsComponent,
   NotFound404Component,
   ReportComponent,

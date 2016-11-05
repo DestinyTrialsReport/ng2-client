@@ -37,6 +37,11 @@
   display: none;
 }
 
+.component--block {
+  display: block;
+  width: 100%;
+}
+
 @media all and (max-width: $breakpoint-large) {
   .body {
     display: block;

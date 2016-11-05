@@ -1,0 +1,20 @@
+.menu {
+  max-width: 420px;
+  margin: 0 auto;
+  pointer-events: auto;
+  width: 100%;
+  background: $dark-main;
+  display: flex;
+  flex-direction: column;
+  color: #999;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+@media all and (max-width: $breakpoint-large) {
+  .menu {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    @include shadow(2);
+  }
+}

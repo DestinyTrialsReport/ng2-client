@@ -10,7 +10,7 @@ import { MOBILE } from './services/constants';
   template: `
     <div class="body" [ngClass]="{'body--focus-on-players': !showMenu}">
       <div class="body__menu">
-        <div class="controls" control></div>
+        <menu></menu>
       </div>
       <main class="body__content">
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>

@@ -1,17 +1,22 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import * as fromRoot              from '../reducers';
-import {Store}            from "@ngrx/store";
-import {CurrentMap}       from "../models/map-stats.model";
-import {Observable}       from "rxjs/Observable";
-import * as playerActions from '../actions/player.actions';
-import {Player} from "../models/player.model";
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import * as fromRoot        from '../../reducers';
+import * as playerActions   from '../../actions/player.actions';
+import { Store }            from "@ngrx/store";
+import { CurrentMap }       from "../../models/map-stats.model";
+import { Observable }       from "rxjs/Observable";
+import { Player }           from "../../models/player.model";
 
 @Component({
-  selector: '[control]',
-  templateUrl: 'control.template.html',
+  selector: 'menu',
+  host: {
+    'class': 'component--block'
+  },
+  templateUrl: 'menu.template.html',
+  styleUrls: ['menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ControlComponent {
+
+export class MenuComponent {
   currentMap$: Observable<CurrentMap>;
   player1$: Observable<Player>;
   player2$: Observable<Player>;
@@ -30,5 +35,4 @@ export class ControlComponent {
   search(platform: number, name: string) {
     this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
   }
-
 }
