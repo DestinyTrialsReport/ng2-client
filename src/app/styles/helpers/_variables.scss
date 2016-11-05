@@ -1,9 +1,8 @@
+$grid-gutter: 1rem;
+
 $os-primary-color: #2196F3;
 $primary-font: "Roboto", "Helvetica", "Arial", sans-serif;
-$break-small: 320px;
-$break-mobile: 800px;
-$break-large: 1200px;
 
-/* Colors */
-$dark-main: #323232;
-$light-main: #dfdfdf;
+$breakpoint-small: 768px;
+$breakpoint-medium: 960px;
+$breakpoint-large: 1280px;

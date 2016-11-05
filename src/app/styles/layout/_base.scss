@@ -1,0 +1,112 @@
+.body {
+  display: flex;
+  overflow-y: auto;
+  align-items: stretch;
+}
+
+.body__menu {
+  min-height: 100vh;
+  min-width: 300px;
+  width: 25vw;
+  max-width: 420px;
+  overflow-x: hidden;
+  z-index: 100;
+  display: flex;
+  pointer-events: none;
+}
+
+.body__content {
+  flex-grow: 1;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.body__mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: none;
+  z-index: 50;
+}
+
+.body__control {
+  display: none;
+}
+
+@media all and (max-width: $breakpoint-large) {
+  .body {
+    display: block;
+    overflow: auto;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .body__menu {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    padding: 3em 15px 0 15px;
+    box-shadow: none;
+    transition: transform cubic-bezier(.55,0,.1,1) .5s;
+    transform: translateY(0%);
+    will-change: transform;
+  }
+
+  .body__content {
+    position: fixed;
+    width: 100%;
+    pointer-events: none;
+    top: 0;
+  }
+
+  .body__mask {
+    display: block;
+    opacity: 1;
+    transition: opacity linear .5s;
+  }
+
+  .body__control {
+    display: block;
+    z-index: 75;
+    color: white;
+    background: #03A9F4;
+
+    i {
+      transform: rotate(-180deg);
+      transition: transform ease-in-out .2s;
+    }
+  }
+
+  .body--focus-on-players {
+    .body__menu {
+      position: fixed;
+      transform: translateY(120%);
+    }
+
+    .body__content {
+      position: static;
+      pointer-events: auto;
+    }
+
+    .body__mask {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .body__control > i {
+      transform: rotate(0deg);
+    }
+  }
+
+  .controls {
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
