@@ -1,0 +1,30 @@
+.platform-toggle {
+  display: flex;
+  align-items: center;
+
+  .toggle {
+    margin: 0 .5rem 0 .8rem;
+  }
+}
+
+.platform-toggle__label {
+  img {
+    height: 1.3rem;
+  }
+}
+
+.platform-toggle input[type=checkbox] + .toggle__btn {
+  background: transparentize($playstation-main, .5);
+
+  &:after {
+    background: $playstation-main;
+  }
+}
+
+.platform-toggle input[type=checkbox]:checked + .toggle__btn {
+  background: transparentize($xbox-main, 0.5);
+
+  &:after {
+    background: $xbox-main;
+  }
+}

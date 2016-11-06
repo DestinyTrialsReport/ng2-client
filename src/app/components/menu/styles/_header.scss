@@ -1,54 +1,11 @@
-header {
+.header {
   position: relative;
   z-index: 1;
   flex-grow: 1;
 }
 
-.header-bar {
-  padding: .75em 0;
-
-  .header-bar__content {
-    display: flex;
-    flex-direction: row;
-  }
-}
-
-.domain-switch {
-  border-bottom: 1px solid darken($header-bg, 5%);
-  padding: .5em;
-
-  .btn.btn.btn {
-    color: $controls-btn-color;
-    padding: 0.5em 0px;
-  }
-}
-
-.controls-map {
-  box-shadow: inset 0 120px 50px -60px rgba(0, 0, 0, 0.75);
-  padding: $controls-padding .5em 1.35em $controls-padding;
-  background: center bottom no-repeat;
-  background-size: auto 20em;
-
-  &.is-week-23 {
-    background-position-x: 100%;
-    background-size: auto 13.5em;
-  }
-}
-
-.controls-map__content {
-  display: flex;
-  align-items: center;
-
-  > button.btn.btn.btn {
-    color: #aaa;
-    margin: 0;
-  }
-}
-
-.controls-map__title {
-  flex-grow: 1;
-  color: #ccc;
-  font-size: 1em;
+.header__content {
+  @include shadow(2);
 }
 
 .ad {

@@ -1,22 +1,28 @@
 <div class="menu">
-  <header>
-    <div class="header__content shadow-z-2">
-      <div class="title-bar" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
-        <div class="title-bar__content">
-          <div class="title-bar__title">
+  <header class="header">
+    <div class="header__content">
+      <div class="title menu__block" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
+        <div class="row middle-xs">
+          <div class="col-xs">
             <a routerLink="/">
-              D<span class="hide-on-small">estiny</span><span class="highlight">T<span class="hide-on-small">rials</span></span>R<span class="hide-on-small">eport</span>
+              <h1>
+                Destiny<span class="highlight">Trials</span>Report
+              </h1>
             </a>
           </div>
-          <div class="platform-toggle">
-            <div class="togglebutton">
-              <label class="platform-toggle__name"><img src="assets/img/ps.svg" alt="PlayStation"></label>
-              <label class="platform-toggle__btn">
-                <input type="checkbox">
-              </label>
-              <label class="platform-toggle__name"><img src="assets/img/xbox.svg" alt="Xbox"></label>
-            </div>
+          <div class="col-xs-shrink platform-toggle">
+            <label class="platform-toggle__label">
+              <img src="assets/img/ps.svg" alt="PlayStation">
+            </label>
+            <label class="toggle">
+              <input type="checkbox">
+              <span class="toggle__btn"></span>
+            </label>
+            <label class="platform-toggle__label">
+              <img src="assets/img/xbox.svg" alt="Xbox">
+            </label>
           </div>
+          <!-- TODO: Implement functionality -->
         </div>
       </div>
 
@@ -26,7 +32,7 @@
             <div class="main-search__row">
               <div class="main-search__input">
                 <input type="text" class="form-control" [value]="query" (keyup)="search(2, $event.target.value)"
-                       autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName">
+                       autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'">
               </div>
               <div class="main-search__controls">
                 <div class="main-search__refresh">
@@ -64,19 +70,18 @@
         </div>
       </div>
 
-      <div class="controls-map"
+      <div class="current-map menu__block"
            [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
-        <div class="controls-map__content">
-          <div class="controls-map__title stat">
-            <span [innerHtml]="(currentMap$ | async)?.activityName"></span>
-            <span class="map-cycle-popover">
-            <i class="material-icons icon--small">&#xE148;</i>
-          </span>
-            <label></label>
+        <div class="row">
+          <div class="col-xs stat">
+            <span class="stat__number" [innerHtml]="(currentMap$ | async)?.activityName"></span>
+            <label class="stat__label">This week's map</label> <!-- TODO: Toggle between this week's / last week's map -->
           </div>
-          <button type="button" class="btn btn-flat btn-sm">
-            Overview
-          </button>
+          <!--<div class="col-xs-shrink">
+            <button type="button" class="btn btn-flat btn-sm">
+              Overview
+            </button>
+          </div> TODO: Only show this when we have an overview, implement modal -->
         </div>
       </div>
     </div>

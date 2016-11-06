@@ -1,0 +1,31 @@
+.stat {
+  white-space: nowrap;
+
+  > span {
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  > label {
+    @extend .data-label;
+
+    &:only-child {
+      line-height: 1;
+      margin-top: 0;
+    }
+  }
+}
+
+.stat__number {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.stat__label {
+  @extend .data-label;
+  display: block;
+
+  .stat__number + & {
+    margin-top: .2rem;
+  }
+}

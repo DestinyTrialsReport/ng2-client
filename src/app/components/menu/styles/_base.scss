@@ -3,12 +3,16 @@
   margin: 0 auto;
   pointer-events: auto;
   width: 100%;
+  color: $light-main;
   background: $dark-main;
   display: flex;
   flex-direction: column;
-  color: #999;
   flex-grow: 1;
   overflow: hidden;
+}
+
+.menu__block {
+  padding: $menu-padding;
 }
 
 @media all and (max-width: $breakpoint-large) {

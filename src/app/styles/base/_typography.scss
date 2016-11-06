@@ -1,0 +1,29 @@
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.highlight {
+  color: $highlight-main;
+}
+
+small {
+  font-size: 1em;
+}
+
+.data-label {
+  font-size: .8em;
+  font-weight: 300;
+  font-family: 'Roboto Condensed';
+  color: $light-secondary;
+  text-transform: uppercase;
+}

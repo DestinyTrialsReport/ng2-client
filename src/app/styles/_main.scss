@@ -9,6 +9,8 @@
 @import 'layout/content';
 
 @import 'components/buttons';
+@import 'components/toggle';
+@import 'components/stats';
 
 // @import '../../assets/css/vendor/bootstrap.css';
 // @import '../../assets/css/inc/vars';
@@ -317,6 +319,6 @@
 html {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.4;
 }
