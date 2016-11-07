@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Item} from "../models/inventory.model";
+import {Item} from "../../models/inventory.model";
 
 @Component({
   selector: '[subclass-stats]',

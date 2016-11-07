@@ -11,8 +11,8 @@ import { Player }           from "../../models/player.model";
   host: {
     'class': 'component--block'
   },
-  templateUrl: 'menu.template.html',
-  styleUrls: ['menu.component.css'],
+  templateUrl: './menu.template.html',
+  styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -23,7 +23,6 @@ export class MenuComponent {
   player3$: Observable<Player>;
   @Input() query: string = '';
   @Input() searching = false;
-  // @Output() search = new EventEmitter<string>();
 
   constructor(private store: Store<fromRoot.AppState>,) {
     this.currentMap$ = store.select(state => state.map.currentMap);

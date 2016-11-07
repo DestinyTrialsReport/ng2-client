@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ClassStat} from "../models/player.model";
+import {ClassStat} from "../../models/player.model";
 
 @Component({
   selector: '[class-stats]',

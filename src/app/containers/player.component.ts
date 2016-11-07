@@ -34,29 +34,11 @@ import {Talent} from "../models/manifest.model";
            
       <tabset class="player-tabs">
         <tab heading="Equipped" customClass="player-tab--equipped">     
-          <div class="player-tab--equipped">
-          
-            <div class="player-tab__section" style="min-height: 287px;"
-              [ngClass]="{'loading-spinner': !(loaded$ | async)?.inventory}"
-              [items]="(inventory$ | async) | filterWeapons"
-              [loaded]="(loaded$ | async)?.inventory" equipped-gear>
-            </div>
-            
-            <div class="player-tab__section" style="min-height: 108px;"
-              [ngClass]="{'loading-spinner': !(loaded$ | async)?.inventory}"
-              [items]="(inventory$ | async) | filterArmor"
-              [loaded]="(loaded$ | async)?.inventory" equipped-gear>
-            </div>
-            
-            <div [stats]="(player$ | async)?.characterBase?.stats | filterClassStats" class-stats>
-            </div>
-            
-            <div [stats]="(player$ | async)?.characterBase?.stats | filterClassArmor" class-stats>
-            </div>
-            
-            <div class="player-tab__section" [inventory]="(inventory$ | async) | filterSubclass" subclass-stats>
-            </div>
-          
+          <div class="player-tab--equipped" 
+            [loaded]="(loaded$ | async)?.inventory"
+            [inventory]="(inventory$ | async)"
+            [stats]="(player$ | async)?.characterBase?.stats"
+            equipped-tab>
           </div>
         </tab>
         <tab heading="Last Matches" customClass="player-tab--last-matches">

@@ -1,6 +1,6 @@
 import {Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger} from '@angular/core';
-import {Item} from "../models/inventory.model";
-import {ARMOR_BUCKETS} from "../services/constants";
+import {Item} from "../../models/inventory.model";
+import {ARMOR_BUCKETS} from "../../services/constants";
 
 @Component({
   selector: '[equipped-gear]',

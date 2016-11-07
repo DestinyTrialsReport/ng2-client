@@ -12,18 +12,17 @@ import {WinPercentagePipe} from "./pipes/win-percentage.pipe";
 import {SumFlawlessPipe} from "./pipes/sum-flawless.pipe";
 import {StreakPipe, StreakIconPipe} from "./pipes/streak.pipe";
 import {FooterComponent} from "./components/footer.component";
-import {EquippedGearComponent} from "./components/equipped-gear.component";
+import {EquippedGearComponent} from "./components/equipped/equipped-gear.component";
 import {ActivityChartPipe} from "./pipes/activity-chart.pipe";
-import {SubclassComponent} from "./components/subclass.component";
-import {ClassStatsComponent} from "./components/class-stats.component";
+import {SubclassComponent} from "./components/equipped/subclass.component";
+import {ClassStatsComponent} from "./components/equipped/class-stats.component";
 import {
   FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats,
   FilterClassArmor
 } from "./pipes/filter-items.pipe";
-import {MyReportComponent} from "./containers/my-report.component";
+import {EquippedTabComponent} from "./components/equipped/equipped-tab.component";
 
 export const APP_DECLARATIONS = [
-  MyReportComponent,
   MenuComponent,
   MapsComponent,
   NotFound404Component,
@@ -39,6 +38,7 @@ export const APP_DECLARATIONS = [
   StreakPipe,
   StreakIconPipe,
   FooterComponent,
+  EquippedTabComponent,
   EquippedGearComponent,
   SubclassComponent,
   ActivityChartPipe,

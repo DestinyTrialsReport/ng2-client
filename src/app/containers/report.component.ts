@@ -1,6 +1,5 @@
 import {
-  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, AfterViewInit, ElementRef,
-  OnInit
+  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy
 } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
@@ -36,18 +35,9 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
     ])
   ],
   template: `
-    <div class="players-wrapper" 
-    [ngClass]="{
-      'focus-on-player-one':   activePlayer === 1, 
-      'focus-on-player-two':   activePlayer === 2, 
-      'focus-on-player-three': activePlayer === 3
-      }">
+    <div class="players-wrapper" >
       <div class="players" 
-            id="playerContainer"
-           #playersWrapper
-           (mousedown)="onPanStart($event)"
-           (mousemove)="onPan($event)"
-           (mouseup)="onPanEnd($event)">
+            id="playerContainer">
         <div id="player1" class="player-container" [@player1Visibility]="(players | async)?.player1?.player" player></div>
         <div id="player2" class="player-container" [@player2Visibility]="(players | async)?.player2?.player" player></div>
         <div id="player3" class="player-container" [@player3Visibility]="(players | async)?.player3?.player" player></div>
@@ -58,13 +48,6 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 })
 export class ReportComponent {
   players:  Observable<SearchState>;
-  isPanning: boolean;
-  currentState: number = 0;
-  startX: number = 0;
-  endX: number = 0;
-  activePlayer: number = 1;
-  outerWidth: number = window.outerWidth;
-  @ViewChild('playersWrapper') playersWrapper: ElementRef;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.AppState>,
@@ -122,46 +105,6 @@ export class ReportComponent {
 
   search(platform: number, name: string) {
     this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
-  }
-
-  onPanStart(event: MouseEvent) {
-    // this.startX = event.x;
-    // this.isPanning = true;
-    // this.playersWrapper.nativeElement.style.transition = 'none';
-    // this.playersWrapper.nativeElement.style['-webkit-transition'] = 'none';
-    // if (this.activePlayer === 1) {
-    //   this.currentState = 0;
-    // } else {
-    //   this.currentState = this.activePlayer === 2 ? -32.5 : -65.5;
-    // }
-  }
-
-  onPan(event: MouseEvent) {
-    // if (this.isPanning) {
-    //   let delta: number = (100 / this.outerWidth) * (event.x - this.startX);
-    //   this.playersWrapper.nativeElement.style.transform = `translate3d(${this.currentState + delta}%, 0px, 0px)`;
-    // }
-  }
-
-  onPanEnd(event: MouseEvent) {
-    // let delta: number = event.x - this.startX;
-    // this.playersWrapper.nativeElement.style = '';
-    // if (delta < -10) {
-    //   if (this.activePlayer === 1) {
-    //     this.activePlayer = 2;
-    //   } else if (this.activePlayer === 2) {
-    //     this.activePlayer = 3;
-    //   }
-    // } else if (delta > 10) {
-    //   if (this.activePlayer === 2) {
-    //     this.activePlayer = 1;
-    //   } else if (this.activePlayer === 3) {
-    //     this.activePlayer = 2;
-    //   }
-    // }
-    // this.playersWrapper.nativeElement.style.transition = 'transform ease-out .3s,-webkit-transform ease-out .3s';
-    // this.playersWrapper.nativeElement.style['-webkit-transition'] = '-webkit-transform ease-out .3s';
-    // this.isPanning = false;
   }
 
 }

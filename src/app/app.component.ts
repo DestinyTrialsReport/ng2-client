@@ -12,7 +12,7 @@ import { MOBILE } from './services/constants';
         <menu></menu>
       </div>
       <main class="body__content">
-        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+        <router-outlet></router-outlet>
       </main>
       <button class="body__control btn btn-fab" (click)="toggleMenu()">
         <i class="material-icons">&#xE5CE;</i>
