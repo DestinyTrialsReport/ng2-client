@@ -7,23 +7,22 @@ import { MOBILE } from './services/constants';
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="wrapper" [ngClass]="{'focus-on-players': !showMenu}">
-      <div class="controls-wrapper shadow-z-2">
-        <div class="controls" control></div>
+    <div class="body" [ngClass]="{'body--focus-on-players': !showMenu}">
+      <div class="body__menu">
+        <menu></menu>
       </div>
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-      <div class="overlay" (click)="toggleMenu()"></div>
-      <button class="control-btn btn btn-fab btn-raised btn-material-grey"
-              (click)="toggleMenu()">
+      <main class="body__content">
+        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+      </main>
+      <button class="body__control btn btn-fab" (click)="toggleMenu()">
         <i class="material-icons">&#xE5CE;</i>
       </button>
+      <div class="body__mask" (click)="toggleMenu()"></div>
     </div>
   `
 })
 export class AppComponent {
-  showMenu:boolean = false;
+  showMenu:boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );

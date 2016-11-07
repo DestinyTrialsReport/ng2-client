@@ -1,0 +1,23 @@
+.search {
+  background: white;
+
+  input {
+    background: transparent;
+    width: 100%;
+    padding: $controls-padding 0 $controls-padding $controls-padding;
+    cursor: pointer;
+    font-size: 1.1em;
+  }
+}
+
+.search__player + .search__player {
+  background: #fafafa;
+}
+
+.search__player + .search__player + .search__player {
+  border: 1px solid darken(#fafafa, 5%);
+}
+
+.search__player--main + .search__player {
+  box-shadow: inset 0 10px 8px -10px rgba(0,0,0,.25);
+}

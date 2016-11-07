@@ -1,0 +1,24 @@
+.menu {
+  max-width: 420px;
+  margin: 0 auto;
+  pointer-events: auto;
+  width: 100%;
+  color: $light-main;
+  background: $dark-main;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.menu__block {
+  padding: $menu-padding;
+}
+
+@media all and (max-width: $breakpoint-large) {
+  .menu {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    @include shadow(2);
+  }
+}

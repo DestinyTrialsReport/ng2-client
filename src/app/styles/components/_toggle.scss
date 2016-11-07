@@ -1,0 +1,62 @@
+.toggle,
+.toggle .toggle__btn,
+.toggle input {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.toggle {
+  input[type=checkbox] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .toggle__btn {
+    cursor: pointer;
+  }
+
+  .toggle__btn,
+  input[type=checkbox][disabled] + .toggle__btn {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    background-color: rgba(80,80,80,.7);
+    border-radius: 15px;
+    margin-right: 5px;
+    transition: background .3s ease;
+    vertical-align: middle;
+    margin-top: -6px;
+  }
+
+  .toggle__btn:after {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #F1F1F1;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,.4);
+    left: -5px;
+    top: -2px;
+    transition: left .3s ease,background .3s ease,box-shadow .1s ease;
+  }
+
+  input[type=checkbox][disabled] + .toggle__btn:after,
+  input[type=checkbox][disabled]:checked + .toggle__btn:after {
+    background-color: #BDBDBD;
+  }
+
+  input[type=checkbox]:checked + .toggle__btn {
+    background-color: transparentize($interactive-main, .5);
+  }
+  input[type=checkbox]:checked + .toggle__btn:after {
+    left: 15px;
+    background-color: $interactive-main;
+  }
+}
