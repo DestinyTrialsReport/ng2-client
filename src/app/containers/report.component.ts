@@ -1,15 +1,12 @@
 import {
   Component, style, state, animate, transition, trigger, ChangeDetectionStrategy
-} from '@angular/core';
+}                         from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
-import { PlayerService }  from "../services/player.service";
-import { Activity }       from "../models/activity.model";
 import * as fromRoot      from '../reducers';
 import * as playerActions from '../actions/player.actions';
-import { SearchState } from "../reducers/search.reducer";
-import { IntervalObservable } from "rxjs/observable/IntervalObservable";
+import { SearchState }    from "../reducers/search.reducer";
 
 @Component({
   selector: 'report',
@@ -50,40 +47,7 @@ export class ReportComponent {
   players:  Observable<SearchState>;
 
   constructor(public  route: ActivatedRoute,
-              private store: Store<fromRoot.AppState>,
-              private playerService: PlayerService) {
-
-    Observable.combineLatest(
-      store.select(s => s.activities.player1),
-      store.select(s => s.players.player1),
-      (activities, player) => {
-        if (player && player.membershipId && activities && activities[0]) {
-          const activity:Activity = activities[0];
-          return {
-            activity: activity,
-            membershipId:  player.membershipId,
-            team: activity.values.team.basic.value,
-          };
-          // const standing:number = activity.values.standing.basic.value;
-        }
-      })
-      .subscribe(data => {
-        if (data) {
-          playerService.pgcr(data.activity.activityDetails.instanceId)
-            .map(pgcr => pgcr.entries
-              .filter(entry => entry.values.team.basic.value === data.team && entry.player.destinyUserInfo.membershipId != data.membershipId)
-              .map(entry => entry.player.destinyUserInfo)
-            )
-            .subscribe(teammates => {
-              this.store.dispatch(new playerActions.SearchCompleteAction([teammates[0], 'player2']));
-              return IntervalObservable.create(1000)
-                .take(1)
-                .subscribe(() => {
-                  this.store.dispatch(new playerActions.SearchCompleteAction([teammates[1], `player3`]));
-                });
-            });
-        }
-    });
+              private store: Store<fromRoot.AppState>) {
 
     this.players = this.store.select(s => s.search)
       .distinctUntilChanged()

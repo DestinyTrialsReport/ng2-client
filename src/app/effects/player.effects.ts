@@ -9,14 +9,19 @@ import * as inventories from '../actions/inventory.actions';
 import * as activities from '../actions/activity.actions';
 import * as player from '../actions/player.actions';
 import * as stats from '../actions/stats.actions';
-import {Player} from "../models/player.model";
+import { Player } from "../models/player.model";
+import { Activity } from "../models/activity.model";
+import { IntervalObservable } from "rxjs/observable/IntervalObservable";
+import * as fromRoot      from '../reducers';
+import { Store } from "@ngrx/store";
 
 @Injectable()
 
 export class PlayerEffects {
   constructor(
     private actions$: Actions,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private store: Store<fromRoot.AppState>
   ) {}
 
   @Effect()
@@ -61,6 +66,47 @@ export class PlayerEffects {
         .map((res: any) => new activities.ActivityActions([res, payload[1]]))
         .catch((err) => of(new player.SearchFailed(err)))
     );
+
+  @Effect()
+  recentActivity$ = this.actions$
+    .ofType(activities.ActionTypes.SEARCH_ACTIVITY)
+    .map<[Activity[], string]>(action => action.payload)
+    .mergeMap(payload => {
+      if (payload[1] !== 'player1') {
+        return empty();
+      }
+      return of(new player.SearchTeammates());
+    });
+
+  @Effect()
+  teammates$ = this.actions$
+    .ofType(player.ActionTypes.SEARCH_TEAMMATES)
+    .withLatestFrom(this.store)
+    .map(([, store]) => {
+      return {
+        membershipId: store.players.player1.membershipId,
+        activity: store.activities.player1[0]
+      }
+    })
+    .do(log => console.log(log))
+    .mergeMap(payload => {
+
+      return this.playerService.pgcr(payload.activity.activityDetails.instanceId)
+        .map((res: any) => {
+          const teammates:Player[] = res.entries
+              .filter(entry => entry.values.team.basic.value === payload.activity.values.team.basic.value && entry.player.destinyUserInfo.membershipId != payload.membershipId)
+              .map(entry => entry.player.destinyUserInfo);
+
+          this.store.dispatch(new player.SearchCompleteAction([teammates[0], 'player2']));
+          return IntervalObservable.create(1000)
+            .take(1)
+            .subscribe(() => {
+              this.store.dispatch(new player.SearchCompleteAction([teammates[1], `player3`]));
+            });
+          }
+        )
+        .catch((err) => of(new player.SearchFailed(err)))
+    });
 
   @Effect()
   inventory$ = this.actions$
@@ -110,4 +156,5 @@ export class PlayerEffects {
         .map((res: any) => new stats.BngStatActions([res, payload[1]]))
         .catch((err) => of(new player.SearchFailed(err)))
     );
+
 }

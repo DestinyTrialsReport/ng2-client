@@ -1,15 +1,12 @@
 import {Component, ChangeDetectionStrategy, ElementRef} from '@angular/core';
 import {Player}        from "../models/player.model";
-import { Store }                  from "@ngrx/store";
-import * as fromRoot              from '../reducers';
-import { Observable }             from 'rxjs/Observable';
-import {Activity}                 from "../models/activity.model";
-import {Item}                     from "../models/inventory.model";
-import {StatState}                from "../reducers/stats.reducer";
-import {LocalStorageService} from 'ng2-webstorage';
-import {SearchState} from "../reducers/search.reducer";
-import {HIDDEN_NODES} from "../services/constants";
-import {Talent} from "../models/manifest.model";
+import { Store }       from "@ngrx/store";
+import * as fromRoot   from '../reducers';
+import { Observable }  from 'rxjs/Observable';
+import { Activity }    from "../models/activity.model";
+import { Item }        from "../models/inventory.model";
+import { StatState }   from "../reducers/stats.reducer";
+import { SearchState } from "../reducers/search.reducer";
 
 @Component({
   selector: '[player]',
@@ -60,8 +57,7 @@ export class PlayerComponent {
   loaded$:      Observable<SearchState>;
 
   constructor(private store: Store<fromRoot.AppState>,
-              private el:ElementRef,
-              private storage: LocalStorageService) {
+              private el:ElementRef) {
     this.player$ = store
       .select(s => s.players[el.nativeElement.id])
       .distinctUntilChanged()
@@ -81,31 +77,6 @@ export class PlayerComponent {
       .share();
 
     this.inventory$ = store.select(s => s.inventory[el.nativeElement.id])
-      .map(items => {
-        let itemsDef:any = storage.retrieve('manifestItems');
-        let talents:any = storage.retrieve('manifestTalents');
-        let stepsDef:any = storage.retrieve('manifestSteps');
-        if (items && itemsDef) {
-          const itemsWithDefinitions: Item[] = items.map(item => Object.assign({}, item, itemsDef[item.itemHash]));
-          return itemsWithDefinitions.map(item => {
-              const talentTree:Talent[] = talents[item.talentGridHash];
-
-              return Object.assign({}, item, {
-                steps: item.nodes.map(node => {
-                  const talentNode:Talent = talentTree[node.nodeHash];
-                  return Object.assign({}, stepsDef[talentNode.s[node.stepIndex]], {
-                    h: talentNode.s[node.stepIndex],
-                    r: talentNode.r,
-                    c: talentNode.c
-                  });
-                })
-                  .filter(step => step.c > -1)
-                  .filter(step => HIDDEN_NODES.indexOf(step.h) < 0)
-              })
-            }
-          );
-        }
-      })
       .distinctUntilChanged()
       .share();
   }
