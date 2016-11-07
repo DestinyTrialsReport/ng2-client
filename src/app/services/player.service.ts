@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import {BUNGIE_BASE_URL, DTR_BASE_URL, GGG_BASE_URL, BUNGIE_BASE_URLS} from './constants';
+import { DTR_BASE_URL, GGG_BASE_URL, BUNGIE_BASE_URLS } from './constants';
 import { RequestBase } from './request-base';
-import {Player, DTRStats, GGGStats} from "../models/player.model";
-import {Inventory} from "../models/inventory.model";
+import { Player } from "../models/player.model";
+import { DTRStats, GGGStats } from "../models/stats.model";
+import { Inventory } from "../models/inventory.model";
 
 @Injectable()
 export class PlayerService extends RequestBase {

@@ -1,7 +1,7 @@
 /* tslint:disable: member-ordering */
 import { Action }     from '@ngrx/store';
 import { type }       from '../util';
-import {Inventory} from "../models/inventory.model";
+import { Inventory } from "../models/inventory.model";
 
 export const ActionTypes = {
   SEARCH_INVENTORY:  type('[Inventory] Inventory Search')

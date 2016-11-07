@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DTRStats } from "../models/player.model";
+import { DTRStats } from "../models/stats.model";
 
 @Pipe({ name: 'sumFlawless' })
 export class SumFlawlessPipe implements PipeTransform {

@@ -14,18 +14,16 @@ export interface Item {
   perks: any,
   talentGridHash: number,
   damage: number,
-  definition: any,
-  nodes: ItemNode[],
-  name: string,
-  icon: string,
-  description: string,
   bucketHash: number,
-  steps: Step[],
-  tier: number,
-  n: string,
-  i: string,
-  tT: number,
-
+  nodes: ItemNode[],
+  steps?: Step[],
+  name?: string,
+  icon?: string,
+  description?: string,
+  tier?: number,
+  n?: string,
+  i?: string,
+  tT?: number,
 }
 
 

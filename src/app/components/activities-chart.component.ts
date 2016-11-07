@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Activity} from "../models/activity.model";
-import {BNGStats} from "../models/player.model";
+import { Component, Input } from '@angular/core';
+import { Activity } from "../models/activity.model";
+import { BNGStats } from "../models/stats.model";
 
 @Component({
   selector: '[activities-chart]',

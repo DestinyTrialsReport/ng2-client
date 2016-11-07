@@ -1,5 +1,5 @@
 /* tslint:disable: member-ordering */
-import {Player} from '../models/player.model';
+import { Player } from '../models/player.model';
 import { Action }     from '@ngrx/store';
 import { type }       from '../util';
 

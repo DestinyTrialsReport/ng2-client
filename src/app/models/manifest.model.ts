@@ -1,20 +1,24 @@
-export interface ItemDefinitions {
-  [hash:number]: ItemDefinition
-}
-
-export interface ItemDefinition {
-  h: number,
-  n: string,
-  d: string,
-  i: string,
-  sT: number,
-  tT: number,
-  steps: Step[]
-}
-
-export interface TalentDefinitions {
-  [hash:number]: Talent[]
-}
+// export interface ItemDefinitions {
+//   [hash:number]: ItemDefinition
+// }
+//
+// export interface TalentDefinitions {
+//   [hash:number]: Talent[]
+// }
+//
+// export interface StepsDefinitions {
+//   [hash:number]: Step
+// }
+//
+// export interface ItemDefinition {
+//   h: number,
+//   n: string,
+//   d: string,
+//   i: string,
+//   sT: number,
+//   tT: number,
+//   steps: Step[]
+// }
 
 export interface Talent {
   h:  number,
@@ -22,10 +26,6 @@ export interface Talent {
   r:  number,
   c:  number,
   s:  number[]
-}
-
-export interface StepsDefinitions {
-  [hash:number]: Step
 }
 
 export interface Step {

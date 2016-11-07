@@ -1,5 +1,5 @@
 import {Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger} from '@angular/core';
-import {DTRStats, GGGStats, BNGStats} from "../models/player.model";
+import { DTRStats, GGGStats, BNGStats } from "../models/stats.model";
 import {Activity} from "../models/activity.model";
 @Component({
   selector: '[quick-stats]',

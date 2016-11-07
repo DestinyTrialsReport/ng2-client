@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {BNGStats} from "../models/player.model";
+import { BNGStats } from "../models/stats.model";
 
 @Pipe({ name: 'winPercentage' })
 export class WinPercentagePipe implements PipeTransform {

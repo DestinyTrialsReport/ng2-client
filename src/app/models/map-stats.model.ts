@@ -25,7 +25,6 @@ export interface MapInfo {
 }
 
 export interface WeaponUsage {
-  // weapon_type: string;
   bucket?: string;
   bucketHash?: number;
   bucketName?: string;
@@ -34,42 +33,26 @@ export interface WeaponUsage {
   file_name: string;
   killPercentage?: number;
   diffPercentage?: number;
-  // constructor(data:any) {
-  //   if (data) {
-  //     this.weaponType = data.weapon_type;
-  //     this.imagePath = 'https://destinytrialsreport.com/assets/img/weapon-icons/' + data.file_name;
-  //     this.kills = parseInt(data.kills);
-  //     this.sumKills = parseInt(data.sum_kills);
-  //
-  //     this.bucketHash = this.itemTypeNameToBucket(this.weaponType);
-  //     this.bucketName = this.bucketHashToName(this.bucketHash);
-  //   }
-  // }
-  //
-  // itemTypeNameToBucket(weaponType:string):number {
-  //   let buckets = {
-  //     'Auto Rifle': 1498876634,
-  //     'Hand Cannon': 1498876634,
-  //     'Pulse Rifle': 1498876634,
-  //     'Scout Rifle': 1498876634,
-  //     'Fusion Rifle': 2465295065,
-  //     'Sniper Rifle': 2465295065,
-  //     'Shotgun': 2465295065,
-  //     'Sidearm': 2465295065,
-  //     'Machine Gun': 953998645,
-  //     'Rocket Launcher': 953998645,
-  //     'Sword': 953998645
-  //   };
-  //   return buckets[weaponType];
-  // }
-  //
-  // bucketHashToName(bucket:number):string {
-  //   let buckets = {
-  //     1498876634: 'primary',
-  //     2465295065: 'special',
-  //     953998645: 'heavy'
-  //   };
-  //   return buckets[bucket];
-  // }
-
 }
+
+// export class GuardianWeapon {
+//   hash: number;
+//   name: string;
+//   tier: number;
+//   icon: string;
+//   day: string;
+//   kills: number;
+//   precisionKills: number;
+//   uses: number;
+//
+//   constructor(data:any) {
+//     this.hash = data.hash;
+//     this.name = data.name;
+//     this.tier = data.tier;
+//     this.icon = 'https://www.bungie.net' + data.icon;
+//     this.day = data.day;
+//     this.kills = data.kills;
+//     this.precisionKills = data.precisionKills;
+//     this.uses = data.uses;
+//   }
+// }

@@ -1,6 +1,6 @@
 /* tslint:disable: member-ordering */
 import { Action } from '@ngrx/store';
-import {MapData, CurrentMap} from "../models/map-stats.model";
+import { MapData, CurrentMap } from "../models/map-stats.model";
 import { type }       from '../util';
 
 export const ActionTypes = {
