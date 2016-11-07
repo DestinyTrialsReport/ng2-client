@@ -14,7 +14,7 @@ import {Talent} from "../models/manifest.model";
 @Component({
   selector: '[player]',
   template: `
-   <div class="player shadow-z-1 is-virgin">
+   <div class="player shadow-z-1">
       <div 
         [playerObs]="(player$ | async)"
         [subclass]="(inventory$ | async | filterSubclass).shift()" emblem>
@@ -59,7 +59,10 @@ import {Talent} from "../models/manifest.model";
           
           </div>
         </tab>
-        <tab heading="Last Matches" class="player-tab--last-matches"></tab>
+        <tab heading="Last Matches" customClass="player-tab--last-matches">
+          <div class="player-tab--equipped">
+          </div>
+        </tab>
         <tab heading="Stats" class="player-tab--stats"></tab>
       </tabset>
       <div class="player__links" footer></div>
@@ -72,7 +75,7 @@ export class PlayerComponent {
   activities$:  Observable<Activity[]>;
   stats$:       Observable<StatState>;
   inventory$:   Observable<Item[]>;
-  loaded$:       Observable<SearchState>;
+  loaded$:      Observable<SearchState>;
 
   constructor(private store: Store<fromRoot.AppState>,
               private el:ElementRef,

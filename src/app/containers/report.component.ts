@@ -1,5 +1,6 @@
 import {
-  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, AfterViewInit
+  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, AfterViewInit, ElementRef,
+  OnInit
 } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
@@ -55,7 +56,7 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportComponent implements AfterViewInit {
+export class ReportComponent {
   players:  Observable<SearchState>;
   isPanning: boolean;
   currentState: number = 0;
@@ -63,7 +64,7 @@ export class ReportComponent implements AfterViewInit {
   endX: number = 0;
   activePlayer: number = 1;
   outerWidth: number = window.outerWidth;
-  @ViewChild('playersWrapper') playersWrapper: any;
+  @ViewChild('playersWrapper') playersWrapper: ElementRef;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.AppState>,
@@ -124,46 +125,43 @@ export class ReportComponent implements AfterViewInit {
   }
 
   onPanStart(event: MouseEvent) {
-    this.startX = event.x;
-    this.isPanning = true;
-    this.playersWrapper.nativeElement.style.transition = 'none';
-    this.playersWrapper.nativeElement.style['-webkit-transition'] = 'none';
-    if (this.activePlayer === 1) {
-      this.currentState = 0;
-    } else {
-      this.currentState = this.activePlayer === 2 ? -32.5 : -65.5;
-    }
+    // this.startX = event.x;
+    // this.isPanning = true;
+    // this.playersWrapper.nativeElement.style.transition = 'none';
+    // this.playersWrapper.nativeElement.style['-webkit-transition'] = 'none';
+    // if (this.activePlayer === 1) {
+    //   this.currentState = 0;
+    // } else {
+    //   this.currentState = this.activePlayer === 2 ? -32.5 : -65.5;
+    // }
   }
 
   onPan(event: MouseEvent) {
-    if (this.isPanning) {
-      let delta: number = (100 / this.outerWidth) * (event.x - this.startX);
-      this.playersWrapper.nativeElement.style.transform = `translate3d(${this.currentState + delta}%, 0px, 0px)`;
-    }
+    // if (this.isPanning) {
+    //   let delta: number = (100 / this.outerWidth) * (event.x - this.startX);
+    //   this.playersWrapper.nativeElement.style.transform = `translate3d(${this.currentState + delta}%, 0px, 0px)`;
+    // }
   }
 
   onPanEnd(event: MouseEvent) {
-    let delta: number = event.x - this.startX;
-    this.playersWrapper.nativeElement.style = '';
-    if (delta < -10) {
-      if (this.activePlayer === 1) {
-        this.activePlayer = 2;
-      } else if (this.activePlayer === 2) {
-        this.activePlayer = 3;
-      }
-    } else if (delta > 10) {
-      if (this.activePlayer === 2) {
-        this.activePlayer = 1;
-      } else if (this.activePlayer === 3) {
-        this.activePlayer = 2;
-      }
-    }
-    this.playersWrapper.nativeElement.style.transition = 'transform ease-out .3s,-webkit-transform ease-out .3s';
-    this.playersWrapper.nativeElement.style['-webkit-transition'] = '-webkit-transform ease-out .3s';
-    this.isPanning = false;
+    // let delta: number = event.x - this.startX;
+    // this.playersWrapper.nativeElement.style = '';
+    // if (delta < -10) {
+    //   if (this.activePlayer === 1) {
+    //     this.activePlayer = 2;
+    //   } else if (this.activePlayer === 2) {
+    //     this.activePlayer = 3;
+    //   }
+    // } else if (delta > 10) {
+    //   if (this.activePlayer === 2) {
+    //     this.activePlayer = 1;
+    //   } else if (this.activePlayer === 3) {
+    //     this.activePlayer = 2;
+    //   }
+    // }
+    // this.playersWrapper.nativeElement.style.transition = 'transform ease-out .3s,-webkit-transform ease-out .3s';
+    // this.playersWrapper.nativeElement.style['-webkit-transition'] = '-webkit-transform ease-out .3s';
+    // this.isPanning = false;
   }
 
-  ngAfterViewInit() {
-
-  }
 }

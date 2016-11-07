@@ -1,13 +1,13 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MOBILE } from './services/constants';
 
 @Component({
-  selector: 'my-app',
+  selector: 'trials-report',
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="wrapper" [ngClass]="{'focus-on-players': showMenu}">
+    <div class="wrapper" [ngClass]="{'focus-on-players': !showMenu}">
       <div class="controls-wrapper shadow-z-2">
         <div class="controls" control></div>
       </div>
@@ -30,9 +30,8 @@ export class AppComponent {
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
 
-  constructor(
-    public router: Router
-  ) { }
+  constructor(public router: Router) {
+  }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;

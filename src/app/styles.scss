@@ -1,0 +1,70 @@
+@import "../assets/css/vendor/bootstrap.css";
+@import '../assets/css/inc/vars';
+@import '../assets/css/inc/colors';
+@import '../assets/css/inc/icons';
+@import '../assets/css/inc/mixins';
+@import '../assets/css/inc/animations';
+
+@import '../assets/css/vendor/theme-override';
+
+@import '../assets/css/main/layout';
+@import '../assets/css/main/typography';
+@import '../assets/css/main/buttons';
+
+@import '../assets/css/elements/loading';
+@import '../assets/css/elements/popover';
+@import '../assets/css/elements/tabs';
+@import '../assets/css/elements/stats';
+@import '../assets/css/elements/match';
+@import '../assets/css/elements/modal';
+@import '../assets/css/elements/carousel';
+@import '../assets/css/elements/dropdown-menu';
+@import '../assets/css/elements/block';
+@import '../assets/css/elements/select';
+
+// Main parts
+@import '../assets/css/parts/controls';
+@import '../assets/css/parts/title-bar';
+@import '../assets/css/parts/main-search';
+@import '../assets/css/parts/blog-post';
+@import '../assets/css/parts/player-overlay';
+@import '../assets/css/parts/current-map';
+@import '../assets/css/parts/platform-toggle';
+@import '../assets/css/parts/donate';
+@import '../assets/css/parts/colofon';
+@import '../assets/css/parts/home';
+@import '../assets/css/parts/maps';
+@import '../assets/css/parts/home-aside';
+@import '../assets/css/parts/top-weapons';
+@import '../assets/css/parts/first-in-lighthouse';
+@import '../assets/css/parts/settings';
+@import '../assets/css/parts/kd-graph';
+
+// Player card
+@import '../assets/css/parts/player';
+@import '../assets/css/parts/edit-player';
+@import '../assets/css/parts/player-overview';
+@import '../assets/css/parts/player-quick-look';
+@import '../assets/css/parts/player-main-stats';
+@import '../assets/css/parts/player-this-week';
+@import '../assets/css/parts/player-hazards';
+@import '../assets/css/parts/recent-players';
+
+// Equipped tab
+@import '../assets/css/parts/player-weapons';
+@import '../assets/css/parts/player-cooldowns';
+@import '../assets/css/parts/player-perks';
+@import '../assets/css/parts/player-armor';
+
+// Last matches tab
+@import '../assets/css/parts/player-last-matches';
+
+// Stats tab
+@import '../assets/css/parts/player-stats';
+
+// Maps tab
+@import '../assets/css/parts/player-maps';
+
+.material-icons {
+  font-size: 16px !important;
+}

@@ -3,7 +3,7 @@
     <div class="title-bar" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
       <div class="title-bar__content">
         <div class="title-bar__title">
-          <a href="/" target="_self">
+          <a routerLink="/">
             D<span class="hide-on-small">estiny</span><span class="highlight">T<span class="hide-on-small">rials</span></span>R<span class="hide-on-small">eport</span>
           </a>
         </div>
