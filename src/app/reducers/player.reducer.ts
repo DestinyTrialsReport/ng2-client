@@ -1,6 +1,6 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Action } from '@ngrx/store';
-import {Player, Character} from "../models/player.model";
+import { Player, Character } from "../models/player.model";
 import * as playerActions from "../actions/player.actions";
 
 

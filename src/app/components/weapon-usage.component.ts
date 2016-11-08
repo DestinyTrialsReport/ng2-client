@@ -1,8 +1,8 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { AppState } from "../reducers/index";
-import {Observable} from "rxjs/Observable";
-import {WeaponUsage} from "../models/map-stats.model";
+import { Observable } from "rxjs/Observable";
+import { WeaponUsage } from "../models/map-stats.model";
 
 @Component({
   selector: 'weapon-usage',
@@ -82,14 +82,12 @@ import {WeaponUsage} from "../models/map-stats.model";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeaponUsageComponent {
+
   percentageNoticeText:string = "Percentages are based on usage of weapon types in relation to total\
     kills in their category.<\hr/\>Difference to the average represents how\
     much more or less that specific weapon type is used on this map\
     in relation to all other Trials of Osiris maps since the latest balance update.";
-  weaponUsage$: Observable<{
-    primary:WeaponUsage[],
-    special:WeaponUsage[]
-  }>;
+  weaponUsage$: Observable<{ primary:WeaponUsage[], special:WeaponUsage[] }>;
 
   constructor(private store: Store<AppState>) {
     this.weaponUsage$ = Observable.combineLatest(

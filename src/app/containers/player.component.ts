@@ -1,12 +1,12 @@
-import {Component, ChangeDetectionStrategy, ElementRef} from '@angular/core';
-import {Player}        from "../models/player.model";
+import { Component, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Player }      from "../models/player.model";
 import { Store }       from "@ngrx/store";
-import * as fromRoot   from '../reducers';
 import { Observable }  from 'rxjs/Observable';
 import { Activity }    from "../models/activity.model";
 import { Item }        from "../models/inventory.model";
 import { StatState }   from "../reducers/stats.reducer";
 import { SearchState } from "../reducers/search.reducer";
+import * as fromRoot   from '../reducers';
 
 @Component({
   selector: '[player]',
@@ -58,6 +58,7 @@ export class PlayerComponent {
 
   constructor(private store: Store<fromRoot.AppState>,
               private el:ElementRef) {
+
     this.player$ = store
       .select(s => s.players[el.nativeElement.id])
       .distinctUntilChanged()
@@ -79,5 +80,6 @@ export class PlayerComponent {
     this.inventory$ = store.select(s => s.inventory[el.nativeElement.id])
       .distinctUntilChanged()
       .share();
+
   }
 }

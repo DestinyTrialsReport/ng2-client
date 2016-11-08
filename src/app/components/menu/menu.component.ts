@@ -24,7 +24,7 @@ export class MenuComponent {
   @Input() query: string = '';
   @Input() searching = false;
 
-  constructor(private store: Store<fromRoot.AppState>,) {
+  constructor(private store: Store<fromRoot.AppState>) {
     this.currentMap$ = store.select(state => state.map.currentMap);
     this.player1$ = store.select(state => state.players.player1);
     this.player2$ = store.select(state => state.players.player2);

@@ -13,6 +13,8 @@ import { MapEffects } from "./effects/map.effects";
 import { TabsModule } from "ng2-bootstrap/components/tabs";
 import { TooltipModule } from "ng2-bootstrap/components/tooltip";
 import { ProgressbarModule } from "ng2-bootstrap/components/progressbar";
+import { ActivityEffects } from "./effects/activity.effects";
+import { StatsEffects } from "./effects/stats.effects";
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT &&
@@ -28,6 +30,8 @@ if (ENV === 'development' && !AOT &&
 
 export const APP_IMPORTS = [
   EffectsModule.run(PlayerEffects),
+  EffectsModule.run(ActivityEffects),
+  EffectsModule.run(StatsEffects),
   EffectsModule.run(MapEffects),
   TabsModule,
   TooltipModule,

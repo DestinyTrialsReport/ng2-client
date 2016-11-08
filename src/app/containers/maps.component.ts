@@ -1,10 +1,10 @@
-import {Component, ChangeDetectionStrategy, style, state, animate, transition, trigger}  from '@angular/core';
-import {MapsService}          from "../services/maps.service";
-import {AppState}             from "../reducers/index";
-import {Store}                from "@ngrx/store";
-import {Observable}           from "rxjs/Observable";
-import * as mapActions        from "../actions/maps.actions";
-import { MapInfo }            from "../models/map-stats.model";
+import { Component, ChangeDetectionStrategy, style, state, animate, transition, trigger }  from '@angular/core';
+import { MapsService }    from "../services/maps.service";
+import { Store }          from "@ngrx/store";
+import { Observable }     from "rxjs/Observable";
+import { MapInfo }        from "../models/map-stats.model";
+import * as fromRoot      from '../reducers';
+import * as mapActions    from "../actions/maps.actions";
 
 @Component({
   selector: '[maps]',
@@ -31,7 +31,7 @@ export class MapsComponent {
   mapInfo$: Observable<MapInfo>;
 
   constructor(public mapService: MapsService,
-              private store: Store<AppState>) {
+              private store: Store<fromRoot.AppState>) {
     this.mapInfo$ = store.select(state => state['map'].mapInfo);
     store.select(state => state.map.currentMap).subscribe(map => {
       this.maxWeek = parseInt(map.week);

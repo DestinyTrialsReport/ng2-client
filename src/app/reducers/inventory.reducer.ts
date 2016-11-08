@@ -25,17 +25,18 @@ export function inventoryReducer(state = initialState, action: inventoryActions.
       const stepsDef: StepsDefinitions = action.manifestSteps;
 
       const playerId: string = action.payload[1];
-      const items: Item[] = action.payload[0].map(inv => Object.assign({}, {
-        bucketHash: inv.bucketHash,
-        nodes: inv.items[0].nodes.filter(node => node.isActivated),
-        tierType: inv.items[0].tierType,
-        itemHash: inv.items[0].itemHash,
-        itemLevel: inv.items[0].itemLevel,
-        stats: inv.items[0].stats,
-        perks: inv.items[0].perks,
-        talentGridHash: inv.items[0].talentGridHash,
-        damage: inv.items[0].damage
-      }))
+      const items: Item[] = action.payload[0]
+        .map(inv => Object.assign({}, {
+          bucketHash: inv.bucketHash,
+          nodes: inv.items[0].nodes.filter(node => node.isActivated),
+          tierType: inv.items[0].tierType,
+          itemHash: inv.items[0].itemHash,
+          itemLevel: inv.items[0].itemLevel,
+          stats: inv.items[0].stats,
+          perks: inv.items[0].perks,
+          talentGridHash: inv.items[0].talentGridHash,
+          damage: inv.items[0].damage
+        }))
         .filter(item => EQUIPPED_BUCKETS.indexOf(item.bucketHash) > -1)
         .map(item => {
           if (item && itemsDef) {

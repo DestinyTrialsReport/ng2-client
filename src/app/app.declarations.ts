@@ -17,7 +17,10 @@ import {ActivityChartPipe} from "./pipes/activity-chart.pipe";
 import {SubclassComponent} from "./components/equipped/subclass.component";
 import {ClassStatsComponent} from "./components/equipped/class-stats.component";
 import {
-  FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats,
+  FilterWeapons,
+  FilterSubclass,
+  FilterArmor,
+  FilterClassStats,
   FilterClassArmor
 } from "./pipes/filter-items.pipe";
 import {EquippedTabComponent} from "./components/equipped/equipped-tab.component";

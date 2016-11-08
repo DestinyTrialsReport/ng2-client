@@ -1,6 +1,6 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {MapsService} from "../services/maps.service";
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+import { MapsService } from "../services/maps.service";
 
 @Component({
   selector: 'guardian-weapons',
@@ -69,7 +69,4 @@ export class WeaponGuardianComponent {
   //       this.weapons = res;
   //   });
   // }
-
-
-
 }

@@ -77,16 +77,17 @@ export function mapsReducer(state = initialState, action: mapActions.Actions): M
         };
       }
 
-      const weaponUsage: WeaponUsage[] = payload.weapon_stats.map(weapon => {
-        const bucketHash:number = TYPE_BUCKETS[weapon.weapon_type];
-        return {
-          bucketHash: bucketHash,
-          bucketName: String(BUCKET_NAMES[bucketHash]),
-          file_name: '/assets/img/weapon-icons/' + weapon.file_name,
-          kills: parseInt(weapon.kills),
-          sum_kills: parseInt(weapon.sum_kills)
-        }
-      });
+      const weaponUsage: WeaponUsage[] = payload.weapon_stats
+        .map(weapon => {
+          const bucketHash:number = TYPE_BUCKETS[weapon.weapon_type];
+          return {
+            bucketHash: bucketHash,
+            bucketName: String(BUCKET_NAMES[bucketHash]),
+            file_name: '/assets/img/weapon-icons/' + weapon.file_name,
+            kills: parseInt(weapon.kills),
+            sum_kills: parseInt(weapon.sum_kills)
+          }
+        });
 
       const primaries: WeaponUsage[] = weaponUsage.filter(w => w.bucketName == 'primary');
       const specials: WeaponUsage[] = weaponUsage.filter(w => w.bucketName == 'special');
