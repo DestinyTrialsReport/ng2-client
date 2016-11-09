@@ -6,11 +6,13 @@ $breakpoint-small: 768px;
 $breakpoint-medium: 960px;
 $breakpoint-large: 1280px;
 
+$primary-font: 'Roboto', sans-serif;
+
+$inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.75);
+$mild-inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.25);
 
 // ---
 $os-primary-color: #2196F3;
-$primary-font: "Roboto", "Helvetica", "Arial", sans-serif;
-
 $player-card-border-radius: 1em;
 $player-emblem-size: 5em;
 $player-content-padding: 1em;

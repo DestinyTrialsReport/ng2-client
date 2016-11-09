@@ -1,16 +1,56 @@
 .btn {
-  cursor:pointer;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  @include shadow(1);
+  transition: box-shadow .1s linear;
+  text-transform: uppercase;
+  font-weight: 300;
+
+  &:not(.btn--icon) > i {
+    font-size: 1em;
+    vertical-align: -13%;
+  }
+
+  &:hover {
+    @include shadow(2);
+  }
+
+  &:active {
+    @include shadow(3);
+    outline: 0;
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
-.btn-fab {
+.btn--ghost {
+  box-shadow: none;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+
+.btn--on-dark {
+  color: $light-secondary;
+
+  &:hover {
+    background: $transparent-hover-light;
+  }
+}
+
+.btn--fab {
+  background: $interactive-main;
   width: 4rem;
   height: 4rem;
   right: 2rem;
   bottom: 2rem;
   position: fixed;
   border-radius: 50%;
-  outline: 0;
-  border: 0;
   @include shadow(2);
   z-index: 1000;
 

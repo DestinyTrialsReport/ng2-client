@@ -15,7 +15,7 @@ import { MOBILE } from './services/constants';
       <main class="body__content">
         <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
       </main>
-      <button class="body__control btn btn-fab" (click)="toggleMenu()">
+      <button class="body__control btn btn--icon btn--fab" (click)="toggleMenu()">
         <i class="material-icons">&#xE5CE;</i>
       </button>
       <div class="body__mask" (click)="toggleMenu()"></div>

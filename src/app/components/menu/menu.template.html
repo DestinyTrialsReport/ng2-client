@@ -33,14 +33,14 @@
             <input type="text" class="form-control" [value]="query" (keyup)="search(2, $event.target.value)"
                    autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'">
           </div>
-          <div class="col-xs-shrink row">
+          <div class="col-xs-shrink row row--no-gutter">
             <div class="col-xs">
-              <button class="btn btn-default btn-icon" type="button">
+              <button class="btn btn--icon btn--ghost" type="button">
                 <i class="material-icons">&#xE86A;</i>
               </button>
             </div>
             <div class="col-xs">
-              <button type="submit" class="btn btn-default btn-icon">
+              <button class="btn btn--icon btn--ghost" type="submit">
                 <i class="material-icons">&#xE163;</i>
               </button>
             </div>
@@ -70,18 +70,24 @@
           </div> TODO: Only show this when we have an overview, implement modal -->
         </div>
       </div>
-    </div>
-    <div class="settings-btn shadow-z-1">
-      <button type="button" class="btn btn-inline">
-        <i class="material-icons icon--small">&#xE8B8;</i> Language &amp; Settings
-      </button>
-      <div class="settings__master">
-        <label class="data-label">Ignore custom<br>card settings</label>
-        <span class="togglebutton">
-      <label>
-        <input type="checkbox">
-      </label>
-    </span>
+      <!-- TODO: Make this work -->
+      <div class="settings-bar row row--no-gutter middle-xs">
+        <div class="col-xs">
+          <button class="settings-bar__btn btn btn--ghost btn--block btn--on-dark">
+            <i class="material-icons icon--small">&#xE8B8;</i> Language &amp; Settings
+          </button>
+        </div>
+        <div class="col-xs-shrink">
+          <div class="settings-bar__switch">
+            <div class="row row--small-gutter middle-xs">
+              <label class="col-xs">Ignore custom<br>card settings</label>
+              <label class="toggle toggle--gray col-xs-shrink">
+                <input type="checkbox">
+                <span class="toggle__btn"></span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>

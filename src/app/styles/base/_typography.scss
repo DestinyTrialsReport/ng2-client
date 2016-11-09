@@ -27,6 +27,10 @@ small {
   font-size: 1em;
 }
 
+label {
+  cursor: inherit;
+}
+
 .data-label {
   font-size: .8em;
   font-weight: 300;
