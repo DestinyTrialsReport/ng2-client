@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Activity} from "../models/activity.model";
-import {BNGStats} from "../models/player.model";
+import { Component, Input } from '@angular/core';
+import { Activity } from "../models/activity.model";
+import { BNGStats } from "../models/stats.model";
 
 @Component({
   selector: '[activities-chart]',
@@ -13,8 +13,9 @@ import {BNGStats} from "../models/player.model";
         <div class="player-quick-look__form__matches">
           <i class="player-quick-look__form__match match"
              *ngFor="let activity of activities"
-             [ngClass]="activityStanding(activity)"
-             [ngStyle]="activity | activityChart: statsBng?.killsDeathsRatio.basic.value"></i>
+             [ngClass]="activityStanding(activity) ? 'match--win' : 'match--loss'"
+             [ngStyle]="activity | activityChart: statsBng?.killsDeathsRatio.basic.value">
+          </i>
         </div>
         <label class="data-label">Recent Matches</label>
       </div>
@@ -32,10 +33,11 @@ export class ActivityChartComponent {
   @Input() activities: Activity[];
   @Input() statsBng: BNGStats;
 
-  activityStanding(activity) {
+  activityStanding(activity): boolean {
+    let standing: number = 0;
     if (activity && activity.values) {
-      let standing: number = activity.values.standing.basic.value;
-      return standing === 0 ? 'match--win' : 'match--loss'
+      standing = activity.values.standing.basic.value;
     }
+    return standing === 0; //? 'match--win' : 'match--loss'
   }
 }

@@ -49,7 +49,7 @@ export function reducer(state = initialState, action: Action): SearchState {
     case players.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
 
-      const newState: boolean = Object.assign({}, state[playerId], {
+      const newState: Search = Object.assign({}, state[playerId], {
         player: true,
         account: false,
         activities: false,

@@ -1,8 +1,9 @@
+export const API_KEY = ENV === 'production' ? '6b1563bd89854465ab2a423d033c7ddf' : 'ee5c2bf3759e4219a50fa9fd47d47805';
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
 export const BUNGIE_BASE_URL: string = 'https://proxy.destinytrialsreport.com/platform/destiny';
-export const BUNGIE_BASE_URLS: string[] = ['https://proxy.destinytrialsreport.com/platform/destiny', 'https://osiris.destinytrialsreport.com/platform/destiny'];
+export const BUNGIE_BASE_URLS: string[] = ['https://www.bungie.net/platform/destiny', 'https://osiris.destinytrialsreport.com/platform/destiny'];
 
 export const WEAPON_BUCKETS: any = [1498876634, 2465295065, 953998645];
 export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];

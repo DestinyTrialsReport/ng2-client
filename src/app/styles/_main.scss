@@ -13,7 +13,6 @@
 @import 'components/toggle';
 @import 'components/stats';
 
-@import '../../assets/css/vendor/bootstrap.css';
 @import '../../assets/css/inc/vars';
 @import '../../assets/css/inc/colors';
 @import '../../assets/css/inc/icons';
@@ -79,6 +78,11 @@
 
 // Maps tab
 @import '../../assets/css/parts/player-maps';
+
+// using Modernizer CSS classes to detect if browser supports the W3C Touch Events API
+:host-context(.mod-touchevents) [md-button]:hover::after, [md-icon-button]:hover::after {
+  content: none;
+}
 
 $offset: 187;
 $duration: 1.4s;
@@ -323,3 +327,8 @@ html {
   font-size: 14px;
   line-height: 1.4;
 }
+
+.material-icons {
+  font-size: 16px !important;
+}
+

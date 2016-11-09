@@ -1,5 +1,5 @@
 /* tslint:disable: member-ordering */
-import {DTRStats, BNGStats, GGGStats} from '../models/player.model';
+import { DTRStats, BNGStats, GGGStats } from '../models/stats.model';
 import { Action }     from '@ngrx/store';
 import { type }       from '../util';
 

@@ -1,6 +1,7 @@
-import {Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger} from '@angular/core';
-import {DTRStats, GGGStats, BNGStats} from "../models/player.model";
-import {Activity} from "../models/activity.model";
+import { Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger } from '@angular/core';
+import { DTRStats, GGGStats, BNGStats } from "../models/stats.model";
+import { Activity } from "../models/activity.model";
+
 @Component({
   selector: '[quick-stats]',
   host: {
@@ -49,6 +50,7 @@ import {Activity} from "../models/activity.model";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class QuickStats {
   @Input() statsDtr: DTRStats;
   @Input() statsGgg: GGGStats;

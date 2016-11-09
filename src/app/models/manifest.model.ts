@@ -2,18 +2,18 @@ export interface ItemDefinitions {
   [hash:number]: ItemDefinition
 }
 
-export interface ItemDefinition {
-  h: number,
-  n: string,
-  d: string,
-  i: string,
-  sT: number,
-  tT: number,
-  steps: Step[]
-}
-
 export interface TalentDefinitions {
   [hash:number]: Talent[]
+}
+
+export interface StepsDefinitions {
+  [hash:number]: Step
+}
+
+export interface ItemDefinition {
+  n: string,
+  i: string,
+  tT: number
 }
 
 export interface Talent {
@@ -22,10 +22,6 @@ export interface Talent {
   r:  number,
   c:  number,
   s:  number[]
-}
-
-export interface StepsDefinitions {
-  [hash:number]: Step
 }
 
 export interface Step {

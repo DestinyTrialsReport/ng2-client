@@ -1,6 +1,5 @@
-import { AfterContentInit, Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { MOBILE } from './services/constants';
 
 @Component({
@@ -13,17 +12,16 @@ import { MOBILE } from './services/constants';
         <menu></menu>
       </div>
       <main class="body__content">
-        <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+        <router-outlet></router-outlet>
       </main>
       <button class="body__control btn btn--icon btn--fab" (click)="toggleMenu()">
         <i class="material-icons">&#xE5CE;</i>
       </button>
       <div class="body__mask" (click)="toggleMenu()"></div>
     </div>
-  `,
-  encapsulation: ViewEncapsulation.None
+  `
 })
-export class AppComponent implements AfterContentInit {
+export class AppComponent {
   showMenu:boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
@@ -31,33 +29,10 @@ export class AppComponent implements AfterContentInit {
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
 
-  constructor(public route: ActivatedRoute,
-              public router: Router) {
-  }
-
-  ngAfterContentInit() {
-    // if (HMR) {
-    //   this.sidenav.open();
-    // } else if (!MOBILE) {
-    //   setTimeout(() => {
-    //     this.sidenav.open();
-    //   });
-    // }
+  constructor(public router: Router) {
   }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
-  }
-
-  activateEvent(event) {
-    if (ENV === 'development') {
-      console.log('Activate Event:', event);
-    }
-  }
-
-  deactivateEvent(event) {
-    if (ENV === 'development') {
-      console.log('Deactivate Event', event);
-    }
   }
 }

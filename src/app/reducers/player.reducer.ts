@@ -1,24 +1,13 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Action } from '@ngrx/store';
-import {Player, BNGStats, DTRStats, GGGStats} from "../models/player.model";
+import { Player, Character } from "../models/player.model";
 import * as playerActions from "../actions/player.actions";
-import {Activity} from "../models/activity.model";
-import {ItemDefinition} from "../models/manifest.model";
 
 
 export interface PlayersState {
   player1: Player;
   player2: Player;
   player3: Player;
-}
-
-export interface PlayerState {
-  player: Player;
-  activities: Activity[];
-  inventory: ItemDefinition[];
-  bungie: BNGStats;
-  trials: DTRStats;
-  guardian: GGGStats;
 }
 
 const initialState: PlayersState = {
@@ -47,7 +36,18 @@ export function playerReducer(state = initialState, action: Action): PlayersStat
     case playerActions.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
       const player: Player = action.payload[0];
-      const updated: Player = Object.assign({}, state[playerId], player.characters[0]);
+      const character: Character = player.characters[0];
+
+      const updated: Player = Object.assign({}, state[playerId], {
+        characterBase: {
+          characterId: character.characterBase.characterId,
+          powerLevel: character.characterBase.powerLevel,
+          grimoireScore: character.characterBase.grimoireScore,
+          stats: character.characterBase.stats
+        },
+        emblemPath: character.emblemPath,
+        backgroundPath: character.backgroundPath
+      });
 
       return Object.assign({}, state, {
         player1: playerId == 'player1' ? updated : state.player1,

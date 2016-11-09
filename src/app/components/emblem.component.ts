@@ -1,7 +1,6 @@
-import {Component, Input, ChangeDetectionStrategy, trigger, state, animate, transition, style} from '@angular/core';
-import {Player} from "../models/player.model";
-import {Item} from "../models/inventory.model";
-
+import { Component, Input, ChangeDetectionStrategy, trigger, state, animate, transition, style } from '@angular/core';
+import { Player } from "../models/player.model";
+import { Item } from "../models/inventory.model";
 
 @Component({
   selector: '[emblem]',
@@ -45,11 +44,10 @@ import {Item} from "../models/inventory.model";
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class Emblem {
   @Input() playerObs: Player;
   @Input() subclass: Item;
 
-  constructor() {
-  }
-
+  constructor() { }
 }

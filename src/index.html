@@ -1,135 +1,142 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Destiny Trials Report</title>
-    <base href="/">
-    <meta charset='utf-8'>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="The ultimate companion for Destiny's Trials of Osiris. Look up a Guardian to see every statistic you need on the enemy Fireteam.">
-    <meta name="keywords" content="destiny,trials of osiris,crucible,trials report,destiny trials report,trials,destiny trials,destiny trials scout,osiris scout,trials loadouts,destiny osiris,destiny osiris search,Trials tracker,Trials of osiris lookup,Destiny crucible lookup,trials help,destiny trials tips,trials fireteam,trials tips,trials stats,destiny trials stats">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Trials Report">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Trials Report">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/assets/icon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/assets/icon/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/assets/icon/manifest.json">
-    <link rel="mask-icon" href="/assets/icon/safari-pinned-tab.svg" color="#323232">
-    <link rel="shortcut icon" href="/assets/icon/favicon.ico">
-    <meta name="msapplication-config" content="/assets/icon/browserconfig.xml">
-    <meta name="theme-color" content="#323232">
-    <style>
-      .loading {
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        opacity: 1;
-        z-index: 999;
-        background: #222;
+<head>
+  <title>Destiny Trials Report</title>
+  <base href="/">
+  <meta charset='utf-8'>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="The ultimate companion for Destiny's Trials of Osiris. Look up a Guardian to see every statistic you need on the enemy Fireteam.">
+  <meta name="keywords" content="destiny,trials of osiris,crucible,trials report,destiny trials report,trials,destiny trials,destiny trials scout,osiris scout,trials loadouts,destiny osiris,destiny osiris search,Trials tracker,Trials of osiris lookup,Destiny crucible lookup,trials help,destiny trials tips,trials fireteam,trials tips,trials stats,destiny trials stats">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Trials Report">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Trials Report">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/assets/icon/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/icon/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/assets/icon/manifest.json">
+  <link rel="mask-icon" href="/assets/icon/safari-pinned-tab.svg" color="#323232">
+  <link rel="shortcut icon" href="/assets/icon/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css" />
+  <link rel="stylesheet" href="app.component.css" />
+  <meta name="msapplication-config" content="/assets/icon/browserconfig.xml">
+  <meta name="theme-color" content="#323232">
+  <style>
+    .loading {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      z-index: 999;
+      background: #222;
 
-        -webkit-transition: opacity .3s linear;
-                transition: opacity .3s linear;
+      -webkit-transition: opacity .3s linear;
+      transition: opacity .3s linear;
 
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-           -ms-flex-align: center;
-              align-items: center;
-         -webkit-box-pack: center;
-            -ms-flex-pack: center;
-          justify-content: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+
+    .loader-icon-container {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+
+      -webkit-transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    trials-report:not(:empty) + .loading {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    trials-report:not(:empty) + .loading .loader-icon-container {
+      -webkit-transform: scale(2);
+      transform: scale(2);
+    }
+
+    .loader-icon,
+    .loader-icon:before,
+    .loader-icon:after {
+      width: 125px;
+      height: 125px;
+    }
+
+    .loader-icon {
+      background: url(assets/img/loader/eye.png) no-repeat center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .loader-icon:before,
+    .loader-icon:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: "";
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      -webkit-animation: 10s rotate infinite linear;
+      animation: 10s rotate infinite linear;
+    }
+
+    .loader-icon:before {
+      background-image: url(assets/img/loader/triangles-min.png);
+    }
+
+    .loader-icon:after {
+      background-image: url(assets/img/loader/whex-min.png);
+      -webkit-animation-direction: reverse;
+      animation-direction: reverse;
+    }
+
+    @-webkit-keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
       }
+    }
 
-      .loader-icon-container {
-        -webkit-transform: scale(1);
-                transform: scale(1);
-
-        -webkit-transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                transition: -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                transition: transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55), -webkit-transform .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    @keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
       }
-
-      trials-report:not(:empty) + .loading {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      trials-report:not(:empty) + .loading .loader-icon-container {
-        -webkit-transform: scale(2);
-                transform: scale(2);
-      }
-
-      .loader-icon,
-      .loader-icon:before,
-      .loader-icon:after {
-        width: 125px;
-        height: 125px;
-      }
-
-      .loader-icon {
-        background: url(assets/img/loader/eye.png) no-repeat center;
-        background-size: cover;
-        position: relative;
-      }
-
-      .loader-icon:before,
-      .loader-icon:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: "";
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        -webkit-animation: 10s rotate infinite linear;
-                animation: 10s rotate infinite linear;
-      }
-
-      .loader-icon:before {
-        background-image: url(assets/img/loader/triangles-min.png);
-      }
-
-      .loader-icon:after {
-        background-image: url(assets/img/loader/whex-min.png);
-        -webkit-animation-direction: reverse;
-                animation-direction: reverse;
-      }
-
-      @-webkit-keyframes rotate {
-        100% {
-          -webkit-transform: rotate(360deg);
-                  transform: rotate(360deg);
-        }
-      }
-
-      @keyframes rotate {
-        100% {
-          -webkit-transform: rotate(360deg);
-                  transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <trials-report></trials-report>
-    <div class="loading">
-      <div class="loader-icon-container">
-        <div class="loader-icon"></div>
-      </div>
-    </div>
-    <script type="text/javascript" src="hammer.min.js"></script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=console.*,Intl.~locale.en&gated=1"></script>
-    <div id="str-dlls">
-      <%= '<' %>script src="/polyfill.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %>
-      <%= '<' %>script src="/vendor.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %>
-    </div>
-    <script src="/index.js"></script>
-  </body>
+    }
+  </style>
+</head>
+<body>
+<trials-report></trials-report>
+<div class="loading">
+  <div class="loader-icon-container">
+    <div class="loader-icon"></div>
+  </div>
+</div>
+<script type="text/javascript" src="hammer.min.js"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=console.*,Intl.~locale.en&gated=1"></script>
+<script type="text/javascript" src="modernizer-touch-events.min.js"></script>
+<!--<script src="http://cdn.rawgit.com/hammerjs/touchemulator/master/touch-emulator.js"></script>-->
+<!--<script>-->
+<!--TouchEmulator();-->
+<!--</script>-->
+<div id="str-dlls">
+  <%= '<' %>script src="/polyfill.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %>
+  <%= '<' %>script src="/vendor.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %>
+</div>
+<script src="/index.js"></script>
+</body>
 </html>

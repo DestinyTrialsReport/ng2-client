@@ -1,7 +1,7 @@
-import {MapsService} from "./services/maps.service";
-import {ManifestService} from "./services/manifest.service";
-import {PlayerService} from "./services/player.service";
-import {APP_INITIALIZER} from "@angular/core";
+import { MapsService } from "./services/maps.service";
+import { ManifestService } from "./services/manifest.service";
+import { PlayerService } from "./services/player.service";
+import { APP_INITIALIZER } from "@angular/core";
 
 export function manifestFactory(service: ManifestService) {
   return () => { return service.loadManifest(); };

@@ -4,16 +4,15 @@ import { Actions, Effect } from '@ngrx/effects';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { MapsService } from '../services/maps.service';
+import { CurrentMap } from "../models/map-stats.model";
 import * as maps from '../actions/maps.actions';
-import {CurrentMap} from "../models/map-stats.model";
 
 @Injectable()
 
 export class MapEffects {
-  constructor(
-    private actions$: Actions,
-    private mapService: MapsService
-  ) { }
+
+  constructor(private actions$: Actions,
+              private mapService: MapsService) { }
 
   @Effect() search$ = this.actions$
     .ofType(maps.ActionTypes.SAVE_CURRENT_MAP)
