@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MOBILE } from './services/constants';
 
@@ -19,7 +19,8 @@ import { MOBILE } from './services/constants';
       </button>
       <div class="body__mask" (click)="toggleMenu()"></div>
     </div>
-  `
+  `,
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   showMenu:boolean = true;
