@@ -5,14 +5,14 @@
   input {
     background: transparent;
     width: 100%;
-    padding: $controls-padding 0 $controls-padding $controls-padding;
+    padding: 1.25rem 0 1.25rem $controls-padding;
     cursor: pointer;
     font-size: 1.1em;
   }
 }
 
 .search__player .btn {
-  padding: $controls-padding .75rem;
+  padding: 1.25rem .75rem;
 }
 
 .search__player + .search__player {

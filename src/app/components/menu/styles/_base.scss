@@ -9,6 +9,7 @@
   flex-direction: column;
   flex-grow: 1;
   overflow: hidden;
+  min-height: 100vh;
 }
 
 .menu__block {
@@ -20,5 +21,6 @@
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     @include shadow(2);
+    min-height: calc(100vh - 3rem);
   }
 }

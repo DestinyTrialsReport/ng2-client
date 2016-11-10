@@ -22,6 +22,7 @@ import { MOBILE } from './services/constants';
   `,
   encapsulation: ViewEncapsulation.None
 })
+
 export class AppComponent {
   showMenu:boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
