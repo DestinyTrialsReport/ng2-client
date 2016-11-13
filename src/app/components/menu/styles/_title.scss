@@ -2,7 +2,7 @@
   padding-top: 6rem;
   background: center top no-repeat;
   background-size: auto 20em;
-  @include image-fade('up');
+  @include image-fade('up', 'small');
 
   h1 {
     font-size: 1.7em;
