@@ -1,5 +1,5 @@
 import { MenuComponent } from "./components/menu/menu.component";
-import { MapsComponent } from "./containers/maps.component";
+import { MapsComponent } from "./components/maps/maps.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NotFound404Component } from './components/notfound404/notfound404.component';
 import { WeaponUsageComponent } from "./components/weapon-usage.component";

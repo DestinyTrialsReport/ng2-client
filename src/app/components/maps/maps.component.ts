@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy, style, state, animate, transition, trigger }  from '@angular/core';
-import { MapsService }    from "../services/maps.service";
+import { MapsService }    from "../../services/maps.service";
 import { Store }          from "@ngrx/store";
 import { Observable }     from "rxjs/Observable";
-import { MapInfo }        from "../models/map-stats.model";
-import * as fromRoot      from '../reducers';
-import * as mapActions    from "../actions/maps.actions";
+import { MapInfo }        from "../../models/map-stats.model";
+import * as fromRoot      from '../../reducers';
+import * as mapActions    from "../../actions/maps.actions";
 
 @Component({
   selector: 'maps',
