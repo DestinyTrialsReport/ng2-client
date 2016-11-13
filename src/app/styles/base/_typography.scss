@@ -31,6 +31,15 @@ label {
   cursor: inherit;
 }
 
+a {
+  color: $interactive-main;
+  text-decoration: none;
+
+  &:hover {
+    color: darken($interactive-main, 25%);
+  }
+}
+
 .data-label {
   font-size: .8em;
   font-weight: 300;
