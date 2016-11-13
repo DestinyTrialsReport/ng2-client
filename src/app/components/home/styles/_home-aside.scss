@@ -2,6 +2,7 @@
 	padding: 0 3rem 0 0;
 	color: $home-aside-color;
 	text-align: right;
+  max-width: 15rem;
 }
 
 .home-aside__title {
@@ -80,4 +81,12 @@
 
 .home-aside__logo--small {
   font-size: 1.3em;
+}
+
+@media all and (max-width: $breakpoint-medium) {
+  .home-aside {
+  	padding: 0;
+  	text-align: center;
+    margin: 2rem auto 0;
+  }
 }
