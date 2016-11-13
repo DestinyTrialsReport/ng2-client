@@ -19,6 +19,7 @@ import * as mapActions    from "../../actions/maps.actions";
       transition('left => right, right => left', animate('0s ease-in-out, opacity linear'))
     ])
   ],
+  styleUrls: ['./maps.component.css'],
   templateUrl: 'maps.template.html'
 })
 
