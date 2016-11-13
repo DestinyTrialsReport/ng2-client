@@ -44,17 +44,13 @@ export class MapsComponent {
     if (prevWeek > 1) {
       this.onWeek = prevWeek;
       this.slideMap = 'right';
-      this.changeDetectorRef.detectChanges();
-
       setTimeout(() => {
         this.slideMap = 'left';
         this.changeDetectorRef.detectChanges();
-
         Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
           .subscribe(() => {
             // TODO: This fires off to quickly, should be on LoadMapDataAction I think?
             this.slideMap = 'idle';
-            this.changeDetectorRef.detectChanges();
           });
         }, 200); // Make sure the exit animation has finished
     }
@@ -65,17 +61,13 @@ export class MapsComponent {
     if (nextWeek <= this.maxWeek) {
       this.onWeek = nextWeek;
       this.slideMap = 'left';
-      this.changeDetectorRef.detectChanges();
-
       setTimeout(() => {
         this.slideMap = 'right';
         this.changeDetectorRef.detectChanges();
-
         Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
           .subscribe(() => {
             // TODO: This fires off to quickly, should be on LoadMapDataAction I think?
             this.slideMap = 'idle';
-            this.changeDetectorRef.detectChanges();
           });
         }, 200); // Make sure the exit animation has finished
     }
