@@ -7,10 +7,7 @@ import * as fromRoot      from '../reducers';
 import * as mapActions    from "../actions/maps.actions";
 
 @Component({
-  selector: '[maps]',
-  host: {
-    'class': 'home'
-  },
+  selector: 'maps',
   animations: [
     trigger('direction', [
       state('left',  style({transform: 'translate3d(5em, 0, 0)', opacity: 0})),

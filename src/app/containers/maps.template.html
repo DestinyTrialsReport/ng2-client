@@ -1,150 +1,84 @@
-<div class="home__content">
-  <article class="home__main">
-    <!--<div class="maps block blog-post shadow-z-1 {{mapInfoAnimClass}}">-->
-    <div class="maps block blog-post shadow-z-1" [@direction]="slideMap">
-      <div class="modal-hero blog-image"
-           [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (mapInfo$ | async)?.pgcrImage + ')'}">
-        <div class="modal-hero__header">
-          <h2 class="modal-hero__title" [innerHtml]="(mapInfo$ | async)?.name"></h2>
-          <span class="map-cycle-popover">
-            <i class="material-icons md-16">&#xE148;</i>
-          </span>
-          <p class="modal-hero__description stat" [innerHtml]="(mapInfo$ | async)?.weekText"></p>
-        </div>
-        <div class="modal-hero__switch">
-          <div class="modal-hero__switch__btns">
-            <a href="#" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2" (click)="previousMap()"><i class="material-icons">&#xE5CB;</i></a>
-            <a href="#" [style.opacity]="(mapInfo$ | async)?.week == '47' ? .2 : 1" (click)="nextMap()"><i class="material-icons">&#xE5CC;</i></a>
-          </div>
-          <label>Other weeks</label>
-        </div>
+<div class="maps block blog-post shadow-z-1" [@direction]="slideMap">
+  <div class="modal-hero blog-image"
+       [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (mapInfo$ | async)?.pgcrImage + ')'}">
+    <div class="modal-hero__header">
+      <h2 class="modal-hero__title" [innerHtml]="(mapInfo$ | async)?.name"></h2>
+      <span class="map-cycle-popover">
+        <i class="material-icons md-16">&#xE148;</i>
+      </span>
+      <p class="modal-hero__description stat" [innerHtml]="(mapInfo$ | async)?.weekText"></p>
+    </div>
+    <div class="modal-hero__switch">
+      <div class="modal-hero__switch__btns">
+        <a href="#" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2" (click)="previousMap()"><i class="material-icons">&#xE5CB;</i></a>
+        <a href="#" [style.opacity]="(mapInfo$ | async)?.week == '47' ? .2 : 1" (click)="nextMap()"><i class="material-icons">&#xE5CC;</i></a>
       </div>
-      <div class="blog-post__content">
-        <div class="row">
-          <div class="col-xs-6 col-md-3 stat">
-            <span [innerHtml]="(mapInfo$ | async)?.lighthouse | number"></span>
-            <label>Flawless runs</label>
-          </div>
-          <div class="col-xs-6 col-md-3 stat">
-            <span [innerHtml]="(mapInfo$ | async)?.players | number"></span>
-            <label>Guardians participated</label>
-          </div>
-          <div class="col-xs-6 col-md-3 stat">
-            <span [innerHtml]="(mapInfo$ | async)?.matches | number"></span>
-            <label>Total matches</label>
-          </div>
-          <div class="col-xs-6 col-md-3 stat">
-            <span [innerHtml]="(mapInfo$ | async)?.kills | number"></span>
-            <label>Total kills</label>
-          </div>
-        </div>
-        <hr>
-        <weapon-usage></weapon-usage>
-        <hr>
-        <guardian-weapons></guardian-weapons>
-        <hr>
-        <!--<div class="row first-in-lighthouse">-->
-          <!--<div class="col-xs-12 col-sm-2">-->
-            <!--<h3 class="stat-header">-->
-              <!--First fireteams to reach the lighthouse-->
-            <!--</h3>-->
-            <!--<span data-content="Due to the way Bungie provides information on lighthouse visits, this leaderboard is subject to change when the tension is high." bs-popover>-->
-              <!--<i class="material-icons icon&#45;&#45;small info">&#xE8FD;</i>-->
-            <!--</span>-->
-            <!--<div class="first-in-lighthouse__platform-toggle">-->
-              <!--<span class="stat-header">Platform</span>-->
-              <!--<a href ng-click="toggleFlawless(0)" ng-class="{'is-active': lighthouseFilter == 0}">Both</a>-->
-              <!--<a href ng-click="toggleFlawless(1)" ng-class="{'is-active': lighthouseFilter == 1}">Xbox</a>-->
-              <!--<a href ng-click="toggleFlawless(2)" ng-class="{'is-active': lighthouseFilter == 2}">PlayStation</a>-->
-            <!--</div>-->
-
-          <!--</div>-->
-          <!--<div class="col-xs-12 col-sm-10" ng-if="!lighthouseLeaderboard">-->
-            <!--<div class="first-in-lighthouse__undecided">-->
-              <!--The race is still on...-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="col-xs-12 col-sm-3 stat first-in-lighthouse__players" ng-if="lighthouseLeaderboard && $index < 3" ng-repeat="lb in lighthouseLeaderboard">-->
-            <!--<span class="first-in-lighthouse__rank first-in-lighthouse__rank&#45;&#45;{{lb.class}}">-->
-              <!--<span>{{lb.rank}}<sup [innerHtml]="lb.rankSuffix"></sup></span>-->
-            <!--</span>-->
-            <!--<span class="first-in-lighthouse__player" ng-repeat="player in lb.players track by $index">-->
-              <!--<a ng-href="https://my.trials.report/{{$parent.lb.platform === 1 ? 'xbox' : 'ps'}}/{{player}}" [innerHtml]="player" target="_blank"></a>-->
-            <!--</span>-->
-            <!--<span class="first-in-lighthouse__player" ng-if="lb.players.length <= 2">&nbsp;</span>-->
-            <!--<span class="first-in-lighthouse__player" ng-if="lb.players.length <= 1">&nbsp;</span>-->
-            <!--<div class="first-in-lighthouse__platform">-->
-              <!--<img ng-if="$parent.lb.platform === 1" src="assets/img/xbox.svg" alt="Xbox">-->
-              <!--<img ng-if="$parent.lb.platform === 2" src="assets/img/ps.svg" alt="PlayStation">-->
-            <!--</div>-->
-            <!--<span class="first-in-lighthouse__time">-->
-              <!--<span [innerHtml]="lb.time"></span>-->
-            <!--</span>-->
-            <!--<hr class="hr&#45;&#45;minor visible-xs">-->
-          <!--</div>-->
+      <label>Other weeks</label>
+    </div>
+  </div>
+  <div class="blog-post__content">
+    <div class="row">
+      <div class="col-xs-6 col-md-3 stat">
+        <span [innerHtml]="(mapInfo$ | async)?.lighthouse | number"></span>
+        <label>Flawless runs</label>
+      </div>
+      <div class="col-xs-6 col-md-3 stat">
+        <span [innerHtml]="(mapInfo$ | async)?.players | number"></span>
+        <label>Guardians participated</label>
+      </div>
+      <div class="col-xs-6 col-md-3 stat">
+        <span [innerHtml]="(mapInfo$ | async)?.matches | number"></span>
+        <label>Total matches</label>
+      </div>
+      <div class="col-xs-6 col-md-3 stat">
+        <span [innerHtml]="(mapInfo$ | async)?.kills | number"></span>
+        <label>Total kills</label>
+      </div>
+    </div>
+    <hr>
+    <weapon-usage></weapon-usage>
+    <hr>
+    <guardian-weapons></guardian-weapons>
+    <hr>
+    <!--<div class="row first-in-lighthouse">-->
+      <!--<div class="col-xs-12 col-sm-2">-->
+        <!--<h3 class="stat-header">-->
+          <!--First fireteams to reach the lighthouse-->
+        <!--</h3>-->
+        <!--<span data-content="Due to the way Bungie provides information on lighthouse visits, this leaderboard is subject to change when the tension is high." bs-popover>-->
+          <!--<i class="material-icons icon&#45;&#45;small info">&#xE8FD;</i>-->
+        <!--</span>-->
+        <!--<div class="first-in-lighthouse__platform-toggle">-->
+          <!--<span class="stat-header">Platform</span>-->
+          <!--<a href ng-click="toggleFlawless(0)" ng-class="{'is-active': lighthouseFilter == 0}">Both</a>-->
+          <!--<a href ng-click="toggleFlawless(1)" ng-class="{'is-active': lighthouseFilter == 1}">Xbox</a>-->
+          <!--<a href ng-click="toggleFlawless(2)" ng-class="{'is-active': lighthouseFilter == 2}">PlayStation</a>-->
         <!--</div>-->
-      </div>
-    </div>
-  </article>
-  <div class="home__aside">
-    <div class="more">
-      <h2 class="more__title">More Trials Report!</h2>
-      <hr>
-      <section class="more__section more__section--side-by-side">
-        <a href="https://twitter.com/trialsreport"
-           target="_blank"
-           title="Destiny Trials Report on Twitter">
-          <img src="/assets/img/twitter.svg">
-          <label>
-            Follow us on <span class="info">Twitter</span> for updates on the site and all things Destiny!
-          </label>
-        </a>
-      </section>
-      <hr>
-      <section class="more__section">
-        <a href="https://my.trials.report" target="_self">
-          <span class="more__logo">myReport</span>
-          <label>
-            See all your characters in one view with more detailed stats
-          </label>
-        </a>
-      </section>
-      <hr>
-      <section class="more__section" href="https://opponents.trials.report">
-        <a
-          href="https://opponents.trials.report" target="_self">
-          <span class="more__logo more__logo--alt"><span>my</span>Opponents</span>
-          <label>
-            Search through your opponents and see every match in detail
-          </label>
-        </a>
-      </section>
-      <hr>
-      <!--<section class="more__section" ng-if="subdomain || sdOpponents">-->
-        <!--<a-->
-          <!--href="https://trials.report"-->
-          <!--target="_self"-->
-          <!--analytics-on analytics-event="Click"-->
-          <!--analytics-category="trialsReport">-->
-          <!--<span class="more__logo">Destiny Trials Report</span>-->
-        <!--</a>-->
-      <!--</section>-->
-      <hr>
-      <section class="more__section">
-        <!--<a-->
-          <!--title="FAQ"-->
-          <!--data-template-url="shared/modals/faq.modal.html"-->
-          <!--bs-modal>-->
-          <!--<span class="more__logo more__logo&#45;&#45;small">FAQ</span>-->
-        <!--</a>-->
-        <a
-          title="Guardian.gg"
-          href="https://guardian.gg"
-          target="_blank">
-          <span class="more__logo more__logo--small">GUARDIAN.GG</span>
-        </a>
-      </section>
-    </div>
 
+      <!--</div>-->
+      <!--<div class="col-xs-12 col-sm-10" ng-if="!lighthouseLeaderboard">-->
+        <!--<div class="first-in-lighthouse__undecided">-->
+          <!--The race is still on...-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-xs-12 col-sm-3 stat first-in-lighthouse__players" ng-if="lighthouseLeaderboard && $index < 3" ng-repeat="lb in lighthouseLeaderboard">-->
+        <!--<span class="first-in-lighthouse__rank first-in-lighthouse__rank&#45;&#45;{{lb.class}}">-->
+          <!--<span>{{lb.rank}}<sup [innerHtml]="lb.rankSuffix"></sup></span>-->
+        <!--</span>-->
+        <!--<span class="first-in-lighthouse__player" ng-repeat="player in lb.players track by $index">-->
+          <!--<a ng-href="https://my.trials.report/{{$parent.lb.platform === 1 ? 'xbox' : 'ps'}}/{{player}}" [innerHtml]="player" target="_blank"></a>-->
+        <!--</span>-->
+        <!--<span class="first-in-lighthouse__player" ng-if="lb.players.length <= 2">&nbsp;</span>-->
+        <!--<span class="first-in-lighthouse__player" ng-if="lb.players.length <= 1">&nbsp;</span>-->
+        <!--<div class="first-in-lighthouse__platform">-->
+          <!--<img ng-if="$parent.lb.platform === 1" src="assets/img/xbox.svg" alt="Xbox">-->
+          <!--<img ng-if="$parent.lb.platform === 2" src="assets/img/ps.svg" alt="PlayStation">-->
+        <!--</div>-->
+        <!--<span class="first-in-lighthouse__time">-->
+          <!--<span [innerHtml]="lb.time"></span>-->
+        <!--</span>-->
+        <!--<hr class="hr&#45;&#45;minor visible-xs">-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </div>
