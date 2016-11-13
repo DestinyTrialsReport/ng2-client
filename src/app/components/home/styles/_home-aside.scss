@@ -1,0 +1,83 @@
+.home-aside {
+	padding: 0 3rem 0 0;
+	color: $home-aside-color;
+	text-align: right;
+}
+
+.home-aside__title {
+  font-weight: bold;
+	text-transform: uppercase;
+	font-size: 1.1em;
+  margin-bottom: 1rem;
+
+  color: transparent;
+  text-shadow: 0px 2px 3px rgba(255,255,255,0.9);
+
+	 color: $home-aside-color;
+	 -webkit-text-fill-color: transparent;
+	 background: -webkit-linear-gradient(darken($home-aside-color, 20%), darken($home-aside-color, 20%));
+	 background: -o-linear-gradient(darken($home-aside-color, 20%), darken($home-aside-color, 20%));
+	 -webkit-background-clip: text;
+   -webkit-background-clip: text;
+      -moz-background-clip: text;
+           background-clip: text;
+}
+
+.home-aside__section {
+  color: inherit;
+  display: block;
+  padding: 1rem 0;
+  font-size: .8em;
+  opacity: .75;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1;
+  }
+
+  img {
+    height: 2rem;
+  }
+}
+
+.home-aside__logo {
+	font-weight: normal;
+	font-size: 1.6em;
+
+  text-shadow: 0px 2px 3px rgba(255,255,255,0.9);
+	color: $home-aside-color;
+	-webkit-text-fill-color: transparent;
+	background: -webkit-linear-gradient(darken($home-aside-color, 20%), darken($home-aside-color, 20%));
+	background: -o-linear-gradient(darken($home-aside-color, 20%), darken($home-aside-color, 20%));
+	-webkit-background-clip: text;
+	   -moz-background-clip: text;
+	        background-clip: text;
+
+	.material-icons {
+		color: $home-aside-color;
+		vertical-align: -13%;
+		text-shadow: none;
+	}
+}
+
+.home-aside__logo--alt {
+	font-size: 1.4em;
+	text-transform: uppercase;
+	font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+
+	> span {
+		color: darken($home-aside-color, 20%);
+		-webkit-text-fill-color: transparent;
+		background: -webkit-linear-gradient(darken($home-aside-color, 70%), darken($home-aside-color, 70%));
+		background: -o-linear-gradient(darken($home-aside-color, 70%), darken($home-aside-color, 70%));
+		-webkit-background-clip: text;
+	     -moz-background-clip: text;
+	          background-clip: text;
+	}
+}
+
+.home-aside__logo--small {
+  font-size: 1.3em;
+}

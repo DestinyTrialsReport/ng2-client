@@ -1,3 +1,4 @@
-body {
-  color: red;
-}
+@import '../../styles/helpers/all';
+
+@import 'styles/base';
+@import 'styles/home-aside';

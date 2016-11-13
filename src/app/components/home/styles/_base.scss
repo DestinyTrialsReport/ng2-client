@@ -1,0 +1,33 @@
+.home {
+  display: flex;
+  max-width: 960px;
+  margin: 0 auto;
+  align-items: center;
+  min-height: 100vh;
+
+  > main {
+    flex-grow: 1;
+    padding: 0 1rem;
+  }
+
+  > aside {
+    max-width: 17.5rem;
+    flex-shrink: 0;
+    padding: 0 1rem;
+    order: -1;
+  }
+}
+
+@media all and (max-width: $breakpoint-medium) {
+  .home {
+    display: block;
+
+    > main {
+      padding: 1rem;
+    }
+
+    > aside {
+      padding: 1rem;
+    }
+  }
+}

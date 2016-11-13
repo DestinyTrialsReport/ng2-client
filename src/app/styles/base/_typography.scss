@@ -31,6 +31,12 @@ label {
   cursor: inherit;
 }
 
+hr {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(to right, transparentize($hr-color, 1) 0, transparentize($hr-color, .7) 50%, transparentize($hr-color, .9) 100%);
+}
+
 a {
   color: $interactive-main;
   text-decoration: none;
@@ -38,6 +44,10 @@ a {
   &:hover {
     color: darken($interactive-main, 25%);
   }
+}
+
+.color-twitter {
+  color: $twitter;
 }
 
 .data-label {

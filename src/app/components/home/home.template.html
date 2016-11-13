@@ -1,65 +1,45 @@
-<div class="home__content">
-  <article class="home__main">
+<div class="home">
+  <main>
     <maps></maps>
-  </article>
-  <div class="home__aside">
-    <div class="more">
-      <h2 class="more__title">More Trials Report!</h2>
+  </main>
+  <aside>
+    <div class="home-aside">
+      <h2 class="home-aside__title">More Trials Report!</h2>
       <hr>
-      <section class="more__section more__section--side-by-side">
-        <a href="https://twitter.com/trialsreport"
-           target="_blank"
-           title="Destiny Trials Report on Twitter">
-          <img src="/assets/img/twitter.svg">
-          <label>
-            Follow us on <span class="info">Twitter</span> for updates on the site and all things Destiny!
+      <a class="home-aside__section"
+         href="https://twitter.com/trialsreport"
+         target="_blank"
+         title="Destiny Trials Report on Twitter">
+        <div class="row row--small-gutter middle-xs">
+          <img class="col-xs-shrink" src="/assets/img/twitter.svg">
+          <label class="col-xs">
+            Follow us on <span class="color-twitter">Twitter</span> for updates on the site and all things Destiny!
           </label>
-        </a>
-      </section>
+        </div>
+      </a>
       <hr>
-      <section class="more__section">
-        <a href="https://my.trials.report" target="_self">
-          <span class="more__logo">myReport</span>
-          <label>
-            See all your characters in one view with more detailed stats
-          </label>
-        </a>
-      </section>
+      <a class="home-aside__section" href="https://my.trials.report" target="_self">
+        <div class="home-aside__logo">myReport</div>
+        <label>
+          See all your characters in one view with more detailed stats
+        </label>
+      </a>
       <hr>
-      <section class="more__section" href="https://opponents.trials.report">
-        <a
-          href="https://opponents.trials.report" target="_self">
-          <span class="more__logo more__logo--alt"><span>my</span>Opponents</span>
-          <label>
-            Search through your opponents and see every match in detail
-          </label>
-        </a>
-      </section>
+      <a class="home-aside__section" href="https://opponents.trials.report" target="_self">
+        <div class="home-aside__logo home-aside__logo--alt"><span>my</span>Opponents</div>
+        <label>
+          Search through your opponents and see every match in detail
+        </label>
+      </a>
       <hr>
-      <!--<section class="more__section" ng-if="subdomain || sdOpponents">-->
-        <!--<a-->
-          <!--href="https://trials.report"-->
-          <!--target="_self"-->
-          <!--analytics-on analytics-event="Click"-->
-          <!--analytics-category="trialsReport">-->
-          <!--<span class="more__logo">Destiny Trials Report</span>-->
-        <!--</a>-->
-      <!--</section>-->
-      <hr>
-      <section class="more__section">
-        <!--<a-->
-          <!--title="FAQ"-->
-          <!--data-template-url="shared/modals/faq.modal.html"-->
-          <!--bs-modal>-->
-          <!--<span class="more__logo more__logo&#45;&#45;small">FAQ</span>-->
-        <!--</a>-->
+      <div class="home-aside__section">
         <a
           title="Guardian.gg"
           href="https://guardian.gg"
           target="_blank">
-          <span class="more__logo more__logo--small">GUARDIAN.GG</span>
+          <span class="home-aside__logo home-aside__logo--small">GUARDIAN.GG</span>
         </a>
-      </section>
+      </div>
     </div>
-  </div>
+  </aside>
 </div>
