@@ -22,90 +22,86 @@
   <div class="card__content">
     <div class="row">
       <div class="col-xs-6 col-sm-3">
-        <div class="stat__number" [innerHtml]="(mapInfo$ | async)?.lighthouse | number"></div>
-        <div class="stat__label">Accounts flawless</div>
+        <div class="stat-number" [innerHtml]="(mapInfo$ | async)?.lighthouse | number"></div>
+        <div class="stat-label">Accounts flawless</div>
       </div>
       <div class="col-xs-6 col-sm-3 stat">
-        <div class="stat__number" [innerHtml]="(mapInfo$ | async)?.players | number"></div>
-        <div class="stat__label">Accounts participated</div>
+        <div class="stat-number" [innerHtml]="(mapInfo$ | async)?.players | number"></div>
+        <div class="stat-label">Accounts participated</div>
       </div>
       <div class="col-xs-6 col-sm-3 stat">
-        <div class="stat__number" [innerHtml]="(mapInfo$ | async)?.matches | number"></div>
-        <div class="stat__label">Total matches</div>
+        <div class="stat-number" [innerHtml]="(mapInfo$ | async)?.matches | number"></div>
+        <div class="stat-label">Total matches</div>
       </div>
       <div class="col-xs-6 col-sm-3 stat">
-        <div class="stat__number" [innerHtml]="(mapInfo$ | async)?.kills | number"></div>
-        <div class="stat__label">Total kills</div>
+        <div class="stat-number" [innerHtml]="(mapInfo$ | async)?.kills | number"></div>
+        <div class="stat-label">Total kills</div>
       </div>
     </div>
     <hr>
     <div class="row">
       <div class="col-xs-12 col-sm-2" [tooltipHtml]="percentageNoticeText" [tooltipClass]="'popover'">
-        <h3 class="stat-header">
+        <h3 class="stat-title">
           Weapon usage by type
         </h3>
-        <span>
-          <i class="material-icons icon--small info">&#xE8FD;</i>
-        </span>
+        <!-- <span>
+          <i class="material-icons info">&#xE8FD;</i> TODO: Implement popovers
+        </span> -->
       </div>
-      <div class="col-xs-12 col-sm-4">
-        <div class="top-weapons--map">
-          <div class="row">
-            <div class="col-xs-6 col-sm-4">
-              <label class="top-weapons__label">Primary</label>
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <label>Kills</label>
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <label>Diff. to avg</label>
-            </div>
+      <div class="stat-table col-xs-12 col-sm-5">
+        <div class="stat-table__row row row--small-gutter">
+          <div class="col-xs-6 col-sm-4">
+            <div class="stat-header">Primary</div>
           </div>
-          <div class="row top-weapons--map__row" *ngFor='let weapon of (weaponUsage$ | async)?.primary'>
-            <div class="col-xs-6 col-sm-4">
-              <img class="weapon-type-icon img-responsive"
-                   [src]="weapon?.file_name"
-                   [alt]="weapon?.weapon_type">
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <span [innerHtml]="weapon?.killPercentage | number:'2.2-2'"></span>%
-            </div>
-            <div class="col-xs-3 col-sm-4 stat"
-                 [ngClass]="{success: weapon?.diffPercentage > 0, fail: weapon?.diffPercentage < 0}">
-              <i class="material-icons" [innerHtml]="weapon?.diffPercentage > 0 ? '&#xE5CE;' : '&#xE5CF;'"></i>
-              <span [innerHtml]="weapon?.diffPercentage | number:'2.2-2'"></span>%
-            </div>
+          <div class="col-xs-3 col-sm-4 stat">
+            <div class="stat-label">Kills</div>
           </div>
-          <hr class="hr--minor visible-xs">
+          <div class="col-xs-3 col-sm-4 stat">
+            <div class="stat-label">Diff. to avg</div>
+          </div>
+        </div>
+        <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (weaponUsage$ | async)?.primary'>
+          <div class="col-xs-6 col-sm-4">
+            <img class="weapon-type-icon"
+                 [src]="weapon?.file_name"
+                 [alt]="weapon?.weapon_type">
+          </div>
+          <div class="col-xs-3 col-sm-4">
+            <span [innerHtml]="weapon?.killPercentage | number:'1.2-2'"></span>%
+          </div>
+          <div class="col-xs-3 col-sm-4"
+               [ngClass]="{'color-success': weapon?.diffPercentage >= 0, 'color-error': weapon?.diffPercentage < 0}">
+            <i class="material-icons icon--small" [innerHtml]="weapon?.diffPercentage >= 0 ? '&#xE5CE;' : '&#xE5CF;'"></i>
+            <span [innerHtml]="weapon?.diffPercentage | number:'1.2-2'"></span>%
+          </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-4 col-sm-offset-1">
-        <div class="top-weapons--map">
-          <div class="row">
-            <div class="col-xs-6 col-sm-4">
-              <label class="top-weapons__label">Primary</label>
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <label>Kills</label>
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <label>Diff. to avg</label>
-            </div>
+      <hr class="col-xs-12 col-sm-hidden hr--minor">
+      <div class="stat-table col-xs-12 col-sm-5">
+        <div class="stat-table__row row row--small-gutter">
+          <div class="col-xs-6 col-sm-4">
+            <div class="stat-header">Secondary</div>
           </div>
-          <div class="row top-weapons--map__row" *ngFor='let weapon of (weaponUsage$ | async)?.special'>
-            <div class="col-xs-6 col-sm-4">
-              <img class="weapon-type-icon img-responsive"
-                   [src]="weapon?.file_name"
-                   [alt]="weapon?.weapon_type">
-            </div>
-            <div class="col-xs-3 col-sm-4 stat">
-              <span [innerHtml]="weapon?.killPercentage | number:'2.2-2'"></span>%
-            </div>
-            <div class="col-xs-3 col-sm-4 stat"
-                 [ngClass]="{success: weapon?.diffPercentage > 0, fail: weapon?.diffPercentage < 0}">
-              <i class="material-icons" [innerHtml]="weapon?.diffPercentage > 0 ? '&#xE5CE;' : '&#xE5CF;'"></i>
-              <span [innerHtml]="weapon?.diffPercentage | number:'2.2-2'"></span>%
-            </div>
+          <div class="col-xs-3 col-sm-4 stat">
+            <div class="stat-label">Kills</div>
+          </div>
+          <div class="col-xs-3 col-sm-4 stat">
+            <div class="stat-label">Diff. to avg</div>
+          </div>
+        </div>
+        <div class="stat-table__row row row--small-gutter" *ngFor='let weapon of (weaponUsage$ | async)?.special'>
+          <div class="col-xs-6 col-sm-4">
+            <img class="weapon-type-icon img-responsive"
+                 [src]="weapon?.file_name"
+                 [alt]="weapon?.weapon_type">
+          </div>
+          <div class="col-xs-3 col-sm-4">
+            <span [innerHtml]="weapon?.killPercentage | number:'1.2-2'"></span>%
+          </div>
+          <div class="col-xs-3 col-sm-4"
+               [ngClass]="{'color-success': weapon?.diffPercentage > 0, 'color-error': weapon?.diffPercentage < 0}">
+            <i class="material-icons icon--small" [innerHtml]="weapon?.diffPercentage > 0 ? '&#xE5CE;' : '&#xE5CF;'"></i>
+            <span [innerHtml]="weapon?.diffPercentage | number:'1.2-2'"></span>%
           </div>
         </div>
       </div>
@@ -113,13 +109,13 @@
     <hr>
     <div class="row">
       <div class="col-xs-12 col-sm-2">
-        <h3 class="stat-header">
+        <h3 class="stat-title">
           Top weapons from Guardian.gg
         </h3>
         <!--<a [href]="weaponStatsUrl" target="_blank" [tooltip]="tooltipText">-->
-        <a>
-          <i class="material-icons icon--small info">&#xE148;</i>
-        </a>
+        <!-- <a>
+          <i class="material-icons icon--small info">&#xE148;</i> TODO: Implement popovers
+        </a> -->
       </div>
       <div class="col-xs-12 col-sm-10" *ngIf="!weapons || (!weapons.primary && !weapons.special)">
         <div class="first-in-lighthouse__undecided">

@@ -37,7 +37,7 @@ export class MapsComponent {
     kills in their category.<\hr/\>Difference to the average represents how\
     much more or less that specific weapon type is used on this map\
     in relation to all other Trials of Osiris maps since the latest balance update.";
-  weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05';
+  weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05'; // TODO: Correct platform
 
   constructor(public mapService: MapsService,
               private store: Store<fromRoot.AppState>,

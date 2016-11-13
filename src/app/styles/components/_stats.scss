@@ -1,13 +1,43 @@
-.stat__number {
+.stat-number {
   font-size: 1.2em;
   line-height: 1;
 }
 
-.stat__label {
+.stat-label {
   @extend .data-label;
   display: block;
 
-  .stat__number + & {
+  .stat-number + & {
     margin-top: .2rem;
+  }
+}
+
+.stat-title {
+  @extend .data-label;
+  font-weight: normal;
+  color: $dark-main;
+}
+
+.stat-header {
+  @extend .data-label;
+  font-weight: normal;
+  color: darken($data-label, 10%);
+}
+
+.stat-table {
+}
+
+.stat-table__row {
+  margin-top: .8rem;
+  margin-bottom: .5rem;
+  line-height: 1.2rem;
+  white-space: nowrap;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
