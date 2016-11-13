@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, style, state, animate, transition, trigger }  from '@angular/core';
-import { ChangeDetectorRef } from "@angular/core";
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, style, state, animate, transition, trigger }  from '@angular/core';
 import { MapsService }    from "../../services/maps.service";
+import { WeaponUsage }    from "../../models/map-stats.model";
 import { Store }          from "@ngrx/store";
 import { Observable }     from "rxjs/Observable";
 import { MapInfo }        from "../../models/map-stats.model";
@@ -26,18 +26,58 @@ import * as mapActions    from "../../actions/maps.actions";
 export class MapsComponent {
   maxWeek: number;
   onWeek: number;
-  slideMap:string;
+  slideMap: string;
   mapInfo$: Observable<MapInfo>;
+  weaponUsage$: Observable<{ primary:WeaponUsage[], special:WeaponUsage[] }>;
+  currentMap: Observable<any>;
+  weapons: any;
+
+  tooltipText: string = "Kindly provided by Guardian.gg. Click here to head over there for the complete list and a lot more cool stats!";
+  percentageNoticeText:string = "Percentages are based on usage of weapon types in relation to total\
+    kills in their category.<\hr/\>Difference to the average represents how\
+    much more or less that specific weapon type is used on this map\
+    in relation to all other Trials of Osiris maps since the latest balance update.";
+  weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05';
 
   constructor(public mapService: MapsService,
               private store: Store<fromRoot.AppState>,
               private changeDetectorRef: ChangeDetectorRef) {
     this.slideMap = 'idle';
-    this.mapInfo$ = store.select(state => state['map'].mapInfo);
+
     store.select(state => state.map.currentMap).subscribe(map => {
       this.maxWeek = parseInt(map.week);
       this.onWeek = parseInt(map.week);
     });
+
+    this.mapInfo$ = store.select(state => state['map'].mapInfo);
+
+    this.weaponUsage$ = Observable.combineLatest(
+      this.store.select(state => state['map'].weaponStats),
+      this.store.select(state => state['map'].weaponTotals),
+      (weapons, totals) => {
+        if (!weapons || !totals) return {primary: [], special: []};
+
+        const primaries: WeaponUsage[] = weapons.filter(w => w.bucketName == 'primary');
+        const specials: WeaponUsage[] = weapons.filter(w => w.bucketName == 'special');
+        return {
+          primary: primaries.map(w => {
+            const avgPercentage:number = 100 * (w.sum_kills / totals.primary.bucketSum);
+            const killPercentage:number =  100 * (w.kills / totals.primary.sum);
+            return Object.assign({}, w, {
+              killPercentage: killPercentage,
+              diffPercentage: killPercentage - avgPercentage
+            });
+          }),
+          special: specials.map(w => {
+            const avgPercentage:number = 100 * (w.sum_kills / totals.special.bucketSum);
+            const killPercentage:number =  100 * (w.kills / totals.special.sum);
+            return Object.assign({}, w, {
+              killPercentage: killPercentage,
+              diffPercentage: killPercentage - avgPercentage
+            });
+          })
+        };
+      });
   }
 
   previousMap() {

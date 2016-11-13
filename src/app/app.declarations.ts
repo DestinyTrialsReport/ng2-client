@@ -1,9 +1,7 @@
 import { MenuComponent } from "./components/menu/menu.component";
 import { MapsComponent } from "./components/maps/maps.component";
 import { HomeComponent } from "./components/home/home.component";
-import { NotFound404Component } from './components/notfound404/notfound404.component';
-import { WeaponUsageComponent } from "./components/weapon-usage.component";
-import { WeaponGuardianComponent } from "./components/weapon-guardian.component";
+import { NotFound404Component } from "./components/notfound404/notfound404.component";
 import { QuickStats } from "./components/quick-stats.component";
 import { PlayerComponent } from "./containers/player.component";
 import { Emblem } from "./components/emblem.component";
@@ -26,8 +24,6 @@ export const APP_DECLARATIONS = [
   HomeComponent,
   NotFound404Component,
   ReportComponent,
-  WeaponUsageComponent,
-  WeaponGuardianComponent,
   Emblem,
   QuickStats,
   PlayerComponent,
