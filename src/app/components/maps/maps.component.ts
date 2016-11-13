@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, style, state, animate, transition, trigger }  from '@angular/core';
+import { ChangeDetectorRef } from "@angular/core";
 import { MapsService }    from "../../services/maps.service";
 import { Store }          from "@ngrx/store";
 import { Observable }     from "rxjs/Observable";
@@ -9,16 +10,16 @@ import * as mapActions    from "../../actions/maps.actions";
 @Component({
   selector: 'maps',
   animations: [
-    trigger('direction', [
-      state('left',  style({transform: 'translate3d(5em, 0, 0)', opacity: 0})),
-      state('right-done',  style({transform: 'translate3d(5em, 0, 0)', opacity: 1})),
-      state('left-done',  style({transform: 'translate3d(-5em, 0, 0)', opacity: 1})),
-      state('right', style({transform: 'translate3d(-5em, 0, 0)', opacity: 0})),
-      transition('* => *', animate('.3s ease-in-out, opacity linear'))
+    trigger('animation', [
+      state('idle', style({ transform: 'translate3d(0, 0, 0)', opacity: 1 })),
+      state('right', style({ transform: 'translate3d(2rem, 0, 0)', opacity: 0 })),
+      state('left', style({ transform: 'translate3d(-2rem, 0, 0)', opacity: 0 })),
+      transition('idle => *', animate('.2s cubic-bezier(0.77,0,1,1)), opacity linear')),
+      transition('* => idle', animate('.2s cubic-bezier(0,0,0.23,1)), opacity linear')),
+      transition('left => right, right => left', animate('0s ease-in-out, opacity linear'))
     ])
   ],
-  templateUrl: 'maps.template.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'maps.template.html'
 })
 
 export class MapsComponent {
@@ -28,7 +29,9 @@ export class MapsComponent {
   mapInfo$: Observable<MapInfo>;
 
   constructor(public mapService: MapsService,
-              private store: Store<fromRoot.AppState>) {
+              private store: Store<fromRoot.AppState>,
+              private changeDetectorRef: ChangeDetectorRef) {
+    this.slideMap = 'idle';
     this.mapInfo$ = store.select(state => state['map'].mapInfo);
     store.select(state => state.map.currentMap).subscribe(map => {
       this.maxWeek = parseInt(map.week);
@@ -40,9 +43,20 @@ export class MapsComponent {
     let prevWeek:number = this.onWeek - 1;
     if (prevWeek > 1) {
       this.onWeek = prevWeek;
-      this.slideMap = 'left';
-      Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
-        .subscribe(() => this.slideMap = 'right-done');
+      this.slideMap = 'right';
+      this.changeDetectorRef.detectChanges();
+
+      setTimeout(() => {
+        this.slideMap = 'left';
+        this.changeDetectorRef.detectChanges();
+
+        Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
+          .subscribe(() => {
+            // TODO: This fires off to quickly, should be on LoadMapDataAction I think?
+            this.slideMap = 'idle';
+            this.changeDetectorRef.detectChanges();
+          });
+        }, 200); // Make sure the exit animation has finished
     }
   }
 
@@ -50,9 +64,20 @@ export class MapsComponent {
     let nextWeek:number = this.onWeek + 1;
     if (nextWeek <= this.maxWeek) {
       this.onWeek = nextWeek;
-      this.slideMap = 'right';
-      Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
-        .subscribe(() => this.slideMap = 'left-done');
+      this.slideMap = 'left';
+      this.changeDetectorRef.detectChanges();
+
+      setTimeout(() => {
+        this.slideMap = 'right';
+        this.changeDetectorRef.detectChanges();
+
+        Observable.of(this.store.dispatch(new mapActions.SearchCompleteAction(this.onWeek)))
+          .subscribe(() => {
+            // TODO: This fires off to quickly, should be on LoadMapDataAction I think?
+            this.slideMap = 'idle';
+            this.changeDetectorRef.detectChanges();
+          });
+        }, 200); // Make sure the exit animation has finished
     }
   }
 }

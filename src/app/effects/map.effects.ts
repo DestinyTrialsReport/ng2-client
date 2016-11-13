@@ -14,7 +14,8 @@ export class MapEffects {
   constructor(private actions$: Actions,
               private mapService: MapsService) { }
 
-  @Effect() search$ = this.actions$
+  @Effect()
+  search$ = this.actions$
     .ofType(maps.ActionTypes.SAVE_CURRENT_MAP)
     .map<CurrentMap>(action => action.payload)
     .switchMap(payload => {
