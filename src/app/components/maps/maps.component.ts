@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, style, state, animate, transition, trigger }  from '@angular/core';
+import { Component, ChangeDetectorRef, style, state, animate, transition, trigger }  from '@angular/core';
 import { MapsService }    from "../../services/maps.service";
 import { WeaponUsage }    from "../../models/map-stats.model";
 import { Store }          from "@ngrx/store";
@@ -40,7 +40,7 @@ export class MapsComponent {
   weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05'; // TODO: Correct platform
 
   constructor(public mapService: MapsService,
-              private store: Store<fromRoot.AppState>,
+              private store: Store<fromRoot.State>,
               private changeDetectorRef: ChangeDetectorRef) {
     this.slideMap = 'idle';
 
