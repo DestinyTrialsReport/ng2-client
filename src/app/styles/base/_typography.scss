@@ -31,6 +31,42 @@ label {
   cursor: inherit;
 }
 
+hr {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(to right, transparentize($hr-color, 1) 0, transparentize($hr-color, .7) 50%, transparentize($hr-color, .9) 100%);
+  margin: 1rem 0;
+}
+
+a {
+  color: $interactive-main;
+  text-decoration: none;
+
+  &:hover {
+    color: darken($interactive-main, 25%);
+  }
+}
+
+.color-twitter {
+  color: $twitter;
+}
+
+.color-success {
+  color: $success;
+}
+
+.color-info {
+  color: $info;
+}
+
+.color-error {
+  color: $error;
+}
+
+.color-warning {
+  color: $warning;
+}
+
 .data-label {
   font-size: .8em;
   font-weight: 300;

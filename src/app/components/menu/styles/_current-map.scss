@@ -1,7 +1,7 @@
 .current-map {
   background: center bottom no-repeat;
   background-size: auto 20em;
-  @include image-fade('down');
+  @include image-fade('down', 'small');
   color: darken($light-main, 10%);
   position: relative;
   z-index: 1;

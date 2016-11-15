@@ -7,12 +7,20 @@ $interactive-main: #2196F3;
 $light-background: #eee;
 $dark-background: $dark-main;
 
-$xbox-main: #107C10;
-$playstation-main: #0066C2;
+$xbox: #107C10;
+$playstation: #0066C2;
+$twitter: $interactive-main;
+
+$success: #00C853;
+$error: #D50000;
+$warning: #FF8F00;
+$info: #03A9F4;
 
 $transparent-hover-light: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+$hr-color: #999;
+$data-label: #999;
 
-
+$home-aside-color: #777;
 
 // ---
 
@@ -26,7 +34,6 @@ $info: #03A9F4;
 
 $text-on-dark: #999;
 $controls-btn-color: darken(white, 30%);
-$home-aside-color: #777;
 
 $equipped-background: #ECEFF1;
 $last-matches-background: #E8F5E9;

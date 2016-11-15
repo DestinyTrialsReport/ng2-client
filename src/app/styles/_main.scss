@@ -4,6 +4,7 @@
 @import 'base/fonts';
 @import 'base/typography';
 @import 'base/forms';
+@import 'base/icons';
 
 @import 'layout/grid';
 @import 'layout/base';
@@ -13,6 +14,8 @@
 @import 'components/toggle';
 @import 'components/stats';
 @import 'components/badges';
+@import 'components/cards';
+@import 'components/tooltips';
 
 @import '../../assets/css/inc/vars';
 @import '../../assets/css/inc/colors';

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import {DTR_BASE_URL, GGG_BASE_URL} from './constants';
+import { DTR_BASE_URL, GGG_BASE_URL } from './constants';
 import { RequestBase } from './request-base';
-import {MapData, CurrentMap} from "../models/map-stats.model";
+import { MapData, CurrentMap } from "../models/map-stats.model";
 
 @Injectable()
 export class MapsService extends RequestBase {

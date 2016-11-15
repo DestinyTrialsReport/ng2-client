@@ -14,17 +14,17 @@
 }
 
 .platform-toggle input[type=checkbox] + .toggle__btn {
-  background: transparentize($playstation-main, .5);
+  background: transparentize($playstation, .5);
 
   &:after {
-    background: $playstation-main;
+    background: $playstation;
   }
 }
 
 .platform-toggle input[type=checkbox]:checked + .toggle__btn {
-  background: transparentize($xbox-main, 0.5);
+  background: transparentize($xbox, 0.5);
 
   &:after {
-    background: $xbox-main;
+    background: $xbox;
   }
 }

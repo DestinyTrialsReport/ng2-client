@@ -1,0 +1,49 @@
+.card {
+  background: white;
+  @include shadow(1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card__header {
+  background-size: cover;
+  background-position: center center;
+  padding: $card-padding;
+  color: $light-main;
+  @include image-fade('up', 'medium');
+
+  .data-label {
+    font-size: .9em;
+  }
+}
+
+.card__header--high {
+  padding-top: 10rem;
+}
+
+.card__header__title {
+  font-weight: 300;
+  margin-bottom: 0;
+  font-size: 2em;
+}
+
+.card__header__controls {
+  margin-left: -.5rem;
+
+  button {
+    color: $light-main;
+    padding: 0 .5rem;
+
+    > i {
+      line-height: 2.8rem; // Based on header height (2em * 1.4 line-height)
+    }
+  }
+}
+
+.card__content {
+  padding: $card-padding;
+
+  > hr {
+    margin: $card-padding 0;
+  }
+}

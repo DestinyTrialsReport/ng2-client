@@ -262,6 +262,12 @@
   order: 1;
 }
 
+@media only screen and (max-width: #{$breakpoint-small - 1px}) {
+  .col-xs-6:nth-child(n+3) {
+    margin-top: $grid-gutter;
+  }
+}
+
 @media only screen and (min-width: $breakpoint-small) {
   .col-sm,
   .col-sm-auto,
@@ -305,6 +311,10 @@
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     max-width: 100%;
+  }
+
+  .col-sm-hidden {
+    display: none;
   }
 
   .col-sm-shrink {
@@ -541,6 +551,10 @@
     max-width: 100%;
   }
 
+  .col-md-hidden {
+    display: none;
+  }
+
   .col-md-shrink {
     flex-shrink: 0;
     width: auto;
@@ -773,6 +787,10 @@
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     max-width: 100%;
+  }
+
+  .col-lg-hidden {
+    display: none;
   }
 
   .col-lg-shrink {
