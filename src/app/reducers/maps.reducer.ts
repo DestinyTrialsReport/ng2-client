@@ -1,6 +1,6 @@
 /* tslint:disable: no-switch-case-fall-through */
 import {MapInfo, WeaponUsage, CurrentMap} from "../models/map-stats.model";
-import * as mapActions from "../actions/maps.actions";
+import * as map from "../actions/maps.actions";
 import {CRUCIBLE_MAPS, BUCKET_NAMES, TYPE_BUCKETS} from "../services/constants";
 
 
@@ -9,7 +9,7 @@ export interface WeaponTotals {
   bucketSum: number;
 }
 
-export interface MapsState {
+export interface State {
   currentMap: CurrentMap;
   mapInfo: MapInfo;
   weaponStats: WeaponUsage[];
@@ -21,7 +21,7 @@ export interface MapsState {
   loaded: boolean;
 }
 
-const initialState: MapsState = {
+const initialState: State = {
   currentMap: {
     referenceId: '',
     start_date: '',
@@ -36,10 +36,10 @@ const initialState: MapsState = {
   loaded: true
 };
 
-export function mapsReducer(state = initialState, action: mapActions.Actions): MapsState {
+export function reducer(state = initialState, action: map.Actions): State {
   switch (action.type) {
 
-    case mapActions.ActionTypes.SAVE_CURRENT_MAP: {
+    case map.ActionTypes.SAVE_CURRENT_MAP: {
       const payload:any = action.payload;
 
       if (!payload) {
@@ -63,7 +63,7 @@ export function mapsReducer(state = initialState, action: mapActions.Actions): M
       });
     }
 
-    case mapActions.ActionTypes.LOAD_MAP_DATA: {
+    case map.ActionTypes.LOAD_MAP_DATA: {
       const payload: any = action.payload;
 
       if (!payload) {

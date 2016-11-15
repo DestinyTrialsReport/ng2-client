@@ -7,7 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { useLogMonitor } from '@ngrx/store-log-monitor';
 
 import { routes } from './app.routing';
-import { rootReducer } from './reducers';
+import { reducer } from './reducers';
 import { PlayerEffects } from "./effects/player.effects";
 import { MapEffects } from "./effects/map.effects";
 import { TabsModule } from "ng2-bootstrap/components/tabs";
@@ -38,7 +38,7 @@ export const APP_IMPORTS = [
   ProgressbarModule,
   ReactiveFormsModule,
   RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-  StoreModule.provideStore(rootReducer),
+  StoreModule.provideStore(reducer),
   STORE_DEV_TOOLS_IMPORTS,
   StoreDevtoolsModule.instrumentOnlyWithExtension()
 ];

@@ -1,25 +1,25 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { Action } from '@ngrx/store';
 import { Player, Character } from "../models/player.model";
-import * as playerActions from "../actions/player.actions";
+import * as player from "../actions/player.actions";
+import {Observable} from "rxjs";
 
 
-export interface PlayersState {
+export interface State {
   player1: Player;
   player2: Player;
   player3: Player;
 }
 
-const initialState: PlayersState = {
+const initialState: State = {
   player1: null,
   player2: null,
   player3: null
 };
 
-export function playerReducer(state = initialState, action: Action): PlayersState {
+export function reducer(state = initialState, action: player.Actions): State {
   switch (action.type) {
 
-    case playerActions.ActionTypes.SEARCH_COMPLETE: {
+    case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
       const player: Player = action.payload[0];
       if (!player) {
@@ -33,7 +33,7 @@ export function playerReducer(state = initialState, action: Action): PlayersStat
       });
     }
 
-    case playerActions.ActionTypes.SEARCH_ACCOUNT: {
+    case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
       const player: Player = action.payload[0];
       const character: Character = player.characters[0];
@@ -59,5 +59,11 @@ export function playerReducer(state = initialState, action: Action): PlayersStat
     default: {
       return state;
     }
+  }
+}
+
+export function getCharacter(playerIndex: string) {
+  return (state$: Observable<State>) => {
+    return state$.select(state => state[playerIndex].characterBase);
   }
 }

@@ -24,6 +24,7 @@ import {
   FilterClassArmor
 } from "./pipes/filter-items.pipe";
 import {EquippedTabComponent} from "./components/equipped/equipped-tab.component";
+import {LastMatchesTabComponent} from "./components/last-matches/last-matches-tab.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -43,6 +44,7 @@ export const APP_DECLARATIONS = [
   FooterComponent,
   EquippedTabComponent,
   EquippedGearComponent,
+  LastMatchesTabComponent,
   SubclassComponent,
   ActivityChartPipe,
   FilterSubclass,

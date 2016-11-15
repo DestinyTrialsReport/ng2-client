@@ -1,30 +1,31 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { Action } from '@ngrx/store';
+import 'rxjs/add/observable/of';
 import { Activity } from "../models/activity.model";
-import * as activityActions from "../actions/activity.actions";
+import * as activity from "../actions/activity.actions";
+import {Observable} from "rxjs";
 
 
-export interface ActivitiesState {
+export interface State {
   player1: Activity[];
   player2: Activity[];
   player3: Activity[];
 }
 
 
-const initialState: ActivitiesState = {
+const initialState: State = {
   player1: [],
   player2: [],
   player3: []
 };
 
-export function activityReducer(state = initialState, action: Action): ActivitiesState {
+export function reducer(state = initialState, action: activity.Actions): State {
   switch (action.type) {
 
-    case activityActions.ActionTypes.SEARCH_ACTIVITY: {
+    case activity.ActionTypes.SEARCH_ACTIVITY: {
 
       const playerId: string = action.payload[1];
 
-      const activities: Activity[] = action.payload[0]
+      const activities = action.payload[0]
         .map(activity => Object.assign({}, {
           period: activity.period,
           activityDetails: {
@@ -51,5 +52,17 @@ export function activityReducer(state = initialState, action: Action): Activitie
     default: {
       return state;
     }
+  }
+}
+
+export function getActivities(playerIndex: string, amount: number) {
+  return (state$: Observable<State>) => {
+    return state$.select(state => {
+      if (state[playerIndex]) {
+        return state[playerIndex].slice(0, amount ? amount : state[playerIndex].length)
+      } else {
+        return Observable.of([]);
+      }
+    });
   }
 }

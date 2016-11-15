@@ -1,25 +1,25 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Item } from "../models/inventory.model";
-import * as inventoryActions from "../actions/inventory.actions";
+import * as inventory from "../actions/inventory.actions";
 import { EQUIPPED_BUCKETS, HIDDEN_NODES } from "../services/constants";
 import { Talent, ItemDefinition, ItemDefinitions, TalentDefinitions, StepsDefinitions } from "../models/manifest.model";
 
-export interface InventoriesState {
+export interface State {
   player1: Item[];
   player2: Item[];
   player3: Item[];
 }
 
-const initialState: InventoriesState = {
+const initialState: State = {
   player1: [],
   player2: [],
   player3: []
 };
 
-export function inventoryReducer(state = initialState, action: inventoryActions.Actions): InventoriesState {
+export function reducer(state = initialState, action: inventory.Actions): State {
   switch (action.type) {
 
-    case inventoryActions.ActionTypes.SEARCH_INVENTORY: {
+    case inventory.ActionTypes.SEARCH_INVENTORY: {
       const itemsDef: ItemDefinitions = action.manifestItems;
       const talents: TalentDefinitions = action.manifestTalents;
       const stepsDef: StepsDefinitions = action.manifestSteps;

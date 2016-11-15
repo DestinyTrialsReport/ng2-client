@@ -1,7 +1,9 @@
 /* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { empty } from 'rxjs/observable/empty';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../services/player.service';
 
@@ -17,12 +19,12 @@ export class StatsEffects {
               private playerService: PlayerService) {}
 
   @Effect()
-  dtrStats$ = this.actions$
+  dtrStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
-        return empty();
+        return Observable.from([]);
       }
 
       return this.playerService.dtrStats(payload[0].membershipId)
@@ -31,12 +33,12 @@ export class StatsEffects {
     });
 
   @Effect()
-  gggStats$ = this.actions$
+  gggStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
-        return empty();
+        return Observable.from([]);
       }
 
       return this.playerService.gggStats(payload[0].membershipId)
@@ -45,7 +47,7 @@ export class StatsEffects {
     });
 
   @Effect()
-  bngStats$ = this.actions$
+  bngStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload =>

@@ -7,7 +7,7 @@ import { Step, Talent } from "../models/manifest.model";
 import { Item } from "../models/inventory.model";
 import { MapsService } from "./maps.service";
 import { LocalStorageService } from "ng2-webstorage";
-import { AppState } from "../reducers/index";
+import { State } from "../reducers/index";
 import { Store } from "@ngrx/store";
 import * as mapActions from "../actions/maps.actions";
 import {CurrentMap} from "../models/map-stats.model";
@@ -22,7 +22,7 @@ export class ManifestService {
 
   constructor(public http: Http,
               public storage: LocalStorageService,
-              public store: Store<AppState>,
+              public store: Store<State>,
               public mapService: MapsService) {
     this.manifestVersion = this.storage.retrieve('manifestVersion');
     this.manifestItems = this.storage.retrieve('manifestItems');

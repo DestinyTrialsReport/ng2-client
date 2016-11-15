@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from "@ngrx/store";
-import { AppState } from "../reducers/index";
 import { Observable } from "rxjs/Observable";
 import { WeaponUsage } from "../models/map-stats.model";
+import * as fromRoot        from '../reducers';
 
 @Component({
   selector: 'weapon-usage',
@@ -89,7 +89,7 @@ export class WeaponUsageComponent {
     in relation to all other Trials of Osiris maps since the latest balance update.";
   weaponUsage$: Observable<{ primary:WeaponUsage[], special:WeaponUsage[] }>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<fromRoot.State>) {
     this.weaponUsage$ = Observable.combineLatest(
       this.store.select(state => state['map'].weaponStats),
       this.store.select(state => state['map'].weaponTotals),

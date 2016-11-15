@@ -4,8 +4,8 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
-import { SearchState }    from "../reducers/search.reducer";
 import * as fromRoot      from '../reducers';
+import * as fromSearch    from '../reducers/search.reducer';
 import * as playerActions from '../actions/player.actions';
 
 @Component({
@@ -44,10 +44,10 @@ import * as playerActions from '../actions/player.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportComponent {
-  players:  Observable<SearchState>;
+  players:  Observable<fromSearch.State>;
 
   constructor(public  route: ActivatedRoute,
-              private store: Store<fromRoot.AppState>) {
+              private store: Store<fromRoot.State>) {
 
     this.players = this.store.select(s => s.search)
       .distinctUntilChanged()

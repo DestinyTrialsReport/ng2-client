@@ -31,7 +31,7 @@ export class MapsComponent {
   mapInfo$: Observable<MapInfo>;
 
   constructor(public mapService: MapsService,
-              private store: Store<fromRoot.AppState>) {
+              private store: Store<fromRoot.State>) {
     this.mapInfo$ = store.select(state => state['map'].mapInfo);
     store.select(state => state.map.currentMap).subscribe(map => {
       this.maxWeek = parseInt(map.week);

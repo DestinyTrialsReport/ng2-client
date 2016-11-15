@@ -1,11 +1,10 @@
 /* tslint:disable: no-switch-case-fall-through */
 import '@ngrx/core/add/operator/select';
-import * as players from '../actions/player.actions';
-import * as activities from '../actions/activity.actions';
+import * as player from '../actions/player.actions';
+import * as activity from '../actions/activity.actions';
 import * as inventory from '../actions/inventory.actions';
-import {Action} from "@ngrx/store";
 
-export interface SearchState {
+export interface State {
   player1: Search;
   player2: Search;
   player3: Search;
@@ -20,7 +19,7 @@ export interface Search {
 }
 
 
-const initialState: SearchState = {
+const initialState: State = {
   player1: {
     player: false,
     account: false,
@@ -44,9 +43,9 @@ const initialState: SearchState = {
   }
 };
 
-export function reducer(state = initialState, action: Action): SearchState {
+export function reducer(state = initialState, action: player.Actions | activity.Actions | inventory.Actions): State {
   switch (action.type) {
-    case players.ActionTypes.SEARCH_COMPLETE: {
+    case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
 
       const newState: Search = Object.assign({}, state[playerId], {
@@ -64,7 +63,7 @@ export function reducer(state = initialState, action: Action): SearchState {
       });
     }
 
-    case players.ActionTypes.SEARCH_ACCOUNT: {
+    case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
 
       const newState: boolean = Object.assign({}, state[playerId], {
@@ -78,7 +77,7 @@ export function reducer(state = initialState, action: Action): SearchState {
       });
     }
 
-    case activities.ActionTypes.SEARCH_ACTIVITY: {
+    case activity.ActionTypes.SEARCH_ACTIVITY: {
       const playerId: string = action.payload[1];
 
       const newState: boolean = Object.assign({}, state[playerId], {

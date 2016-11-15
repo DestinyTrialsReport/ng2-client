@@ -1,15 +1,14 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { Action } from '@ngrx/store';
 import { BNGStats, DTRStats, GGGStats, StatValue, Flawless } from "../models/stats.model";
-import * as statsActions from "../actions/stats.actions";
+import * as stats from "../actions/stats.actions";
 
-export interface StatsState {
-  player1: StatState;
-  player2: StatState;
-  player3: StatState;
+export interface State {
+  player1: Stats;
+  player2: Stats;
+  player3: Stats;
 }
 
-export interface StatState {
+export interface Stats {
   bungie: BNGStats;
   trials: DTRStats;
   guardian: GGGStats;
@@ -49,7 +48,7 @@ const guardianInitial: GGGStats = {
   rank: 0
 };
 
-const initialState: StatsState = {
+const initialState: State = {
   player1: {
     bungie: bngInitial,
     trials: trialsInitial,
@@ -67,10 +66,10 @@ const initialState: StatsState = {
   }
 };
 
-export function statsReducer(state = initialState, action: Action): StatsState {
+export function reducer(state = initialState, action: stats.Actions): State {
   switch (action.type) {
 
-    case statsActions.ActionTypes.BNG_STATS: {
+    case stats.ActionTypes.BNG_STATS: {
       const bngStats: BNGStats = {
         activitiesWon: action.payload[0].activitiesWon,
         activitiesEntered: action.payload[0].activitiesEntered,
@@ -78,7 +77,7 @@ export function statsReducer(state = initialState, action: Action): StatsState {
       };
       const playerId: string = action.payload[1];
 
-      const updated: StatState = Object.assign({}, state[playerId], {
+      const updated: State = Object.assign({}, state[playerId], {
         bungie: bngStats,
         trials: state[playerId].trials,
         guardian: state[playerId].guardian
@@ -91,14 +90,14 @@ export function statsReducer(state = initialState, action: Action): StatsState {
       });
     }
 
-    case statsActions.ActionTypes.DTR_STATS: {
+    case stats.ActionTypes.DTR_STATS: {
       const dtrStats: DTRStats = {
         membershipId: action.payload[0].membershipId,
         flawless: action.payload[0].flawless
       };
       const playerId: string = action.payload[1];
 
-      const updated: StatState = Object.assign({}, state[playerId], {
+      const updated: State = Object.assign({}, state[playerId], {
         bungie: state[playerId].bungie,
         trials: dtrStats,
         guardian: state[playerId].guardian
@@ -111,7 +110,7 @@ export function statsReducer(state = initialState, action: Action): StatsState {
       });
     }
 
-    case statsActions.ActionTypes.GGG_STATS: {
+    case stats.ActionTypes.GGG_STATS: {
       const membershipId:string = action.payload[2];
       const gggStats: GGGStats = {
         elo: action.payload[0][membershipId].elo,
@@ -119,7 +118,7 @@ export function statsReducer(state = initialState, action: Action): StatsState {
       };
       const playerId: string = action.payload[1];
 
-      const updated: StatState = Object.assign({}, state[playerId], {
+      const updated: State = Object.assign({}, state[playerId], {
         bungie: state[playerId].bungie,
         trials: state[playerId].trials,
         guardian: gggStats

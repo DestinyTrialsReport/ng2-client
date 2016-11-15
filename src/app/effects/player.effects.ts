@@ -1,13 +1,15 @@
 /* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
+import { Action, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import { empty } from 'rxjs/observable/empty';
+import { Observable } from 'rxjs/Observable';
+
+import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../services/player.service';
 
 import { Player } from "../models/player.model";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
-import { Store } from "@ngrx/store";
 import * as inventories from '../actions/inventory.actions';
 import * as player from '../actions/player.actions';
 import * as fromRoot      from '../reducers';
@@ -18,30 +20,30 @@ export class PlayerEffects {
 
   constructor(private actions$: Actions,
               private playerService: PlayerService,
-              private store: Store<fromRoot.AppState>) {}
+              private store: Store<fromRoot.State>) {}
 
   @Effect()
-  search$ = this.actions$
+  search$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_PLAYER)
     .debounceTime(300)
-    .map<[number, string, string]>(action => action.payload)
+    .map((action: player.SearchPlayer) => action.payload)
     .mergeMap(query => {
       if (query[1] === '') {
-        return empty();
+        return Observable.from([]);
       }
 
       return this.playerService.search(query[0], query[1])
         .map(searched => new player.SearchCompleteAction([searched, query[2]]))
-        .catch((err) => of(new player.SearchFailed(err)));
+        .catch(() => of(new player.SearchFailed(new Error('error'))));
     });
 
   @Effect()
-  account$ = this.actions$
+  account$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
-        return empty();
+        return Observable.from([]);
       }
 
       return this.playerService.account(payload[0].membershipType, payload[0].membershipId)
@@ -50,7 +52,7 @@ export class PlayerEffects {
     });
 
   @Effect()
-  teammates$ = this.actions$
+  teammates$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_TEAMMATES)
     .withLatestFrom(this.store)
     .map(([, store]) => {
@@ -59,7 +61,6 @@ export class PlayerEffects {
         activity: store.activities.player1[0]
       }
     })
-    .do(log => console.log(log))
     .mergeMap(payload => {
 
       return this.playerService.pgcr(payload.activity.activityDetails.instanceId)
@@ -73,6 +74,7 @@ export class PlayerEffects {
             .take(1)
             .subscribe(() => {
               this.store.dispatch(new player.SearchCompleteAction([teammates[1], `player3`]));
+              // this.store.dispatch(new pgcr.SearchPGCR([res]));
             });
           }
         )
@@ -80,7 +82,7 @@ export class PlayerEffects {
     });
 
   @Effect()
-  inventory$ = this.actions$
+  inventory$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload =>
