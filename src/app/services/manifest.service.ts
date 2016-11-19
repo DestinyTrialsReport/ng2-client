@@ -28,6 +28,7 @@ export class ManifestService {
     this.manifestItems = this.storage.retrieve('manifestItems');
     this.manifestTalents = this.storage.retrieve('manifestTalents');
     this.manifestSteps = this.storage.retrieve('manifestSteps');
+
   }
 
   version(): Observable<any> {

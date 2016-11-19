@@ -2,6 +2,7 @@ import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
+import * as fromAuth from './auth.reducer';
 import * as fromMaps from './maps.reducer';
 import * as fromPlayers from './player.reducer';
 import * as fromActivities from './activity.reducer';
@@ -14,6 +15,7 @@ import {PGCR} from "../models/pgcr.model";
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
 export interface State {
+  auth: fromAuth.State;
   map: fromMaps.State;
   search: fromSearch.State;
   players: fromPlayers.State;
@@ -24,6 +26,7 @@ export interface State {
 }
 
 export const reducers = {
+  auth: fromAuth.reducer,
   map: fromMaps.reducer,
   search: fromSearch.reducer,
   players: fromPlayers.reducer,
@@ -40,6 +43,12 @@ export function getPlayerState(state$: Observable<State>) {
 export function getPgcrState(state$: Observable<State>) {
   return state$.select(s => s.pgcr);
 }
+
+export function getAuthState(state$: Observable<State>) {
+  return state$.select(s => s.auth);
+}
+
+export const getStateFromAuth = compose(fromAuth.getState, getAuthState);
 
 export const getPgcrCollection = compose(fromPGCR.getCollection, getPgcrState);
 
