@@ -46,6 +46,7 @@
             </div>
           </div>
         </div>
+        <!-- TODO: Can we make sure these pop-up a bit earlier? -->
         <div class="search__player" *ngIf="(player2$ | async)?.displayName">
           <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
                  [placeholder]="(player2$ | async)?.displayName">

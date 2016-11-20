@@ -1,14 +1,17 @@
 .search {
   background: white;
-  padding-right: #{$menu-padding - 0.75rem};
 
   input {
     background: transparent;
     width: 100%;
-    padding: 1.25rem 0 1.25rem $controls-padding;
+    padding: 1.5rem 0 1.25rem $controls-padding;
     cursor: pointer;
     font-size: 1.1em;
   }
+}
+
+.search__player {
+  padding-right: #{$menu-padding - 0.75rem};
 }
 
 .search__player .btn {
