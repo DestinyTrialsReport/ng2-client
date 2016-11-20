@@ -4,19 +4,18 @@ import { RequestBase } from './request-base';
 import { BUNGIE_BASE_URL } from "./constants";
 import { Observable } from "rxjs";
 import { AuthResponse } from "../models/auth.model";
-import {LocalStorageService} from "ng2-webstorage";
+import {Store} from "@ngrx/store";
+import * as fromRoot      from '../reducers';
 
 @Injectable()
 export class AuthService extends RequestBase {
-  accessToken:any;
-  refreshToken:any;
 
   constructor(public http: Http,
-              public storage: LocalStorageService) {
+              private store: Store<fromRoot.State>) {
     super(http);
-    storage.observe('accessToken').subscribe(token => {
-      if (token) {
-        return this.optionsNoPre.headers.append('Authorization', `Bearer ${token}`)
+    store.let(fromRoot.getAuthState).subscribe(state => {
+      if (state.accessToken) {
+        return this.optionsNoPre.headers.append('Authorization', `Bearer ${state.accessToken}`)
       }
     });
   }
@@ -36,7 +35,6 @@ export class AuthService extends RequestBase {
   getBnetUser(): Observable<any> {
     return this.http.get(`${BUNGIE_BASE_URL}/User/GetBungieNetUser/`, this.optionsNoPre)
       .map(res => {
-        // res.headers.set('Access-Control-Max-Age', '600');
         // res.headers.append('Access-Control-Max-Age', '600');
         return res.json()
       })

@@ -2,19 +2,12 @@
 import '@ngrx/core/add/operator/select';
 import * as auth from '../actions/auth.actions';
 import { Observable } from "rxjs";
-import { AuthToken } from "../models/auth.model";
 
 export interface State {
   accessToken: string;
   refreshToken: string;
   authState: string;
 }
-
-const initialToken: AuthToken = {
-  value: '',
-  readyin: -1,
-  expires: -1
-};
 
 const initialState: State = {
   accessToken: '',
@@ -36,9 +29,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
     }
 
     case auth.ActionTypes.STORE_TOKEN: {
-      console.log(action)
       const authResponse: any = action.payload;
-      console.log(authResponse);
       const authState: string = authResponse.authState;
       const accessToken: string = authResponse.accessToken;
       const refreshToken: string = authResponse.refreshToken;
@@ -60,6 +51,6 @@ export function reducer(state = initialState, action: auth.Actions): State {
   }
 }
 
-export function getState(state$: Observable<State>) {
+export function getAuthState(state$: Observable<State>) {
   return state$.select(state => state.authState);
 }

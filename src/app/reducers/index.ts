@@ -13,6 +13,7 @@ import * as fromPGCR from './pgcr.reducer';
 import {Observable} from "rxjs";
 import {PGCR} from "../models/pgcr.model";
 import { combineLatest } from 'rxjs/observable/combineLatest';
+import {localStorageSync} from "ngrx-store-localstorage";
 
 export interface State {
   auth: fromAuth.State;
@@ -48,7 +49,7 @@ export function getAuthState(state$: Observable<State>) {
   return state$.select(s => s.auth);
 }
 
-export const getStateFromAuth = compose(fromAuth.getState, getAuthState);
+export const getAuthAuthState = compose(fromAuth.getAuthState, getAuthState);
 
 export const getPgcrCollection = compose(fromPGCR.getCollection, getPgcrState);
 
@@ -101,7 +102,7 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(storeFreeze, storeLogger(), combineReducers)(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 // const productionReducer = combineReducers(reducers);
 
