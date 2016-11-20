@@ -33,7 +33,7 @@ export class AuthEffects {
     .map((action: auth.RedirectToAuth) => action.payload)
     .switchMap(state =>
       Observable.combineLatest(
-        Observable.of(state).map(token => this.storage.store('authState', token)),
+        Observable.of(state).map(token => this.storage.store('authState', token)).take(1),
         () => window.location.href = `https://www.bungie.net/en/Application/Authorize/10670?state=${state}`
       ));
 
@@ -41,32 +41,33 @@ export class AuthEffects {
   loadAuth$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOAD_TOKENS)
     .startWith(new auth.LoadTokens())
-    .switchMap(() => {
-      if ( new Date() - new Date(parseInt(this.authState)) < 1800000 ) {
-        return Observable.of(
-          new auth.StoreToken({
-            authState: this.authState,
-            accessToken: this.accessToken,
-            refreshToken: this.refreshToken
-          })
-        )
-      } else {
-        return Observable.of(
-          new auth.RefreshTokens(this.refreshToken)
-        )
-      }
-    });
+    .mergeMap(() => Observable.of(
+      new auth.StoreToken({
+        authState: this.authState,
+        accessToken: this.accessToken,
+        refreshToken: this.refreshToken
+      })
+    ));
 
   @Effect()
   storeToLocal$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.STORE_TOKEN)
     .map((action: auth.StoreToken) => action.payload)
-    .switchMap(res =>
-      Observable.combineLatest(
-        Observable.of(res.accessToken).map(token => this.storage.store('accessToken', token)),
-        Observable.of(res.refreshToken).map(token => this.storage.store('refreshToken', token)),
-        (access, refresh) => new auth.StoreTokenSuccess())
-    );
+    .switchMap(res => {
+        return Observable.combineLatest(
+          Observable.of(res.accessToken).map(token => this.storage.store('accessToken', token)).take(1),
+          Observable.of(res.refreshToken).map(token => this.storage.store('refreshToken', token)).take(1),
+          (a,r) => {
+            let currentTimestamp: number = new Date().valueOf();
+            let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(res.authState);
+            if ( res.refreshToken && (lastAuthTimeAgo > 1800000) ) {
+              return new auth.RefreshTokens(res.refreshToken);
+            } else {
+              return new auth.StoreTokenSuccess();
+            }
+          }
+        )
+    });
 
   // @Effect()
   // storeSuccess: Observable<Action> = this.actions$
