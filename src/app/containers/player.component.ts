@@ -109,7 +109,7 @@ export class PlayerComponent {
 
   public getMatchHistory():void {
     if (this.recentMatches) {
-      this.store.dispatch(new pgcrActions.SearchPGCR({matchIds: this.recentMatches, player: this.el.nativeElement.id}));
+      this.recentMatches.map(match => this.store.dispatch(new pgcrActions.SearchPGCR({matchId: match, player: this.el.nativeElement.id})));
       // this.store.let(fromRoot.getNewMatches(this.recentMatches))
       //   .subscribe((ids: string[]) => {
       //     if (ids.length > 0) {

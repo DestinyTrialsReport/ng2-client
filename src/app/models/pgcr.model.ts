@@ -34,8 +34,8 @@ export interface Values {
 }
 
 export interface ValuesR {
-  team: number;
-  standing: number;
+  team?: number;
+  standing?: number;
   assists: number;
   kills: number;
   activityDurationSeconds: number;
@@ -78,6 +78,8 @@ export interface WeaponValue {
 }
 
 export interface WeaponValueR {
+  name: string;
+  icon: string;
   uniqueWeaponKills: number;
   uniqueWeaponPrecisionKills: number;
   uniqueWeaponKillsPrecisionKills: number;

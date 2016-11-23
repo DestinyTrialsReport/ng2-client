@@ -12,7 +12,7 @@ export const ActionTypes = {
 export class SearchPGCR implements Action {
   type = ActionTypes.SEARCH_PGCR;
 
-  constructor(public payload: {matchIds: string[], player: string}) { }
+  constructor(public payload: {matchId: string, player: string}) { }
 }
 
 export class LoadPGCR implements Action {
@@ -24,7 +24,7 @@ export class LoadPGCR implements Action {
 export class StorePGCR implements Action {
   type = ActionTypes.STORE_PGCR;
 
-  constructor(public payload: {matches: Entry[], player: string, definitions: any}) { }
+  constructor(public payload: {entry: Entry, player: string, definitions: any}) { }
 }
 
 export type Actions

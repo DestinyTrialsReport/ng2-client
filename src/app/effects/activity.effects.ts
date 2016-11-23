@@ -60,25 +60,18 @@ export class ActivityEffects {
         player: state[payload.player]
       }
     })
-    .mergeMap(response => {
-      let matches = [];
-
-      response.payload.matchIds.forEach(match => {
-        matches.push(
-          this.playerService.pgcr(match)
-          .catch((err) => of(new player.SearchFailed(err)))
-        );
-      });
-      return Observable.forkJoin( matches )
-        .map((res: PGCR[]) => {
-          const matches: Entry[] = res.map(match => match.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift());
-          const weaponIds = matches.reduce((weaponsArray, entry) => [...weaponsArray, ...entry.extended.weapons.map(weapon => weapon.referenceId)], []);
-          return new pgcr.StorePGCR({
-            matches: matches,
-            player: response.payload.player,
-            definitions: weaponIds.reduce((weaponDefinitions, weaponId) => Object.assign(weaponDefinitions, {[weaponId]: this.itemDefs[weaponId]}), {})
+    .mergeMap(response =>
+        this.playerService.pgcr(response.payload.matchId)
+          .map((res: PGCR) => {
+            const entry: Entry = res.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift();
+            const weaponIds = entry.extended.weapons.map(weapon => weapon.referenceId);
+            return new pgcr.StorePGCR({
+              entry: entry,
+              player: response.payload.player,
+              definitions: weaponIds.reduce((weaponDefinitions, weaponId) => Object.assign(weaponDefinitions, {[weaponId]: this.itemDefs[weaponId]}), {})
+            })
           })
-        })
-    });
+          .catch((err) => of(new player.SearchFailed(err)))
+      );
 
 }
