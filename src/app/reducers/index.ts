@@ -38,7 +38,7 @@ export const reducers = {
 };
 
 export function getPlayerState(state$: Observable<State>) {
-  return state$.select(s => s.activities);
+  return state$.select(s => s.players);
 }
 
 export function getPgcrState(state$: Observable<State>) {

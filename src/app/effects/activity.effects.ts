@@ -10,15 +10,23 @@ import * as activities from '../actions/activity.actions';
 import * as player from '../actions/player.actions';
 import * as pgcr from '../actions/pgcr.actions';
 import {Observable} from "rxjs";
-import {PGCR} from "../models/pgcr.model";
-import {Action} from "@ngrx/store";
+import {PGCR, Entry} from "../models/pgcr.model";
+import {Action, Store} from "@ngrx/store";
+import * as fromRoot      from '../reducers';
+import {LocalStorageService} from "ng2-webstorage";
 
 @Injectable()
 
 export class ActivityEffects {
 
+  itemDefs: any;
+
   constructor(private actions$: Actions,
-              private playerService: PlayerService) { }
+              private playerService: PlayerService,
+              public storage: LocalStorageService,
+              private store: Store<fromRoot.State>) {
+    this.itemDefs = this.storage.retrieve('manifestItems');
+  }
 
   @Effect()
   activities$: Observable<Action> = this.actions$
@@ -44,18 +52,33 @@ export class ActivityEffects {
   @Effect()
   searchPGCR$: Observable<Action> = this.actions$
     .ofType(pgcr.ActionTypes.SEARCH_PGCR)
-    .map<string[]>(action => action.payload)
-    .mergeMap(payload => {
+    .map((action: pgcr.SearchPGCR) => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .map(([payload, state]) => {
+      return {
+        payload: payload,
+        player: state[payload.player]
+      }
+    })
+    .mergeMap(response => {
       let matches = [];
 
-      payload.forEach(match => {
+      response.payload.matchIds.forEach(match => {
         matches.push(
           this.playerService.pgcr(match)
           .catch((err) => of(new player.SearchFailed(err)))
         );
       });
       return Observable.forkJoin( matches )
-        .map((res: PGCR[]) => new pgcr.StorePGCR(res))
+        .map((res: PGCR[]) => {
+          const matches: Entry[] = res.map(match => match.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift());
+          const weaponIds = matches.reduce((weaponsArray, entry) => [...weaponsArray, ...entry.extended.weapons.map(weapon => weapon.referenceId)], []);
+          return new pgcr.StorePGCR({
+            matches: matches,
+            player: response.payload.player,
+            definitions: weaponIds.reduce((weaponDefinitions, weaponId) => Object.assign(weaponDefinitions, {[weaponId]: this.itemDefs[weaponId]}), {})
+          })
+        })
     });
 
 }

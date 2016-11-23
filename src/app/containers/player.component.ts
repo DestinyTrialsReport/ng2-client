@@ -43,6 +43,7 @@ import * as pgcrActions from "../actions/pgcr.actions";
         <tab heading="Last Matches" (select)="getMatchHistory()" customClass="player-tab--last-matches">
           <div class="player-tab--equipped"
             [matches]="(matches$ | async)" 
+            [pgcr]="(pgcr$ | async)" 
             [characterId]="(player$ | async)?.characterBase?.characterId" 
             last-matches-tab>
           </div>
@@ -61,6 +62,7 @@ export class PlayerComponent {
   inventory$:   Observable<Item[]>;
   loaded$:      Observable<fromSearch.State>;
   matches$:     Observable<PGCR[]>;
+  pgcr$:        Observable<any>;
   recentMatches: string[];
 
   constructor(private store: Store<fromRoot.State>,
@@ -93,8 +95,12 @@ export class PlayerComponent {
         this.recentMatches = activities.map(a => a.activityDetails.instanceId);
       });
 
-    this.matches$ = store.select(s => s.pgcr.collection)
-      .map(collection => this.recentMatches.map(id => collection[id]))
+    // this.matches$ = store.select(s => s.pgcr.collection)
+    //   .map(collection => this.recentMatches.map(id => collection[id]))
+    //   .distinctUntilChanged()
+    //   .share();
+    //
+    this.pgcr$ = store.select(s => s.pgcr[el.nativeElement.id])
       .distinctUntilChanged()
       .share();
 
@@ -103,12 +109,13 @@ export class PlayerComponent {
 
   public getMatchHistory():void {
     if (this.recentMatches) {
-      this.store.let(fromRoot.getNewMatches(this.recentMatches))
-        .subscribe((ids: string[]) => {
-          if (ids.length > 0) {
-            this.store.dispatch(new pgcrActions.SearchPGCR(ids))
-          }
-        });
+      this.store.dispatch(new pgcrActions.SearchPGCR({matchIds: this.recentMatches, player: this.el.nativeElement.id}));
+      // this.store.let(fromRoot.getNewMatches(this.recentMatches))
+      //   .subscribe((ids: string[]) => {
+      //     if (ids.length > 0) {
+      //       this.store.dispatch(new pgcrActions.SearchPGCR({matchIds: ids, player: this.el.nativeElement.id}))
+      //     }
+      //   });
     }
   };
 
