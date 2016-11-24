@@ -1,7 +1,7 @@
 /* tslint:disable: member-ordering */
 import { Action }       from '@ngrx/store';
 import { type }         from '../util';
-import {PGCR, Entry} from "../models/pgcr.model";
+import {PGCR, Entry, Team, MatchPayload} from "../models/pgcr.model";
 
 export const ActionTypes = {
   SEARCH_PGCR:    type('[PGCR] PGCR Search'),
@@ -12,7 +12,7 @@ export const ActionTypes = {
 export class SearchPGCR implements Action {
   type = ActionTypes.SEARCH_PGCR;
 
-  constructor(public payload: {matchId: string, player: string}) { }
+  constructor(public payload: {match: MatchPayload, player: string}) { }
 }
 
 export class LoadPGCR implements Action {
@@ -24,7 +24,7 @@ export class LoadPGCR implements Action {
 export class StorePGCR implements Action {
   type = ActionTypes.STORE_PGCR;
 
-  constructor(public payload: {entry: Entry, player: string, definitions: any}) { }
+  constructor(public payload: {teams: Team[], match: MatchPayload, entry: Entry, player: string, definitions: any}) { }
 }
 
 export type Actions

@@ -1,5 +1,8 @@
 /* tslint:disable: no-switch-case-fall-through */
-import {PGCR, Extended, ExtendedWeapons, WeaponValue, Medal, Values, ValuesR, WeaponValueR} from "../models/pgcr.model";
+import {
+  PGCR, ExtendedWeapons, WeaponValue, Medal, ValuesR, WeaponValueR, MatchPayload,
+  Team
+} from "../models/pgcr.model";
 import * as pgcr from "../actions/pgcr.actions";
 import {Observable} from "rxjs";
 import {MEDAL_DEFINITIONS} from "../services/constants";
@@ -13,7 +16,15 @@ export interface State {
   player3: PgcrPlayerState;
 }
 
+export interface PgcrSummary {
+  standing: number;
+  teamScore: number;
+  enemyScore: number;
+  period: string;
+}
+
 export interface PgcrPlayerState {
+  summary: PgcrSummary[]
   values: ValuesR;
   weapons:{[weaponId:number]: WeaponValueR};
   medals:{[key:string]: Medal}
@@ -34,6 +45,7 @@ const initialValues: ValuesR = {
 };
 
 const initialPlayer: PgcrPlayerState = {
+  summary: [],
   values: initialValues,
   weapons: {},
   medals: {}
@@ -50,22 +62,31 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
   switch (action.type) {
 
     case pgcr.ActionTypes.STORE_PGCR: {
+      const teams: Team[] = action.payload['teams'];
+      const match: MatchPayload = action.payload['match'];
       const playerId: string = action.payload['player'];
       const entry: any = action.payload['entry'];
       const definitions: ItemDefinitions = action.payload['definitions'];
-      const values: any = entry.values;
+      const basicValues: any = entry.values;
       const extendedValues: any = entry.extended.values;
       const extendedWeapons: any = entry.extended.weapons;
 
-      const summary = Object.assign({}, state[playerId], {
-          assists: values.assists.basic.value + state[playerId].values.assists,
-          kills: values.kills.basic.value + state[playerId].values.kills,
-          activityDurationSeconds: values.activityDurationSeconds.basic.value + state[playerId].values.activityDurationSeconds,
-          averageScorePerKill: values.averageScorePerKill.basic.value + state[playerId].values.averageScorePerKill,
-          averageScorePerLife: values.averageScorePerLife.basic.value + state[playerId].values.averageScorePerLife,
-          deaths: values.deaths.basic.value + state[playerId].values.deaths,
-          killsDeathsAssists: values.killsDeathsAssists.basic.value + state[playerId].values.killsDeathsAssists,
-          killsDeathsRatio: values.killsDeathsRatio.basic.value + state[playerId].values.killsDeathsRatio,
+      const summary =  Object.assign({}, state[playerId].summary, {
+        standing: match.standing,
+        teamScore: teams.filter(teams => teams.teamId == match.team).map(team => team.score.basic.value).shift(),
+        enemyScore: teams.filter(teams => teams.teamId != match.team).map(team => team.score.basic.value).shift(),
+        period: match.period
+      });
+
+      const values = Object.assign({}, {
+          assists: basicValues.assists.basic.value + state[playerId].values.assists,
+          kills: basicValues.kills.basic.value + state[playerId].values.kills,
+          activityDurationSeconds: basicValues.activityDurationSeconds.basic.value + state[playerId].values.activityDurationSeconds,
+          averageScorePerKill: basicValues.averageScorePerKill.basic.value + state[playerId].values.averageScorePerKill,
+          averageScorePerLife: basicValues.averageScorePerLife.basic.value + state[playerId].values.averageScorePerLife,
+          deaths: basicValues.deaths.basic.value + state[playerId].values.deaths,
+          killsDeathsAssists: basicValues.killsDeathsAssists.basic.value + state[playerId].values.killsDeathsAssists,
+          killsDeathsRatio: basicValues.killsDeathsRatio.basic.value + state[playerId].values.killsDeathsRatio,
           precisionKills: (extendedValues.precisionKills ? extendedValues.precisionKills.basic.value : 0) + state[playerId].values.precisionKills,
           resurrectionsPerformed: (extendedValues.resurrectionsPerformed ? extendedValues.resurrectionsPerformed.basic.value : 0) + state[playerId].values.resurrectionsPerformed,
           averageLifespan: (extendedValues.averageLifespan ? extendedValues.averageLifespan.basic.value : 0) + state[playerId].values.averageLifespan,
@@ -99,7 +120,17 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
         }, {});
 
       const updated: any = Object.assign({}, state[playerId], {
-        values: summary,
+        summary: [...state[playerId].summary, ...summary]
+          .sort(function (a, b) {
+            if (a.period > b.period) {
+              return 1;
+            }
+            if (a.period < b.period) {
+              return -1;
+            }
+            return 0;
+          }),
+        values: Object.assign({}, state[playerId].values, values),
         weapons: Object.assign({}, state[playerId].weapons, weapons),
         medals: Object.assign({}, state[playerId].medals, medals),
       });

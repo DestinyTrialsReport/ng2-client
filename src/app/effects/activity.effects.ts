@@ -61,11 +61,13 @@ export class ActivityEffects {
       }
     })
     .mergeMap(response =>
-        this.playerService.pgcr(response.payload.matchId)
+        this.playerService.pgcr(response.payload.match.instanceId)
           .map((res: PGCR) => {
             const entry: Entry = res.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift();
             const weaponIds = entry.extended.weapons.map(weapon => weapon.referenceId);
             return new pgcr.StorePGCR({
+              teams: res.teams,
+              match: response.payload.match,
               entry: entry,
               player: response.payload.player,
               definitions: weaponIds.reduce((weaponDefinitions, weaponId) => Object.assign(weaponDefinitions, {[weaponId]: this.itemDefs[weaponId]}), {})

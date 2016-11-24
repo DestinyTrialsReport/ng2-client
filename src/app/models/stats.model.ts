@@ -19,9 +19,71 @@ export interface GGGStats {
 }
 
 export interface BNGStats {
-  activitiesWon: StatValue,
-  activitiesEntered: StatValue,
-  killsDeathsRatio: StatValue
+  activitiesWon: StatValue;
+  activitiesEntered: StatValue;
+  killsDeathsRatio: StatValue;
+  kills: StatValue;
+  deaths: StatValue;
+  assists: StatValue;
+  totalActivityDurationSeconds: StatValue;
+  score: StatValue;
+  allParticipantsScore: StatValue;
+  averageKillDistance: StatValue;
+  activitiesWinPercentage: StatValue;
+  weaponKillsSuper: StatValue;
+  weaponKillsMelee: StatValue;
+  weaponKillsGrenade: StatValue;
+  abilityKills: StatValue;
+  totalDeathDistance: StatValue;
+  averageDeathDistance: StatValue;
+  totalKillDistance: StatValue;
+  secondsPlayed: StatValue;
+  averageLifespan: StatValue;
+  averageScorePerKill: StatValue;
+  averageScorePerLife: StatValue;
+  bestSingleGameKills: StatValue;
+  bestSingleGameScore: StatValue;
+  closeCalls: StatValue;
+  dominationKills: StatValue;
+  killsDeathsAssists: StatValue;
+  objectivesCompleted: StatValue;
+  precisionKills: StatValue;
+  resurrectionsPerformed: StatValue;
+  resurrectionsReceived: StatValue;
+  suicides: StatValue;
+  weaponKillsAutoRifle: StatValue;
+  weaponKillsFusionRifle: StatValue;
+  weaponKillsHandCannon: StatValue;
+  weaponKillsMachinegun: StatValue;
+  weaponKillsPulseRifle: StatValue;
+  weaponKillsRocketLauncher: StatValue;
+  weaponKillsScoutRifle: StatValue;
+  weaponKillsShotgun: StatValue;
+  weaponKillsSniper: StatValue;
+  weaponKillsSubmachinegun: StatValue;
+  weaponKillsRelic: StatValue;
+  weaponKillsSideArm: StatValue;
+  weaponKillsSword: StatValue;
+  weaponBestType: StatValue;
+  winLossRatio: StatValue;
+  allParticipantsCount: StatValue;
+  allParticipantsTimePlayed: StatValue;
+  defensiveKills: StatValue;
+  longestKillSpree: StatValue;
+  longestSingleLife: StatValue;
+  mostPrecisionKills: StatValue;
+  offensiveKills: StatValue;
+  orbsDropped: StatValue;
+  orbsGathered: StatValue;
+  relicsCaptured: StatValue;
+  remainingTimeAfterQuitSeconds: StatValue;
+  teamScore: StatValue;
+  zonesCaptured: StatValue;
+  zonesNeutralized: StatValue;
+  combatRating: StatValue;
+  longestKillDistance: StatValue;
+  highestCharacterLevel: StatValue;
+  highestLightLevel: StatValue;
 }
 
 export interface StatValue {
@@ -41,87 +103,3 @@ export interface StatValue {
 //   if (elo < 1700) return 'platinum';
 //   return 'diamond';
 // };
-
-// export class BngStats {
-//   killsDeathsRatio: number;
-//   activitiesWon: number;
-//   activitiesEntered: number;
-//   activitiesWinPercentage: number;
-//   // weaponKillsSuper: number;
-//   // weaponKillsMelee: number;
-//   // weaponKillsGrenade: number;
-//   // abilityKills: number;
-//   // assists: number;
-//   // totalDeathDistance: number;
-//   // averageDeathDistance: number;
-//   // totalKillDistance: number;
-//   // kills: number;
-//   // averageKillDistance: number;
-//   // secondsPlayed: number;
-//   // deaths: number;
-//   // averageLifespan: number;
-//   // score: number;
-//   // averageScorePerKill: number;
-//   // averageScorePerLife: number;
-//   // bestSingleGameKills: number;
-//   // bestSingleGameScore: number;
-//   // closeCalls: number;
-//   // dominationKills: number;
-//   // killsDeathsAssists: number;
-//   // objectivesCompleted: number;
-//   // precisionKills: number;
-//   // resurrectionsPerformed: number;
-//   // resurrectionsReceived: number;
-//   // suicides: number;
-//   // weaponKillsAutoRifle: number;
-//   // weaponKillsFusionRifle: number;
-//   // weaponKillsHandCannon: number;
-//   // weaponKillsMachinegun: number;
-//   // weaponKillsPulseRifle: number;
-//   // weaponKillsRocketLauncher: number;
-//   // weaponKillsScoutRifle: number;
-//   // weaponKillsShotgun: number;
-//   // weaponKillsSniper: number;
-//   // weaponKillsSubmachinegun: number;
-//   // weaponKillsRelic: number;
-//   // weaponKillsSideArm: number;
-//   // weaponKillsSword: number;
-//   // weaponBestType: number;
-//   // winLossRatio: number;
-//   // allParticipantsCount: number;
-//   // allParticipantsScore: number;
-//   // allParticipantsTimePlayed: number;
-//   // defensiveKills: number;
-//   // longestKillSpree: number;
-//   // longestSingleLife: number;
-//   // mostPrecisionKills: number;
-//   // offensiveKills: number;
-//   // orbsDropped: number;
-//   // orbsGathered: number;
-//   // relicsCaptured: number;
-//   // remainingTimeAfterQuitSeconds: number;
-//   // teamScore: number;
-//   // totalActivityDurationSeconds: number;
-//   // zonesCaptured: number;
-//   // zonesNeutralized: number;
-//   // combatRating: number;
-//   // longestKillDistance: number;
-//   // highestCharacterLevel: number;
-//   // highestLightLevel: number;
-//   // activitiesWinPercentage: number;
-//
-//   constructor(response:any) {
-//     if (response && response.trialsOfOsiris) {
-//       let trials = response.trialsOfOsiris;
-//       let stats = trials.allTime;
-//       if (stats) {
-//         this.activitiesWon = stats.activitiesWon.basic.value;
-//         this.activitiesEntered = stats.activitiesEntered.basic.value;
-//         this.killsDeathsRatio = stats.killsDeathsRatio.basic.value;
-//         if (this.activitiesWon && this.activitiesEntered) {
-//           this.activitiesWinPercentage = 100 * (this.activitiesWon / this.activitiesEntered);
-//         }
-//       }
-//     }
-//   }
-// }

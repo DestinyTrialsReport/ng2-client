@@ -1,3 +1,10 @@
+export interface MatchPayload {
+  instanceId: string;
+  team: number;
+  standing: number;
+  period: string;
+}
+
 export interface PGCR {
   id: number,
   period: string,
@@ -7,6 +14,14 @@ export interface PGCR {
     mode: number
   },
   entries: Entry[]
+  teams: Team[]
+}
+
+export interface Team {
+  teamId: number,
+  standing: Value,
+  score: Value,
+  teamName: string
 }
 
 export interface Entry {

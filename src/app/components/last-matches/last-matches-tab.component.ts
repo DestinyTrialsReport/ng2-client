@@ -14,14 +14,14 @@ import {PGCR} from "../../models/pgcr.model";
 <div class="player-tab--last-matches">
   <div class="player-tab__section">
     <div class="row">
-      <div class="last-match__result col-xs-4" *ngFor="let match of matches">
-        <span class="match" [ngClass]="{'match--win': match?.standing === 0, 'match--loss': match?.standing === 1}"></span>
+      <div class="last-match__result col-xs-4" *ngFor="let summary of pgcr?.summary">
+        <span class="match" [ngClass]="{'match--win': summary?.standing === 0, 'match--loss': summary?.standing === 1}"></span>
         <span class="last-match__score">
-          <span class="last-match__score--team"  [innerHtml]="match?.values?.teamScore?.basic?.value"></span>
+          <span class="last-match__score--team"  [innerHtml]="summary?.teamScore"></span>
           -
-          <span class="last-match__score--opponents" [innerHtml]="match?.values?.enemyScore?.basic?.value"></span>
+          <span class="last-match__score--opponents" [innerHtml]="summary?.enemyScore"></span>
         </span>
-        <span class="last-match__date" [innerHtml]="match?.values?.dateAgo"></span>
+        <span class="last-match__date" [innerHtml]="summary?.period | timeAgo"></span>
       </div>
     </div>
   </div>

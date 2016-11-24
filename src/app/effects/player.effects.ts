@@ -4,7 +4,6 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
-import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../services/player.service';
 

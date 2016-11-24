@@ -4,10 +4,10 @@ import { Store }        from "@ngrx/store";
 import { Observable }   from 'rxjs/Observable';
 import { Activity }     from "../models/activity.model";
 import { Item }         from "../models/inventory.model";
-import { PGCR }         from "../models/pgcr.model";
 import * as fromRoot    from '../reducers';
 import * as fromSearch  from '../reducers/search.reducer';
 import * as fromStats    from '../reducers/stats.reducer';
+import * as fromPgcr    from '../reducers/pgcr.reducer';
 import * as pgcrActions from "../actions/pgcr.actions";
 
 @Component({
@@ -42,13 +42,16 @@ import * as pgcrActions from "../actions/pgcr.actions";
         </tab>
         <tab heading="Last Matches" (select)="getMatchHistory()" customClass="player-tab--last-matches">
           <div class="player-tab--equipped"
-            [matches]="(matches$ | async)" 
             [pgcr]="(pgcr$ | async)" 
-            [characterId]="(player$ | async)?.characterBase?.characterId" 
             last-matches-tab>
           </div>
         </tab>
-        <tab heading="Stats" class="player-tab--stats"></tab>
+        <tab heading="Stats" customClass="player-tab--stats">
+          <div class="player-tab--equipped"
+            [stats]="(stats$ | async)?.bungie" 
+            stats-tab>
+          </div>
+        </tab>
       </tabset>
       <div class="player__links" footer></div>
    </div>
@@ -61,9 +64,8 @@ export class PlayerComponent {
   stats$:       Observable<fromStats.State>;
   inventory$:   Observable<Item[]>;
   loaded$:      Observable<fromSearch.State>;
-  matches$:     Observable<PGCR[]>;
-  pgcr$:        Observable<any>;
-  recentMatches: string[];
+  pgcr$:        Observable<fromPgcr.State>;
+  recentMatches: any[];
 
   constructor(private store: Store<fromRoot.State>,
               private el:ElementRef) {
@@ -92,24 +94,29 @@ export class PlayerComponent {
 
     this.store.let(fromRoot.getRecentActivities(this.el.nativeElement.id, 3))
       .subscribe((activities: Activity[]) => {
-        this.recentMatches = activities.map(a => a.activityDetails.instanceId);
+        this.recentMatches = activities.map(a => {
+          return {
+            instanceId: a.activityDetails.instanceId,
+            standing: a.values.standing.basic.value,
+            team: a.values.team.basic.value,
+            period: a.period
+          }
+        });
       });
 
-    // this.matches$ = store.select(s => s.pgcr.collection)
-    //   .map(collection => this.recentMatches.map(id => collection[id]))
-    //   .distinctUntilChanged()
-    //   .share();
-    //
     this.pgcr$ = store.select(s => s.pgcr[el.nativeElement.id])
       .distinctUntilChanged()
       .share();
-
-    // this.matches$ = store.let(fromRoot.getPgcrFromRecent(this.el.nativeElement.id, 3))
   }
 
   public getMatchHistory():void {
     if (this.recentMatches) {
-      this.recentMatches.map(match => this.store.dispatch(new pgcrActions.SearchPGCR({matchId: match, player: this.el.nativeElement.id})));
+      this.store.select(s => s.pgcr[this.el.nativeElement.id])
+        .subscribe(state => {
+          if (state.summary.length < 1) {
+            this.recentMatches.map(match => this.store.dispatch(new pgcrActions.SearchPGCR({match: match, player: this.el.nativeElement.id})));
+          }
+        });
       // this.store.let(fromRoot.getNewMatches(this.recentMatches))
       //   .subscribe((ids: string[]) => {
       //     if (ids.length > 0) {
