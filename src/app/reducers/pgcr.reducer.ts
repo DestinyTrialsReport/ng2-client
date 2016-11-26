@@ -92,7 +92,7 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
           averageLifespan: (extendedValues.averageLifespan ? extendedValues.averageLifespan.basic.value : 0) + state[playerId].values.averageLifespan,
       });
 
-      const weapons = extendedWeapons.reduce((weaponsUsed: {[id: number]: WeaponValue}, weapon: ExtendedWeapons) => {
+      const weapons = extendedWeapons ? extendedWeapons.reduce((weaponsUsed: {[id: number]: WeaponValue}, weapon: ExtendedWeapons) => {
         const weaponInState = state[playerId].weapons[weapon.referenceId];
         return Object.assign(weaponsUsed, {
           [weapon.referenceId]: {
@@ -103,7 +103,7 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
             uniqueWeaponPrecisionKills: weapon.values.uniqueWeaponPrecisionKills.basic.value + (weaponInState ? weaponInState.uniqueWeaponPrecisionKills : 0),
           }
         });
-      }, {});
+      }, {}) : {};
 
       const medals = Object.keys(extendedValues)
         .filter(key => key.substring(0, 6) === 'medals')

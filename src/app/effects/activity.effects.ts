@@ -14,18 +14,20 @@ import {PGCR, Entry} from "../models/pgcr.model";
 import {Action, Store} from "@ngrx/store";
 import * as fromRoot      from '../reducers';
 import {LocalStorageService} from "ng2-webstorage";
+import {ItemDefinitions} from "../models/manifest.model";
 
 @Injectable()
 
 export class ActivityEffects {
 
-  itemDefs: any;
+  itemDefs: ItemDefinitions;
 
   constructor(private actions$: Actions,
               private playerService: PlayerService,
               public storage: LocalStorageService,
               private store: Store<fromRoot.State>) {
     this.itemDefs = this.storage.retrieve('manifestItems');
+    this.storage.observe('manifestItems').subscribe(manifestItems => this.itemDefs = manifestItems);
   }
 
   @Effect()
@@ -64,7 +66,7 @@ export class ActivityEffects {
         this.playerService.pgcr(response.payload.match.instanceId)
           .map((res: PGCR) => {
             const entry: Entry = res.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift();
-            const weaponIds = entry.extended.weapons.map(weapon => weapon.referenceId);
+            const weaponIds = entry.extended.weapons ? entry.extended.weapons.map(weapon => weapon.referenceId) : [0];
             return new pgcr.StorePGCR({
               teams: res.teams,
               match: response.payload.match,
