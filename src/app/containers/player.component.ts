@@ -61,7 +61,7 @@ import * as pgcrActions from "../actions/pgcr.actions";
 export class PlayerComponent {
   player$:      Observable<Player>;
   activities$:  Observable<Activity[]>;
-  stats$:       Observable<fromStats.State>;
+  stats$:       Observable<fromStats.Stats>;
   inventory$:   Observable<Item[]>;
   loaded$:      Observable<fromSearch.State>;
   pgcr$:        Observable<fromPgcr.State>;

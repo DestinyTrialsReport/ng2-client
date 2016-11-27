@@ -16,6 +16,19 @@ export class MapEffects {
               private mapService: MapsService) { }
 
   @Effect()
+  slide$: Observable<Action> = this.actions$
+    .ofType(maps.ActionTypes.SLIDE_MAP)
+    .map((action: maps.SlideMapAction) => action.payload)
+    .delay(200)
+    .switchMap(payload => {
+      if (!payload) {
+        return Observable.from([]);
+      }
+
+      return of(new maps.SearchCompleteAction(payload.week));
+    });
+
+  @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(maps.ActionTypes.SAVE_CURRENT_MAP)
     .map((action: maps.SaveCurrentMapAction) => action.payload)
@@ -30,7 +43,8 @@ export class MapEffects {
   @Effect()
   weapons$: Observable<Action> = this.actions$
     .ofType(maps.ActionTypes.SEARCH_COMPLETE)
-    .map<number>(action => action.payload)
+    .map((action: maps.SearchCompleteAction) => action.payload)
+    .delay(200)
     .switchMap(payload => {
       if (!payload) {
         return Observable.from([]);
