@@ -15,25 +15,25 @@ import {BNGStats} from "../../models/stats.model";
   <div class="player-tab__section player-stats__main">
     <div class="row stat-row">
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.kills?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.kills?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Kills</label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.deaths?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.deaths?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Deaths</label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.assists?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.assists?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Assists</label>
       </div>
     </div>
     <div class="row stat-row">
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.activitiesEntered?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.activitiesEntered?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Games</label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.activitiesWon?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.activitiesWon?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Wins</label>
       </div>
       <div class="col-xs-4 stat">
@@ -43,15 +43,15 @@ import {BNGStats} from "../../models/stats.model";
     </div>
     <div class="row stat-row">
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.score?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.score?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Rounds won</label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.allParticipantsScore?.basic?.value - stats?.score?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.allParticipantsScore?.basic?.value - stats?.score?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Rounds lost</label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.averageKillDistance?.basic?.value | number:0) || 'N/A'"></span>
+        <span [innerHtml]="(stats?.averageKillDistance?.basic?.value | number:'1.0-0') || 'N/A'"></span>
         <label>Kill distance</label>
       </div>
     </div>
@@ -63,7 +63,7 @@ import {BNGStats} from "../../models/stats.model";
         <label translate="weaponBestType"></label>
       </div>
       <div class="col-xs-6 stat">
-        <span [innerHtml]="(stats?.precisionKills?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.precisionKills?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Headshots</label>
       </div>
     </div>
@@ -72,21 +72,21 @@ import {BNGStats} from "../../models/stats.model";
     </div>
     <div class="row stat-row" *ngIf="stats">
       <div class="col-xs-4 stat stat__kills" *ngFor="let key of weaponKills">
-        <span [innerHtml]="(stats[key]?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats[key]?.basic?.value | number:'1.0-0') || 0"></span>
         <label></label>
       </div>
     </div>
     <div class="row stat-row">
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.weaponKillsGrenade?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.weaponKillsGrenade?.basic?.value | number:'1.0-0') || 0"></span>
         <label translate="weaponKillsGrenade"></label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.weaponKillsMelee?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.weaponKillsMelee?.basic?.value | number:'1.0-0') || 0"></span>
         <label translate="weaponKillsMelee"></label>
       </div>
       <div class="col-xs-4 stat">
-        <span [innerHtml]="(stats?.weaponKillsSuper?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.weaponKillsSuper?.basic?.value | number:'1.0-0') || 0"></span>
         <label translate="weaponKillsSuper"></label>
       </div>
     </div>
@@ -97,11 +97,11 @@ import {BNGStats} from "../../models/stats.model";
     </div>
     <div class="row stat-row">
       <div class="col-xs-6 stat">
-        <span [innerHtml]="(stats?.bestSingleGameKills?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.bestSingleGameKills?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Kills in one game</label>
       </div>
       <div class="col-xs-6 stat">
-        <span [innerHtml]="(stats?.mostPrecisionKills?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.mostPrecisionKills?.basic?.value | number:'1.0-0') || 0"></span>
         <label>Headshots in one game</label>
       </div>
     </div>
@@ -111,7 +111,7 @@ import {BNGStats} from "../../models/stats.model";
         <label translate="longestSingleLife"></label>
       </div>
       <div class="col-xs-6 stat">
-        <span [innerHtml]="(stats?.longestKillSpree?.basic?.value | number:0) || 0"></span>
+        <span [innerHtml]="(stats?.longestKillSpree?.basic?.value | number:'1.0-0') || 0"></span>
         <label translate="longestKillSpree"></label>
       </div>
     </div>
