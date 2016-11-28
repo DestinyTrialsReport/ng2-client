@@ -72,6 +72,7 @@ export class ReportComponent {
     if (window.innerWidth <= 960) {
       this.panActive = true;
       this.playersContainer.nativeElement.style['transition'] = 'none';
+      this.playersContainer.nativeElement.style['-webkit-transition'] = 'none';
       this.panStartX = parseFloat(window.getComputedStyle(this.playersContainer.nativeElement).transform.split(',')[4]);
       if (isNaN(this.panStartX)) {
         this.panStartX = 0;
@@ -81,17 +82,20 @@ export class ReportComponent {
 
   panMove(deltaX) {
     if (this.panActive) {
+      this.playersContainer.nativeElement.style['-webkit-transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
       this.playersContainer.nativeElement.style['transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
     }
   }
 
   panEnd(deltaX) {
+    this.playersContainer.nativeElement.style['-webkit-transition'] = null;
     this.playersContainer.nativeElement.style['transition'] = null;
+    this.playersContainer.nativeElement.style['-webkit-transform'] = null;
     this.playersContainer.nativeElement.style['transform'] = null;
 
-    if (deltaX < -10) {
+    if (deltaX < -20) {
       this.shiftPlayerFocus(1);
-    } else if (deltaX > 10) {
+    } else if (deltaX > 20) {
       this.shiftPlayerFocus(-1);
     }
     this.panActive = false;
