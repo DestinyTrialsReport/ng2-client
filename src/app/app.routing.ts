@@ -1,9 +1,8 @@
 /* tslint:disable: max-line-length */
 import { Routes } from '@angular/router';
-
 import { HomeComponent } from "./components/home/home.component";
 import { NotFound404Component } from './components/notfound404/notfound404.component';
-import { ReportComponent } from "./containers/report.component";
+import { ReportComponent } from "./components/report/report.component";
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
