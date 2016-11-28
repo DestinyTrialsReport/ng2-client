@@ -1,4 +1,4 @@
-import { Component, style, state, animate, transition, trigger, ChangeDetectionStrategy} from '@angular/core';
+import { Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
@@ -33,8 +33,11 @@ import * as playerActions from '../../actions/player.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportComponent {
-  players:  Observable<fromSearch.State>;
-  focusOnPlayer:int = 1;
+  players: Observable<fromSearch.State>;
+  focusOnPlayer: number = 1;
+  panActive: boolean = false;
+  panStartX: number;
+  @ViewChild('playersContainer') playersContainer: ElementRef;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
@@ -61,7 +64,36 @@ export class ReportComponent {
     this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
   }
 
-  shiftPlayerFocus(direction: int) {
+  shiftPlayerFocus(direction: number) {
     this.focusOnPlayer = Math.max(1, Math.min(3, this.focusOnPlayer + ((window.innerWidth > 768 ? 2 : 1) * direction)));
+  }
+
+  panStart() {
+    if (window.innerWidth <= 960) {
+      this.panActive = true;
+      this.playersContainer.nativeElement.style['transition'] = 'none';
+      this.panStartX = parseFloat(window.getComputedStyle(this.playersContainer.nativeElement).transform.split(',')[4]);
+      if (isNaN(this.panStartX)) {
+        this.panStartX = 0;
+      }
+    }
+  }
+
+  panMove(deltaX) {
+    if (this.panActive) {
+      this.playersContainer.nativeElement.style['transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
+    }
+  }
+
+  panEnd(deltaX) {
+    this.playersContainer.nativeElement.style['transition'] = null;
+    this.playersContainer.nativeElement.style['transform'] = null;
+
+    if (deltaX < -10) {
+      this.shiftPlayerFocus(1);
+    } else if (deltaX > 10) {
+      this.shiftPlayerFocus(-1);
+    }
+    this.panActive = false;
   }
 }

@@ -1,7 +1,7 @@
 <div class="report" [ngClass]="{ 'report--focus-on-player-one': focusOnPlayer === 1,
                                  'report--focus-on-player-two': focusOnPlayer === 2,
                                  'report--focus-on-player-three': focusOnPlayer === 3 }">
-  <div class="report__players" id="playerContainer">
+  <div class="report__players" (panstart)="panStart($event)" (panmove)="panMove($event.deltaX)" (panend)="panEnd($event.deltaX)" #playersContainer>
     <div class="report__player" id="player1" [@player1Present]="(players | async)?.player1?.player" player></div>
     <div class="report__player" id="player2"  [@player2Present]="(players | async)?.player2?.player" player></div>
     <div class="report__player" id="player3"  [@player3Present]="(players | async)?.player3?.player" player></div>
