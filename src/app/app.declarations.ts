@@ -18,6 +18,8 @@ import { ClassStatsComponent } from "./components/equipped/class-stats.component
 import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
 import { EquippedTabComponent } from "./components/equipped/equipped-tab.component";
 import {LastMatchesTabComponent} from "./components/last-matches/last-matches-tab.component";
+import {TimeAgo} from "./pipes/time-ago.pipe";
+import {StatsTabComponent} from "./components/stats-tab/stats-tab.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -35,6 +37,7 @@ export const APP_DECLARATIONS = [
   StreakIconPipe,
   FooterComponent,
   EquippedTabComponent,
+  StatsTabComponent,
   EquippedGearComponent,
   LastMatchesTabComponent,
   SubclassComponent,
@@ -44,5 +47,6 @@ export const APP_DECLARATIONS = [
   FilterArmor,
   FilterClassStats,
   FilterClassArmor,
+  TimeAgo,
   ClassStatsComponent
 ];

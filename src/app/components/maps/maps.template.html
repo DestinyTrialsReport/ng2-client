@@ -1,4 +1,4 @@
-<div class="card maps" [@animation]="slideMap">
+<div class="card maps" [@animation]="slideMap$ | async">
   <div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (mapInfo$ | async)?.pgcrImage + ')'}">
     <div class="row middle-xs">
       <div class="col-xs">
@@ -60,7 +60,7 @@
             <div class="stat-label">Diff. to avg</div>
           </div>
         </div>
-        <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (weaponUsage$ | async)?.primary'>
+        <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (primary$ | async)'>
           <div class="col-xs-6 col-sm-4">
             <img class="weapon-type-icon"
                  [src]="weapon?.file_name"
@@ -89,7 +89,7 @@
             <div class="stat-label">Diff. to avg</div>
           </div>
         </div>
-        <div class="stat-table__row row row--small-gutter" *ngFor='let weapon of (weaponUsage$ | async)?.special'>
+        <div class="stat-table__row row row--small-gutter" *ngFor='let weapon of (special$ | async)'>
           <div class="col-xs-6 col-sm-4">
             <img class="weapon-type-icon img-responsive"
                  [src]="weapon?.file_name"

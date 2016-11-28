@@ -26,7 +26,7 @@ const bngValuesInitial: StatValue = {
   }
 };
 
-const bngInitial: BNGStats = {
+const bngInitial: any = {
   activitiesWon: bngValuesInitial,
   activitiesEntered: bngValuesInitial,
   killsDeathsRatio: bngValuesInitial
@@ -70,11 +70,7 @@ export function reducer(state = initialState, action: stats.Actions): State {
   switch (action.type) {
 
     case stats.ActionTypes.BNG_STATS: {
-      const bngStats: BNGStats = {
-        activitiesWon: action.payload[0].activitiesWon,
-        activitiesEntered: action.payload[0].activitiesEntered,
-        killsDeathsRatio: action.payload[0].killsDeathsRatio
-      };
+      const bngStats: BNGStats = action.payload[0];
       const playerId: string = action.payload[1];
 
       const updated: State = Object.assign({}, state[playerId], {

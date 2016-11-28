@@ -6,6 +6,7 @@ import { type }       from '../util';
 export const ActionTypes = {
   CURRENT_MAP:      type('[Map] Current Map'),
   SAVE_CURRENT_MAP: type('[Map] Save Current Map'),
+  SLIDE_MAP:        type('[Map] Slide Map'),
   SEARCH_MAP:       type('[Map] Search Map'),
   SEARCH_COMPLETE:  type('[Map] Search Map Complete'),
   SEARCH_FAILED:    type('[Map] Search Map Failed'),
@@ -22,6 +23,12 @@ export class SaveCurrentMapAction implements Action {
   type = ActionTypes.SAVE_CURRENT_MAP;
 
   constructor(public payload: CurrentMap) { }
+}
+
+export class SlideMapAction implements Action {
+  type = ActionTypes.SLIDE_MAP;
+
+  constructor(public payload: {direction: string, week: number}) { }
 }
 
 
@@ -53,6 +60,7 @@ export type Actions
   = SearchMapAction
   | SaveCurrentMapAction
   | CurrentMapAction
+  | SlideMapAction
   | SearchCompleteAction
   | SearchFailedAction
   | LoadMapDataAction;

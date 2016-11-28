@@ -17,8 +17,9 @@ export interface State {
     primary: WeaponTotals,
     special: WeaponTotals
   }
-  loading: boolean;
-  loaded: boolean;
+  primaryAvg: WeaponUsage[];
+  specialAvg: WeaponUsage[];
+  slideMap: string;
 }
 
 const initialState: State = {
@@ -32,12 +33,43 @@ const initialState: State = {
   mapInfo: null,
   weaponStats: [],
   weaponTotals: null,
-  loading: false,
-  loaded: true
+  primaryAvg: [],
+  specialAvg: [],
+  slideMap: 'idle'
 };
 
 export function reducer(state = initialState, action: map.Actions): State {
   switch (action.type) {
+
+    case map.ActionTypes.SLIDE_MAP: {
+      const payload:any = action.payload;
+
+      if (!payload) {
+        return {
+          currentMap: state.currentMap,
+          mapInfo: state.mapInfo,
+          weaponStats: state.weaponStats,
+          weaponTotals: state.weaponTotals,
+          primaryAvg: state.primaryAvg,
+          specialAvg: state.specialAvg,
+          slideMap: 'idle'
+        };
+      }
+
+      return Object.assign({}, state, {
+        slideMap: action.payload.direction
+      });
+    }
+
+    case map.ActionTypes.SEARCH_COMPLETE: {
+      return Object.assign({}, state, {
+        currentMap: state.currentMap,
+        mapInfo: state.mapInfo,
+        weaponStats: state.weaponStats,
+        weaponTotals: state.weaponTotals,
+        slideMap: state.slideMap === 'left' ? 'right' : (state.slideMap === 'right' ? 'left' : 'idle')
+      });
+    }
 
     case map.ActionTypes.SAVE_CURRENT_MAP: {
       const payload:any = action.payload;
@@ -48,18 +80,15 @@ export function reducer(state = initialState, action: map.Actions): State {
           mapInfo: state.mapInfo,
           weaponStats: state.weaponStats,
           weaponTotals: state.weaponTotals,
-          loading: false,
-          loaded: false
+          primaryAvg: state.primaryAvg,
+          specialAvg: state.specialAvg,
+          slideMap: 'idle'
         };
       }
 
       return Object.assign({}, state, {
         currentMap: Object.assign({}, state.currentMap, action.payload),
-        mapInfo: state.mapInfo,
-        weaponStats: state.weaponStats,
-        weaponTotals: state.weaponTotals,
-        loading: true,
-        loaded: false
+        slideMap: 'idle'
       });
     }
 
@@ -72,8 +101,9 @@ export function reducer(state = initialState, action: map.Actions): State {
           mapInfo: state.mapInfo,
           weaponStats: state.weaponStats,
           weaponTotals: state.weaponTotals,
-          loading: false,
-          loaded: false
+          primaryAvg: state.primaryAvg,
+          specialAvg: state.specialAvg,
+          slideMap: state.slideMap
         };
       }
 
@@ -102,6 +132,24 @@ export function reducer(state = initialState, action: map.Actions): State {
         bucketSum: specials.map(w => w.sum_kills).reduce((acc, x) => acc + x, 0)
       };
 
+      const primaryAvg: WeaponUsage[] = weaponUsage.filter(w => w.bucketName == 'primary').map(w => {
+        const avgPercentage:number = 100 * (w.sum_kills / primary.bucketSum);
+        const killPercentage:number =  100 * (w.kills / primary.sum);
+        return Object.assign({}, w, {
+          killPercentage: killPercentage,
+          diffPercentage: killPercentage - avgPercentage
+        });
+      });
+
+      const specialAvg: WeaponUsage[] = weaponUsage.filter(w => w.bucketName == 'special').map(w => {
+        const avgPercentage:number = 100 * (w.sum_kills / special.bucketSum);
+        const killPercentage:number =  100 * (w.kills / special.sum);
+        return Object.assign({}, w, {
+          killPercentage: killPercentage,
+          diffPercentage: killPercentage - avgPercentage
+        });
+      });
+
       return Object.assign({}, state, {
         currentMap: state.currentMap,
         mapInfo: Object.assign({}, payload.map_info[0], CRUCIBLE_MAPS[payload.map_info[0].referenceId]),
@@ -110,8 +158,9 @@ export function reducer(state = initialState, action: map.Actions): State {
           primary: primary,
           special: special
         },
-        loading: true,
-        loaded: false
+        primaryAvg: primaryAvg,
+        specialAvg: specialAvg,
+        slideMap: 'idle'
       });
     }
 

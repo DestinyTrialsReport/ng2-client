@@ -92,7 +92,7 @@ export function reducer(state = initialState, action: player.Actions | activity.
     }
 
     case inventory.ActionTypes.SEARCH_INVENTORY: {
-      const playerId: string = action.payload[1];
+      const playerId: string = action.payload['player'];
 
       const newState: boolean = Object.assign({}, state[playerId], {
         inventory: true

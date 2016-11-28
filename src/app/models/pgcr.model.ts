@@ -1,3 +1,10 @@
+export interface MatchPayload {
+  instanceId: string;
+  team: number;
+  standing: number;
+  period: string;
+}
+
 export interface PGCR {
   id: number,
   period: string,
@@ -6,20 +13,55 @@ export interface PGCR {
     instanceId: string,
     mode: number
   },
-  values: {
-    assists: Value,
-    kills: Value,
-    deaths: Value,
-    team: Value,
-    standing: Value
-  },
   entries: Entry[]
+  teams: Team[]
+}
+
+export interface Team {
+  teamId: number,
+  standing: Value,
+  score: Value,
+  teamName: string
 }
 
 export interface Entry {
   standing: number,
   score: Value,
-  characterId: string
+  characterId: string,
+  values: Values,
+  extended: Extended
+}
+
+export interface Values {
+  team: Value;
+  standing: Value;
+  assists: Value;
+  kills: Value;
+  activityDurationSeconds: Value;
+  averageScorePerKill: Value;
+  averageScorePerLife: Value;
+  deaths: Value;
+  killsDeathsAssists: Value;
+  killsDeathsRatio: Value;
+  precisionKills: Value;
+  resurrectionsPerformed: Value;
+  averageLifespan: Value;
+}
+
+export interface ValuesR {
+  team?: number;
+  standing?: number;
+  assists: number;
+  kills: number;
+  activityDurationSeconds: number;
+  averageScorePerKill: number;
+  averageScorePerLife: number;
+  deaths: number;
+  killsDeathsAssists: number;
+  killsDeathsRatio: number;
+  precisionKills: number;
+  resurrectionsPerformed: number;
+  averageLifespan: number;
 }
 
 export interface Value {
@@ -28,4 +70,39 @@ export interface Value {
     value: number,
     displayValue: string
   }
+}
+
+export interface Extended {
+  weapons: ExtendedWeapons[];
+  values: {
+    averageLifespan: Value;
+  }
+}
+
+export interface ExtendedWeapons {
+  referenceId: number;
+  values: WeaponValue;
+}
+
+export interface WeaponValue {
+  name?: string;
+  icon?: string;
+  uniqueWeaponKills: Value;
+  uniqueWeaponPrecisionKills: Value;
+  uniqueWeaponKillsPrecisionKills: Value;
+}
+
+export interface WeaponValueR {
+  name: string;
+  icon: string;
+  uniqueWeaponKills: number;
+  uniqueWeaponPrecisionKills: number;
+  uniqueWeaponKillsPrecisionKills: number;
+}
+
+export interface Medal {
+  value: number;
+  name: string;
+  description: string;
+  icon: string;
 }

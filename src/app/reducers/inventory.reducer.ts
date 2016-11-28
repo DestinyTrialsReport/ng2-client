@@ -20,12 +20,15 @@ export function reducer(state = initialState, action: inventory.Actions): State 
   switch (action.type) {
 
     case inventory.ActionTypes.SEARCH_INVENTORY: {
-      const itemsDef: ItemDefinitions = action.manifestItems;
-      const talents: TalentDefinitions = action.manifestTalents;
-      const stepsDef: StepsDefinitions = action.manifestSteps;
+      // const itemsDef: ItemDefinitions = action.manifestItems;
+      // const stepsDef: StepsDefinitions = action.manifestSteps;
+      // const talents: TalentDefinitions = action.manifestTalents;
+      const itemsDef: ItemDefinitions = action.payload['itemDefs'];
+      const talents: TalentDefinitions = action.payload['talentDefs'];
+      const stepsDef: StepsDefinitions = action.payload['stepsDefs'];
 
-      const playerId: string = action.payload[1];
-      const items: Item[] = action.payload[0]
+      const playerId: string = action.payload['player'];
+      const items: Item[] = action.payload['inventory']
         .map(inv => Object.assign({}, {
           bucketHash: inv.bucketHash,
           nodes: inv.items[0].nodes.filter(node => node.isActivated),

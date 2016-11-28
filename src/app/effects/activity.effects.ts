@@ -10,15 +10,25 @@ import * as activities from '../actions/activity.actions';
 import * as player from '../actions/player.actions';
 import * as pgcr from '../actions/pgcr.actions';
 import {Observable} from "rxjs";
-import {PGCR} from "../models/pgcr.model";
-import {Action} from "@ngrx/store";
+import {PGCR, Entry} from "../models/pgcr.model";
+import {Action, Store} from "@ngrx/store";
+import * as fromRoot      from '../reducers';
+import {LocalStorageService} from "ng2-webstorage";
+import {ItemDefinitions} from "../models/manifest.model";
 
 @Injectable()
 
 export class ActivityEffects {
 
+  itemDefs: ItemDefinitions;
+
   constructor(private actions$: Actions,
-              private playerService: PlayerService) { }
+              private playerService: PlayerService,
+              public storage: LocalStorageService,
+              private store: Store<fromRoot.State>) {
+    this.itemDefs = this.storage.retrieve('manifestItems');
+    this.storage.observe('manifestItems').subscribe(manifestItems => this.itemDefs = manifestItems);
+  }
 
   @Effect()
   activities$: Observable<Action> = this.actions$
@@ -44,18 +54,28 @@ export class ActivityEffects {
   @Effect()
   searchPGCR$: Observable<Action> = this.actions$
     .ofType(pgcr.ActionTypes.SEARCH_PGCR)
-    .map<string[]>(action => action.payload)
-    .mergeMap(payload => {
-      let matches = [];
-
-      payload.forEach(match => {
-        matches.push(
-          this.playerService.pgcr(match)
+    .map((action: pgcr.SearchPGCR) => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .map(([payload, state]) => {
+      return {
+        payload: payload,
+        player: state[payload.player]
+      }
+    })
+    .mergeMap(response =>
+        this.playerService.pgcr(response.payload.match.instanceId)
+          .map((res: PGCR) => {
+            const entry: Entry = res.entries.filter(entry => entry.characterId === response.player.characterBase.characterId).shift();
+            const weaponIds = entry.extended.weapons ? entry.extended.weapons.map(weapon => weapon.referenceId) : [0];
+            return new pgcr.StorePGCR({
+              teams: res.teams,
+              match: response.payload.match,
+              entry: entry,
+              player: response.payload.player,
+              definitions: weaponIds.reduce((weaponDefinitions, weaponId) => Object.assign(weaponDefinitions, {[weaponId]: this.itemDefs[weaponId]}), {})
+            })
+          })
           .catch((err) => of(new player.SearchFailed(err)))
-        );
-      });
-      return Observable.forkJoin( matches )
-        .map((res: PGCR[]) => new pgcr.StorePGCR(res))
-    });
+      );
 
 }
