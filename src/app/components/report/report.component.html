@@ -2,9 +2,9 @@
                                  'report--focus-on-player-two': focusOnPlayer === 2,
                                  'report--focus-on-player-three': focusOnPlayer === 3 }">
   <div class="report__players" (panstart)="panStart($event)" (panmove)="panMove($event.deltaX)" (panend)="panEnd($event.deltaX)" #playersContainer>
-    <div class="report__player" id="player1" [@playerLoaded]="(players | async)?.player1?.inventory" player></div>
-    <div class="report__player" id="player2" [@playerLoaded]="(players | async)?.player2?.inventory" player></div>
-    <div class="report__player" id="player3" [@playerLoaded]="(players | async)?.player3?.inventory" player></div>
+    <player class="report__player" id="player1" [@playerLoaded]="(players | async)?.player1?.inventory"></player>
+    <player class="report__player" id="player2" [@playerLoaded]="(players | async)?.player2?.inventory"></player>
+    <player class="report__player" id="player3" [@playerLoaded]="(players | async)?.player3?.inventory"></player>
   </div>
   <div class="report__shift-focus report__shift-focus--left" (click)="shiftPlayerFocus(-1)"></div>
   <div class="report__shift-focus report__shift-focus--right" (click)="shiftPlayerFocus(1)"></div>
