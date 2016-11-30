@@ -11,6 +11,11 @@
   white-space: nowrap;
   transition: transform cubic-bezier(0.4, 0.0, 0.2, 1) .3s;
   will-change: transform;
+
+  background-image: url('/assets/img/loading.svg'), url('/assets/img/loading.svg'), url('/assets/img/loading.svg');
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 2rem, 2rem, 2rem;
+  background-position: 15% 50vh, center 50vh, 85% 50vh;
 }
 
 .report__player {
@@ -21,7 +26,7 @@
   width: 25vw;
   min-width: 280px;
   max-width: 380px;
-  transform: translate3d(0, 0, 0);
+  transition: .5s transform cubic-bezier(0.0, 0.0, 0.2, 1), .5s opacity linear;
 
   &:nth-child(1) {
     padding-right: .333rem;
