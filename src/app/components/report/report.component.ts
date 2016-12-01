@@ -9,23 +9,23 @@ import * as playerActions from '../../actions/player.actions';
 @Component({
   selector: 'report',
   animations: [
-    trigger('player1Present', [
-      state('null' , style({opacity: 0})),
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
-      transition('* => true', animate('1s ease-in'))
-    ]),
-    trigger('player2Present', [
-      state('null' , style({opacity: 0})),
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
-      transition('* => true', animate('1s ease-in'))
-    ]),
-    trigger('player3Present', [
-      state('null' , style({opacity: 0})),
-      state('true' , style({opacity: 1})),
-      state('false', style({opacity: 0})),
-      transition('* => true', animate('1s ease-in'))
+    trigger('playerLoaded', [
+      state('null' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('undefined' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('false', style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('true' , style({
+        transform: 'translate3d(0, 0rem, 0)',
+        opacity: 1
+      }))
     ])
   ],
   templateUrl: './report.component.html',

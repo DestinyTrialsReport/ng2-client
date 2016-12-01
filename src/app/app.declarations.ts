@@ -4,7 +4,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { ReportComponent } from "./components/report/report.component";
 import { NotFound404Component } from "./components/notfound404/notfound404.component";
 import { QuickStats } from "./components/quick-stats.component";
-import { PlayerComponent } from "./containers/player.component";
+import { PlayerComponent } from "./components/player/player.component";
 import { Emblem } from "./components/emblem.component";
 import { ActivityChartComponent } from "./components/activities-chart.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
