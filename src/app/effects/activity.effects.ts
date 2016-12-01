@@ -34,17 +34,32 @@ export class ActivityEffects {
   activities$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map<[Player, string]>(action => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .map(([payload, state]) => {
+      return {
+        character: payload[0],
+        player: state[payload[1]] ? state[payload[1]] : state['player1'],
+        playerIndex: payload[1]
+      }
+    })
     .mergeMap(payload =>
-      this.playerService.activities(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
-        .map((res: any) => new activities.ActivityActions([res, payload[1]]))
+      this.playerService.activities(payload.player.membershipType, payload.player.membershipId, payload.character.characterBase.characterId)
+        .map((res: any) => new activities.ActivityActions([res, payload.playerIndex]))
         .catch((err) => of(new player.SearchFailed(err)))
     );
 
   @Effect() recentActivity$: Observable<Action> = this.actions$
     .ofType(activities.ActionTypes.SEARCH_ACTIVITY)
     .map<[Activity[], string]>(action => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getMyPlayerState))
+    .map(([payload, state]) => {
+      return {
+        name: payload[1],
+        myReport: state.loaded
+      }
+    })
     .mergeMap(payload => {
-      if (payload[1] !== 'player1') {
+      if (payload.name !== 'player1' || payload.myReport) {
         return Observable.from([]);
       }
       return of(new player.SearchTeammates());

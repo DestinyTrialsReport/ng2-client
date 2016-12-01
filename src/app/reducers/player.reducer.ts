@@ -1,5 +1,6 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Player, Character } from "../models/player.model";
+import * as myPlayer from "../actions/my-player.actions";
 import * as player from "../actions/player.actions";
 import {Observable} from "rxjs";
 
@@ -16,9 +17,10 @@ const initialState: State = {
   player3: null
 };
 
-export function reducer(state = initialState, action: player.Actions): State {
+export function reducer(state = initialState, action: player.Actions | myPlayer.Actions): State {
   switch (action.type) {
 
+    case myPlayer.ActionTypes.SEARCH_MY_COMPLETE:
     case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
       const player: Player = action.payload[0];
@@ -35,8 +37,8 @@ export function reducer(state = initialState, action: player.Actions): State {
 
     case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
-      const player: Player = action.payload[0];
-      const character: Character = player.characters[0];
+      const character: Character = action.payload[0];
+      // const character: Character = player.characters[0];
 
       const updated: Player = Object.assign({}, state[playerId], {
         characterBase: {
@@ -46,7 +48,10 @@ export function reducer(state = initialState, action: player.Actions): State {
           stats: character.characterBase.stats
         },
         emblemPath: character.emblemPath,
-        backgroundPath: character.backgroundPath
+        backgroundPath: character.backgroundPath,
+        membershipId: character.membershipId ? character.membershipId : state[playerId].membershipId,
+        membershipType: character.membershipType ? character.membershipType : state[playerId].membershipType,
+        displayName: character.displayName ? character.displayName : state[playerId].displayName
       });
 
       return Object.assign({}, state, {

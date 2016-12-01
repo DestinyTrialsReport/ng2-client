@@ -1,0 +1,7 @@
+<div class="report" class="report--focus-on-player-one">
+  <div class="report__players">
+    <player class="report__player" id="player1" [@playerLoaded]="(players | async)?.player1?.inventory"></player>
+    <player class="report__player" id="player2" [@playerLoaded]="(players | async)?.player2?.inventory"></player>
+    <player class="report__player" id="player3" [@playerLoaded]="(players | async)?.player3?.inventory"></player>
+  </div>
+</div>

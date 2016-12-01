@@ -47,11 +47,11 @@
           </div>
         </div>
         <!-- TODO: Can we make sure these pop-up a bit earlier? -->
-        <div class="search__player" *ngIf="(player2$ | async)?.displayName">
+        <div class="search__player" *ngIf="(player2$ | async)?.displayName && !(myReport$ | async)">
           <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
                  [placeholder]="(player2$ | async)?.displayName">
         </div>
-        <div class="search__player" *ngIf="(player3$ | async)?.displayName">
+        <div class="search__player" *ngIf="(player3$ | async)?.displayName && !(myReport$ | async)">
           <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
                  [placeholder]="(player3$ | async)?.displayName">
         </div>

@@ -10,11 +10,7 @@ import * as playerActions from '../../actions/player.actions';
   selector: 'report',
   animations: [
     trigger('playerLoaded', [
-      state('null' , style({
-        transform: 'translate3d(0, 2rem, 0)',
-        opacity: 0
-      })),
-      state('undefined' , style({
+      state('void' , style({
         transform: 'translate3d(0, 2rem, 0)',
         opacity: 0
       })),
@@ -25,7 +21,11 @@ import * as playerActions from '../../actions/player.actions';
       state('true' , style({
         transform: 'translate3d(0, 0rem, 0)',
         opacity: 1
-      }))
+      })),
+      transition(
+        "void => *, false => *",
+        [animate("500ms cubic-bezier(0.0, 0.0, 0.2, 1), .5s opacity linear", style({transform: "translate3d(0, 0rem, 0)"}))]
+      )
     ])
   ],
   templateUrl: './report.component.html',
@@ -57,11 +57,11 @@ export class ReportComponent {
           }
         }
       })
-      .subscribe(data => this.store.dispatch(new playerActions.SearchPlayer([data.platform, data.player, 'player1'])));
+      .subscribe(data => this.store.dispatch(new playerActions.SearchPlayer({platform: data.platform, name: data.player, playerIndex: 'player1'})));
   }
 
   search(platform: number, name: string) {
-    this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
+    this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: name, playerIndex: 'player1'}));
   }
 
   shiftPlayerFocus(direction: number) {

@@ -1,6 +1,7 @@
 /* tslint:disable: no-switch-case-fall-through */
 import '@ngrx/core/add/operator/select';
 import * as player from '../actions/player.actions';
+import * as myPlayer from '../actions/my-player.actions';
 import * as activity from '../actions/activity.actions';
 import * as inventory from '../actions/inventory.actions';
 
@@ -43,7 +44,7 @@ const initialState: State = {
   }
 };
 
-export function reducer(state = initialState, action: player.Actions | activity.Actions | inventory.Actions): State {
+export function reducer(state = initialState, action: player.Actions | myPlayer.Actions | activity.Actions | inventory.Actions): State {
   switch (action.type) {
     case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
@@ -63,6 +64,7 @@ export function reducer(state = initialState, action: player.Actions | activity.
       });
     }
 
+    case myPlayer.ActionTypes.SEARCH_MY_ACCOUNT:
     case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
 

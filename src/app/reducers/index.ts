@@ -5,6 +5,7 @@ import { storeLogger } from 'ngrx-store-logger';
 import * as fromAuth from './auth.reducer';
 import * as fromMaps from './maps.reducer';
 import * as fromPlayers from './player.reducer';
+import * as fromMyPlayers from './my-player.reducer';
 import * as fromActivities from './activity.reducer';
 import * as fromInventories from './inventory.reducer';
 import * as fromStats from './stats.reducer';
@@ -20,6 +21,7 @@ export interface State {
   map: fromMaps.State;
   search: fromSearch.State;
   players: fromPlayers.State;
+  characters: fromMyPlayers.State;
   activities: fromActivities.State;
   inventory: fromInventories.State;
   stats: fromStats.State;
@@ -31,6 +33,7 @@ export const reducers = {
   map: fromMaps.reducer,
   search: fromSearch.reducer,
   players: fromPlayers.reducer,
+  characters: fromMyPlayers.reducer,
   activities: fromActivities.reducer,
   inventory: fromInventories.reducer,
   stats: fromStats.reducer,
@@ -39,6 +42,10 @@ export const reducers = {
 
 export function getPlayerState(state$: Observable<State>) {
   return state$.select(s => s.players);
+}
+
+export function getMyPlayerState(state$: Observable<State>) {
+  return state$.select(s => s.characters);
 }
 
 export function getPgcrState(state$: Observable<State>) {

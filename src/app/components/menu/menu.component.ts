@@ -21,6 +21,7 @@ export class MenuComponent {
   player1$: Observable<Player>;
   player2$: Observable<Player>;
   player3$: Observable<Player>;
+  myReport$: Observable<boolean>;
   @Input() query: string = '';
   @Input() searching = false;
 
@@ -29,6 +30,7 @@ export class MenuComponent {
     this.player1$ = store.select(state => state.players.player1);
     this.player2$ = store.select(state => state.players.player2);
     this.player3$ = store.select(state => state.players.player3);
+    this.myReport$ = store.select(state => state.characters.loaded);
   }
 
   search(platform: number, name: string) {

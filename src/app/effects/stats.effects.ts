@@ -1,7 +1,7 @@
 /* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { of } from 'rxjs/observable/of';
@@ -9,18 +9,21 @@ import { PlayerService } from '../services/player.service';
 
 import { Player } from "../models/player.model";
 import * as player from '../actions/player.actions';
+import * as myPlayer from '../actions/my-player.actions';
 import * as stats from '../actions/stats.actions';
+import * as fromRoot      from '../reducers';
 
 @Injectable()
 
 export class StatsEffects {
 
   constructor(private actions$: Actions,
+              private store: Store<fromRoot.State>,
               private playerService: PlayerService) {}
 
   @Effect()
   dtrStats$: Observable<Action> = this.actions$
-    .ofType(player.ActionTypes.SEARCH_COMPLETE)
+    .ofType(player.ActionTypes.SEARCH_COMPLETE || myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
@@ -34,7 +37,7 @@ export class StatsEffects {
 
   @Effect()
   gggStats$: Observable<Action> = this.actions$
-    .ofType(player.ActionTypes.SEARCH_COMPLETE)
+    .ofType(player.ActionTypes.SEARCH_COMPLETE || myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
     .map<[Player, string]>(action => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
@@ -50,9 +53,17 @@ export class StatsEffects {
   bngStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map<[Player, string]>(action => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .map(([payload, state]) => {
+      return {
+        character: payload[0],
+        player: state[payload[1]] ? state[payload[1]] : state['player1'],
+        playerIndex: payload[1]
+      }
+    })
     .mergeMap(payload =>
-      this.playerService.bngStats(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
-        .map((res: any) => new stats.BngStatActions([res, payload[1]]))
+      this.playerService.bngStats(payload.player.membershipType, payload.player.membershipId, payload.character.characterBase.characterId)
+        .map((res: any) => new stats.BngStatActions([res, payload.playerIndex]))
         .catch((err) => of(new player.SearchFailed(err)))
     );
 

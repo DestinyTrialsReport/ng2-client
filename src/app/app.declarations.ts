@@ -20,6 +20,7 @@ import { EquippedTabComponent } from "./components/equipped/equipped-tab.compone
 import { LastMatchesTabComponent } from "./components/last-matches/last-matches-tab.component";
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
+import { MyReportComponent } from "./components/my-report/my-report.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -27,6 +28,7 @@ export const APP_DECLARATIONS = [
   HomeComponent,
   NotFound404Component,
   ReportComponent,
+  MyReportComponent,
   Emblem,
   QuickStats,
   PlayerComponent,

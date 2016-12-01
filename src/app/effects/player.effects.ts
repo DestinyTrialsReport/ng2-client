@@ -13,6 +13,7 @@ import { ItemDefinitions, TalentDefinitions, StepsDefinitions } from "../models/
 
 import * as inventories from '../actions/inventory.actions';
 import * as player from '../actions/player.actions';
+import * as myPlayer from '../actions/my-player.actions';
 import * as fromRoot      from '../reducers';
 
 @Injectable()
@@ -41,13 +42,19 @@ export class PlayerEffects {
     .debounceTime(300)
     .map((action: player.SearchPlayer) => action.payload)
     .mergeMap(query => {
-      if (query[1] === '') {
+      if (query.name === '') {
         return Observable.from([]);
       }
 
-      return this.playerService.search(query[0], query[1])
-        .map(searched => new player.SearchCompleteAction([searched, query[2]]))
-        .catch(() => of(new player.SearchFailed(new Error('error'))));
+      return this.playerService.search(query.platform, query.name)
+        .map(searched => {
+          if (query.playerIndex === 'myPlayer') {
+            return new myPlayer.SearchMyCompleteAction([searched, 'player1'])
+          } else {
+            return new player.SearchCompleteAction([searched, query.playerIndex])
+          }
+        })
+        .catch(() => of(new player.SearchPlayerFailed(new Error('searching player failed'))));
     });
 
   @Effect()
@@ -60,7 +67,22 @@ export class PlayerEffects {
       }
 
       return this.playerService.account(payload[0].membershipType, payload[0].membershipId)
-        .map(searched => new player.SearchAccount([searched, payload[1]]))
+        .map(searched => new player.SearchAccount([searched.characters[0], payload[1]]))
+        .catch((err) => of(new player.SearchFailed(err)));
+    });
+
+  @Effect()
+  myAccount$: Observable<Action> = this.actions$
+    .ofType(myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
+    .map<[Player,string]>(action => action.payload)
+    .mergeMap(payload => {
+      console.log(payload)
+      if (!payload[1] || payload[1] !== 'player1') {
+        return Observable.from([]);
+      }
+
+      return this.playerService.account(payload[0].membershipType, payload[0].membershipId)
+        .map(searched => new myPlayer.SearchMyAccount([searched, 'player1']))
         .catch((err) => of(new player.SearchFailed(err)));
     });
 
@@ -97,16 +119,24 @@ export class PlayerEffects {
   @Effect()
   inventory$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
-    .map((action: inventories.InventoryActions) => action.payload)
-    .mergeMap(payload =>
-      this.playerService.inventory(payload[0].membershipType, payload[0].membershipId, payload[0].characters[0].characterBase.characterId)
+    .map((action: player.SearchAccount) => action.payload)
+    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .map(([payload, state]) => {
+      return {
+        character: payload[0],
+        player: state[payload[1]] ? state[payload[1]] : state['player1'],
+        playerIndex: payload[1]
+      }
+    })
+    .mergeMap(response =>
+      this.playerService.inventory(response.player.membershipType, response.player.membershipId, response.character.characterBase.characterId)
         .map((res: any) => {
           const weapons = res.map(weapon => weapon.items[0]);
           const weaponIds = weapons.map(weapon => weapon.itemHash);
           const talentIds = weapons.map(weapon => weapon.talentGridHash);
           return new inventories.InventoryActions({
             inventory: res,
-            player: payload[1],
+            player: response.playerIndex,
             itemDefs: weaponIds.reduce((definitions, id) => Object.assign(definitions, {[id]: this.itemDefs[id]}), {}),
             talentDefs: talentIds.reduce((definitions, id) => Object.assign(definitions, {[id]: this.talentDefs[id]}), {}),
             stepsDefs: this.stepsDefs

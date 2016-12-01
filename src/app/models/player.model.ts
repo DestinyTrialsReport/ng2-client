@@ -15,13 +15,16 @@ export interface Player {
 
 export interface Character {
   characterBase: {
-    characterId: string,
-    powerLevel: number,
-    grimoireScore: number,
-    stats: ClassStat[]
+    characterId: string;
+    powerLevel: number;
+    grimoireScore: number;
+    stats: ClassStat[];
   },
-  emblemPath: string,
-  backgroundPath: string
+  emblemPath: string;
+  backgroundPath: string;
+  membershipId?: string;
+  membershipType?: number;
+  displayName?: string;
 }
 
 export interface ClassStat {
