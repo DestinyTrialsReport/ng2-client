@@ -14,6 +14,14 @@ import * as playerActions from '../../actions/player.actions';
         transform: 'translate3d(0, 2rem, 0)',
         opacity: 0
       })),
+      state('null' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('undefined' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
       state('false', style({
         transform: 'translate3d(0, 2rem, 0)',
         opacity: 0
