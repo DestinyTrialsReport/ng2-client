@@ -19,7 +19,7 @@
     transition: border-left-width linear .1s;
 
     &:hover {
-      border-left: 5px solid $info;
+      border-left: 5px solid $info-color;
       background: #fafafa;
       color: #000;
     }

@@ -3,7 +3,7 @@ import { Activity } from "../models/activity.model";
 import { BNGStats } from "../models/stats.model";
 
 @Component({
-  selector: '[activities-chart]',
+  selector: 'activities-chart',
   host: {
     'class': 'player__content player-quick-look'
   },

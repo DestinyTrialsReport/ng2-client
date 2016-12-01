@@ -2,7 +2,7 @@
   background: center bottom no-repeat;
   background-size: auto 20em;
   @include image-fade('down', 'small');
-  color: darken($light-main, 10%);
+  color: darken($light-main-color, 10%);
   position: relative;
   z-index: 1;
 }

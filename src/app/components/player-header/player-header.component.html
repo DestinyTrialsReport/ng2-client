@@ -1,0 +1,26 @@
+<div class="player-header" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + playerObs?.backgroundPath + ')'}">
+  <div class="row row--no-gutter middle-xs" [@loaded]="playerObs ? 'true' : 'false'">
+    <div class="col-xs-shrink">
+      <img class="player-header__emblem" alt="Emblem" [src]="'https://www.bungie.net' + playerObs?.emblemPath">
+    </div>
+    <div class="col-xs row row--small-gutter middle-xs">
+      <div class="col-xs player-info">
+        <h2 class="player-header__title" [innerText]="playerObs?.displayName"></h2>
+        <div class="player-header__subtext" [innerText]="subclass?.n"></div>
+        <!--<div ng-repeat="hazard in player.nonHazard track by $index" ng-bind="hazard" class="player-hazard">-->
+        <!--</div>-->
+        <!--<div ng-repeat="hazard in player.nonHazardCharity track by $index" ng-bind="hazard.status" class="player-hazard player-hazard&#45;&#45;charity1"-->
+             <!--data-template-url="shared/popovers/charity1.popover.html" data-placement="bottom" bs-popover>-->
+        <!--</div>-->
+      </div>
+      <div class="col-xs-shrink">
+        <div class="player-header__light highlight">
+          &#10022; <span [innerText]="playerObs?.characterBase?.powerLevel"></span>
+        </div>
+        <span class="player-header__subtext">
+          <img src="/assets/img/grimoire.png" alt="Grimoire"> <span [innerText]="playerObs?.characterBase?.grimoireScore"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

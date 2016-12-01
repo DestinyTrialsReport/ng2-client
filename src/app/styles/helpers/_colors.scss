@@ -1,36 +1,36 @@
-$dark-main: #323232;
-$light-main: #ffffff;
-$light-secondary: #999999;
-$highlight-main: #FFD700;
-$interactive-main: #2196F3;
+$dark-main-color: #323232;
+$light-main-color: #ffffff;
+$light-secondary-color: #999999;
+$highlight-main-color: #FFD700;
+$interactive-main-color: #2196F3;
 
-$light-background: #eee;
-$dark-background: $dark-main;
+$light-background-color: #eee;
+$dark-background-color: $dark-main-color;
 
-$xbox: #107C10;
-$playstation: #0066C2;
-$twitter: $interactive-main;
+$xbox-color: #107C10;
+$playstation-color: #0066C2;
+$twitter-color: $interactive-main-color;
 
-$success: #00C853;
-$error: #D50000;
-$warning: #FF8F00;
-$info: #03A9F4;
+$success-color: #00C853;
+$error-color: #D50000;
+$warning-color: #FF8F00;
+$info-color: #03A9F4;
 
-$transparent-hover-light: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
-$hr-color: #999;
-$data-label: #999;
+$transparent-hover-light-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+$hr-color: $light-secondary-color;
+$data-label-color: $light-secondary-color;
 
 $home-aside-color: #777;
 
 // ---
 
-$main-dark: #333;
-$xbox-main: #107C10;
-$playstation-main: #0066C2;
-$success: #00C853;
+$main-dark-color: #333;
+$xbox-color-main: #107C10;
+$playstation-color-main: #0066C2;
+$success-color: #00C853;
 $fail: #D50000;
-$warning: #FF8F00;
-$info: #03A9F4;
+$warning-color: #FF8F00;
+$info-color: #03A9F4;
 
 $text-on-dark: #999;
 $controls-btn-color: darken(white, 30%);
@@ -42,8 +42,8 @@ $maps-background: #E0F2F1;
 $this-week-background: #E0F2F1;
 $map-based-background: #E0F7FA;
 
-$header-bg: $main-dark;
-$footer-bg: $main-dark;
+$header-bg: $main-dark-color;
+$footer-bg: $main-dark-color;
 $player-card: #fcfcfc;
 $primary: #2196F3;
 

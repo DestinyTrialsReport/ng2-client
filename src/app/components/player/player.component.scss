@@ -1,3 +1,12 @@
-body {
-  
+@import '../../styles/helpers/all';
+
+.player {
+  @include shadow(1);
+  border-radius: $player-card-border-radius;
+  margin: 1em 0;
+  overflow: hidden;
+}
+
+.player__block {
+  padding: $player-card-padding;
 }

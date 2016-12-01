@@ -53,11 +53,11 @@
   }
 
   input[type=checkbox]:checked + .toggle__btn {
-    background-color: transparentize($interactive-main, .5);
+    background-color: transparentize($interactive-main-color, .5);
   }
   input[type=checkbox]:checked + .toggle__btn:after {
     left: 1.07em;
-    background-color: $interactive-main;
+    background-color: $interactive-main-color;
   }
 }
 
@@ -67,18 +67,18 @@
 
 .toggle--gray {
   input[type=checkbox] + .toggle__btn {
-    background: transparentize($light-secondary, .5);
+    background: transparentize($light-secondary-color, .5);
 
     &:after {
-      background: $light-secondary;
+      background: $light-secondary-color;
     }
   }
 
   input[type=checkbox]:checked + .toggle__btn {
-    background: transparentize(lighten($light-secondary, 15%), .5);
+    background: transparentize(lighten($light-secondary-color, 15%), .5);
 
     &:after {
-      background: lighten($light-secondary, 15%);
+      background: lighten($light-secondary-color, 15%);
     }
   }
 }

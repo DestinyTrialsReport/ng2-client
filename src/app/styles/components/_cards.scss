@@ -9,7 +9,7 @@
   background-size: cover;
   background-position: center center;
   padding: $card-padding;
-  color: $light-main;
+  color: $light-main-color;
   @include image-fade('up', 'medium');
 
   .data-label {
@@ -31,7 +31,7 @@
   margin-left: -.5rem;
 
   button {
-    color: $light-main;
+    color: $light-main-color;
     padding: 0 .5rem;
 
     > i {

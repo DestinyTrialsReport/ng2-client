@@ -15,13 +15,13 @@
 .stat-title {
   @extend .data-label;
   font-weight: normal;
-  color: $dark-main;
+  color: $dark-main-color;
 }
 
 .stat-header {
   @extend .data-label;
   font-weight: normal;
-  color: darken($data-label, 10%);
+  color: darken($data-label-color, 10%);
 }
 
 .stat-table {

@@ -1,0 +1,35 @@
+@import '../../styles/helpers/all';
+
+.player-header {
+  color: $light-main-color;
+  padding-right: $player-card-padding;
+  background-size: auto $player-card-emblem-size;
+  background-position: $player-card-emblem-size top;
+  background-repeat: no-repeat;
+}
+
+.player-header__emblem {
+  width: $player-card-emblem-size;
+  height: $player-card-emblem-size;
+  margin-right: .5rem;
+  display: block;
+  border-top-left-radius: $player-card-border-radius;
+}
+
+.player-header__title {
+  font-weight: 400;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+.player-header__light {
+  font-size: 1.1em;
+}
+
+.player-header__subtext {
+  font-size: .8em;
+
+  > img {
+    height: .8em;
+  }
+}

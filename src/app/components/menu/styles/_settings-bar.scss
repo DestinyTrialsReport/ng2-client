@@ -13,10 +13,10 @@
   height: 100%;
   font-size: .9em;
   text-align: left;
-  background: transparentize($light-secondary, .9);
+  background: transparentize($light-secondary-color, .9);
 
   &:hover {
-    background: $transparent-hover-light;
+    background: $transparent-hover-light-color;
   }
 }
 
@@ -25,10 +25,10 @@
   cursor: pointer;
   font-size: .7em;
   text-transform: uppercase;
-  color: $light-secondary;
+  color: $light-secondary-color;
 
   &:hover {
-    background: $transparent-hover-light;
+    background: $transparent-hover-light-color;
     @include shadow(2);
   }
 }

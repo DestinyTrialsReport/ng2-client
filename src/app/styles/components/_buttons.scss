@@ -37,15 +37,15 @@
 }
 
 .btn--on-dark {
-  color: $light-secondary;
+  color: $light-secondary-color;
 
   &:hover {
-    background: $transparent-hover-light;
+    background: $transparent-hover-light-color;
   }
 }
 
 .btn--fab {
-  background: $interactive-main;
+  background: $interactive-main-color;
   width: 5rem;
   height: 5rem;
   right: 2rem;

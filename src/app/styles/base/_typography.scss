@@ -20,7 +20,7 @@ p:last-child {
 }
 
 .highlight {
-  color: $highlight-main;
+  color: $highlight-main-color;
 }
 
 small {
@@ -39,38 +39,38 @@ hr {
 }
 
 a {
-  color: $interactive-main;
+  color: $interactive-main-color;
   text-decoration: none;
 
   &:hover {
-    color: darken($interactive-main, 25%);
+    color: darken($interactive-main-color, 25%);
   }
 }
 
 .color-twitter {
-  color: $twitter;
+  color: $twitter-color;
 }
 
 .color-success {
-  color: $success;
+  color: $success-color;
 }
 
 .color-info {
-  color: $info;
+  color: $info-color;
 }
 
 .color-error {
-  color: $error;
+  color: $error-color;
 }
 
 .color-warning {
-  color: $warning;
+  color: $warning-color;
 }
 
 .data-label {
   font-size: .8em;
   font-weight: 300;
   font-family: 'Roboto Condensed';
-  color: $light-secondary;
+  color: $light-secondary-color;
   text-transform: uppercase;
 }

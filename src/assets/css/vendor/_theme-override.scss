@@ -12,10 +12,10 @@ a:focus {
 
 .togglebutton label input[type=checkbox]:checked + .toggle,
 .togglebutton-default label input[type=checkbox]:checked + .toggle {
-  background-color: transparentize($success, .5);
+  background-color: transparentize($success-color, .5);
 }
 
 .togglebutton label input[type=checkbox]:checked + .toggle:after,
 .togglebutton-default label input[type=checkbox]:checked + .toggle:after {
-  background-color: $success;
+  background-color: $success-color;
 }

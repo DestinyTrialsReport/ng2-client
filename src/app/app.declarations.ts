@@ -5,7 +5,7 @@ import { ReportComponent } from "./components/report/report.component";
 import { NotFound404Component } from "./components/notfound404/notfound404.component";
 import { QuickStats } from "./components/quick-stats.component";
 import { PlayerComponent } from "./components/player/player.component";
-import { Emblem } from "./components/emblem.component";
+import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { ActivityChartComponent } from "./components/activities-chart.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
@@ -29,9 +29,9 @@ export const APP_DECLARATIONS = [
   NotFound404Component,
   ReportComponent,
   MyReportComponent,
-  Emblem,
   QuickStats,
   PlayerComponent,
+  PlayerHeaderComponent,
   ActivityChartComponent,
   WinPercentagePipe,
   SumFlawlessPipe,

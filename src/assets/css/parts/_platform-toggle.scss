@@ -20,19 +20,19 @@
 
   .togglebutton label input[type=checkbox]+.toggle,
   .togglebutton-default label input[type=checkbox]+.toggle {
-    background: transparentize($playstation-main, 0.5);
+    background: transparentize($playstation-color-main, 0.5);
 
     &:after {
-      background: $playstation-main;
+      background: $playstation-color-main;
     }
   }
 
   .togglebutton label input[type=checkbox]:checked+.toggle,
   .togglebutton-default label input[type=checkbox]:checked+.toggle {
-    background: transparentize($xbox-main, 0.5);
+    background: transparentize($xbox-color-main, 0.5);
 
     &:after {
-      background: $xbox-main;
+      background: $xbox-color-main;
     }
   }
 }
