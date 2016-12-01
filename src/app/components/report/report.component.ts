@@ -80,14 +80,14 @@ export class ReportComponent {
     }
   }
 
-  panMove(deltaX) {
+  panMove(deltaX: number) {
     if (this.panActive) {
       this.playersContainer.nativeElement.style['-webkit-transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
       this.playersContainer.nativeElement.style['transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
     }
   }
 
-  panEnd(deltaX) {
+  panEnd(deltaX: number) {
     this.playersContainer.nativeElement.style['-webkit-transition'] = null;
     this.playersContainer.nativeElement.style['transition'] = null;
     this.playersContainer.nativeElement.style['-webkit-transform'] = null;
