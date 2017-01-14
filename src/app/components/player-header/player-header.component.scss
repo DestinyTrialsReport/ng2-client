@@ -6,6 +6,7 @@
   background-size: auto $player-card-emblem-size;
   background-position: $player-card-emblem-size top;
   background-repeat: no-repeat;
+  text-shadow: 0 2px 3px rgba(0,0,0,.5);
 }
 
 .player-header__emblem {
@@ -24,6 +25,11 @@
 
 .player-header__light {
   font-size: 1.1em;
+  font-weight: 400;
+}
+
+.player-header__grimoire {
+  text-align: right;
 }
 
 .player-header__subtext {
