@@ -23,12 +23,11 @@ export class StreakPipe implements PipeTransform {
 export class StreakIconPipe implements PipeTransform {
   transform(activities: Activity[]) {
     if (activities && activities[0]) {
-      let css:string = 'match--win';
+      let css:string = 'match-icon--win';
       if (activities[0].values.standing.basic.value !== 0) {
-        css = 'match--loss';
+        css = 'match-icon--loss';
       }
       return css;
     }
   }
 }
-

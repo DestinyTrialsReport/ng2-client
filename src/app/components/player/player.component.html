@@ -3,20 +3,14 @@
      [playerObs]="(player$ | async)"
      [subclass]="(inventory$ | async | filterSubclass).shift()">
    </player-header>
-   
-   <div class="player-block">
-     <activities-chart
-       [activities]="(activities$ | async)"
-       [statsBng]="(stats$ | async)?.bungie">
-     </activities-chart>
-   </div>
 
-   <div
+   <player-intro
      [statsDtr]="(stats$ | async)?.trials"
      [statsBng]="(stats$ | async)?.bungie"
      [statsGgg]="(stats$ | async)?.guardian"
-     [activities]="activities$ | async" quick-stats>
-   </div>
+     [statsBng]="(stats$ | async)?.bungie"
+     [activities]="(activities$ | async)">
+  </player-intro>
 
    <tabset class="player-tabs">
      <tab heading="Equipped" customClass="player-tab--equipped">

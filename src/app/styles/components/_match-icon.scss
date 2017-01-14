@@ -1,0 +1,14 @@
+.match-icon {
+  border-radius: 50%;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+
+  &.match-icon--win {
+    background: $success-color;
+  }
+
+  &.match-icon--loss {
+    border: .2em solid $error-color;
+  }
+}

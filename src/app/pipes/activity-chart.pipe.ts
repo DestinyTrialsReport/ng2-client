@@ -12,7 +12,7 @@ export class ActivityChartPipe implements PipeTransform {
       let x:number = 0;
       let playerKd:number = kdRatio; //this.kd;
       let range:number = 1.5;
-      let factor:number = -60;
+      let factor:number = 60;
 
       let matchKd:number = kills/deaths;
 

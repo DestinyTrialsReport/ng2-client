@@ -7,6 +7,6 @@
   overflow: hidden;
 }
 
-.player__block {
+:host /deep/ .player__block {
   padding: $player-card-padding;
 }

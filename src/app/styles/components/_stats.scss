@@ -1,6 +1,16 @@
 .stat-number {
   font-size: 1.2em;
   line-height: 1;
+
+  .material-icons {
+    font-size: .9em;
+    vertical-align: -.1rem;
+  }
+
+  .match-icon {
+    font-size: 10px;
+    vertical-align: .15rem;
+  }
 }
 
 .stat-label {
@@ -22,9 +32,6 @@
   @extend .data-label;
   font-weight: normal;
   color: darken($data-label-color, 10%);
-}
-
-.stat-table {
 }
 
 .stat-table__row {

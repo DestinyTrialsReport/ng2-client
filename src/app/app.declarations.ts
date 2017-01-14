@@ -3,10 +3,9 @@ import { MapsComponent } from "./components/maps/maps.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ReportComponent } from "./components/report/report.component";
 import { NotFound404Component } from "./components/notfound404/notfound404.component";
-import { QuickStats } from "./components/quick-stats.component";
 import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
-import { ActivityChartComponent } from "./components/activities-chart.component";
+import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
@@ -29,10 +28,9 @@ export const APP_DECLARATIONS = [
   NotFound404Component,
   ReportComponent,
   MyReportComponent,
-  QuickStats,
   PlayerComponent,
   PlayerHeaderComponent,
-  ActivityChartComponent,
+  PlayerIntroComponent,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,

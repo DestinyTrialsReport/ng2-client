@@ -3,7 +3,7 @@
 .player-header {
   color: $light-main-color;
   padding-right: $player-card-padding;
-  background-size: auto $player-card-emblem-size;
+  background-size: cover;
   background-position: $player-card-emblem-size top;
   background-repeat: no-repeat;
   text-shadow: 0 2px 3px rgba(0,0,0,.5);
