@@ -1,27 +1,27 @@
 <div class="player__intro">
   <div class="player__block">
-    <div class="row middle-xs">
-      <div class="col-xs">
-        <div class="match-graph">
+    <div class="row row--small-gutter middle-xs kd">
+      <div class="col-xs kd__graph">
+        <div class="kd__matches">
           <i class="match-icon"
              *ngFor="let activity of activities"
              [ngClass]="activityStanding(activity) ? 'match-icon--win' : 'match-icon--loss'"
-             [ngStyle]="activity | activityChart: statsBng?.killsDeathsRatio.basic.value">
+             [ngStyle]="activity | activityGraph: statsBng?.killsDeathsRatio.basic.value">
           </i>
         </div>
-        <label class="data-label">Recent Matches</label>
+        <div class="stat-label">Recent Matches</div>
       </div>
-      <div class="col-xs-shrink">
-        <div class="player-quick-look__kd__nr">
+      <div class="col-xs-shrink kd__stat">
+        <div class="stat-number">
           <span [innerHtml]="statsBng?.killsDeathsRatio.basic.value | number : '1.2-2'"></span>
         </div>
-        <label class="data-label">K/D</label>
+        <div class="stat-label">K/D</div>
       </div>
     </div>
   </div>
   <hr class="hr--no-margin">
   <div class="player__block">
-    <div class="row">
+    <div class="row row--no-gutter">
       <div class="col-xs-3 stat">
         <div class="stat-number" [innerHtml]="(statsBng | winPercentage | number:'1.0-0') + '%'"></div>
         <div class="stat-number" *ngIf="!statsBng">N/A</div>
@@ -34,7 +34,7 @@
         </div>
         <div class="stat-label">Streak</div>
       </div>
-      <div class="col-xs-3 stat">
+      <div class="col-xs-4 stat">
         <div class="stat-number">
           <span [innerHtml]="(statsGgg?.elo | number:'1.0-0') || 'N/A'"></span>
           <span>
@@ -45,13 +45,13 @@
         </div>
         <div class="stat-label">Elo Rating</div>
       </div>
-      <div class="col-xs-3 stat">
+      <div class="col-xs-2 stat">
         <!--<span class="player-main-stats__lighthouse fail">-->
           <!--<i class="material-icons">&#xE14C;</i>-->
         <!--</span>-->
         <div class="stat-number" [ngClass]="{'color-success': (statsDtr | sumFlawless) > 0, 'color-error': (statsDtr | sumFlawless) === 0}">
-          <i *ngIf="(statsDtr | sumFlawless) === 0" class="material-icons">&#xE14C;</i>
-          <span *ngIf="(statsDtr | sumFlawless) > 0" [innerHtml]="(statsDtr | sumFlawless) + 'x'"></span>
+          <i *ngIf="!(statsDtr | sumFlawless)" class="material-icons color-error">&#xE14C;</i>
+          <span *ngIf="(statsDtr | sumFlawless)" [innerHtml]="(statsDtr | sumFlawless) + 'x'"></span>
         </div>
         <div class="stat-label">Flawless</div>
       </div>

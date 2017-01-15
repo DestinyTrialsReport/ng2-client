@@ -1,40 +1,7 @@
 @import '../../styles/helpers/all';
 
-.player__intro {
-  box-shadow: inset 0px 10px 8px -10px rgba(0,0,0,.75);
-}
+@import 'styles/kd';
 
 hr {
   margin: 0;
-}
-
-.match-graph {
-  line-height: 40px;
-  height: 40px;
-  direction: rtl;
-  text-align: left;
-  overflow: hidden;
-  position: relative;
-  padding-right: 10px;
-
-  > .match-icon {
-    font-size: 10px;
-    display: inline-block;
-    margin-right: 3px;
-    position: relative;
-    -webkit-transform-origin: center center;
-    transform-origin: center center;
-    -webkit-transition: -webkit-transform ease .2s;
-    transition: -webkit-transform ease .2s;
-    transition: transform ease .2s;
-    transition: transform ease .2s,-webkit-transform ease .2s;
-    -webkit-transition-delay: 1s;
-    transition-delay: 1s;
-    will-change: transform;
-    opacity: .4;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
