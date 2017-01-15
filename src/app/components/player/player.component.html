@@ -1,7 +1,7 @@
 <div class="player card">
    <player-header
      [playerObs]="(player$ | async)"
-     [subclass]="(inventory$ | async | filterSubclass).shift()">
+     [subclass]="(inventory$ | async | filterSubclass)[0]">
    </player-header>
 
    <player-intro

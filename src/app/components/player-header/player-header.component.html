@@ -1,5 +1,5 @@
 <div class="player-header" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + playerObs?.backgroundPath + ')'}">
-  <div class="row row--no-gutter middle-xs" [@loaded]="playerObs ? 'true' : 'false'">
+  <div class="row row--no-gutter middle-xs">
     <div class="col-xs-shrink">
       <img class="player-header__emblem" alt="Emblem" [src]="'https://www.bungie.net' + playerObs?.emblemPath">
     </div>
