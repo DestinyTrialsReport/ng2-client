@@ -1,0 +1,22 @@
+@import '../../styles/helpers/all';
+
+.player__footer {
+  .btn {
+    display: inline-block;
+    padding: $player-card-padding;
+    text-align: center;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      max-height: 1.3rem;
+    }
+  }
+
+  .text-logo {
+    text-transform: none;
+    font-size: .9em;
+    font-weight: bold;
+    line-height: 1.3rem;
+  }
+}

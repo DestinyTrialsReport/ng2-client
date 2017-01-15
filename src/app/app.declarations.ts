@@ -6,10 +6,10 @@ import { NotFound404Component } from "./components/notfound404/notfound404.compo
 import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
+import { PlayerFooterComponent } from "./components/player-footer/player-footer.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
-import { FooterComponent } from "./components/footer.component";
 import { EquippedGearComponent } from "./components/equipped/equipped-gear.component";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
 import { SubclassComponent } from "./components/equipped/subclass.component";
@@ -31,11 +31,11 @@ export const APP_DECLARATIONS = [
   PlayerComponent,
   PlayerHeaderComponent,
   PlayerIntroComponent,
+  PlayerFooterComponent,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,
   StreakIconPipe,
-  FooterComponent,
   EquippedTabComponent,
   StatsTabComponent,
   EquippedGearComponent,

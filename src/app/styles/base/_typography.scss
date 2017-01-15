@@ -35,9 +35,10 @@ hr {
   height: 1px;
   border: 0;
   background: linear-gradient(to right, transparentize($hr-color, .9) 0, transparentize($hr-color, .7) 50%, transparentize($hr-color, .9) 100%);
+  margin: 1rem 0;
 
-  &:not(.hr--no-margin) {
-    margin: 1rem 0;
+  &.hr--no-margin {
+    margin: 0;
   }
 }
 
@@ -76,4 +77,16 @@ a {
   font-family: 'Roboto Condensed';
   color: $light-secondary-color;
   text-transform: uppercase;
+}
+
+.text-logo {
+  color: $light-secondary-color;
+  text-shadow: 0px 2px 3px rgba(255,255,255,0.9);
+  -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(darken($light-secondary-color, 20%), darken($light-secondary-color, 20%));
+  background: -o-linear-gradient(darken($light-secondary-color, 20%), darken($light-secondary-color, 20%));
+  -webkit-background-clip: text;
+  -webkit-background-clip: text;
+    -moz-background-clip: text;
+         background-clip: text;
 }
