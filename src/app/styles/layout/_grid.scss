@@ -8,6 +8,10 @@
   margin-left: -$grid-gutter;
 }
 
+.row--wrap {
+  flex-wrap: wrap;
+}
+
 .row.reverse {
   flex-direction: row-reverse;
 }
@@ -806,7 +810,7 @@
   .bottom-lg {
     align-items: flex-end;
   }
-  
+
   .around-lg {
     justify-content: space-around;
   }

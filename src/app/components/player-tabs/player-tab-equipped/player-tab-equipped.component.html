@@ -1,0 +1,65 @@
+<div class="player__block tab__section">
+  <div class="row row--small-gutter middle-xs inventory-item inventory-item--weapon" *ngFor="let item of inventory | filterWeapons">
+    <div class="col-xs-shrink">
+      <div class="inventory-item__image">
+        <!-- TODO: Add light
+        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
+        <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+      </div>
+    </div>
+    <div class="col-xs">
+      <div class="inventory-item__title">
+        <span [innerHtml]="item?.n"></span>
+      </div>
+      <div class="inventory-item__perks">
+        <!-- TODO: Add popovers, remove ornament perks -->
+        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="player__block tab__section">
+  <div class="row row--small-gutter middle-xs inventory-item" *ngFor="let item of inventory | filterArmor">
+    <div class="col-xs-shrink">
+      <div class="inventory-item__image">
+        <!-- TODO: Add light
+        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
+        <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+      </div>
+    </div>
+    <div class="col-xs">
+      <div class="inventory-item__title">
+        <span [innerHtml]="item?.n"></span>
+      </div>
+      <div class="inventory-item__perks">
+        <!-- TODO: Add popovers -->
+        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
+      </div>
+    </div>
+  </div>
+  <!-- TODO: Add artifact -->
+</div>
+
+<div class="player__block tab__section">
+  <div class="row row--wrap" *ngFor="let subclass of (inventory | filterSubclass)">
+    <template ngFor let-node [ngForOf]="subclass?.steps">
+      <div class="subclass-perk col-xs-6"
+        *ngIf="([5, 7].indexOf(node.c) < 0) && !([2, 3, 4].indexOf(node.c) > -1 && node.r == 0)">
+        <div class="row row--no-gutter middle-xs">
+          <div class="col-xs-shrink">
+            <i class="perk-icon subclass-perk__icon" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
+          </div>
+          <div class="col-xs" [innerHtml]="node?.n"></div>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>
+
+<div class="player__block tab__section">
+  <div [stats]="stats | filterClassStats" class-stats>
+  </div>
+
+  <div [stats]="stats | filterClassArmor" class-stats>
+  </div>
+</div>

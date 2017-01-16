@@ -1,0 +1,103 @@
+.tabs {
+  position: relative;
+
+  .nav-tabs {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .nav-item {
+    flex-grow: 1;
+    position: relative;
+    background: $inactive-tab-color;
+    color: $inactive-tab-text-color;
+    box-shadow: $inset-shadow;
+    margin-top: -2px;  // Prevents weird glitches
+    margin-bottom: -2px; // Prevents weird glitches
+
+    &.active {
+      color: $active-tab-text-color;
+      z-index: 1;
+      box-shadow: $inset-shadow, 0 0 10px rgba(0,0,0,0.5);
+    }
+  }
+
+  .nav-link {
+    display: block;
+    text-align: center;
+    padding: $tab-control-padding;
+    font-size: .9em;
+    font-family: $condensed-font;
+    text-transform: uppercase;
+    color: inherit;
+  }
+}
+
+.tab {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+
+  .tab-pane.active & {
+    position: static;
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+.tab__content {
+  opacity: 0;
+  transform: translate3d(0, 2rem, 0);
+  transition: transform .3s cubic-bezier(0.0, 0.0, 0.2, 1), opacity .3s linear;
+  margin-bottom: -1px; // Prevents weird glitches
+
+  .tab-pane.active & {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.tab__section {
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  & + .tab__section {
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Styles */
+
+.tab--style-one {
+  &.nav-item.active {
+    background: $tab-style-one-color;
+  }
+
+  &.tab {
+    background-image: linear-gradient(to bottom, $tab-style-one-color, darken($tab-style-one-color, 5%));
+  }
+}
+
+.tab--style-two {
+  &.nav-item.active {
+    background: $tab-style-two-color;
+  }
+
+  &.tab {
+    background-image: linear-gradient(to bottom, $tab-style-two-color, darken($tab-style-two-color, 5%));
+  }
+}
+
+.tab--style-three {
+  &.nav-item.active {
+    background: $tab-style-three-color;
+  }
+
+  &.tab {
+    background-image: linear-gradient(to bottom, $tab-style-three-color, darken($tab-style-three-color, 5%));
+  }
+}

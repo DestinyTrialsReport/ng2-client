@@ -1,0 +1,15 @@
+@import '../../../styles/helpers/all';
+
+.subclass-perk {
+  color: #78909C;
+  font-family: $condensed-font;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: .9em;
+}
+
+.subclass-perk__icon {
+  background-color: #78909C;
+  margin-right: .5rem;
+}

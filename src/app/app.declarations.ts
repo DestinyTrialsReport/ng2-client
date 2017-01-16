@@ -6,16 +6,15 @@ import { NotFound404Component } from "./components/notfound404/notfound404.compo
 import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
+import { PlayerTabEquippedComponent } from "./components/player-tabs/player-tab-equipped/player-tab-equipped.component";
 import { PlayerFooterComponent } from "./components/player-footer/player-footer.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
 import { EquippedGearComponent } from "./components/equipped/equipped-gear.component";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
-import { SubclassComponent } from "./components/equipped/subclass.component";
 import { ClassStatsComponent } from "./components/equipped/class-stats.component";
 import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
-import { EquippedTabComponent } from "./components/equipped/equipped-tab.component";
 import { LastMatchesTabComponent } from "./components/last-matches/last-matches-tab.component";
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
@@ -31,16 +30,14 @@ export const APP_DECLARATIONS = [
   PlayerComponent,
   PlayerHeaderComponent,
   PlayerIntroComponent,
+  PlayerTabEquippedComponent,
   PlayerFooterComponent,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,
   StreakIconPipe,
-  EquippedTabComponent,
   StatsTabComponent,
-  EquippedGearComponent,
   LastMatchesTabComponent,
-  SubclassComponent,
   ActivityGraphPipe,
   FilterSubclass,
   FilterWeapons,

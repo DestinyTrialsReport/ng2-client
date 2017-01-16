@@ -3,6 +3,21 @@
   max-width: 2.5rem;
 }
 
+.perk-icon {
+  background-size: 75% 75%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #B0BEC5;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 3px;
+  display: inline-block;
+
+  & + .perk-icon {
+    margin-left: .3em;
+  }
+}
+
 .icon--small {
   font-size: .9em;
 }

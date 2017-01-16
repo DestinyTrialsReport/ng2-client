@@ -12,28 +12,36 @@
      [activities]="(activities$ | async)">
   </player-intro>
 
-   <tabset class="player-tabs">
-     <tab heading="Equipped" customClass="player-tab--equipped">
-       <div class="player-tab--equipped"
-         [loaded]="(loaded$ | async)?.inventory"
-         [inventory]="(inventory$ | async)"
-         [stats]="(player$ | async)?.characterBase?.stats"
-         equipped-tab>
-       </div>
-     </tab>
-     <tab heading="Last Matches" (select)="getMatchHistory()" customClass="player-tab--last-matches">
-       <div class="player-tab--equipped"
-         [pgcr]="(pgcr$ | async)"
-         last-matches-tab>
-       </div>
-     </tab>
-     <tab heading="Stats" customClass="player-tab--stats">
-       <div class="player-tab--equipped"
-         [stats]="(stats$ | async)?.bungie"
-         stats-tab>
-       </div>
-     </tab>
-   </tabset>
+  <hr class="hr--no-margin">
+
+  <tabset class="tabs">
+    <tab heading="Equipped" customClass="tab__nav tab--style-one">
+      <div class="tab tab--style-one">
+        <div class="tab__content">
+          <player-tab-equipped
+            [inventory]="(inventory$ | async)"
+            [stats]="(player$ | async)?.characterBase?.stats">
+          </player-tab-equipped>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Last Matches" (select)="getMatchHistory()" customClass="tab--style-two">
+      <div class="tab tab--style-two">
+        <div class="tab__content"
+          [pgcr]="(pgcr$ | async)"
+          last-matches-tab>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Stats" customClass="player-tab--stats" customClass="tab--style-three">
+      <div class="tab tab--style-three">
+        <div class="tab__content"
+          [stats]="(stats$ | async)?.bungie"
+          stats-tab>
+        </div>
+      </div>
+    </tab>
+  </tabset>
 
    <player-footer>
    </player-footer>

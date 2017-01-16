@@ -66,7 +66,7 @@
 .home-aside__logo--alt {
 	font-size: 1.4em;
 	text-transform: uppercase;
-	font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+	font-family: $condensed-font;
 
 	> span {
 		color: darken($home-aside-color, 20%);

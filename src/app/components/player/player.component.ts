@@ -17,13 +17,13 @@ import * as pgcrActions from "../../actions/pgcr.actions";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayerComponent {
-  player$:      Observable<Player>;
-  activities$:  Observable<Activity[]>;
-  stats$:       Observable<fromStats.Stats>;
-  inventory$:   Observable<Item[]>;
-  loaded$:      Observable<fromSearch.State>;
-  pgcr$:        Observable<fromPgcr.State>;
-  recentMatches: any[];
+  player$:        Observable<Player>;
+  activities$:    Observable<Activity[]>;
+  stats$:         Observable<fromStats.Stats>;
+  inventory$:     Observable<Item[]>;
+  loaded$:        Observable<fromSearch.State>;
+  pgcr$:          Observable<fromPgcr.State>;
+  recentMatches:  any[];
 
   constructor(private store: Store<fromRoot.State>,
               private el:ElementRef) {
@@ -75,12 +75,6 @@ export class PlayerComponent {
             this.recentMatches.map(match => this.store.dispatch(new pgcrActions.SearchPGCR({match: match, player: this.el.nativeElement.id})));
           }
         });
-      // this.store.let(fromRoot.getNewMatches(this.recentMatches))
-      //   .subscribe((ids: string[]) => {
-      //     if (ids.length > 0) {
-      //       this.store.dispatch(new pgcrActions.SearchPGCR({matchIds: ids, player: this.el.nativeElement.id}))
-      //     }
-      //   });
     }
   };
 

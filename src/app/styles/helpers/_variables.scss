@@ -9,6 +9,7 @@ $breakpoint-medium: 960px;
 $breakpoint-large: 1280px;
 
 $primary-font: 'Roboto', sans-serif;
+$condensed-font: 'Roboto Condensed', 'Roboto', sans-serif;
 
 $inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.75);
 $mild-inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.25);
@@ -16,6 +17,15 @@ $mild-inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.25);
 $player-card-padding: 1rem;
 $player-card-border-radius: .5rem;
 $player-card-emblem-size: 5rem;
+
+$tab-control-padding: .8rem 1rem;
+
+$inventory-item-image-size: 5rem;
+$inventory-item-cutout-x: 42%;
+$inventory-item-cutout-y: 24%;
+
+$inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.5);
+$mild-inset-shadow: inset 0px 10px 8px -10px rgba(0,0,0,0.25);
 
 // ---
 $os-primary-color: #2196F3;
