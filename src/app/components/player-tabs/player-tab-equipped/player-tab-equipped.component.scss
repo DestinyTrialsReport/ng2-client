@@ -7,6 +7,10 @@
   align-items: center;
   font-weight: 400;
   font-size: .9em;
+
+  &:nth-child(n+3) {
+    margin-top: .5rem;
+  }
 }
 
 .subclass-perk__icon {
