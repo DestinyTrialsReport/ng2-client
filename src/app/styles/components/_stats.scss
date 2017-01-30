@@ -32,6 +32,10 @@
   @extend .data-label;
   font-weight: normal;
   color: darken($data-label-color, 10%);
+
+  .stat-progress + & {
+    margin-top: .2rem;
+  }
 }
 
 .stat-table__row {
@@ -47,4 +51,8 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.stat-progress > .col-xs:not(:first-child) {
+  margin-left: .15rem;
 }
