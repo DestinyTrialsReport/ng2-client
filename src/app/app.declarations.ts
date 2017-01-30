@@ -11,7 +11,6 @@ import { PlayerFooterComponent } from "./components/player-footer/player-footer.
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
-import { EquippedGearComponent } from "./components/equipped/equipped-gear.component";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
 import { ClassStatsComponent } from "./components/equipped/class-stats.component";
 import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
