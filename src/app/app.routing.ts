@@ -4,6 +4,8 @@ import { HomeComponent } from "./components/home/home.component";
 import { NotFound404Component } from './components/notfound404/notfound404.component';
 import { ReportComponent } from "./components/report/report.component";
 import { MyReportComponent } from "./components/my-report/my-report.component";
+import {LeaderboardsComponent} from "./components/leaderboards/leaderboards.component";
+import {MapsComponent} from "./components/maps/maps.component";
 
 export function isSubdomain(name: string): boolean {
   let segments = window.location.hostname.split('.');
@@ -13,7 +15,10 @@ export function isSubdomain(name: string): boolean {
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'ps/:player1', component: isSubdomain('my') ? ReportComponent : ReportComponent, data: { platform: 2 } },
+  // { path: '', component: HomeComponent, pathMatch: 'full' },
+  // { path: '', component: LeaderboardsComponent },
+  // { path: 'ps/:player1', component: isSubdomain('my') ? ReportComponent : ReportComponent, data: { platform: 2 } },
+  { path: 'ps/:player1', component: ReportComponent, data: { platform: 2 } },
   // { path: 'ps/:player1', component: ReportComponent, data: { platform: 2 } },
   { path: 'xbox/:player1', component: ReportComponent, data: { platform: 1 } },
   { path: '**', component: NotFound404Component }

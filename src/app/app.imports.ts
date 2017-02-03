@@ -1,5 +1,6 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, PreloadAllModules } from '@angular/router';
+import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -10,12 +11,14 @@ import { routes } from './app.routing';
 import { reducer } from './reducers';
 import { PlayerEffects } from "./effects/player.effects";
 import { MapEffects } from "./effects/map.effects";
-import { TabsModule } from "ng2-bootstrap/components/tabs";
-import { TooltipModule } from "ng2-bootstrap/components/tooltip";
-import { ProgressbarModule } from "ng2-bootstrap/components/progressbar";
+import { TabsModule } from "ng2-bootstrap/tabs";
+import { TooltipModule } from "ng2-bootstrap/tooltip";
+import { ProgressbarModule } from "ng2-bootstrap/progressbar";
 import { ActivityEffects } from "./effects/activity.effects";
 import { StatsEffects } from "./effects/stats.effects";
 import {AuthEffects} from "./effects/auth.effects";
+import {LeaderboardEffects} from "./effects/leaderboard.effects";
+import {Ng2PaginationModule} from "ng2-pagination";
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT &&
@@ -35,11 +38,15 @@ export const APP_IMPORTS = [
   EffectsModule.run(ActivityEffects),
   EffectsModule.run(StatsEffects),
   EffectsModule.run(MapEffects),
-  TabsModule,
-  TooltipModule,
-  ProgressbarModule,
+  EffectsModule.run(LeaderboardEffects),
+  TabsModule.forRoot(),
+  TooltipModule.forRoot(),
+  ProgressbarModule.forRoot(),
   ReactiveFormsModule,
-  RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  Ng2PaginationModule,
+  IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
+  RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: IdlePreload }),
+  // RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   StoreModule.provideStore(reducer),
   STORE_DEV_TOOLS_IMPORTS,
   StoreDevtoolsModule.instrumentOnlyWithExtension()

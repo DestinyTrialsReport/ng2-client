@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noEmitHelpers": true,
@@ -16,7 +18,7 @@
   },
   "exclude": [
     "node_modules",
-    "src/compiled",
+    "compiled",
     "src/**/*.e2e.ts",
     "src/**/*.spec.ts",
     "src/server.ts",
@@ -31,7 +33,7 @@
   "buildOnSave": false,
   "atom": { "rewriteTsconfig": false },
   "angularCompilerOptions": {
-   "genDir": "src/compiled",
+   "genDir": "compiled",
    "skipMetadataEmit" : true
  }
 }

@@ -17,11 +17,13 @@ import { LastMatchesTabComponent } from "./components/last-matches/last-matches-
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
 import { MyReportComponent } from "./components/my-report/my-report.component";
+import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
   MapsComponent,
   HomeComponent,
+  LeaderboardsComponent,
   NotFound404Component,
   ReportComponent,
   MyReportComponent,

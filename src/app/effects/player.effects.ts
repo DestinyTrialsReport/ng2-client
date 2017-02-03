@@ -60,7 +60,7 @@ export class PlayerEffects {
   @Effect()
   account$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE)
-    .map<[Player, string]>(action => action.payload)
+    .map((action: player.SearchCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
         return Observable.from([]);
@@ -74,9 +74,8 @@ export class PlayerEffects {
   @Effect()
   myAccount$: Observable<Action> = this.actions$
     .ofType(myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
-    .map<[Player,string]>(action => action.payload)
+    .map((action: myPlayer.SearchMyCompleteAction) => action.payload)
     .mergeMap(payload => {
-      console.log(payload)
       if (!payload[1] || payload[1] !== 'player1') {
         return Observable.from([]);
       }

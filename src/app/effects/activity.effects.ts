@@ -4,7 +4,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { PlayerService } from '../services/player.service';
 
-import { Player } from "../models/player.model";
+import {Player, Character} from "../models/player.model";
 import { Activity } from "../models/activity.model";
 import * as activities from '../actions/activity.actions';
 import * as player from '../actions/player.actions';
@@ -33,7 +33,7 @@ export class ActivityEffects {
   @Effect()
   activities$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
-    .map<[Player, string]>(action => action.payload)
+    .map((action: player.SearchAccount) => action.payload)
     .withLatestFrom(this.store.let(fromRoot.getPlayerState))
     .map(([payload, state]) => {
       return {
@@ -50,7 +50,7 @@ export class ActivityEffects {
 
   @Effect() recentActivity$: Observable<Action> = this.actions$
     .ofType(activities.ActionTypes.SEARCH_ACTIVITY)
-    .map<[Activity[], string]>(action => action.payload)
+    .map((action: activities.ActivityActions) => action.payload)
     .withLatestFrom(this.store.let(fromRoot.getMyPlayerState))
     .map(([payload, state]) => {
       return {

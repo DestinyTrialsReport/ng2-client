@@ -24,7 +24,7 @@ export class StatsEffects {
   @Effect()
   dtrStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE || myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
-    .map<[Player, string]>(action => action.payload)
+    .map((action: player.SearchCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
         return Observable.from([]);
@@ -38,7 +38,7 @@ export class StatsEffects {
   @Effect()
   gggStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_COMPLETE || myPlayer.ActionTypes.SEARCH_MY_COMPLETE)
-    .map<[Player, string]>(action => action.payload)
+    .map((action: player.SearchCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
         return Observable.from([]);
@@ -52,7 +52,7 @@ export class StatsEffects {
   @Effect()
   bngStats$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
-    .map<[Player, string]>(action => action.payload)
+    .map((action: player.SearchAccount) => action.payload)
     .withLatestFrom(this.store.let(fromRoot.getPlayerState))
     .map(([payload, state]) => {
       return {

@@ -17,6 +17,7 @@ import { APP_PROVIDERS } from './app.providers';
 import { AppComponent } from './app.component';
 
 import { Ng2Webstorage } from 'ng2-webstorage';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { Ng2Webstorage } from 'ng2-webstorage';
     APP_IMPORTS,
     Ng2Webstorage,
     BrowserModule,
+    FormsModule,
     HttpModule
   ],
   bootstrap: [AppComponent],

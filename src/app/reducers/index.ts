@@ -11,6 +11,7 @@ import * as fromInventories from './inventory.reducer';
 import * as fromStats from './stats.reducer';
 import * as fromSearch from './search.reducer';
 import * as fromPGCR from './pgcr.reducer';
+import * as fromLeaderboards from './leaderboards.reducer';
 import {Observable} from "rxjs";
 import {PGCR} from "../models/pgcr.model";
 import { combineLatest } from 'rxjs/observable/combineLatest';
@@ -26,6 +27,7 @@ export interface State {
   inventory: fromInventories.State;
   stats: fromStats.State;
   pgcr: fromPGCR.State;
+  leaderboard: fromLeaderboards.State;
 }
 
 export const reducers = {
@@ -37,7 +39,8 @@ export const reducers = {
   activities: fromActivities.reducer,
   inventory: fromInventories.reducer,
   stats: fromStats.reducer,
-  pgcr: fromPGCR.reducer
+  pgcr: fromPGCR.reducer,
+  leaderboard: fromLeaderboards.reducer
 };
 
 export function getPlayerState(state$: Observable<State>) {

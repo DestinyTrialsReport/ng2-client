@@ -1,0 +1,109 @@
+<div class="maps">
+  <div class="card">
+    <div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (mapInfo$ | async)?.pgcrImage + ')'}">
+      <div class="row middle-xs">
+        <div class="col-xs">
+          <h2 class="card__header__title" [innerHtml]="(mapInfo$ | async)?.name"></h2>
+          <!-- TODO: Add popover in case of rotating maps -->
+          <!--<div class="data-label" [innerHtml]="(mapInfo$ | async)?.weekText + '\'s map'"></div>-->
+        </div>
+        <!--<div class="col-xs-shrink">-->
+          <!--<div class="card__header__controls">-->
+            <!--<button class="btn btn&#45;&#45;icon btn&#45;&#45;ghost" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2" (click)="previousMap()">-->
+              <!--<i class="material-icons">&#xE5CB;</i>-->
+            <!--</button>-->
+            <!--<button class="btn btn&#45;&#45;icon btn&#45;&#45;ghost" [style.opacity]="(mapInfo$ | async)?.week == maxWeek ? .2 : 1" (click)="nextMap()">-->
+              <!--<i class="material-icons">&#xE5CC;</i>-->
+            <!--</button>-->
+          <!--</div>-->
+          <!--<div class="data-label">Other weeks</div>-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="card__content">
+      <div class="row">
+        <div class="col-xs-4 select-container">
+          <div class="select">
+            <select>
+              <option value="weapon-types">Weapon Types</option>
+            </select>
+          </div>
+          <div class="stat-label">Leaderboard</div>
+        </div>
+        <div class="col-xs-4 select-container">
+          <div class="select">
+            <select [(ngModel)]="selectedType" (ngModelChange)="getType()">
+              <option value="Auto Rifle">Auto Rifles</option>
+              <option value="Scout Rifle">Scout Rifles</option>
+              <option value="Pulse Rifle">Pulse Rifles</option>
+              <option value="Hand Cannon">Hand Cannons</option>
+              <option value="Sniper Rifle">Sniper Rifles</option>
+              <option value="Fusion Rifle">Fusion Rifles</option>
+              <option value="Shotgun">Shotguns</option>
+              <option value="Sidearm">Sidearms</option>
+            </select>
+          </div>
+          <div class="stat-label">Weapon Type</div>
+        </div>
+        <div class="col-xs-4 select-container">
+          <div class="select">
+            <select [(ngModel)]="selectedTier" (ngModelChange)="filterTier()">
+              <option value="0">All</option>
+              <option value="6">Exotic</option>
+              <option value="5">Legendary</option>
+              <option value="4">Rare</option>
+              <option value="3">Uncommon</option>
+              <option value="2">Common</option>
+            </select>
+          </div>
+          <div class="stat-label">Tier</div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="stat-table col-xs-12">
+          <div class="stat-table__row row row--small-gutter">
+            <div class="col-xs-2">
+              <div class="stat-header">Kills</div>
+            </div>
+            <div class="col-xs-6 stat">
+              <div class="stat-header">Weapon</div>
+            </div>
+            <div class="col-xs-2 stat">
+              <div class="stat-header">Headshots</div>
+            </div>
+            <div class="col-xs-2 stat">
+              <div class="stat-header">Matches</div>
+            </div>
+          </div>
+          <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (weapons$ | async) | paginate: { itemsPerPage: 10, currentPage: page }'>
+            <div class="col-xs-2">
+              <span [innerHtml]="weapon?.kills"></span>
+            </div>
+            <div class="col-xs-6">
+              <img class="weapon-icon"
+                   [src]="weapon?.icon"
+                   [alt]="weapon?.name">
+              <span [innerHtml]="weapon?.name"></span>
+            </div>
+            <div class="col-xs-2">
+              <span [innerHtml]="weapon?.headshots"></span>
+            </div>
+            <div class="col-xs-2">
+              <span [innerHtml]="weapon?.matches"></span>
+            </div>
+          </div>
+        </div>
+        <hr class="col-xs-12 col-sm-hidden hr--minor">
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-center">
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

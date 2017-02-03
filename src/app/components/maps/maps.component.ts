@@ -1,5 +1,4 @@
 import { Component, style, state, animate, transition, trigger }  from '@angular/core';
-import { MapsService }    from "../../services/maps.service";
 import { WeaponUsage }    from "../../models/map-stats.model";
 import { Store }          from "@ngrx/store";
 import { Observable }     from "rxjs/Observable";
@@ -40,8 +39,7 @@ export class MapsComponent {
     in relation to all other Trials of Osiris maps since the latest balance update.";
   weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05'; // TODO: Correct platform
 
-  constructor(public mapService: MapsService,
-              private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>) {
 
     this.slideMap$ = store.select(state => state['map'].slideMap);
 
