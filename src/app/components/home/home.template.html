@@ -1,7 +1,6 @@
 <div class="home">
   <main>
-    <!--<maps></maps>-->
-    <leaderboards></leaderboards>
+    <maps></maps>
   </main>
   <aside>
     <div class="home-aside">
@@ -23,6 +22,13 @@
         <div class="home-aside__logo text-logo">myReport</div>
         <label>
           See all your characters in one view with more detailed stats
+        </label>
+      </a>
+      <hr>
+      <a class="home-aside__section" [routerLink]="['/leaderboards']">
+        <div class="home-aside__logo home-aside__logo--alt text-logo"><span>Leaderboards</span></div>
+        <label>
+          Track the top most used weapons for this week.
         </label>
       </a>
       <hr>

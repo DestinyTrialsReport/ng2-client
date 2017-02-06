@@ -112,6 +112,7 @@
     "ng2-pagination": "^2.0.0",
     "ng2-webstorage": "^1.5.0",
     "ngrx-store-localstorage": "^0.1.5",
+    "reselect": "^2.5.4",
     "rxjs": "5.0.1",
     "zone.js": "~0.7.4"
   },

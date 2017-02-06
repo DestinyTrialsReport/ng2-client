@@ -22,6 +22,8 @@ export class MenuComponent {
   player2$: Observable<Player>;
   player3$: Observable<Player>;
   myReport$: Observable<boolean>;
+  searchedName: string;
+  isXbox: boolean;
   @Input() query: string = '';
   @Input() searching = false;
 
@@ -33,7 +35,12 @@ export class MenuComponent {
     this.myReport$ = store.select(state => state.characters.loaded);
   }
 
-  search(platform: number, name: string) {
-    // this.store.dispatch(new playerActions.SearchPlayer([platform, name, 'player1']));
+  search() {
+    let platform = this.isXbox ? 1 : 2;
+    this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: this.searchedName, playerIndex: 'player1'}));
+  }
+
+  togglePlatform(event: Event) {
+    console.log(event)
   }
 }

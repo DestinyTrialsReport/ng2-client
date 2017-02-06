@@ -13,7 +13,7 @@ export class AuthService extends RequestBase {
   constructor(public http: Http,
               private store: Store<fromRoot.State>) {
     super(http);
-    store.let(fromRoot.getAuthState).subscribe(state => {
+    store.select(fromRoot.getAuthState).subscribe(state => {
       if (state.accessToken) {
         return this.optionsNoPre.headers.append('Authorization', `Bearer ${state.accessToken}`)
       }

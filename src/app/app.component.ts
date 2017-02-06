@@ -12,9 +12,9 @@ import {AuthService} from "./services/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="body" [ngClass]="{'body--focus-on-players': !showMenu}">
-      <!--<div class="body__menu">-->
-        <!--<menu></menu>-->
-      <!--</div>-->
+      <div class="body__menu">
+        <menu></menu>
+      </div>
       <main class="body__content">
       <!--<a target="_blank" (click)="getAuthorization()">Auth With Bungo</a>-->
       <!--<a target="_blank" (click)="getAccount()">Get Account</a>-->

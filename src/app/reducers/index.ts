@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -43,25 +44,28 @@ export const reducers = {
   leaderboard: fromLeaderboards.reducer
 };
 
-export function getPlayerState(state$: Observable<State>) {
-  return state$.select(s => s.players);
-}
+export const getPgcrState = (state: State) => state.pgcr;
 
-export function getMyPlayerState(state$: Observable<State>) {
-  return state$.select(s => s.characters);
-}
+export const getMyPlayerState = (state: State) => state.characters;
 
-export function getPgcrState(state$: Observable<State>) {
-  return state$.select(s => s.pgcr);
-}
+export const getPlayerState = (state: State) => state.players;
 
-export function getAuthState(state$: Observable<State>) {
-  return state$.select(s => s.auth);
-}
+export const getAuthState = (state: State) => state.auth;
 
-export const getAuthAuthState = compose(fromAuth.getAuthState, getAuthState);
+export const getLeaderboardState = (state: State) => state.leaderboard;
 
-export const getPgcrCollection = compose(fromPGCR.getCollection, getPgcrState);
+export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
+
+export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLeaderboards.getSpecial);
+// export const getPrimaryAndSpecial = createSelector(getLeaderboardState, fromLeaderboards.getPrimaryAndSpecial);
+
+export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLeaderboardSpecial, (primary, special) => {
+  return [primary, special];
+});
+
+export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
+
+export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
 
 export function getActivityState(state$: Observable<State>) {
   return state$.select(s => s.activities);
@@ -82,7 +86,7 @@ export const getCharacter = function (playerIndex: string) {
 export const getPgcrFromRecent = function (playerIndex: string, amount: number) {
   return (state$: Observable<State>) => {
     return combineLatest<{ [id: string]: PGCR }, string[]>(
-      state$.let(getPgcrCollection),
+      state$.select(getPgcrCollection),
       state$.let(compose(fromActivities.getActivities(playerIndex, amount), getActivityState))
     )
       .map(([ collection, ids ]) => ids.map(id => collection[id]));
@@ -91,7 +95,7 @@ export const getPgcrFromRecent = function (playerIndex: string, amount: number) 
 
 export const getNewMatches = function (matches: string[]) {
   return (state$: Observable<State>) => {
-      return state$.let(getPgcrCollection)
+      return state$.select(getPgcrCollection)
         .map(collection => matches.filter(instanceId => !collection[instanceId]));
   }
 };

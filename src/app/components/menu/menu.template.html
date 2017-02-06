@@ -15,22 +15,20 @@
               <img src="assets/img/ps.svg" alt="PlayStation">
             </label>
             <label class="toggle">
-              <input type="checkbox">
+              <input type="checkbox" [(ngModel)]="isXbox" (ngModelChange)="togglePlatform($event)">
               <span class="toggle__btn"></span>
             </label>
             <label class="platform-toggle__label">
               <img src="assets/img/xbox.svg" alt="Xbox">
             </label>
           </div>
-          <!-- TODO: Implement XBOX/PS toggle -->
         </div>
       </div>
 
       <div class="search">
         <div class="search__player search__player--main row middle-xs">
           <div class="col-xs">
-            <!-- TODO: Make search work -->
-            <input type="text" class="form-control" [value]="query" (keyup)="search(2, $event.target.value)"
+            <input type="text" class="form-control" [(ngModel)]="searchedName"
                    autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'">
           </div>
           <div class="col-xs-shrink row row--no-gutter">
@@ -40,7 +38,7 @@
               </button>
             </div>
             <div class="col-xs">
-              <button class="btn btn--icon btn--ghost" type="submit">
+              <button class="btn btn--icon btn--ghost" type="submit" [routerLink]="[isXbox ? '/xbox' : '/ps', searchedName]">
                 <i class="material-icons">&#xE163;</i>
               </button>
             </div>

@@ -27,7 +27,7 @@ export class AuthEffects {
   @Effect()
   loadAuth$: Observable<Action> = this.actions$
     .ofType(Dispatcher.INIT)
-    .withLatestFrom(this.store.let(fromRoot.getAuthState))
+    .withLatestFrom(this.store.select(fromRoot.getAuthState))
     .map(([ , state ]) => {
       let currentTimestamp: number = new Date().valueOf();
       let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(state.authState);
@@ -49,7 +49,7 @@ export class AuthEffects {
   validateTokens$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.VALIDATE_TOKEN)
     .map((action: auth.ValidateToken) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getAuthState))
+    .withLatestFrom(this.store.select(fromRoot.getAuthState))
     .map(([payload, state]) => {
       return {
         payload: payload,
@@ -74,7 +74,7 @@ export class AuthEffects {
   refreshTokens$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.REFRESH_TOKENS)
     .map((action: auth.RefreshTokens) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getAuthAuthState))
+    .withLatestFrom(this.store.select(fromRoot.getAuthAuthState))
     .map(([payload, state]) => {
       return {
         payload: payload,

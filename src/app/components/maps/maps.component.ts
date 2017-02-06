@@ -29,6 +29,7 @@ export class MapsComponent {
   mapInfo$: Observable<MapInfo>;
   primary$: Observable<WeaponUsage[]>;
   special$: Observable<WeaponUsage[]>;
+  weapons$: Observable<Array<any>>;
   currentMap: Observable<any>;
   weapons: any;
 
@@ -37,7 +38,6 @@ export class MapsComponent {
     kills in their category.<\hr/\>Difference to the average represents how\
     much more or less that specific weapon type is used on this map\
     in relation to all other Trials of Osiris maps since the latest balance update.";
-  weaponStatsUrl: string = "https://guardian.gg/en/weapon-stats?platform=" + 2 + "&mode=14&start=" + '2016-09-02' + "&end=" + '2016-09-05'; // TODO: Correct platform
 
   constructor(private store: Store<fromRoot.State>) {
 
@@ -51,6 +51,8 @@ export class MapsComponent {
     this.mapInfo$ = store.select(state => state['map'].mapInfo);
     this.primary$ = store.select(state => state['map'].primaryAvg);
     this.special$ = store.select(state => state['map'].specialAvg);
+
+    this.weapons$ = store.select(fromRoot.getPrimaryAndSpecial);
   }
 
   previousMap() {

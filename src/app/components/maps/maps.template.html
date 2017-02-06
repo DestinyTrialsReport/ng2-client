@@ -63,7 +63,7 @@
           </div>
           <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (primary$ | async)'>
             <div class="col-xs-6 col-sm-4">
-              <img class="weapon-type-icon"
+              <img class="weapon-type-icon img-responsive"
                    [src]="weapon?.file_name"
                    [alt]="weapon?.weapon_type">
             </div>
@@ -111,35 +111,29 @@
       <div class="row">
         <div class="col-xs-12 col-sm-2">
           <h3 class="stat-title">
-            Top weapons from Guardian.gg
+            Top weapons based on total kills
           </h3>
-          <!--<a [href]="weaponStatsUrl" target="_blank" [tooltip]="tooltipText">-->
-          <!-- <a>
-            <i class="material-icons icon--small info">&#xE148;</i> TODO: Implement popovers
-          </a> -->
         </div>
-        <div class="col-xs-12 col-sm-10" *ngIf="!weapons || (!weapons.primary && !weapons.special)">
+        <div class="col-xs-12 col-sm-10" *ngIf="!(weapons$ | async)">
           <div class="first-in-lighthouse__undecided">
-            Guardian.gg does not have any weapon stats to show (yet!).
+            We do not have any weapon stats to show (yet!).
           </div>
         </div>
-        <template [ngIf]="weapons">
-          <div class="col-xs-12 col-sm-5" *ngFor='let type of [weapons.primary, weapons.special]'>
-            <template ngFor let-weapon [ngForOf]="type" let-i="index">
-              <div class="row top-weapon" *ngIf="i < 3">
-                <div class="col-xs-6 col-sm-7 last-weapon-weapon__descr">
-                  <img class="last-match-weapon__img img-responsive" [src]="'https://www.bungie.net' + weapon.icon"
-                       [alt]="weapon.name">
-                  <span class="last-match-weapon__title" [innerHtml]="weapon.name"></span>
-                </div>
-                <div class="col-xs-6 col-sm-5 stat">
-                  <span [innerHtml]="weapon.kills | number:'2.0-2'"></span>%
-                </div>
+        <div class="col-xs-12 col-sm-5" *ngFor='let type of (weapons$ | async)'>
+          <template ngFor let-weapon [ngForOf]="type" let-i="index">
+            <div class="row top-weapon" *ngIf="i < 3">
+              <div class="col-xs-6 col-sm-7 top-weapon-weapon__descr">
+                <img class="top-weapon-weapon__img img-responsive" [src]="weapon.icon"
+                     [alt]="weapon.name">
+                <span class="top-match-weapon__title" [innerHtml]="weapon.name"></span>
               </div>
-            </template>
-            <hr class="hr--minor visible-xs" *ngIf="i === 0">
-          </div>
-        </template>
+              <div class="col-xs-6 col-sm-5 stat">
+                <span [innerHtml]="weapon.percentage | number:'1.2-2'"></span>%
+              </div>
+            </div>
+          </template>
+          <hr class="hr--minor visible-xs" *ngIf="i === 0">
+        </div>
       </div>
     </div>
   </div>

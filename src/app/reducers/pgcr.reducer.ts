@@ -148,6 +148,4 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
   }
 }
 
-export function getCollection(state$: Observable<State>) {
-  return state$.select(state => state.collection);
-}
+export const getCollection = (state: State) => state.collection;

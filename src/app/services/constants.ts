@@ -4,7 +4,12 @@ export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
 export const BUNGIE_BASE_URL: string = 'https://www.bungie.net/Platform';
 
-export const WEAPON_BUCKETS: any = [1498876634, 2465295065, 953998645];
+
+export const BUCKET_PRIMARY_WEAPON: any = 1498876634;
+export const BUCKET_SPECIAL_WEAPON: any = 2465295065;
+export const BUCKET_HEAVY_WEAPON: any = 953998645;
+
+export const WEAPON_BUCKETS: any = [BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, BUCKET_HEAVY_WEAPON];
 export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
 export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031];
 

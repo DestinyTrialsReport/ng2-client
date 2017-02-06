@@ -8,6 +8,7 @@ import { empty } from 'rxjs/observable/empty';
 import { LeaderboardService } from '../services/leaderboard.service';
 import { Observable } from 'rxjs/Observable';
 import * as leaderboard from '../actions/leaderboard.actions';
+import * as maps from '../actions/maps.actions';
 
 @Injectable()
 
@@ -28,6 +29,20 @@ export class LeaderboardEffects {
       return this.leaderboardService.weaponType(payload.type, payload.week)
         .map(result => new leaderboard.WeaponTypeSuccessAction(result))
         .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
-        // .catch((err) => empty());
+    });
+
+  @Effect()
+  weaponPercentage$: Observable<Action> = this.actions$
+    .ofType(maps.ActionTypes.SEARCH_COMPLETE)
+    .map((action: maps.SearchCompleteAction) => action.payload)
+    .delay(200)
+    .switchMap(payload => {
+      if (!payload) {
+        return Observable.from([]);
+      }
+
+      return this.leaderboardService.weaponPercentage(payload)
+        .map(result => new leaderboard.WeaponPercentageSuccessAction(result))
+        .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });
 }

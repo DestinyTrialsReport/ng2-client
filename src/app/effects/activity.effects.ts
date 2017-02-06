@@ -34,7 +34,7 @@ export class ActivityEffects {
   activities$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map((action: player.SearchAccount) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .withLatestFrom(this.store.select(fromRoot.getPlayerState))
     .map(([payload, state]) => {
       return {
         character: payload[0],
@@ -51,7 +51,7 @@ export class ActivityEffects {
   @Effect() recentActivity$: Observable<Action> = this.actions$
     .ofType(activities.ActionTypes.SEARCH_ACTIVITY)
     .map((action: activities.ActivityActions) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getMyPlayerState))
+    .withLatestFrom(this.store.select(fromRoot.getMyPlayerState))
     .map(([payload, state]) => {
       return {
         name: payload[1],
@@ -70,7 +70,7 @@ export class ActivityEffects {
   searchPGCR$: Observable<Action> = this.actions$
     .ofType(pgcr.ActionTypes.SEARCH_PGCR)
     .map((action: pgcr.SearchPGCR) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .withLatestFrom(this.store.select(fromRoot.getPlayerState))
     .map(([payload, state]) => {
       return {
         payload: payload,

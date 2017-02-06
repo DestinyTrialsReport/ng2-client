@@ -78,7 +78,7 @@
           </div>
           <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of (weapons$ | async) | paginate: { itemsPerPage: 10, currentPage: page }'>
             <div class="col-xs-2">
-              <span [innerHtml]="weapon?.kills"></span>
+              <span [innerHtml]="weapon?.kills | number:'1.0-0'"></span>
             </div>
             <div class="col-xs-6">
               <img class="weapon-icon"
@@ -87,10 +87,10 @@
               <span [innerHtml]="weapon?.name"></span>
             </div>
             <div class="col-xs-2">
-              <span [innerHtml]="weapon?.headshots"></span>
+              <span [innerHtml]="weapon?.headshots | number:'1.0-0'"></span>
             </div>
             <div class="col-xs-2">
-              <span [innerHtml]="weapon?.matches"></span>
+              <span [innerHtml]="weapon?.matches | number:'1.0-0'"></span>
             </div>
           </div>
         </div>

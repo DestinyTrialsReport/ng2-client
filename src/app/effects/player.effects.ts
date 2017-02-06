@@ -119,7 +119,7 @@ export class PlayerEffects {
   inventory$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_ACCOUNT)
     .map((action: player.SearchAccount) => action.payload)
-    .withLatestFrom(this.store.let(fromRoot.getPlayerState))
+    .withLatestFrom(this.store.select(fromRoot.getPlayerState))
     .map(([payload, state]) => {
       return {
         character: payload[0],
