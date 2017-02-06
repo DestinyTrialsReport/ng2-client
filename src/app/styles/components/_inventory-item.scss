@@ -25,6 +25,29 @@
   }
 }
 
+.inventory-item__title {
+  white-space: normal;
+}
+
 .inventory-item__title + .inventory-item__perks {
   margin-top: .5rem;
+}
+
+.inventory-item--small {
+  font-size: .9em;
+
+  .inventory-item__image {
+    width: $inventory-item-small-image-size;
+    height: $inventory-item-small-image-size;
+    border-radius: .3em;
+  }
+
+  .inventory-item__title {
+    line-height: 1;
+  }
+
+  .stat-header + &,
+  & + .inventory-item--small {
+    margin-top: .5em;
+  }
 }

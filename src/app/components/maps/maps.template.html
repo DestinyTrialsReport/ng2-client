@@ -111,28 +111,38 @@
       <div class="row">
         <div class="col-xs-12 col-sm-2">
           <h3 class="stat-title">
-            Top weapons based on total kills
+            Top weapons
           </h3>
         </div>
-        <div class="col-xs-12 col-sm-10" *ngIf="!(weapons$ | async)">
-          <div class="first-in-lighthouse__undecided">
-            We do not have any weapon stats to show (yet!).
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-5" *ngFor='let type of (weapons$ | async)'>
-          <template ngFor let-weapon [ngForOf]="type" let-i="index">
-            <div class="row top-weapon" *ngIf="i < 3">
-              <div class="col-xs-6 col-sm-7 top-weapon-weapon__descr">
-                <img class="top-weapon-weapon__img img-responsive" [src]="weapon.icon"
-                     [alt]="weapon.name">
-                <span class="top-match-weapon__title" [innerHtml]="weapon.name"></span>
+        <div class="stat-table col-xs-12 col-sm-5" *ngFor='let type of (weapons$ | async); let i = index;'>
+          <div class="stat-table__row row row--tiny-gutter">
+            <div class="col-xs">
+              <div class="stat-header">
+                <span *ngIf="i === 0">Primary</span>
+                <span *ngIf="i === 1">Secondary</span>
               </div>
-              <div class="col-xs-6 col-sm-5 stat">
+            </div>
+            <div class="col-xs-shrink stat">
+              <div class="stat-label">Kills</div>
+            </div>
+          </div>
+          <template ngFor let-weapon [ngForOf]="type" let-i="index">
+            <div class="stat-table__row row row--tiny-gutter middle-xs inventory-item inventory-item--small" *ngIf="i < 5">
+              <div class="col-xs-shrink">
+                <div class="inventory-item__image">
+                  <img class="top-weapon-weapon__img img-responsive" [src]="weapon.icon" [alt]="weapon.name">
+                </div>
+              </div>
+              <div class="col-xs">
+                <div class="inventory-item__title">
+                  <span [innerHtml]="weapon.name"></span>
+                </div>
+              </div>
+              <div class="col-xs-shrink">
                 <span [innerHtml]="weapon.percentage | number:'1.2-2'"></span>%
               </div>
             </div>
           </template>
-          <hr class="hr--minor visible-xs" *ngIf="i === 0">
         </div>
       </div>
     </div>
