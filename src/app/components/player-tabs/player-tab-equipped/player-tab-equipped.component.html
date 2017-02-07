@@ -41,7 +41,7 @@
 </div>
 
 <div class="player__block tab__section">
-  <div class="row row--wrap" *ngFor="let subclass of (inventory | filterSubclass)">
+  <div class="row" *ngFor="let subclass of (inventory | filterSubclass)">
     <template ngFor let-node [ngForOf]="subclass?.steps">
       <div class="subclass-perk col-xs-6" *ngIf="([5, 7].indexOf(node.c) < 0) && !([2, 3, 4].indexOf(node.c) > -1 && node.r == 0)">
         <div class="row row--no-gutter middle-xs">

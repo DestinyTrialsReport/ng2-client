@@ -3,13 +3,13 @@
   display: flex;
   flex: 0 1 auto;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   margin-right: -$grid-gutter;
   margin-left: -$grid-gutter;
 }
 
-.row--wrap {
-  flex-wrap: wrap;
+.row--no-wrap {
+  flex-wrap: nowrap;
 }
 
 .row.reverse {
