@@ -29,7 +29,9 @@
         <div class="search__player search__player--main row middle-xs">
           <div class="col-xs">
             <input type="text" class="form-control" [(ngModel)]="searchedName"
-                   autocorrect="off" autocomplete="off" spellcheck="false" [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'">
+                   autocorrect="off" autocomplete="off" spellcheck="false"
+                   [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'"
+                   (keyup.enter)="searchPlayer()">
           </div>
           <div class="col-xs-shrink row row--no-gutter">
             <div class="col-xs">
@@ -38,7 +40,9 @@
               </button>
             </div>
             <div class="col-xs">
-              <button class="btn btn--icon btn--ghost" type="submit" [routerLink]="[isXbox ? '/xbox' : '/ps', searchedName]">
+              <button class="btn btn--icon btn--ghost"
+                      type="submit"
+                      (click)="searchPlayer()">
                 <i class="material-icons">&#xE163;</i>
               </button>
             </div>
@@ -92,12 +96,12 @@
   </header>
 
   <footer class="footer">
-    <!-- TODO: Style this once the Ad is visible -->
-    <!-- <div class="block__footer-dark block__footer--ad-dark" style="min-width:336px;min-height:280px">
-      <div class="ad" style="min-width:336px;min-height:280px"> -->
-        <!--<adsense ad-client="ca-pub-7408805581120581" ad-slot="8795722555" inline-style="display:inline-block;width:336px;height:280px"></adsense>-->
-      <!-- </div>
-    </div> -->
+    <div class="block__footer-dark block__footer--ad-dark" style="min-width:336px;min-height:280px">
+      <div class="ad" style="min-width:336px;min-height:280px">
+        <ng2-adsense *ngIf="showAd"></ng2-adsense>
+        <ng2-adsense *ngIf="!showAd"></ng2-adsense>
+      </div>
+    </div>
 
     <div class="donate">
       <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MNKJ7R6TA4XJE" target="_blank">

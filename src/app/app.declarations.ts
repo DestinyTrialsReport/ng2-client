@@ -18,12 +18,18 @@ import { TimeAgo } from "./pipes/time-ago.pipe";
 import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
+import {LeaderboardPlayerComponent} from "./components/leaderboards/leaderboard-players.component";
+import {LeaderboardWeaponTypesComponent} from "./components/leaderboards/leaderboard-weapon-types.component";
+import {LeaderboardSearchComponent} from "./components/leaderboards/leaderboard-search.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
   MapsComponent,
   HomeComponent,
   LeaderboardsComponent,
+  LeaderboardPlayerComponent,
+  LeaderboardWeaponTypesComponent,
+  LeaderboardSearchComponent,
   NotFound404Component,
   ReportComponent,
   MyReportComponent,

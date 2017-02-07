@@ -1,4 +1,7 @@
-import {Component, ChangeDetectionStrategy, style, state, trigger, animate, transition} from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, style, state, trigger, animate, transition, ViewChild,
+  ElementRef
+} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Observable }     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
@@ -12,6 +15,14 @@ import * as myPlayer        from '../../actions/my-player.actions';
   animations: [
     trigger('playerLoaded', [
       state('void' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('null' , style({
+        transform: 'translate3d(0, 2rem, 0)',
+        opacity: 0
+      })),
+      state('undefined' , style({
         transform: 'translate3d(0, 2rem, 0)',
         opacity: 0
       })),
@@ -35,6 +46,10 @@ import * as myPlayer        from '../../actions/my-player.actions';
 })
 export class MyReportComponent {
   players: Observable<fromSearch.State>;
+  focusOnPlayer: number = 1;
+  panActive: boolean = false;
+  panStartX: number;
+  @ViewChild('playersContainer') playersContainer: ElementRef;
 
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
@@ -68,5 +83,42 @@ export class MyReportComponent {
 
   search(platform: number, name: string) {
     this.store.dispatch(new player.SearchPlayer({platform: platform, name: name, playerIndex: 'myPlayer'}));
+  }
+
+  shiftPlayerFocus(direction: number) {
+    this.focusOnPlayer = Math.max(1, Math.min(3, this.focusOnPlayer + ((window.innerWidth > 768 ? 2 : 1) * direction)));
+  }
+
+  panStart() {
+    if (window.innerWidth <= 960) {
+      this.panActive = true;
+      this.playersContainer.nativeElement.style['transition'] = 'none';
+      this.playersContainer.nativeElement.style['-webkit-transition'] = 'none';
+      this.panStartX = parseFloat(window.getComputedStyle(this.playersContainer.nativeElement).transform.split(',')[4]);
+      if (isNaN(this.panStartX)) {
+        this.panStartX = 0;
+      }
+    }
+  }
+
+  panMove(deltaX: number) {
+    if (this.panActive) {
+      this.playersContainer.nativeElement.style['-webkit-transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
+      this.playersContainer.nativeElement.style['transform'] = 'translate3d(' + (this.panStartX + (deltaX / 2)) + 'px, 0, 0)';
+    }
+  }
+
+  panEnd(deltaX: number) {
+    this.playersContainer.nativeElement.style['-webkit-transition'] = null;
+    this.playersContainer.nativeElement.style['transition'] = null;
+    this.playersContainer.nativeElement.style['-webkit-transform'] = null;
+    this.playersContainer.nativeElement.style['transform'] = null;
+
+    if (deltaX < -20) {
+      this.shiftPlayerFocus(1);
+    } else if (deltaX > 20) {
+      this.shiftPlayerFocus(-1);
+    }
+    this.panActive = false;
   }
 }

@@ -1,3 +1,7 @@
+@import '../../styles/helpers/all';
+
+@import 'styles/base';
+
 .maps {
   max-width: 640px;
   background: url('/assets/img/loading.svg') no-repeat center 50%;
@@ -34,6 +38,9 @@
 
 select {
   cursor: pointer;
+}
+
+select, input {
   width: 100%;
   -webkit-appearance: none;
   -moz-appearance: none;

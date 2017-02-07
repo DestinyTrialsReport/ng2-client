@@ -1,5 +1,5 @@
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { EffectsModule } from '@ngrx/effects';
@@ -11,14 +11,16 @@ import { routes } from './app.routing';
 import { reducer } from './reducers';
 import { PlayerEffects } from "./effects/player.effects";
 import { MapEffects } from "./effects/map.effects";
+import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 import { TabsModule } from "ng2-bootstrap/tabs";
 import { TooltipModule } from "ng2-bootstrap/tooltip";
 import { ProgressbarModule } from "ng2-bootstrap/progressbar";
 import { ActivityEffects } from "./effects/activity.effects";
 import { StatsEffects } from "./effects/stats.effects";
-import {AuthEffects} from "./effects/auth.effects";
-import {LeaderboardEffects} from "./effects/leaderboard.effects";
-import {Ng2PaginationModule} from "ng2-pagination";
+import { AuthEffects } from "./effects/auth.effects";
+import { LeaderboardEffects } from "./effects/leaderboard.effects";
+import { Ng2PaginationModule } from "ng2-pagination";
+import { AdsenseModule } from "./ng2-adsense";
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT &&
@@ -40,13 +42,17 @@ export const APP_IMPORTS = [
   EffectsModule.run(MapEffects),
   EffectsModule.run(LeaderboardEffects),
   TabsModule.forRoot(),
+  TypeaheadModule.forRoot(),
   TooltipModule.forRoot(),
   ProgressbarModule.forRoot(),
   ReactiveFormsModule,
   Ng2PaginationModule,
   IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
   RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: IdlePreload }),
-  // RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  AdsenseModule.forRoot({
+    adClient: 'ca-pub-7408805581120581',
+    adSlot: 8795722555
+  }),
   StoreModule.provideStore(reducer),
   STORE_DEV_TOOLS_IMPORTS,
   StoreDevtoolsModule.instrumentOnlyWithExtension()

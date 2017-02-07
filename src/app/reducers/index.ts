@@ -56,7 +56,17 @@ export const getLeaderboardState = (state: State) => state.leaderboard;
 
 export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
 
+export const getLeaderboardWeaponIds = createSelector(getLeaderboardState, fromLeaderboards.getWeaponIds);
+
 export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLeaderboards.getSpecial);
+
+export const getLeaderboardPlayers = createSelector(getLeaderboardState, fromLeaderboards.getPlayers);
+
+export const getLeaderboardSearchedPlayer = createSelector(getLeaderboardState, fromLeaderboards.getSearchedPlayer);
+
+export const getLeaderboardPlayerWeapons = createSelector(getLeaderboardState, fromLeaderboards.getPlayerWeapons);
+
+export const getLeaderboardsCurrentPage = createSelector(getLeaderboardState, fromLeaderboards.getCurrentPage);
 // export const getPrimaryAndSpecial = createSelector(getLeaderboardState, fromLeaderboards.getPrimaryAndSpecial);
 
 export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLeaderboardSpecial, (primary, special) => {

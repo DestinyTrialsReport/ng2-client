@@ -30,7 +30,8 @@ import {AuthService} from "./services/auth.service";
 })
 
 export class AppComponent implements OnInit {
-  showMenu:boolean = true;
+  showMenu: boolean = true;
+  showAd: boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );
@@ -39,7 +40,9 @@ export class AppComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private store: Store<fromRoot.State>,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+
+  }
 
   ngOnInit() {
     this.route.queryParams
