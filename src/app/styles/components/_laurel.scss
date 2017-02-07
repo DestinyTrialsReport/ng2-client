@@ -1,0 +1,14 @@
+.laurel {
+  width: 2rem;
+  height: 2rem;
+  background-image: url(/assets/img/laurel-grey.svg);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.laurel--first {
+  background-image: url(/assets/img/laurel-gold.svg);
+}

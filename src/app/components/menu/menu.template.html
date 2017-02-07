@@ -62,7 +62,7 @@
       <div class="current-map menu__block"
            [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
         <div class="row">
-          <div class="col-xs stat">
+          <div class="col-xs">
             <span class="stat-number" [innerHtml]="(currentMap$ | async)?.activityName"></span>
             <label class="stat-label" [innerHtml]="(currentMap$ | async)?.weekText + '\'s map'"></label> <!-- TODO: Toggle between this week's / last week's map -->
           </div>

@@ -8,6 +8,7 @@ import { PlayerHeaderComponent } from "./components/player-header/player-header.
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
 import { PlayerTabEquippedComponent } from "./components/player-tabs/player-tab-equipped/player-tab-equipped.component";
 import { PlayerTabRecentMatchesComponent } from "./components/player-tabs/player-tab-recent-matches/player-tab-recent-matches.component";
+import { PlayerTabStatsComponent } from "./components/player-tabs/player-tab-stats/player-tab-stats.component";
 import { PlayerFooterComponent } from "./components/player-footer/player-footer.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
@@ -15,7 +16,6 @@ import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
 import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
 import { TimeAgo } from "./pipes/time-ago.pipe";
-import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
 import { LeaderboardPlayerComponent } from "./components/leaderboards/leaderboard-players.component";
@@ -38,12 +38,12 @@ export const APP_DECLARATIONS = [
   PlayerIntroComponent,
   PlayerTabEquippedComponent,
   PlayerTabRecentMatchesComponent,
+  PlayerTabStatsComponent,
   PlayerFooterComponent,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,
   StreakIconPipe,
-  StatsTabComponent,
   ActivityGraphPipe,
   FilterSubclass,
   FilterWeapons,

@@ -22,19 +22,19 @@
   <hr class="hr--no-margin">
   <div class="player__block">
     <div class="row row--no-gutter">
-      <div class="col-xs-3 stat">
+      <div class="col-xs-3">
         <div class="stat-number" [innerHtml]="(statsBng | winPercentage | number:'1.0-0') + '%'"></div>
         <div class="stat-number" *ngIf="!statsBng">N/A</div>
         <div class="stat-label">Wins</div>
       </div>
-      <div class="col-xs-3 stat">
+      <div class="col-xs-3">
         <div class="stat-number">
           <span [innerHtml]="(activities | streak) || 'N/A'"></span>
           <span class="match-icon" [ngClass]="activities | streakIcon"></span>
         </div>
         <div class="stat-label">Streak</div>
       </div>
-      <div class="col-xs-4 stat">
+      <div class="col-xs-4">
         <div class="stat-number">
           <span [innerHtml]="(statsGgg?.elo | number:'1.0-0') || 'N/A'"></span>
           <span>
@@ -45,7 +45,7 @@
         </div>
         <div class="stat-label">Elo Rating</div>
       </div>
-      <div class="col-xs-2 stat">
+      <div class="col-xs-2">
         <div class="stat-number" [ngClass]="{'color-success': (statsDtr | sumFlawless) > 0, 'color-error': (statsDtr | sumFlawless) === 0}">
           <i *ngIf="!(statsDtr | sumFlawless)" class="material-icons color-error">&#xE14C;</i>
           <span *ngIf="(statsDtr | sumFlawless)" [innerHtml]="(statsDtr | sumFlawless) + 'x'"></span>

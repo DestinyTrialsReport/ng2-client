@@ -19,7 +19,7 @@ import * as mapActions    from "../../actions/maps.actions";
     ])
   ],
   styleUrls: ['./maps.component.css'],
-  templateUrl: 'maps.template.html'
+  templateUrl: 'maps.component.html'
 })
 
 export class MapsComponent {

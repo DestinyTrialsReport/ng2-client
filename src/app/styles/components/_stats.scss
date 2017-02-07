@@ -45,6 +45,11 @@
   & + & {
     margin-top: .6rem;
   }
+
+  > hr {
+    margin-top: .6rem;
+    margin-bottom: 0rem;
+  }
 }
 
 .stat-progress > .col-xs:not(:first-child) {

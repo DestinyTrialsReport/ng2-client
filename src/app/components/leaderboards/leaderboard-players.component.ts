@@ -13,13 +13,13 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       <div class="col-xs-2">
         <div class="stat-header">Kills</div>
       </div>
-      <div class="col-xs-4 stat">
+      <div class="col-xs-4">
         <div class="stat-header">Player</div>
       </div>
-      <div class="col-xs-2 stat">
+      <div class="col-xs-2">
         <div class="stat-header">Headshots</div>
       </div>
-      <div class="col-xs-2 stat">
+      <div class="col-xs-2">
         <div class="stat-header">Matches</div>
       </div>
     </div>

@@ -38,9 +38,10 @@
     </tab>
     <tab heading="Stats" customClass="player-tab--stats" customClass="tab__nav tab--style-three">
       <div class="tab tab--style-three">
-        <div class="tab__content"
-          [stats]="(stats$ | async)?.bungie"
-          stats-tab>
+        <div class="tab__content">
+          <player-tab-stats
+            [stats]="(stats$ | async)?.bungie">
+          </player-tab-stats>
         </div>
       </div>
     </tab>

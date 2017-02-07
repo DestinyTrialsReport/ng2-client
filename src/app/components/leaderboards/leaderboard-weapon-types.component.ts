@@ -11,13 +11,13 @@ import { LBWeaponType } from "../../models/leaderboard.model";
       <div class="col-xs-2">
         <div class="stat-header">Kills</div>
       </div>
-      <div class="col-xs-6 stat">
+      <div class="col-xs-6">
         <div class="stat-header">Weapon</div>
       </div>
-      <div class="col-xs-2 stat">
+      <div class="col-xs-2">
         <div class="stat-header">Headshots</div>
       </div>
-      <div class="col-xs-2 stat">
+      <div class="col-xs-2">
         <div class="stat-header">Matches</div>
       </div>
     </div>

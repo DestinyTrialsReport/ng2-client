@@ -1,0 +1,99 @@
+<div class="player__block tab__section">
+  <div class="row row--small-gutter">
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.kills?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Kills</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.deaths?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Deaths</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.assists?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Assists</div>
+    </div>
+  </div>
+  <div class="row row--small-gutter">
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.activitiesEntered?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Games</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.activitiesWon?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Wins</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="stats?.totalActivityDurationSeconds?.basic?.displayValue || '0s'"></div>
+      <div class="stat-label">Time played</div>
+    </div>
+  </div>
+  <div class="row row--small-gutter">
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.score?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Rounds won</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.allParticipantsScore?.basic?.value - stats?.score?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Rounds lost</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-number" [innerHtml]="(stats?.averageKillDistance?.basic?.value | number:'1.0-0') || 'N/A'"></div>
+      <div class="stat-label">Kill distance</div>
+    </div>
+  </div>
+</div>
+<div class="player__block tab__section" *ngIf="stats">
+  <div class="stat-table__row row row--small-gutter">
+    <div class="col-xs-4">
+      <div class="stat-header">Weapon type</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-label">Kills</div>
+    </div>
+    <div class="col-xs-4">
+      <div class="stat-label">Headshots</div>
+    </div>
+  </div>
+  <!-- TODO: Sort this on descending kills -->
+  <div class="stat-table__row row row--small-gutter" *ngFor="let key of weaponKills; let i = index;">
+    <div class="col-xs-4">
+      <img class="weapon-type-icon" [src]="keyToWeaponIcon(key)">
+    </div>
+    <div class="col-xs-4">
+      <span [innerHtml]="(stats[key]?.basic?.value | number:'1.0-0') || 0"></span>
+    </div>
+    <div class="col-xs-4">
+      0 <!-- TODO: Add headshots -->
+    </div>
+    <hr class="col-xs-12" *ngIf="i === 3 || i === 7">
+  </div>
+</div>
+<div class="player__block tab__section character-records">
+  <div class="row middle-xs">
+    <div class="col-xs">
+      <div class="stat-header">
+        Character records
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="stat-number" [innerHtml]="(stats?.bestSingleGameKills?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Kills in one game</div>
+    </div>
+    <div class="col-xs-6">
+      <div class="stat-number" [innerHtml]="(stats?.mostPrecisionKills?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Headshots in one game</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="stat-number" [innerHtml]="stats?.longestSingleLife?.basic?.displayValue || 'N/A'"></div>
+      <div class="stat-label">Longest single life</div>
+    </div>
+    <div class="col-xs-6">
+      <div class="stat-number" [innerHtml]="(stats?.longestKillSpree?.basic?.value | number:'1.0-0') || 0"></div>
+      <div class="stat-label">Longest kill spree</div>
+    </div>
+  </div>
+</div>

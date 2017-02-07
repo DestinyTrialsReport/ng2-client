@@ -12,37 +12,37 @@
 </div>
 <div class="player__block tab__section">
   <div class="row row--tiny-gutter">
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="pgcr?.values?.kills || 0"></div>
       <div class="stat-label">Kills</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="pgcr?.values?.deaths || 0"></div>
       <div class="stat-label">Deaths</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="pgcr?.values?.assists || 0"></div>
       <div class="stat-label">Assists</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="pgcr?.values?.precisionKills || 0"></div>
       <div class="stat-label">Headshots</div>
     </div>
   </div>
   <div class="row row--tiny-gutter">
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="(pgcr?.values?.killsDeathsRatio / 3 | number : '1.2-2') || 0"></div>
       <div class="stat-label">K/D</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="(pgcr?.values?.killsDeathsAssists / 3 | number : '1.2-2') || 0"></div>
       <div class="stat-label">KA/D</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="pgcr?.values?.resurrectionsPerformed || 0"></div>
       <div class="stat-label">Revives</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-number" [innerHtml]="secondsToDisplay((pgcr?.values?.averageLifespan / 3)) || 0"></div>
       <div class="stat-label">Lifespan</div>
     </div>
@@ -53,10 +53,10 @@
     <div class="col-xs-6">
       <div class="stat-header">Used weapons</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-label">Kills</div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <div class="stat-label">Headshots</div>
     </div>
   </div>
@@ -73,10 +73,10 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <span [innerHtml]="weapon?.uniqueWeaponKills"></span>
     </div>
-    <div class="col-xs-3 stat">
+    <div class="col-xs-3">
       <span [innerHtml]="weapon?.uniqueWeaponPrecisionKills"></span>
     </div>
   </div>
