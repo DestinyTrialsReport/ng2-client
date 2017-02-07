@@ -1,0 +1,43 @@
+@import '../../../styles/helpers/all';
+
+.recent-match__score {
+  text-align: center;
+  padding: 0.5rem 0;
+
+  .match-icon {
+    font-size: 10px;
+    vertical-align: .35rem;
+    margin-right: .25rem;
+  }
+
+  .stat-number {
+    font-size: 2em;
+
+    > span:last-child {
+      color: $light-secondary-color;
+    }
+  }
+}
+
+.recent-match__medals {
+  margin-top: -.5em;
+  margin-bottom: -.5em;
+}
+
+.recent-match__medal {
+  text-align: center;
+  margin: .5em 0;
+
+  > img {
+    width: 2.25rem;
+    display: block;
+    margin-bottom: .1rem;
+  }
+
+  > small {
+    font-size: .8em;
+    vertical-align: .15em;
+    margin-right: .1rem;
+    display: inline-block;
+  }
+}

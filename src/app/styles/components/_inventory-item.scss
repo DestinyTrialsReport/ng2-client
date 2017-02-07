@@ -1,7 +1,3 @@
-.inventory-item + .inventory-item {
-  margin-top: 1em;
-}
-
 .inventory-item__image {
   width: $inventory-item-image-size;
   height: $inventory-item-image-size;
@@ -44,10 +40,5 @@
 
   .inventory-item__title {
     line-height: 1;
-  }
-
-  .stat-header + &,
-  & + .inventory-item--small {
-    margin-top: .5em;
   }
 }

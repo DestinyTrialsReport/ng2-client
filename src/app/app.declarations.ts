@@ -7,20 +7,20 @@ import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
 import { PlayerTabEquippedComponent } from "./components/player-tabs/player-tab-equipped/player-tab-equipped.component";
+import { PlayerTabRecentMatchesComponent } from "./components/player-tabs/player-tab-recent-matches/player-tab-recent-matches.component";
 import { PlayerFooterComponent } from "./components/player-footer/player-footer.component";
 import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
 import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
-import { LastMatchesTabComponent } from "./components/last-matches/last-matches-tab.component";
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { StatsTabComponent } from "./components/stats-tab/stats-tab.component";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
-import {LeaderboardPlayerComponent} from "./components/leaderboards/leaderboard-players.component";
-import {LeaderboardWeaponTypesComponent} from "./components/leaderboards/leaderboard-weapon-types.component";
-import {LeaderboardSearchComponent} from "./components/leaderboards/leaderboard-search.component";
+import { LeaderboardPlayerComponent } from "./components/leaderboards/leaderboard-players.component";
+import { LeaderboardWeaponTypesComponent } from "./components/leaderboards/leaderboard-weapon-types.component";
+import { LeaderboardSearchComponent } from "./components/leaderboards/leaderboard-search.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -37,13 +37,13 @@ export const APP_DECLARATIONS = [
   PlayerHeaderComponent,
   PlayerIntroComponent,
   PlayerTabEquippedComponent,
+  PlayerTabRecentMatchesComponent,
   PlayerFooterComponent,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,
   StreakIconPipe,
   StatsTabComponent,
-  LastMatchesTabComponent,
   ActivityGraphPipe,
   FilterSubclass,
   FilterWeapons,

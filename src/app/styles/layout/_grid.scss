@@ -6,6 +6,10 @@
   flex-wrap: wrap;
   margin-right: -$grid-gutter;
   margin-left: -$grid-gutter;
+
+  & + .row {
+    margin-top: $grid-gutter;
+  }
 }
 
 .row--no-wrap {

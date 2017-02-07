@@ -9,6 +9,7 @@ import { ClassStat }      from "../../../models/player.model";
   styleUrls: ['./player-tab-equipped.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class PlayerTabEquippedComponent {
   armorBuckets: number[] = ARMOR_BUCKETS;
   @Input() stats: ClassStat[];

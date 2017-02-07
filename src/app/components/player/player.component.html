@@ -27,15 +27,16 @@
         </div>
       </div>
     </tab>
-    <tab heading="Last Matches" (select)="getMatchHistory()" customClass="tab--style-two">
+    <tab heading="Last Matches" (select)="getMatchHistory()" customClass="tab__nav tab--style-two">
       <div class="tab tab--style-two">
-        <div class="tab__content"
-          [pgcr]="(pgcr$ | async)"
-          last-matches-tab>
+        <div class="tab__content">
+          <player-tab-recent-matches
+            [pgcr]="(pgcr$ | async)">
+          </player-tab-recent-matches>
         </div>
       </div>
     </tab>
-    <tab heading="Stats" customClass="player-tab--stats" customClass="tab--style-three">
+    <tab heading="Stats" customClass="player-tab--stats" customClass="tab__nav tab--style-three">
       <div class="tab tab--style-three">
         <div class="tab__content"
           [stats]="(stats$ | async)?.bungie"
