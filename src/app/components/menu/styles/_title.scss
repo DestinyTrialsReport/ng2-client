@@ -20,3 +20,12 @@
     text-decoration: none;
   }
 }
+
+
+@media all and (max-width: $breakpoint-large) {
+  .title {
+    h1 {
+      font-size: 1.4em;
+    }
+  }
+}

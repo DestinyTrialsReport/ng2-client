@@ -10,19 +10,29 @@ import { Observable } from 'rxjs/Observable';
 import * as leaderboard from '../actions/leaderboard.actions';
 import * as maps from '../actions/maps.actions';
 import {PlayerService} from "../services/player.service";
+import {YEAR_ONE_DUPLICATES} from "../services/constants";
+import {ItemDefinitions} from "../models/manifest.model";
+import {LocalStorageService} from "ng2-webstorage";
 
 @Injectable()
 
 export class LeaderboardEffects {
 
+  itemDefinitions: ItemDefinitions;
+
   constructor(private actions$: Actions,
               private playerService: PlayerService,
-              private leaderboardService: LeaderboardService) { }
+              public storage: LocalStorageService,
+              private leaderboardService: LeaderboardService) {
+    this.itemDefinitions = this.storage.retrieve('manifestItems');
+    this.storage.observe('manifestItems').subscribe(definitions => this.itemDefinitions = definitions);
+  }
 
   @Effect()
   getWeaponType$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.GET_WEAPON_TYPE)
     .map((action: leaderboard.GetWeaponTypeAction) => action.payload)
+    .delay(200)
     .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
@@ -30,6 +40,21 @@ export class LeaderboardEffects {
 
       return this.leaderboardService.weaponType(payload.type, payload.week)
         .map(result => new leaderboard.WeaponTypeSuccessAction(result))
+        .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
+    });
+
+  @Effect()
+  getMedal$: Observable<Action> = this.actions$
+    .ofType(leaderboard.ActionTypes.GET_MEDAL)
+    .map((action: leaderboard.GetMedalAction) => action.payload)
+    .delay(200)
+    .switchMap(payload => {
+      if (!payload) {
+        return of(new leaderboard.LeaderboardRequestFailedAction(''));
+      }
+
+      return this.leaderboardService.getMedal(payload.medalId, payload.week)
+        .map(result => new leaderboard.GetMedalSuccessAction(result))
         .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });
 
@@ -77,15 +102,28 @@ export class LeaderboardEffects {
 
   @Effect()
   getWeaponIds$: Observable<Action> = this.actions$
-    .ofType(leaderboard.ActionTypes.GET_WEAPON_IDS)
-    .map((action: leaderboard.GetWeaponIdsAction) => action.payload)
+    .ofType(leaderboard.ActionTypes.GET_WEAPON_LIST)
+    .map((action: leaderboard.GetWeaponListAction) => action.payload)
     .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
 
-      return this.leaderboardService.getWeaponIds(payload)
-        .map(result => new leaderboard.WeaponIdsSuccessAction(result))
+      return this.leaderboardService.getWeaponIds(payload.week)
+        .map(res => {
+          const weapons = res
+            .map(id => {
+              let definition = this.itemDefinitions[parseInt(id)];
+              if (definition) {
+                let isDuplicate = YEAR_ONE_DUPLICATES.indexOf(id) > -1;
+                return {
+                  id: parseInt(id),
+                  name: isDuplicate ? definition.n + ' (Year 1)' : definition.n
+                }
+              }
+            });
+          return new leaderboard.WeaponListSuccessAction(weapons)
+        })
         .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });
 

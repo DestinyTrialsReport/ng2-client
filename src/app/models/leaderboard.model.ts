@@ -1,4 +1,5 @@
 export interface LBWeaponType {
+  id: string;
   name: string;
   icon: string;
   kills: string;

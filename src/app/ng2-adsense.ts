@@ -47,7 +47,6 @@ export class AdsenseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('adsense init');
     // attempts to push the ad twice. Usually if one doesn't work the other
     // will depeding on if the browser has the adsense code cached
     const res = this.push();

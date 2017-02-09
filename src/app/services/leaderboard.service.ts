@@ -17,6 +17,11 @@ export class LeaderboardService extends RequestBase {
       .map(res => res.json());
   }
 
+  getMedal(medalId: number, week: number): Observable<any[]> {
+    return this.http.get(`${DTR_BASE_URL}/leaderboard/medals/${week}/${medalId}/`)
+      .map(res => res.json());
+  }
+
   playerWeapons(weaponId: string, week: number): Observable<LBWeaponType[]> {
     return this.http.get(`${DTR_BASE_URL}/leaderboard/players/${weaponId}/${week}/`)
       .map(res => res.json());

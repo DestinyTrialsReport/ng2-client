@@ -10,25 +10,34 @@ export const ActionTypes = {
   SEARCH_PLAYER:              type('[Leaderboard] Search Player'),
   SEARCH_PLAYER_WEAPONS:      type('[Leaderboard] Search Player Weapons'),
   CHANGE_PAGE:                type('[Leaderboard] Change Page'),
-  GET_WEAPON_IDS:             type('[Leaderboard] Get Weapon Ids'),
+  GET_MEDAL:                  type('[Leaderboard] Get Medal'),
+  SET_LEADERBOARD_TYPE:       type('[Leaderboard] Set Leaderboard Type'),
+  GET_MEDAL_SUCCESS:          type('[Leaderboard] Get Medal Success'),
+  GET_WEAPON_LIST:            type('[Leaderboard] Get Weapon List'),
   PLAYERS_SUCCESS:            type('[Leaderboard] Players Successful'),
   SEARCH_PLAYER_SUCCESS:      type('[Leaderboard] Search Player Successful'),
-  WEAPON_IDS_SUCCESS:         type('[Leaderboard] Weapon Ids Successful'),
+  WEAPON_LIST_SUCCESS:        type('[Leaderboard] Weapon List Successful'),
   WEAPON_TYPE_SUCCESS:        type('[Leaderboard] Weapon Type Successful'),
   WEAPON_PERCENTAGE_SUCCESS:  type('[Leaderboard] Weapon Percentage Successful'),
   REQUEST_FAILED:             type('[Leaderboard] Request Failed'),
 };
 
+export class GetMedalAction implements Action {
+  type = ActionTypes.GET_MEDAL;
+
+  constructor(public payload: {medalId: number, week: number, weaponId?: string}) { }
+}
+
 export class GetWeaponTypeAction implements Action {
   type = ActionTypes.GET_WEAPON_TYPE;
 
-  constructor(public payload: {type: string, week: number}) { }
+  constructor(public payload: any) { }
 }
 
-export class GetWeaponIdsAction implements Action {
-  type = ActionTypes.GET_WEAPON_IDS;
+export class GetWeaponListAction implements Action {
+  type = ActionTypes.GET_WEAPON_LIST;
 
-  constructor(public payload: number) { }
+  constructor(public payload: {week: number, weaponId?: string, medalId?: number}) { }
 }
 
 export class SearchPlayerAction implements Action {
@@ -46,7 +55,13 @@ export class SearchPlayerWeaponsAction implements Action {
 export class GetPlayersAction implements Action {
   type = ActionTypes.GET_PLAYERS;
 
-  constructor(public payload: {weaponId: string, week: number}) { }
+  constructor(public payload: {weaponId: string, week: number, medalId?: number}) { }
+}
+
+export class SetLeaderboardAction implements Action {
+  type = ActionTypes.SET_LEADERBOARD_TYPE;
+
+  constructor(public payload: {type: string}) { }
 }
 
 export class ChangePageAction implements Action {
@@ -79,10 +94,16 @@ export class WeaponTypeSuccessAction implements Action {
   constructor(public payload: LBWeaponType[]) { }
 }
 
-export class WeaponIdsSuccessAction implements Action {
-  type = ActionTypes.WEAPON_IDS_SUCCESS;
+export class GetMedalSuccessAction implements Action {
+  type = ActionTypes.GET_MEDAL_SUCCESS;
 
-  constructor(public payload: string[]) { }
+  constructor(public payload: any) { }
+}
+
+export class WeaponListSuccessAction implements Action {
+  type = ActionTypes.WEAPON_LIST_SUCCESS;
+
+  constructor(public payload: Array<{id: number, name: string}>) { }
 }
 
 export class WeaponPercentageSuccessAction implements Action {
@@ -99,14 +120,17 @@ export class LeaderboardRequestFailedAction implements Action {
 
 export type Actions
   = GetWeaponTypeAction
-  | GetWeaponIdsAction
+  | GetWeaponListAction
+  | GetMedalAction
   | GetPlayersAction
+  | SetLeaderboardAction
   | SearchPlayerWeaponsAction
   | SearchPlayerAction
   | ChangePageAction
   | SearchPlayerSuccessAction
   | PlayersSuccessAction
-  | WeaponIdsSuccessAction
+  | WeaponListSuccessAction
+  | GetMedalSuccessAction
   | FilterByTierAction
   | LeaderboardRequestFailedAction
   | WeaponTypeSuccessAction

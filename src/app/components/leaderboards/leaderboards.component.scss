@@ -3,6 +3,7 @@
 @import 'styles/base';
 
 .maps {
+  width: 50vw;
   max-width: 640px;
   background: url('/assets/img/loading.svg') no-repeat center 50%;
   background-size: 2rem;
@@ -57,4 +58,24 @@ select, input {
 
 .text-center {
   text-align: center;
+}
+
+.loading-container {
+  width: calc(100vw - 2em);
+  max-width: 640px;
+  background: url('/assets/img/loading.svg') no-repeat center 50%;
+  background-size: 2rem;
+}
+
+@media all and (max-width: $breakpoint-large) {
+  .maps {
+    width: 95vw;
+    margin-bottom: 5em;
+  }
+}
+
+@media all and (max-width: $breakpoint-medium) {
+  .select-container {
+    margin-bottom: 1em;
+  }
 }

@@ -170,3 +170,4 @@ export function reducer(state = initialState, action: map.Actions): State {
   }
 }
 
+export const getCurrentMap = (state: State) => state.currentMap;

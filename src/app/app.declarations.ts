@@ -21,6 +21,7 @@ import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.co
 import { LeaderboardPlayerComponent } from "./components/leaderboards/leaderboard-players.component";
 import { LeaderboardWeaponTypesComponent } from "./components/leaderboards/leaderboard-weapon-types.component";
 import { LeaderboardSearchComponent } from "./components/leaderboards/leaderboard-search.component";
+import {LeaderboardMedalsComponent} from "./components/leaderboards/leaderboard-medals.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -28,6 +29,7 @@ export const APP_DECLARATIONS = [
   HomeComponent,
   LeaderboardsComponent,
   LeaderboardPlayerComponent,
+  LeaderboardMedalsComponent,
   LeaderboardWeaponTypesComponent,
   LeaderboardSearchComponent,
   NotFound404Component,

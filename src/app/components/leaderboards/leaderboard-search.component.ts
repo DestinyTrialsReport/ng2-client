@@ -1,18 +1,34 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {Store} from "@ngrx/store";
+
+import * as fromRoot            from '../../reducers';
+import * as leaderboardActions  from "../../actions/leaderboard.actions";
 
 @Component({
   selector: 'leaderboard-search',
   host: {
-    'class': 'stat-table col-xs-12'
+    'class': 'row'
   },
+  styleUrls: ['./leaderboards.component.css'],
   template: `
+  <div class="col-xs-12 col-sm-4 select-container">
+    <div class="select">
+      <select [ngModel]="leaderboardType" (ngModelChange)="setLeaderboard($event)">
+        <option value="select-leaderboard" disabled>Select Leaderboard</option>
+        <option value="{{type.value}}" *ngFor='let type of leaderboardTypes; let i = index;' [innerHtml]="type.text"></option>
+      </select>
+    </div>
+    <div class="stat-label">Leaderboard</div>
+  </div>
+  
+  <div class="stat-table col-xs-12">
     <div class="col-xs-12">
-      <div class="row">
+      <div class="row" style="padding-bottom: 1em;text-align: center;">
         <div class="col-xs-6">
-          <div class="stat-label">This weeks weapon ranking for player: </div>
+          <div class="stat-label" style="font-size: 1em;">This weeks weapon ranking for player: </div>
         </div>
         <div class="col-xs-6">
-          <div class="stat-label" [innerHtml]="searchedPlayer"></div>
+          <div class="stat-label" style="font-size: 1em;" [innerHtml]="searchedPlayer"></div>
         </div>
       </div>
     </div>
@@ -43,7 +59,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       <div class="col-xs-4">
         <img [src]="weapon?.icon"
              [alt]="weapon?.name"
-             style="height: 1rem;max-width: 1rem;">
+             class="weapon-icon__small">
         <span [innerHtml]="weapon?.name"></span>
       </div>
       <div class="col-xs-2">
@@ -53,6 +69,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
         <span [innerHtml]="weapon?.matches | number:'1.0-0'"></span>
       </div>
     </div>
+  </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -62,6 +79,12 @@ export class LeaderboardSearchComponent {
   @Input() itemsPerPage: number;
   @Input() currentPage: number;
   @Input() searchedPlayer: string;
+  @Input() leaderboardType: number;
+  @Input() leaderboardTypes: Array<any>;
 
-  constructor() { }
+  constructor(private store: Store<fromRoot.State>) { }
+
+  setLeaderboard(type: string) {
+    this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: type}));
+  }
 }

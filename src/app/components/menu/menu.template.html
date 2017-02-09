@@ -30,7 +30,7 @@
           <div class="col-xs">
             <input type="text" class="form-control" [(ngModel)]="searchedName"
                    autocorrect="off" autocomplete="off" spellcheck="false"
-                   [placeholder]="(player1$ | async)?.displayName || 'Enter your opponents\' gamertag'"
+                   [placeholder]="(player1$ | async)?.displayName || 'Enter gamertag'"
                    (keyup.enter)="searchPlayer()">
           </div>
           <div class="col-xs-shrink row row--no-gutter">
@@ -64,7 +64,8 @@
         <div class="row">
           <div class="col-xs">
             <span class="stat-number" [innerHtml]="(currentMap$ | async)?.activityName"></span>
-            <label class="stat-label" [innerHtml]="(currentMap$ | async)?.weekText + '\'s map'"></label> <!-- TODO: Toggle between this week's / last week's map -->
+            <!--<label class="stat-label" [innerHtml]="(currentMap$ | async)?.weekText + '\'s map'"></label> -->
+            <!-- TODO: Toggle between this week's / last week's map -->
           </div>
           <!--<div class="col-xs-shrink">
             <button type="button" class="btn btn-flat btn-sm">
@@ -75,30 +76,30 @@
       </div>
       <!-- TODO: Make this work -->
       <div class="settings-bar row row--no-gutter middle-xs">
-        <div class="col-xs">
-          <button class="settings-bar__btn btn btn--ghost btn--block btn--on-dark">
-            <i class="material-icons icon--small">&#xE8B8;</i> Language &amp; Settings
-          </button>
-        </div>
-        <div class="col-xs-shrink">
-          <div class="settings-bar__switch">
-            <div class="row row--small-gutter middle-xs">
-              <label class="col-xs">Ignore custom<br>card settings</label>
-              <label class="toggle toggle--gray col-xs-shrink">
-                <input type="checkbox">
-                <span class="toggle__btn"></span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <!--<div class="col-xs">-->
+          <!--<button class="settings-bar__btn btn btn&#45;&#45;ghost btn&#45;&#45;block btn&#45;&#45;on-dark">-->
+            <!--<i class="material-icons icon&#45;&#45;small">&#xE8B8;</i> Language &amp; Settings-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="col-xs-shrink">-->
+          <!--<div class="settings-bar__switch">-->
+            <!--<div class="row row&#45;&#45;small-gutter middle-xs">-->
+              <!--<label class="col-xs">Ignore custom<br>card settings</label>-->
+              <!--<label class="toggle toggle&#45;&#45;gray col-xs-shrink">-->
+                <!--<input type="checkbox">-->
+                <!--<span class="toggle__btn"></span>-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
   </header>
 
   <footer class="footer">
     <div class="ad">
-      <ng2-adsense *ngIf="showAd"></ng2-adsense>
-      <ng2-adsense *ngIf="!showAd"></ng2-adsense>
+      <!--<ng2-adsense *ngIf="showAd"></ng2-adsense>-->
+      <!--<ng2-adsense *ngIf="!showAd"></ng2-adsense>-->
     </div>
 
     <div class="donate">

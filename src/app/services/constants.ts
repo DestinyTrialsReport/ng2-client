@@ -1,4 +1,5 @@
 export const API_KEY = ENV === 'production' ? '6b1563bd89854465ab2a423d033c7ddf' : 'ee5c2bf3759e4219a50fa9fd47d47805';
+// e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
@@ -13,6 +14,15 @@ export const WEAPON_BUCKETS: any = [BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON
 export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
 export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031];
 
+export const WEAPON_TYPES: string[] = [ "Auto Rifle",
+                                        "Scout Rifle",
+                                        "Pulse Rifle",
+                                        "Hand Cannon",
+                                        "Sniper Rifle",
+                                        "Fusion Rifle",
+                                        "Shotgun",
+                                        "Sidearm" ];
+
 export const TYPE_BUCKETS: any = {
                 'Auto Rifle': 1498876634,
                 'Hand Cannon': 1498876634,
@@ -24,7 +34,7 @@ export const TYPE_BUCKETS: any = {
                 'Sidearm': 2465295065,
                 'Machine Gun': 953998645,
                 'Rocket Launcher': 953998645,
-                'Sword': 953998645
+                'Sword': 953998645,
               };
 
 export const BUCKET_NAMES: any = {
@@ -32,6 +42,97 @@ export const BUCKET_NAMES: any = {
                 2465295065: 'special',
                 953998645: 'heavy'
               };
+
+export const YEAR_ONE_DUPLICATES: string[] = [
+  '2657648895',
+  '2726256225',
+  '2911036427',
+  '135862170',
+  '3926983632',
+  '1055280513',
+  '3222439399',
+  '2563304568',
+  '2167109420',
+  '1375158428',
+  '1557422751',
+  '3141342998',
+  '2180040613',
+  '4251892203',
+  '2217778941',
+  '160095218',
+  '2278129280',
+  '3800763760',
+  '119482464',
+  '2656589561',
+  '3625835502',
+  '1146059646',
+  '2599394508',
+  '3478790848',
+  '3118679308',
+  '2210820430',
+  '2846692979',
+  '2853794413',
+  '806143008',
+  '3384077431',
+  '335341128',
+  '2344494719',
+  '727840013',
+  '2615561155',
+  '3490486525',
+  '119482466',
+  '2609120348',
+  '2681212685',
+  '1054959830',
+  '3118679309',
+  '67230518',
+  '1221909933',
+  '2352707666',
+  '3906535130',
+  '2563222798',
+  '2834348866',
+  '2612834019',
+  '3947396344',
+  '135862171',
+  '3259091099',
+  '2775854838',
+  '3968437225',
+  '3478790850',
+  '3191797830',
+  '119482465',
+  '106426948',
+  '2344494718',
+  '4046873053',
+  '2530134059',
+  '649076661',
+  '2937600841',
+  '3551403306',
+  '88964023',
+  '1094262007',
+  '2670848871',
+  '4086430879',
+  '879791779',
+  '3104387070',
+  '2835361676',
+  '3028978726',
+  '561587767',
+  '2472321204',
+  '2210820429',
+  '3195303140',
+  '3096129877',
+  '3164616404',
+  '3191797831',
+  '2266591883',
+  '73994448',
+  '4075571038',
+  '3463607706',
+  '3298170796',
+  '260216313',
+  '3982555097',
+  '2176787615',
+  '4026257891',
+  '935317314',
+  '422175840'
+];
 
 export const HIDDEN_NODES: any = [
   0,
@@ -78,6 +179,198 @@ export const HIDDEN_NODES: any = [
   4197414939  // Inverse Shadow
 ];
 
+
+export const MEDALS_REF: Array<{id: number, statId: string, statName: string}> = [
+    {
+      "id" : 38,
+      "statId" : "medalsAbilityArcLightningKillMulti",
+      "statName" : "Storm Bringer"
+    },
+    {
+      "id" : 31,
+      "statId" : "medalsAbilityGhostGunKillMulti",
+      "statName" : "Way of the Gun"
+    },
+    {
+      "id" : 33,
+      "statId" : "medalsAbilityHavocKillMulti",
+      "statName" : "Cry Havoc"
+    },
+    {
+      "id" : 32,
+      "statId" : "medalsAbilityNovaBombKillMulti",
+      "statName" : "Space Magic"
+    },
+    {
+      "id" : 37,
+      "statId" : "medalsAbilityThermalHammerKillMulti",
+      "statName" : "Hammer and Tongs"
+    },
+    {
+      "id" : 36,
+      "statId" : "medalsAbilityVoidBowKillMulti",
+      "statName" : "Wild Hunt"
+    },
+    {
+      "id" : 35,
+      "statId" : "medalsActivityCompleteCycle",
+      "statName" : "The Cycle"
+    },
+    // {
+    //   "id" : 34,
+    //   "statId" : "medalsActivityCompleteLonewolf",
+    //   "statName" : "Lone Wolf"
+    // },
+    {
+      "id" : 13,
+      "statId" : "medalsAvenger",
+      "statName" : "Avenger"
+    },
+    {
+      "id" : 14,
+      "statId" : "medalsCloseCallTalent",
+      "statName" : "Narrow Escape"
+    },
+    {
+      "id" : 15,
+      "statId" : "medalsComebackKill",
+      "statName" : "Back in Action"
+    },
+    {
+      "id" : 21,
+      "statId" : "medalsEliminationWipeQuick",
+      "statName" : "Ace"
+    },
+    {
+      "id" : 22,
+      "statId" : "medalsEliminationWipeSolo",
+      "statName" : "Wrecking Ball"
+    },
+    {
+      "id" : 1,
+      "statId" : "medalsFirstBlood",
+      "statName" : "First Blood"
+    },
+    {
+      "id" : 2,
+      "statId" : "medalsGrenadeKillStick",
+      "statName" : "Get it Off!"
+    },
+    {
+      "id" : 3,
+      "statId" : "medalsHazardKill",
+      "statName" : "Hazard Pay"
+    },
+    {
+      "id" : 4,
+      "statId" : "medalsHunterKillInvisible",
+      "statName" : "I See You"
+    },
+    {
+      "id" : 23,
+      "statId" : "medalsKillHeadshot",
+      "statName" : "Bullseye"
+    },
+    {
+      "id" : 24,
+      "statId" : "medalsKillMulti2",
+      "statName" : "Double Down"
+    },
+    {
+      "id" : 25,
+      "statId" : "medalsKillMulti3",
+      "statName" : "Triple Down"
+    },
+    {
+      "id" : 26,
+      "statId" : "medalsKillMulti4",
+      "statName" : "Breaker"
+    },
+    // {
+    //   "id" : 27,
+    //   "statId" : "medalsKillMulti5",
+    //   "statName" : "Slayer"
+    // },
+    {
+      "id" : 20,
+      "statId" : "medalsKillPostmortem",
+      "statName" : "Postmortem"
+    },
+    {
+      "id" : 28,
+      "statId" : "medalsKillSpreeNoDamage",
+      "statName" : "Phantom"
+    },
+    {
+      "id" : 8,
+      "statId" : "medalsMeleeKillHunterThrowingKnifeHeadshot",
+      "statName" : "Stick Around"
+    },
+    {
+      "id" : 10,
+      "statId" : "medalsPaybackKill",
+      "statName" : "Payback"
+    },
+    {
+      "id" : 11,
+      "statId" : "medalsRadianceShutdown",
+      "statName" : "...And Stay Down!"
+    },
+    {
+      "id" : 12,
+      "statId" : "medalsRescue",
+      "statName" : "Overwatch"
+    },
+    {
+      "id" : 29,
+      "statId" : "medalsTeamKillSpree",
+      "statName" : "Strength of the Wolf"
+    },
+    {
+      "id" : 19,
+      "statId" : "orbsDropped",
+      "statName" : "Orbs Dropped"
+    },
+    {
+      "id" : 18,
+      "statId" : "resurrectionsPerformed",
+      "statName" : "Resurrections"
+    },
+    // {
+    //   "id" : 30,
+    //   "statId" : "score",
+    //   "statName" : "Score"
+    // },
+    // {
+    //   "id" : 16,
+    //   "statId" : "secondsPlayed",
+    //   "statName" : "Time Played"
+    // },
+    {
+      "id" : 17,
+      "statId" : "suicides",
+      "statName" : "Suicides"
+    },
+    {
+      "id" : 5,
+      "statId" : "weaponKillsGrenade",
+      "statName" : "Grenade"
+    },
+    {
+      "id" : 6,
+      "statId" : "weaponKillsMelee",
+      "statName" : "Melee"
+    },
+    {
+      "id" : 7,
+      "statId" : "weaponKillsSuper",
+      "statName" : "Super"
+    },
+    {
+      "id" : 9,
+      "statId" : "zonesCaptured",
+      "statName" : "Zones Captured"
+    }];
 
 export const MEDAL_DEFINITIONS: any = {
   "medalsAbilityGhostGunKillMulti": {

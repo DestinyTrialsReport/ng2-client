@@ -1,6 +1,6 @@
 <div class="leaderboards">
   <main>
-    <div class="maps" style="width: 50vw;">
+    <div class="maps">
       <div class="card">
         <div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
           <div class="row middle-xs">
@@ -9,78 +9,67 @@
               <!-- TODO: Add popover in case of rotating maps -->
               <!--<div class="data-label" [innerHtml]="(mapInfo$ | async)?.weekText + '\'s map'"></div>-->
             </div>
-            <!--<div class="col-xs-shrink">-->
-            <!--<div class="card__header__controls">-->
-            <!--<button class="btn btn&#45;&#45;icon btn&#45;&#45;ghost" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2" (click)="previousMap()">-->
-            <!--<i class="material-icons">&#xE5CB;</i>-->
-            <!--</button>-->
-            <!--<button class="btn btn&#45;&#45;icon btn&#45;&#45;ghost" [style.opacity]="(mapInfo$ | async)?.week == maxWeek ? .2 : 1" (click)="nextMap()">-->
-            <!--<i class="material-icons">&#xE5CC;</i>-->
-            <!--</button>-->
-            <!--</div>-->
-            <!--<div class="data-label">Other weeks</div>-->
-            <!--</div>-->
+            <div class="col-xs-shrink">
+              <div class="card__header__controls">
+                <button class="btn btn--icon btn--ghost" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2"
+                        (click)="previousMap()">
+                  <i class="material-icons">&#xE5CB;</i>
+                </button>
+                <button class="btn btn--icon btn--ghost" [style.opacity]="(mapInfo$ | async)?.week == maxWeek ? .2 : 1"
+                        (click)="nextMap()">
+                  <i class="material-icons">&#xE5CC;</i>
+                </button>
+              </div>
+              <div class="data-label">Other weeks</div>
+            </div>
           </div>
         </div>
-        <div class="card__content">
-          <div class="row">
-            <div class="col-xs-4 select-container">
-              <div class="select">
-                <select [(ngModel)]="leaderboardType" (ngModelChange)="setLeaderboard()">
-                  <option value="{{type.value}}" *ngFor='let type of leaderboardTypes; let i = index;' [innerHtml]="type.text"></option>
-                </select>
-              </div>
-              <div class="stat-label">Leaderboard</div>
-            </div>
-            <div class="col-xs-4 select-container" *ngIf="leaderboardType == 'weapon-types'">
-              <div class="select">
-                <select [(ngModel)]="selectedType" (ngModelChange)="getType()">
-                  <option value="{{type.value}}" *ngFor='let type of weaponTypes; let i = index;' [innerHtml]="type.text"></option>
-                </select>
-              </div>
-              <div class="stat-label">Weapon Type</div>
-            </div>
-            <div class="col-xs-4 select-container" *ngIf="leaderboardType == 'weapon-types'">
-              <div class="select">
-                <select [(ngModel)]="selectedTier" (ngModelChange)="filterTier()">
-                  <option value="{{type.value}}" *ngFor='let type of weaponTiers; let i = index;' [innerHtml]="type.text"></option>
-                </select>
-              </div>
-              <div class="stat-label">Tier</div>
-            </div>
-            <div class="col-xs-8 select-container" *ngIf="leaderboardType == 'players'">
-              <div class="select">
-                <input [(ngModel)]="selectedWeapon"
-                       [typeahead]="weaponList$ | async"
-                       [typeaheadOptionField]="'name'"
-                       (typeaheadOnSelect)="getPlayerForWeapon($event)">
-              </div>
-              <div class="stat-label">Weapon Name</div>
-            </div>
-          </div>
-          <hr>
-          <div class="row" *ngIf="(playerWeapons$ | async).length < 1">
-            <leaderboard-weapon-types *ngIf="leaderboardType == 'weapon-types'"
-                                      [weapons]="(weapons$ | async)"
-                                      [itemsPerPage]="20"
-                                      [currentPage]="(currentPage$ | async)">
-            </leaderboard-weapon-types>
+        <div class="card__content" *ngIf="!(error$ | async)" [ngClass]="{'loading-container': loading}">
+          <leaderboard-weapon-types *ngIf="(leaderboardType$ | async) == 'weapon-types'"
+                                    [weapons]="(weapons$ | async)"
+                                    [weaponType]="(weaponType$ | async)"
+                                    [weaponTier]="(weaponTier$ | async)"
+                                    [currentWeek]="currentWeek"
+                                    [leaderboardType]="(leaderboardType$ | async)"
+                                    [leaderboardTypes]="leaderboardTypes"
+                                    [itemsPerPage]="10"
+                                    [currentPage]="(currentPage$ | async)"
+                                    [@loading]="loading$ | async">
+          </leaderboard-weapon-types>
 
-            <leaderboard-players *ngIf="leaderboardType == 'players'"
-                                 [players]="(players$ | async)"
-                                 [itemsPerPage]="20"
-                                 [currentPage]="(currentPage$ | async)">
-            </leaderboard-players>
-          </div>
+          <leaderboard-medals *ngIf="(leaderboardType$ | async) == 'medals'"
+                              [medals]="(medals$ | async)"
+                              [leaderboardType]="(leaderboardType$ | async)"
+                              [leaderboardTypes]="leaderboardTypes"
+                              [itemsPerPage]="10"
+                              [currentWeek]="currentWeek"
+                              [currentPage]="(currentPage$ | async)"
+                              [selectedMedal]="(selectedMedal$ | async)"
+                              [@loading]="loading$ | async">
+          </leaderboard-medals>
 
-          <div class="row" *ngIf="(playerWeapons$ | async).length > 0">
-            <leaderboard-search [weapons]="(playerWeapons$ | async)"
-                                [itemsPerPage]="20"
-                                [searchedPlayer]="(searchedPlayer$ | async)"
-                                [currentPage]="(currentPage$ | async)">
-            </leaderboard-search>
-            <hr class="col-xs-12 col-sm-hidden hr--minor">
-          </div>
+          <leaderboard-search *ngIf="(leaderboardType$ | async) == 'select-leaderboard'"
+                              [weapons]="(playerWeapons$ | async)"
+                              [itemsPerPage]="10"
+                              [searchedPlayer]="(searchedPlayer$ | async)"
+                              [leaderboardType]="(leaderboardType$ | async)"
+                              [leaderboardTypes]="leaderboardTypes"
+                              [currentPage]="(currentPage$ | async)"
+                              [@loading]="loading$ | async">
+          </leaderboard-search>
+
+          <leaderboard-players *ngIf="(leaderboardType$ | async) == 'players'"
+                               [players]="(players$ | async)"
+                               [itemsPerPage]="10"
+                               [selectedWeaponName]="selectedWeaponName$ | async"
+                               [weaponList]="weaponList$ | async"
+                               [currentWeek]="currentWeek"
+                               [currentPage]="(currentPage$ | async)"
+                               [leaderboardType]="(leaderboardType$ | async)"
+                               [leaderboardTypes]="leaderboardTypes"
+                               [@loading]="loading$ | async">
+          </leaderboard-players>
+
           <hr>
           <div class="row">
             <div class="col-xs-12">
@@ -89,6 +78,17 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="card__content" *ngIf="(error$ | async)">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-center">
+                <p style="color: #F44336;font-size: 1.2em;font-weight: bold;">Request Failed</p>
+                <span>Please check gamertag and try again.</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

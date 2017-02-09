@@ -29,7 +29,7 @@ import {AuthService} from "./services/auth.service";
   encapsulation: ViewEncapsulation.None
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   showMenu: boolean = true;
   showAd: boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
@@ -38,31 +38,21 @@ export class AppComponent implements OnInit {
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
 
-  constructor(private route: ActivatedRoute,
-              private store: Store<fromRoot.State>,
-              private authService: AuthService) {
+  constructor(private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        if (params && params['code']) {
-          this.store.dispatch(new auth.ValidateToken({code: params['code'], state: params['state']}));
+        if (params && params['gamertag']) {
+          this.showMenu = false;
         }
       });
   }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
-  }
-
-  getAuthorization() {
-    this.store.dispatch(new auth.RedirectToAuth(new Date().valueOf().toString()));
-  }
-
-  getAccount() {
-    this.authService.getBnetUser().subscribe(res => console.log(res))
   }
 
 }

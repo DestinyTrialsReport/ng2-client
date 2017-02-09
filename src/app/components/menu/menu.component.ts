@@ -57,11 +57,13 @@ export class MenuComponent implements OnInit, AfterViewInit {
   searchPlayer() {
     let platform = this.isXbox ? 1 : 2;
     if (window.location.pathname === '/leaderboards') {
-      this.store.dispatch(new leaderboardActions.SearchPlayerAction({name: this.searchedName, week: this.currentWeek, platform: platform}));
+      // this.store.dispatch(new leaderboardActions.SearchPlayerAction({name: this.searchedName, week: this.currentWeek, platform: platform}));
+      this.router.navigate(['/leaderboards'], {queryParams: {gamertag: this.searchedName, platform: platform}});
     } else {
       this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
     }
     // this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: this.searchedName, playerIndex: 'player1'}));
+    //   this.router.navigate(['/'], {queryParams: {gamertag: this.searchedName, platform: platform}});
   }
 
   togglePlatform(event: Event) {

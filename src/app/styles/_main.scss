@@ -66,3 +66,27 @@ ul.dropdown-menu {
   border-bottom: 1px solid #ddd;
   color: #ccc;
 }
+
+.weapon-icon__small {
+  height: 1.5rem;
+  max-width: 1.5rem;
+  clip-path: polygon(42% 0%, 100% 0%, 100% 76%, 58% 100%, 0% 100%, 0% 76%, 0 24%, 42% 0%);
+  border-radius: .2em;
+  overflow: hidden;
+}
+
+@media all and (max-width: $breakpoint-medium) {
+  ul.ng2-pagination {
+    padding-left: 0;
+  }
+  .row--small-gutter > .col-xs-6,
+  .row--small-gutter > .col-xs-4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+  }
+
+  .row--small-gutter > .col-xs-6 {
+    padding-left: 20px;
+  }
+}

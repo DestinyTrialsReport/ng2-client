@@ -54,28 +54,72 @@ export const getAuthState = (state: State) => state.auth;
 
 export const getLeaderboardState = (state: State) => state.leaderboard;
 
+export const getMapState = (state: State) => state.map;
+
 export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
 
-export const getLeaderboardWeaponIds = createSelector(getLeaderboardState, fromLeaderboards.getWeaponIds);
+export const getLeaderboardWeaponList = createSelector(getLeaderboardState, fromLeaderboards.getWeaponList);
 
 export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLeaderboards.getSpecial);
 
 export const getLeaderboardPlayers = createSelector(getLeaderboardState, fromLeaderboards.getPlayers);
 
+export const getLeaderboardWeapons = createSelector(getLeaderboardState, fromLeaderboards.getWeapons);
+
 export const getLeaderboardSearchedPlayer = createSelector(getLeaderboardState, fromLeaderboards.getSearchedPlayer);
 
 export const getLeaderboardPlayerWeapons = createSelector(getLeaderboardState, fromLeaderboards.getPlayerWeapons);
 
+export const getLeaderboardMedals = createSelector(getLeaderboardState, fromLeaderboards.getMedals);
+
 export const getLeaderboardsCurrentPage = createSelector(getLeaderboardState, fromLeaderboards.getCurrentPage);
-// export const getPrimaryAndSpecial = createSelector(getLeaderboardState, fromLeaderboards.getPrimaryAndSpecial);
+
+export const getLeaderboardsLoadingStatus = createSelector(getLeaderboardState, fromLeaderboards.getLoadingStatus);
+
+export const getLeaderboardsErrorStatus = createSelector(getLeaderboardState, fromLeaderboards.getErrorStatus);
+
+export const getLeaderboardsSelectedWeaponId = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponId);
+
+export const getLeaderboardsSelectedMedal = createSelector(getLeaderboardState, fromLeaderboards.getSelectedMedal);
+
+export const getLeaderboardsSelectedWeaponType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponType);
+
+export const getLeaderboardsSelectedWeaponTier = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponTier);
+
+export const getLeaderboardsQueryParams = createSelector(getLeaderboardState, fromLeaderboards.getQueryParams);
+
+export const getLeaderboardsQueryString = createSelector(getLeaderboardsQueryParams, (params) => {
+  if (params) {
+    let paramsArray = Object.keys(params)
+      .filter(key => !!params[key])
+      .map(key => `${key}=${params[key]}`);
+
+    return paramsArray.join('?')
+  }
+});
+
+export const getLeaderboardType = createSelector(getLeaderboardState, fromLeaderboards.getLeaderboardType);
 
 export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLeaderboardSpecial, (primary, special) => {
   return [primary, special];
 });
 
+export const getLeaderboardSelectedWeaponName = createSelector(getLeaderboardWeaponList, getLeaderboardsSelectedWeaponId, (weapons, id) => {
+  let weapon = weapons.filter(weapon => weapon.id == id);
+  if (weapon[0]) {
+    return weapon[0].name;
+  }
+});
+
 export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
 
 export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
+
+export const getCurrentMap = createSelector(getMapState, fromMaps.getCurrentMap);
+
+export const getCurrentWeek = createSelector(getCurrentMap, (map) => {
+  return map.week;
+});
 
 export function getActivityState(state$: Observable<State>) {
   return state$.select(s => s.activities);
@@ -126,7 +170,7 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth', 'leaderboard'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 // const productionReducer = combineReducers(reducers);
 
