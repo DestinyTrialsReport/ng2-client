@@ -13,6 +13,7 @@ import { CurrentMap }           from "../../models/map-stats.model";
 import * as fromRoot            from '../../reducers';
 import * as leaderboardActions  from "../../actions/leaderboard.actions";
 import * as mapActions          from "../../actions/maps.actions";
+import {MEDALS_REF} from "../../services/constants";
 
 @Component({
   selector: 'leaderboards',
@@ -30,6 +31,7 @@ import * as mapActions          from "../../actions/maps.actions";
 })
 
 export class LeaderboardsComponent implements OnInit {
+  medalList: Array<{id: number, statId: string, statName: string}> = MEDALS_REF;
   maxWeek: number = 63;
   selectedMedal$: Observable<number>;
   selectedWeaponName$: Observable<string>;
@@ -37,15 +39,18 @@ export class LeaderboardsComponent implements OnInit {
   currentPage$: Observable<number>;
   searchedPlayer$: Observable<string>;
   currentWeek: number;
+  currentYear: string;
+  displayWeek: number;
   currentMap$: Observable<CurrentMap>;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
   weapons$: Observable<LBWeaponType[]>;
   players$: Observable<any[]>;
   medals$: Observable<any[]>;
-  weaponType$: Observable<string>;
-  weaponTier$: Observable<number>;
+  selectedType$: Observable<string>;
+  selectedFilter$: Observable<number>;
   playerWeapons$: Observable<any[]>;
+  items$: Observable<any[]>;
   weaponList$: Observable<{ id: number; name: string; }[]>;
 
   leaderboardTypes: Array<{value: string, text: string}> = [
@@ -72,13 +77,16 @@ export class LeaderboardsComponent implements OnInit {
     this.players$ = store.select(fromRoot.getLeaderboardPlayers)
       .distinctUntilChanged();
 
+    this.items$ = store.select(fromRoot.getLeaderboardItems)
+      .distinctUntilChanged();
+
     this.medals$ = store.select(fromRoot.getLeaderboardMedals)
       .distinctUntilChanged();
 
-    this.weaponType$ = store.select(fromRoot.getLeaderboardsSelectedWeaponType)
+    this.selectedType$ = store.select(fromRoot.getLeaderboardsSelectedType)
       .distinctUntilChanged();
 
-    this.weaponTier$ = store.select(fromRoot.getLeaderboardsSelectedWeaponTier)
+    this.selectedFilter$ = store.select(fromRoot.getLeaderboardsSelectedFilter)
       .distinctUntilChanged();
 
     this.playerWeapons$ = store.select(fromRoot.getLeaderboardPlayerWeapons)

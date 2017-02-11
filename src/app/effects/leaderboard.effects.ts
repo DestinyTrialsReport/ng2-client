@@ -53,7 +53,7 @@ export class LeaderboardEffects {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
 
-      return this.leaderboardService.getMedal(payload.medalId, payload.week)
+      return this.leaderboardService.getMedal(payload.type, payload.week)
         .map(result => new leaderboard.GetMedalSuccessAction(result))
         .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });
@@ -67,7 +67,7 @@ export class LeaderboardEffects {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
 
-      return this.leaderboardService.playerWeapons(payload.weaponId, payload.week)
+      return this.leaderboardService.playerWeapons(payload.type, payload.week)
         .map(result => new leaderboard.PlayersSuccessAction(result))
         .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });

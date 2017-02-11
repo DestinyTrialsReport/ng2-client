@@ -180,196 +180,208 @@ export const HIDDEN_NODES: any = [
 ];
 
 
-export const MEDALS_REF: Array<{id: number, statId: string, statName: string}> = [
+export const WEAPON_TYPE_REF: Array<{value: string, text: string}> = [
+  {id: "All", text: "All"},
+  {id: "Auto Rifle", text: "Auto Rifles"},
+  {id: "Scout Rifle", text: "Scout Rifles"},
+  {id: "Pulse Rifle", text: "Pulse Rifles"},
+  {id: "Hand Cannon", text: "Hand Cannons"},
+  {id: "Sniper Rifle", text: "Sniper Rifles"},
+  {id: "Fusion Rifle", text: "Fusion Rifles"},
+  {id: "Shotgun", text: "Shotguns"},
+  {id: "Sidearm", text: "Sidearms"}
+];
+
+export const MEDALS_REF: Array<{id: number, statId: string, text: string}> = [
     {
       "id" : 38,
       "statId" : "medalsAbilityArcLightningKillMulti",
-      "statName" : "Storm Bringer"
+      "text" : "Storm Bringer"
     },
     {
       "id" : 31,
       "statId" : "medalsAbilityGhostGunKillMulti",
-      "statName" : "Way of the Gun"
+      "text" : "Way of the Gun"
     },
     {
       "id" : 33,
       "statId" : "medalsAbilityHavocKillMulti",
-      "statName" : "Cry Havoc"
+      "text" : "Cry Havoc"
     },
     {
       "id" : 32,
       "statId" : "medalsAbilityNovaBombKillMulti",
-      "statName" : "Space Magic"
+      "text" : "Space Magic"
     },
     {
       "id" : 37,
       "statId" : "medalsAbilityThermalHammerKillMulti",
-      "statName" : "Hammer and Tongs"
+      "text" : "Hammer and Tongs"
     },
     {
       "id" : 36,
       "statId" : "medalsAbilityVoidBowKillMulti",
-      "statName" : "Wild Hunt"
+      "text" : "Wild Hunt"
     },
     {
       "id" : 35,
       "statId" : "medalsActivityCompleteCycle",
-      "statName" : "The Cycle"
+      "text" : "The Cycle"
     },
     // {
     //   "id" : 34,
     //   "statId" : "medalsActivityCompleteLonewolf",
-    //   "statName" : "Lone Wolf"
+    //   "text" : "Lone Wolf"
     // },
     {
       "id" : 13,
       "statId" : "medalsAvenger",
-      "statName" : "Avenger"
+      "text" : "Avenger"
     },
     {
       "id" : 14,
       "statId" : "medalsCloseCallTalent",
-      "statName" : "Narrow Escape"
+      "text" : "Narrow Escape"
     },
     {
       "id" : 15,
       "statId" : "medalsComebackKill",
-      "statName" : "Back in Action"
+      "text" : "Back in Action"
     },
     {
       "id" : 21,
       "statId" : "medalsEliminationWipeQuick",
-      "statName" : "Ace"
+      "text" : "Ace"
     },
     {
       "id" : 22,
       "statId" : "medalsEliminationWipeSolo",
-      "statName" : "Wrecking Ball"
+      "text" : "Wrecking Ball"
     },
     {
       "id" : 1,
       "statId" : "medalsFirstBlood",
-      "statName" : "First Blood"
+      "text" : "First Blood"
     },
     {
       "id" : 2,
       "statId" : "medalsGrenadeKillStick",
-      "statName" : "Get it Off!"
+      "text" : "Get it Off!"
     },
     {
       "id" : 3,
       "statId" : "medalsHazardKill",
-      "statName" : "Hazard Pay"
+      "text" : "Hazard Pay"
     },
     {
       "id" : 4,
       "statId" : "medalsHunterKillInvisible",
-      "statName" : "I See You"
+      "text" : "I See You"
     },
     {
       "id" : 23,
       "statId" : "medalsKillHeadshot",
-      "statName" : "Bullseye"
+      "text" : "Bullseye"
     },
     {
       "id" : 24,
       "statId" : "medalsKillMulti2",
-      "statName" : "Double Down"
+      "text" : "Double Down"
     },
     {
       "id" : 25,
       "statId" : "medalsKillMulti3",
-      "statName" : "Triple Down"
+      "text" : "Triple Down"
     },
     {
       "id" : 26,
       "statId" : "medalsKillMulti4",
-      "statName" : "Breaker"
+      "text" : "Breaker"
     },
     // {
     //   "id" : 27,
     //   "statId" : "medalsKillMulti5",
-    //   "statName" : "Slayer"
+    //   "text" : "Slayer"
     // },
     {
       "id" : 20,
       "statId" : "medalsKillPostmortem",
-      "statName" : "Postmortem"
+      "text" : "Postmortem"
     },
     {
       "id" : 28,
       "statId" : "medalsKillSpreeNoDamage",
-      "statName" : "Phantom"
+      "text" : "Phantom"
     },
     {
       "id" : 8,
       "statId" : "medalsMeleeKillHunterThrowingKnifeHeadshot",
-      "statName" : "Stick Around"
+      "text" : "Stick Around"
     },
     {
       "id" : 10,
       "statId" : "medalsPaybackKill",
-      "statName" : "Payback"
+      "text" : "Payback"
     },
     {
       "id" : 11,
       "statId" : "medalsRadianceShutdown",
-      "statName" : "...And Stay Down!"
+      "text" : "...And Stay Down!"
     },
     {
       "id" : 12,
       "statId" : "medalsRescue",
-      "statName" : "Overwatch"
+      "text" : "Overwatch"
     },
     {
       "id" : 29,
       "statId" : "medalsTeamKillSpree",
-      "statName" : "Strength of the Wolf"
+      "text" : "Strength of the Wolf"
     },
     {
       "id" : 19,
       "statId" : "orbsDropped",
-      "statName" : "Orbs Dropped"
+      "text" : "Orbs Dropped"
     },
     {
       "id" : 18,
       "statId" : "resurrectionsPerformed",
-      "statName" : "Resurrections"
+      "text" : "Resurrections"
     },
     // {
     //   "id" : 30,
     //   "statId" : "score",
-    //   "statName" : "Score"
+    //   "text" : "Score"
     // },
     // {
     //   "id" : 16,
     //   "statId" : "secondsPlayed",
-    //   "statName" : "Time Played"
+    //   "text" : "Time Played"
     // },
     {
       "id" : 17,
       "statId" : "suicides",
-      "statName" : "Suicides"
+      "text" : "Suicides"
     },
     {
       "id" : 5,
       "statId" : "weaponKillsGrenade",
-      "statName" : "Grenade"
+      "text" : "Grenade"
     },
     {
       "id" : 6,
       "statId" : "weaponKillsMelee",
-      "statName" : "Melee"
+      "text" : "Melee"
     },
     {
       "id" : 7,
       "statId" : "weaponKillsSuper",
-      "statName" : "Super"
+      "text" : "Super"
     },
     {
       "id" : 9,
       "statId" : "zonesCaptured",
-      "statName" : "Zones Captured"
+      "text" : "Zones Captured"
     }];
 
 export const MEDAL_DEFINITIONS: any = {

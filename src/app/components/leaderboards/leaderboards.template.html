@@ -3,11 +3,27 @@
     <div class="maps">
       <div class="card">
         <div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
-          <div class="row middle-xs">
-            <div class="col-xs">
-              <h2 class="card__header__title" [innerHtml]="(currentMap$ | async)?.activityName"></h2>
-              <!-- TODO: Add popover in case of rotating maps -->
-              <!--<div class="data-label" [innerHtml]="(mapInfo$ | async)?.weekText + '\'s map'"></div>-->
+          <div class="row bottom-xs">
+            <div class="col-xs-shrink card__header__title">
+              Trials Week
+              <span [innerHtml]="(currentMap$ | async)?.weekInYear"></span>
+              -
+              <span [innerHtml]="(currentMap$ | async)?.year"></span>
+              <p class="card__header__title--map" [innerHtml]="(currentMap$ | async)?.activityName"></p>
+            </div>
+            <div class="col-md center-xs card__header__select">
+              <h2 class="card__header__title--context" [innerHtml]="'Most Kills with Weapon Name Here'"></h2>
+              <!--<div class="btn card__header__select&#45;&#45;dropdown">-->
+                <!--<button class="middle-xs btn btn&#45;&#45;icon btn&#45;&#45;ghost" (click)="nextMap()">-->
+                  <!--<i class="material-icons">&#xE5CB;</i>-->
+                <!--</button>-->
+                <!--<select class="data-label" style="width: auto">-->
+                  <!--<option *ngFor='let medal of medalList; let i = index;' value="{{medal.id}}" [innerHtml]="medal.statName"></option>-->
+                <!--</select>-->
+                <!--<button class="middle-xs btn btn&#45;&#45;icon btn&#45;&#45;ghost" (click)="nextMap()">-->
+                  <!--<i class="material-icons">&#xE5CC;</i>-->
+                <!--</button>-->
+              <!--</div>-->
             </div>
             <div class="col-xs-shrink">
               <div class="card__header__controls">
@@ -25,28 +41,18 @@
           </div>
         </div>
         <div class="card__content" *ngIf="!(error$ | async)" [ngClass]="{'loading-container': loading}">
-          <leaderboard-weapon-types *ngIf="(leaderboardType$ | async) == 'weapon-types'"
-                                    [weapons]="(weapons$ | async)"
-                                    [weaponType]="(weaponType$ | async)"
-                                    [weaponTier]="(weaponTier$ | async)"
-                                    [currentWeek]="currentWeek"
+
+          <leaderboard-weapon-types *ngIf="(leaderboardType$ | async)"
+                                    [items]="(items$ | async)"
                                     [leaderboardType]="(leaderboardType$ | async)"
                                     [leaderboardTypes]="leaderboardTypes"
-                                    [itemsPerPage]="10"
+                                    [selectedType]="(selectedType$ | async)"
+                                    [selectedFilter]="(selectedFilter$ | async)"
+                                    [currentWeek]="currentWeek"
                                     [currentPage]="(currentPage$ | async)"
+                                    [itemsPerPage]="10"
                                     [@loading]="loading$ | async">
           </leaderboard-weapon-types>
-
-          <leaderboard-medals *ngIf="(leaderboardType$ | async) == 'medals'"
-                              [medals]="(medals$ | async)"
-                              [leaderboardType]="(leaderboardType$ | async)"
-                              [leaderboardTypes]="leaderboardTypes"
-                              [itemsPerPage]="10"
-                              [currentWeek]="currentWeek"
-                              [currentPage]="(currentPage$ | async)"
-                              [selectedMedal]="(selectedMedal$ | async)"
-                              [@loading]="loading$ | async">
-          </leaderboard-medals>
 
           <leaderboard-search *ngIf="(leaderboardType$ | async) == 'select-leaderboard'"
                               [weapons]="(playerWeapons$ | async)"

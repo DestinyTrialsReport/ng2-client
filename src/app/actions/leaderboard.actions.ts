@@ -25,7 +25,7 @@ export const ActionTypes = {
 export class GetMedalAction implements Action {
   type = ActionTypes.GET_MEDAL;
 
-  constructor(public payload: {medalId: number, week: number, weaponId?: string}) { }
+  constructor(public payload: {type: string, week: number}) { }
 }
 
 export class GetWeaponTypeAction implements Action {
@@ -37,7 +37,7 @@ export class GetWeaponTypeAction implements Action {
 export class GetWeaponListAction implements Action {
   type = ActionTypes.GET_WEAPON_LIST;
 
-  constructor(public payload: {week: number, weaponId?: string, medalId?: number}) { }
+  constructor(public payload: {type: string, week: number}) { }
 }
 
 export class SearchPlayerAction implements Action {
@@ -55,7 +55,7 @@ export class SearchPlayerWeaponsAction implements Action {
 export class GetPlayersAction implements Action {
   type = ActionTypes.GET_PLAYERS;
 
-  constructor(public payload: {weaponId: string, week: number, medalId?: number}) { }
+  constructor(public payload: {type: string, week: number}) { }
 }
 
 export class SetLeaderboardAction implements Action {

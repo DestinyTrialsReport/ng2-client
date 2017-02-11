@@ -17,7 +17,7 @@ export class LeaderboardService extends RequestBase {
       .map(res => res.json());
   }
 
-  getMedal(medalId: number, week: number): Observable<any[]> {
+  getMedal(medalId: string, week: number): Observable<any[]> {
     return this.http.get(`${DTR_BASE_URL}/leaderboard/medals/${week}/${medalId}/`)
       .map(res => res.json());
   }

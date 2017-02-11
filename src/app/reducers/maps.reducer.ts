@@ -72,22 +72,15 @@ export function reducer(state = initialState, action: map.Actions): State {
     }
 
     case map.ActionTypes.SAVE_CURRENT_MAP: {
-      const payload:any = action.payload;
+      const payload: any = action.payload;
+      const currentMap:CurrentMap = Object.assign({}, payload, {
+        year: payload.week > 44 ? 'Year 3' : 'Year 2',
+        weekInYear: payload.week > 44 ? payload.week - 44 : payload.week
+      });
 
-      if (!payload) {
-        return {
-          currentMap: state.currentMap,
-          mapInfo: state.mapInfo,
-          weaponStats: state.weaponStats,
-          weaponTotals: state.weaponTotals,
-          primaryAvg: state.primaryAvg,
-          specialAvg: state.specialAvg,
-          slideMap: 'idle'
-        };
-      }
 
       return Object.assign({}, state, {
-        currentMap: Object.assign({}, state.currentMap, action.payload),
+        currentMap: Object.assign({}, state.currentMap, currentMap),
         slideMap: 'idle'
       });
     }

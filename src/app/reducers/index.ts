@@ -64,6 +64,8 @@ export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLea
 
 export const getLeaderboardPlayers = createSelector(getLeaderboardState, fromLeaderboards.getPlayers);
 
+export const getLeaderboardItems = createSelector(getLeaderboardState, fromLeaderboards.getItems);
+
 export const getLeaderboardWeapons = createSelector(getLeaderboardState, fromLeaderboards.getWeapons);
 
 export const getLeaderboardSearchedPlayer = createSelector(getLeaderboardState, fromLeaderboards.getSearchedPlayer);
@@ -82,9 +84,9 @@ export const getLeaderboardsSelectedWeaponId = createSelector(getLeaderboardStat
 
 export const getLeaderboardsSelectedMedal = createSelector(getLeaderboardState, fromLeaderboards.getSelectedMedal);
 
-export const getLeaderboardsSelectedWeaponType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponType);
+export const getLeaderboardsSelectedType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedType);
 
-export const getLeaderboardsSelectedWeaponTier = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponTier);
+export const getLeaderboardsSelectedFilter = createSelector(getLeaderboardState, fromLeaderboards.getSelectedFilter);
 
 export const getLeaderboardsQueryParams = createSelector(getLeaderboardState, fromLeaderboards.getQueryParams);
 
@@ -170,7 +172,7 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth', 'leaderboard'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 // const productionReducer = combineReducers(reducers);
 

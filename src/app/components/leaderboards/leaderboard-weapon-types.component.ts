@@ -1,6 +1,6 @@
 import {Component, Input, ChangeDetectionStrategy, OnInit} from '@angular/core';
 import { LBWeaponType } from "../../models/leaderboard.model";
-import {WEAPON_TYPES} from "../../services/constants";
+import {WEAPON_TYPES, WEAPON_TYPE_REF, MEDALS_REF} from "../../services/constants";
 import {Store} from "@ngrx/store";
 
 import * as fromRoot            from '../../reducers';
@@ -24,15 +24,25 @@ import * as leaderboardActions  from "../../actions/leaderboard.actions";
   </div>
   <div class="col-xs-12 col-sm-4 select-container">
     <div class="select">
-      <select [(ngModel)]="weaponType" (ngModelChange)="getType($event)">
-        <option value="{{type.value}}" *ngFor='let type of weaponTypes; let i = index;' [innerHtml]="type.text"></option>
+      <select [(ngModel)]="selectedType" (ngModelChange)="getType($event)">
+        <option value="{{type.value}}" *ngFor='let type of typeCollection[leaderboardType]; let i = index;' [innerHtml]="type.text"></option>
       </select>
     </div>
     <div class="stat-label">Weapon Type</div>
   </div>
-  <div class="col-xs-12 col-sm-4 select-container">
+  <!--<div class="col-xs-12 col-sm-8 select-container" *ngIf="leaderboardType === 'players'">-->
+    <!--<div class="select">-->
+      <!--<input [ngModel]="selectedType"-->
+             <!--[typeahead]="weaponList"-->
+             <!--[typeaheadOptionField]="'name'"-->
+             <!--(typeaheadOnSelect)="getPlayerForWeapon($event)"-->
+             <!--placeholder="Enter Weapon Name">-->
+    <!--</div>-->
+    <!--<div class="stat-label">Weapon Name</div>-->
+  <!--</div>-->
+  <div class="col-xs-12 col-sm-4 select-container" *ngIf="leaderboardType === 'weapon-types'">
     <div class="select">
-      <select [(ngModel)]="weaponTier" (ngModelChange)="filterTier($event)">
+      <select [(ngModel)]="selectedFilter" (ngModelChange)="filterItems($event)">
         <option value="{{type.value}}" *ngFor='let type of weaponTiers; let i = index;' [innerHtml]="type.text"></option>
       </select>
     </div>
@@ -43,33 +53,33 @@ import * as leaderboardActions  from "../../actions/leaderboard.actions";
     <hr>
     <div class="stat-table__row row row--small-gutter">
       <div class="col-xs-2">
-        <div class="stat-header">Kills</div>
+        <div class="stat-header" [innerHtml]="leaderboardType === 'medals' ? 'Count' : 'Kills'"></div>
       </div>
       <div class="col-xs-6">
-        <div class="stat-header">Weapon</div>
+        <div class="stat-header" [innerHtml]="leaderboardType === 'weapon-types' ? 'Weapon' : 'Player'"></div>
       </div>
       <div class="col-xs-2">
-        <div class="stat-header">Headshots</div>
+        <div class="stat-header" *ngIf="leaderboardType === 'weapon-types'">Headshots</div>
       </div>
       <div class="col-xs-2">
         <div class="stat-header">Matches</div>
       </div>
     </div>
-    <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of weapons | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }'>
+    <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let item of items | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }'>
       <div class="col-xs-2">
-        <span [innerHtml]="weapon?.kills | number:'1.0-0'"></span>
+        <span [innerHtml]="(item?.kills || item?.count) | number:'1.0-0'"></span>
       </div>
       <div class="col-xs-6">
-        <img [src]="weapon?.icon"
-             [alt]="weapon?.name"
+        <img [src]="item?.icon"
+             [alt]="item?.name"
              class="weapon-icon__small">
-        <a [innerHtml]="weapon?.name" [routerLink]="['/']" [queryParams]="{weaponHash: weapon?.id}"></a>
+        <a [innerHtml]="item?.name" [routerLink]="['/']" [queryParams]="{weaponHash: item?.id}"></a>
       </div>
       <div class="col-xs-2">
-        <span [innerHtml]="weapon?.headshots | number:'1.0-0'"></span>
+        <span [innerHtml]="item?.headshots | number:'1.0-0'"></span>
       </div>
       <div class="col-xs-2">
-        <span [innerHtml]="weapon?.matches | number:'1.0-0'"></span>
+        <span [innerHtml]="item?.matches | number:'1.0-0'"></span>
       </div>
     </div>
   </div>
@@ -78,25 +88,22 @@ import * as leaderboardActions  from "../../actions/leaderboard.actions";
 })
 
 export class LeaderboardWeaponTypesComponent implements OnInit {
-  @Input() weapons: LBWeaponType[];
+  @Input() items: any[];
   @Input() itemsPerPage: number;
-  @Input() weaponType: string;
-  @Input() weaponTier: number;
+  @Input() selectedType: string;
+  @Input() selectedFilter: number;
   @Input() currentPage: number;
   @Input() currentWeek: number;
-  @Input() leaderboardType: number;
+  @Input() leaderboardType: string;
   @Input() leaderboardTypes: Array<any>;
 
-  weaponTypes: Array<{value: string, text: string}> = [
-    {value: "All", text: "All"},
-    {value: "Auto Rifle", text: "Auto Rifles"},
-    {value: "Scout Rifle", text: "Scout Rifles"},
-    {value: "Pulse Rifle", text: "Pulse Rifles"},
-    {value: "Hand Cannon", text: "Hand Cannons"},
-    {value: "Sniper Rifle", text: "Sniper Rifles"},
-    {value: "Fusion Rifle", text: "Fusion Rifles"},
-    {value: "Shotgun", text: "Shotguns"},
-    {value: "Sidearm", text: "Sidearms"},
+  typeCollection: any = [
+    {
+      'weapon-types': WEAPON_TYPE_REF
+    },
+    {
+      'medals': MEDALS_REF
+    }
   ];
 
   weaponTiers: Array<{value: number, text: string}> = [
@@ -111,22 +118,39 @@ export class LeaderboardWeaponTypesComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.getType(this.weaponType);
+    this.getType(this.leaderboardType);
   }
 
   setLeaderboard(type: string) {
     this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: type}));
+    this.selectedType = null;
+    this.getType(type);
   }
 
-  getType(weaponType: string) {
-    if (WEAPON_TYPES.indexOf(weaponType) < 0) {
-      weaponType = 'All';
+  getType(type: string) {
+    switch (type) {
+      case 'weapon-types': {
+        if (WEAPON_TYPES.indexOf(this.selectedType) < 0) {
+          this.selectedType = 'All';
+        }
+        this.store.dispatch(new leaderboardActions.GetWeaponTypeAction({type: this.selectedType, week: this.currentWeek}));
+        return;
+      }
+      case 'medals': {
+        if (!this.selectedType) {
+          this.selectedType = '1';
+        }
+        this.store.dispatch(new leaderboardActions.GetMedalAction({type: this.selectedType, week: this.currentWeek}));
+        return;
+      }
+      case 'players': {
+        this.store.dispatch(new leaderboardActions.GetPlayersAction({type: this.selectedType, week: this.currentWeek}));
+        return;
+      }
     }
-
-    this.store.dispatch(new leaderboardActions.GetWeaponTypeAction({type: weaponType, week: this.currentWeek}));
   }
 
-  filterTier(tier: number) {
+  filterItems(tier: number) {
     if (!tier) {
       tier = 0;
     }

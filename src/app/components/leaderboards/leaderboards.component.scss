@@ -2,6 +2,25 @@
 
 @import 'styles/base';
 
+.card__header__title {
+  font-size: .8em;
+  font-weight: 300;
+  font-family: 'Roboto Condensed';
+  color: $text-on-dark;
+  text-transform: uppercase;
+}
+
+.card__header__title--map {
+  margin: 0;
+}
+
+.card__header__title--context {
+  font-size: 1em;
+  font-weight: 300;
+  color: #fafafa;
+  text-transform: uppercase;
+}
+
 .maps {
   width: 50vw;
   max-width: 640px;
@@ -23,6 +42,26 @@
   margin-bottom: 1em;
   -webkit-transition: box-shadow ease-in-out .2s;
   transition: box-shadow ease-in-out .2s;
+}
+
+.card__header__select {
+  .material-icons {
+    color: white;
+  }
+}
+
+.card__header__select--dropdown {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.6);
+  border-radius: .3em;
+  -webkit-transition: box-shadow ease-in-out .2s;
+  transition: box-shadow ease-in-out .2s;
+
+  select {
+    color: $text-on-dark;
+  }
 }
 
 .select:after {
@@ -51,10 +90,6 @@ select, input {
   background: 0 0;
 }
 
-.select-container {
-  padding-right: 2.5rem;
-  padding-left: 2.5rem;
-}
 
 .text-center {
   text-align: center;

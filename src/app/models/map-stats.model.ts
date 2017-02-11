@@ -9,6 +9,8 @@ export interface CurrentMap {
   week: string
   activityName: string
   pgcrImage: string
+  year?: string
+  weekInYear?: number
 }
 
 export interface MapInfo {

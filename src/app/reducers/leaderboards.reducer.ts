@@ -6,10 +6,11 @@ import {BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, MEDALS_REF} from "../servi
 
 
 export interface State {
+  items: any[];
   searchedPlayer: string;
   leaderboardType: string;
-  selectedWeaponType: string;
-  selectedWeaponTier: number;
+  selectedType: string;
+  selectedFilter: number;
   selectedMedal: number;
   selectedWeaponId: number;
   weapons: LBWeaponType[];
@@ -29,11 +30,12 @@ export interface State {
 }
 
 const initialState: State = {
+  items: [],
   searchedPlayer: null,
   leaderboardType: 'weapon-types',
   selectedMedal: 1,
-  selectedWeaponType: 'All',
-  selectedWeaponTier: 0,
+  selectedType: null,
+  selectedFilter: 0,
   selectedWeaponId: null,
   weapons: [],
   collection: [],
@@ -59,9 +61,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload = action.payload;
 
       return Object.assign({}, state, {
-        selectedWeaponId: payload.weaponId || state.selectedWeaponId,
-        selectedMedal: payload.medalId || state.selectedMedal,
-        selectedWeaponType: payload.type || state.selectedWeaponType,
+        selectedType: payload.type || state.selectedType,
         loading: true,
         error: false
       });
@@ -90,10 +90,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const currentPage = state.currentPage > 1 ? state.currentPage : null;
 
       return Object.assign({}, state, {
-        medals: payload,
-        weapons: [],
-        playerWeapons: [],
-        players: [],
+        items: payload,
         loading: false,
         error: false,
         leaderboardType: 'medals',
@@ -106,16 +103,13 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.WEAPON_TYPE_SUCCESS: {
       const payload: LBWeaponType[] = action.payload;
-      const weaponType = state.selectedWeaponType === 'All' ? null : state.selectedWeaponType;
-      const weaponTier = state.selectedWeaponTier === 0 ? null : state.selectedWeaponTier;
+      const weaponType = state.selectedType === 'All' ? null : state.selectedType;
+      const weaponTier = state.selectedFilter === 0 ? null : state.selectedFilter;
       const currentPage = state.currentPage > 1 ? state.currentPage : null;
 
       return Object.assign({}, state, {
-        weapons: payload,
+        items: payload,
         collection: payload,
-        playerWeapons: [],
-        players: [],
-        medals: [],
         loading: false,
         error: false,
         leaderboardType: 'weapon-types',
@@ -130,13 +124,12 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
     case leaderboard.ActionTypes.FILTER_BY_TIER: {
       const payload:number = action.payload;
       const filtered:any = (payload > 0 && payload < 7) ? state.collection.filter(c => c.tier === payload) : state.collection;
-      const weaponType = state.selectedWeaponType === 'All' ? null : state.selectedWeaponType;
+      const weaponType = state.selectedType === 'All' ? null : state.selectedType;
       const currentPage = state.currentPage > 1 ? state.currentPage : null;
 
       return Object.assign({}, state, {
-        selectedWeaponTier: payload,
-        weapons: [...filtered],
-        playerWeapons: [],
+        selectedFilter: payload,
+        items: [...filtered],
         leaderboardType: 'weapon-types',
         queryParams: Object.assign({}, {
           weaponType: weaponType,
@@ -173,7 +166,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         searchedPlayer: payload.name,
-        playerWeapons: [],
+        items: [],
         loading: true,
         error: false
       });
@@ -196,10 +189,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const currentPage = state.currentPage > 1 ? state.currentPage : null;
 
       return Object.assign({}, state, {
-        players: [...payload],
-        weapons: [],
-        playerWeapons: [],
-        medals: [],
+        items: [...payload],
         loading: false,
         error: false,
         leaderboardType: 'players',
@@ -214,7 +204,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload:any[] = action.payload;
 
       return Object.assign({}, state, {
-        playerWeapons: [...payload],
+        items: [...payload],
         loading: false,
         error: false
       });
@@ -236,6 +226,8 @@ export const getSelectedWeaponId = (state: State) => state.selectedWeaponId;
 
 export const getPlayers = (state: State) => state.players;
 
+export const getItems = (state: State) => state.items;
+
 export const getWeapons = (state: State) => state.weapons;
 
 export const getSearchedPlayer = (state: State) => state.searchedPlayer;
@@ -246,9 +238,9 @@ export const getMedals = (state: State) => state.medals;
 
 export const getSelectedMedal = (state: State) => state.selectedMedal;
 
-export const getSelectedWeaponType = (state: State) => state.selectedWeaponType;
+export const getSelectedType = (state: State) => state.selectedType;
 
-export const getSelectedWeaponTier = (state: State) => state.selectedWeaponTier;
+export const getSelectedFilter = (state: State) => state.selectedFilter;
 
 export const getCurrentPage = (state: State) => state.currentPage;
 
