@@ -12,8 +12,8 @@
         <span [innerHtml]="item?.n"></span>
       </div>
       <div class="inventory-item__perks">
-        <!-- TODO: Add popovers, remove ornament perks -->
-        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
+        <!-- TODO: Remove ornament perks -->
+        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}" [popover]="node?.d" [popoverTitle]="node?.n"></i>
       </div>
     </div>
   </div>
@@ -32,8 +32,7 @@
         <span [innerHtml]="item?.n"></span>
       </div>
       <div class="inventory-item__perks">
-        <!-- TODO: Add popovers -->
-        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
+        <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}" [popover]="node?.d" [popoverTitle]="node?.n"></i>
       </div>
       <!-- TODO: Show badge if there is no exotic tier armor equipped -->
     </div>
@@ -59,7 +58,6 @@
 <div class="player__block tab__section">
   <div class="row">
     <div class="col-xs-4" *ngFor="let stat of stats | filterClassStats">
-      <!-- TODO: Popovers -->
       <div class="row row--no-gutter stat-progress">
         <div class="col-xs" *ngFor="let tier of stat?.tiers">
           <progressbar [value]="tier" [max]="60" [ngClass]="{'is-incomplete': (tier !== 60)}"></progressbar>
@@ -73,7 +71,6 @@
 <div class="player__block tab__section">
   <div class="row">
     <div class="col-xs-4" *ngFor="let stat of stats | filterClassArmor">
-      <!-- TODO: Popovers -->
       <div class="stat-progress">
         <progressbar [value]="stat?.value" [max]="10"></progressbar>
       </div>

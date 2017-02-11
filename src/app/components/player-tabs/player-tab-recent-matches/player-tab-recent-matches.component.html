@@ -84,10 +84,9 @@
 </div>
 <div class="player__block tab__section">
   <div class="row recent-match__medals">
-    <div class="col-xs-2 recent-match__medal" *ngFor="let medal of objectToArray(pgcr?.medals)">
+    <div class="col-xs-2 recent-match__medal" *ngFor="let medal of objectToArray(pgcr?.medals)" [popoverTitle]="medal?.name" [popover]="medal?.description">
       <img [src]="'https://www.bungie.net' + medal?.icon" [alt]="medal?.name" [title]="medal?.name">
       <small>x</small><span [innerHtml]="medal?.value"></span>
     </div>
   </div>
-  <!-- TODO: Add popovers -->
 </div>

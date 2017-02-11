@@ -13,7 +13,7 @@ import { PlayerEffects } from "./effects/player.effects";
 import { MapEffects } from "./effects/map.effects";
 import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 import { TabsModule } from "ng2-bootstrap/tabs";
-import { TooltipModule } from "ng2-bootstrap/tooltip";
+import { PopoverModule } from "ng2-bootstrap/popover";
 import { ProgressbarModule } from "ng2-bootstrap/progressbar";
 import { ActivityEffects } from "./effects/activity.effects";
 import { StatsEffects } from "./effects/stats.effects";
@@ -43,7 +43,7 @@ export const APP_IMPORTS = [
   EffectsModule.run(LeaderboardEffects),
   TabsModule.forRoot(),
   TypeaheadModule.forRoot(),
-  TooltipModule.forRoot(),
+  PopoverModule.forRoot(),
   ProgressbarModule.forRoot(),
   ReactiveFormsModule,
   Ng2PaginationModule,
