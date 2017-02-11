@@ -25,7 +25,8 @@
   white-space: normal;
 }
 
-.inventory-item__title + .inventory-item__perks {
+.inventory-item__title + .inventory-item__perks,
+.inventory-item__badges {
   margin-top: .5rem;
 }
 

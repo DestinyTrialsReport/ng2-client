@@ -31,20 +31,36 @@
       <div class="inventory-item__title">
         <span [innerHtml]="item?.n"></span>
       </div>
-      <div class="inventory-item__perks">
+      <div class="inventory-item__perks" *ngIf="item.tT === 6">
         <i class="perk-icon" *ngFor="let node of item?.steps" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}" [popover]="node?.d" [popoverTitle]="node?.n"></i>
       </div>
-      <!-- TODO: Show badge if there is no exotic tier armor equipped -->
+      <div class="inventory-item__badges" *ngIf="item.tT !== 6">
+        <span class="badge badge--blank">No Exotic armor equipped</span>
+      </div>
     </div>
   </div>
-  <!-- TODO: Add artifact -->
+  <div class="row row--small-gutter middle-xs inventory-item" *ngFor="let item of inventory | filterArtifact">
+    <!-- TODO: Finish artifact -->
+    <div class="col-xs-shrink">
+      <div class="inventory-item__image">
+        <!-- TODO: Add light
+        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
+        <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+      </div>
+    </div>
+    <div class="col-xs">
+      <div class="inventory-item__title">
+        <span [innerHtml]="item?.n"></span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="player__block tab__section">
   <div class="row" *ngFor="let subclass of (inventory | filterSubclass)">
     <template ngFor let-node [ngForOf]="subclass?.steps">
       <div class="subclass-perk col-xs-6" *ngIf="([5, 7].indexOf(node.c) < 0) && !([2, 3, 4].indexOf(node.c) > -1 && node.r == 0)">
-        <div class="row row--no-gutter middle-xs">
+        <div class="row row--no-gutter middle-xs" [popoverTitle]="node?.n" [popover]="node?.d">
           <div class="col-xs-shrink">
             <i class="perk-icon subclass-perk__icon" [ngStyle]="{'background-image': 'url(https://www.bungie.net/common/destiny_content/icons/' + node?.i + ')'}"></i>
           </div>

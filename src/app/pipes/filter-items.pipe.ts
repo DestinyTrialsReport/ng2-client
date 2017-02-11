@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Item} from "../models/inventory.model";
-import {WEAPON_BUCKETS, ARMOR_BUCKETS} from "../services/constants";
-import {ClassStat} from "../models/player.model";
+import { Item } from "../models/inventory.model";
+import { WEAPON_BUCKETS, ARMOR_BUCKETS, ARTIFACT_BUCKET } from "../services/constants";
+import { ClassStat } from "../models/player.model";
 
 @Pipe({ name: 'filterSubclass' })
 export class FilterSubclass implements PipeTransform {
@@ -27,6 +27,14 @@ export class FilterArmor implements PipeTransform {
     const hasExotic: boolean = armor.map(item => item.tT).indexOf(6) > -1;
 
     return armor.filter(item => hasExotic ? item.tT === 6 : item.bucketHash === 3448274439);
+  }
+}
+
+@Pipe({ name: 'filterArtifact' })
+export class FilterArtifact implements PipeTransform {
+  transform(items: Item[]) {
+    if (!items) return [];
+    return items.filter(item => ARTIFACT_BUCKET === item.bucketHash);
   }
 }
 
