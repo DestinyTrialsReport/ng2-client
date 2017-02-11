@@ -5,6 +5,7 @@ export class TimeAgo implements PipeTransform {
   transform(period: string) {
     if (period) {
       var result:string;
+      var number:number;
       let value = new Date(period);
 
       let now = new Date().getTime();
@@ -13,13 +14,20 @@ export class TimeAgo implements PipeTransform {
       if (delta < 10) {
         result = 'now';
       } else if (delta < 60) {
-        result = Math.floor(delta) + ' Seconds Ago';
+        number = Math.floor(delta);
+        result = number + ' second' + (number > 1 ? 's' : '') + ' ago';
       } else if (delta < 3600) {
-        result = Math.floor(delta / 60) + ' Minutes Ago';
+        number = Math.floor(delta / 60);
+        result = number + ' minute' + (number > 1 ? 's' : '') + ' ago';
       } else if (delta < 86400) {
-        result = Math.floor(delta / 3600) + ' Hours Ago';
+        number = Math.floor(delta / 3600);
+        result = number + ' hour' + (number > 1 ? 's' : '') + ' ago';
+      } else if (delta < 604800) {
+        number = Math.floor(delta / 86400);
+        result = number + ' day' + (number > 1 ? 's' : '') + ' ago';
       } else {
-        result = Math.floor(delta / 86400) + ' Days Ago';
+        number = Math.floor(delta / 604800);
+        result = number + ' week' + (number > 1 ? 's' : '') + ' ago';
       }
       return result;
     }
