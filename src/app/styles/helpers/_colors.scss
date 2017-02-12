@@ -1,5 +1,6 @@
 $dark-main-color: #323232;
 $light-main-color: #ffffff;
+$gray-main-color: #B0BEC5;
 $light-secondary-color: #999999;
 $highlight-main-color: #FFD700;
 $interactive-main-color: #2196F3;
@@ -19,6 +20,7 @@ $info-color: #03A9F4;
 $transparent-hover-light-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
 $hr-color: $light-secondary-color;
 $data-label-color: $light-secondary-color;
+$perk-color: $gray-main-color;
 
 $home-aside-color: #777;
 
@@ -28,31 +30,3 @@ $active-tab-text-color: #666666;
 $tab-style-one-color: #ECEFF1;
 $tab-style-two-color: #E8F5E9;
 $tab-style-three-color: #E8EAF6;
-
-// ---
-
-$main-dark-color: #333;
-$xbox-color-main: #107C10;
-$playstation-color-main: #0066C2;
-$success-color: #00C853;
-$fail: #D50000;
-$warning-color: #FF8F00;
-$info-color: #03A9F4;
-
-$text-on-dark: #999;
-$controls-btn-color: darken(white, 30%);
-
-$equipped-background: #ECEFF1;
-$last-matches-background: #E8F5E9;
-$stats-background: #E8EAF6;
-$maps-background: #E0F2F1;
-$this-week-background: #E0F2F1;
-$map-based-background: #E0F7FA;
-
-$header-bg: $main-dark-color;
-$footer-bg: $main-dark-color;
-$player-card: #fcfcfc;
-$primary: #2196F3;
-
-$perk-background: #78909C;
-$hazard-background: #F44336;

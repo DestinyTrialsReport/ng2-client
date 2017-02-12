@@ -37,6 +37,10 @@ hr {
   background: linear-gradient(to right, transparentize($hr-color, .9) 0, transparentize($hr-color, .7) 50%, transparentize($hr-color, .9) 100%);
   margin: 1rem 0;
 
+  &.hr--small-margin {
+    margin: .5rem 0;
+  }
+
   &.hr--no-margin {
     margin: 0;
   }

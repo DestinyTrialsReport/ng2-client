@@ -6,7 +6,21 @@
           <i class="match-icon"
              *ngFor="let activity of activities"
              [ngClass]="activityStanding(activity) ? 'match-icon--win' : 'match-icon--loss'"
-             [ngStyle]="activity | activityGraph: statsBng?.killsDeathsRatio.basic.value">
+             [ngStyle]="activity | activityGraph: statsBng?.killsDeathsRatio.basic.value"
+             [popover]="activityDetailsPopover"
+             [popoverTitle]="activity.period | timeAgo">
+             <template #activityDetailsPopover>
+               <div class="row row--small-margin">
+                 <div class="col-xs">
+                   <div class="stat-number" [innerHtml]="activity?.values?.kills.basic.value / activity?.values?.deaths.basic.value | number : '1.2-2'"></div>
+                   <div class="stat-label">K/D</div>
+                 </div>
+                 <div class="col-xs">
+                   <div class="stat-number" [innerHtml]="activity?.values?.kills.basic.value"></div>
+                   <div class="stat-label">Kills</div>
+                 </div>
+               </div>
+             </template>
           </i>
         </div>
         <div class="stat-label">Recent Matches</div>
