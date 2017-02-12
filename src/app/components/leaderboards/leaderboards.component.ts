@@ -1,13 +1,11 @@
 import {
-  Component, style, state, animate,
-  transition, trigger, OnInit, ChangeDetectionStrategy
+  Component, OnInit, ChangeDetectionStrategy
 } from '@angular/core';
 import { Store }                from "@ngrx/store";
 import { ActivatedRoute }       from "@angular/router";
 import { Location }             from '@angular/common';
 import { Observable }           from "rxjs/Observable";
 
-import { LBWeaponType }         from "../../models/leaderboard.model";
 import { CurrentMap }           from "../../models/map-stats.model";
 
 import * as fromRoot            from '../../reducers';
@@ -17,41 +15,27 @@ import {MEDALS_REF} from "../../services/constants";
 
 @Component({
   selector: 'leaderboards',
-  animations: [
-    trigger('loading', [
-      state('void', style({ opacity: 1 })),
-      state('false', style({ opacity: 1 })),
-      state('true', style({ opacity: 0 })),
-      transition('* => *', animate('50ms ease-in-out, opacity linear'))
-    ])
-  ],
   styleUrls: ['./leaderboards.component.css'],
   templateUrl: 'leaderboards.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LeaderboardsComponent implements OnInit {
-  medalList: Array<{id: number, statId: string, statName: string}> = MEDALS_REF;
+  medalList: Array<{id: number; statId?: string; text: string}> = MEDALS_REF;
   maxWeek: number = 63;
-  selectedMedal$: Observable<number>;
-  selectedWeaponName$: Observable<string>;
   leaderboardType$: Observable<string>;
+  leaderboardTitle$: Observable<string>;
   currentPage$: Observable<number>;
   searchedPlayer$: Observable<string>;
   currentWeek: number;
-  currentYear: string;
-  displayWeek: number;
   currentMap$: Observable<CurrentMap>;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
-  weapons$: Observable<LBWeaponType[]>;
-  players$: Observable<any[]>;
-  medals$: Observable<any[]>;
-  selectedType$: Observable<string>;
+  selectedType$: Observable<any>;
   selectedFilter$: Observable<number>;
   playerWeapons$: Observable<any[]>;
   items$: Observable<any[]>;
-  weaponList$: Observable<{ id: number; name: string; }[]>;
+  typeSelection$: Observable<{ id: any; statId?: string; text: string; }[]>;
 
   leaderboardTypes: Array<{value: string, text: string}> = [
     {value: 'weapon-types', text: 'Weapon Types'},
@@ -66,7 +50,7 @@ export class LeaderboardsComponent implements OnInit {
     this.leaderboardType$ = store.select(fromRoot.getLeaderboardType)
       .distinctUntilChanged();
 
-    this.weapons$ = store.select(fromRoot.getLeaderboardWeapons)
+    this.leaderboardTitle$ = store.select(fromRoot.getLeaderboardTitle)
       .distinctUntilChanged();
 
     this.currentMap$ = store.select(fromRoot.getCurrentMap)
@@ -74,25 +58,13 @@ export class LeaderboardsComponent implements OnInit {
 
     this.currentMap$.filter(map => !!map).subscribe(map => this.currentWeek = parseInt(map.week));
 
-    this.players$ = store.select(fromRoot.getLeaderboardPlayers)
-      .distinctUntilChanged();
-
     this.items$ = store.select(fromRoot.getLeaderboardItems)
-      .distinctUntilChanged();
-
-    this.medals$ = store.select(fromRoot.getLeaderboardMedals)
       .distinctUntilChanged();
 
     this.selectedType$ = store.select(fromRoot.getLeaderboardsSelectedType)
       .distinctUntilChanged();
 
     this.selectedFilter$ = store.select(fromRoot.getLeaderboardsSelectedFilter)
-      .distinctUntilChanged();
-
-    this.playerWeapons$ = store.select(fromRoot.getLeaderboardPlayerWeapons)
-      .distinctUntilChanged();
-
-    this.searchedPlayer$ = store.select(fromRoot.getLeaderboardSearchedPlayer)
       .distinctUntilChanged();
 
     this.currentPage$ = store.select(fromRoot.getLeaderboardsCurrentPage);
@@ -103,13 +75,7 @@ export class LeaderboardsComponent implements OnInit {
     this.error$ = store.select(fromRoot.getLeaderboardsErrorStatus)
       .distinctUntilChanged();
 
-    this.weaponList$ = store.select(fromRoot.getLeaderboardWeaponList)
-      .distinctUntilChanged();
-
-    this.selectedMedal$ = store.select(fromRoot.getLeaderboardsSelectedMedal)
-      .distinctUntilChanged();
-
-    this.selectedWeaponName$ = store.select(fromRoot.getLeaderboardSelectedWeaponName)
+    this.typeSelection$ = store.select(fromRoot.getLeaderboardTypeSelection)
       .distinctUntilChanged();
 
     store.select(fromRoot.getLeaderboardsQueryString).subscribe(params => {
@@ -135,13 +101,14 @@ export class LeaderboardsComponent implements OnInit {
       .subscribe(data => {
         this.currentWeek = parseInt(data.week);
         if (data.params['gamertag'] && data.params['platform']) {
-          this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: 'select-leaderboard'}));
+          this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: 'select-leaderboard', week: this.currentWeek}));
           this.store.dispatch(new leaderboardActions.SearchPlayerAction({
             name: data.params['gamertag'],
             week: this.currentWeek,
             platform: data.params['platform']
           }));
         }
+        this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: 'weapon-types', week: this.currentWeek}));
       });
   }
 

@@ -18,20 +18,14 @@ import { FilterWeapons, FilterSubclass, FilterArmor, FilterClassStats, FilterCla
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
-import { LeaderboardPlayerComponent } from "./components/leaderboards/leaderboard-players.component";
-import { LeaderboardWeaponTypesComponent } from "./components/leaderboards/leaderboard-weapon-types.component";
-import { LeaderboardSearchComponent } from "./components/leaderboards/leaderboard-search.component";
-import {LeaderboardMedalsComponent} from "./components/leaderboards/leaderboard-medals.component";
+import { LeaderboardTableComponent } from "./components/leaderboards/leaderboard-table.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
   MapsComponent,
   HomeComponent,
   LeaderboardsComponent,
-  LeaderboardPlayerComponent,
-  LeaderboardMedalsComponent,
-  LeaderboardWeaponTypesComponent,
-  LeaderboardSearchComponent,
+  LeaderboardTableComponent,
   NotFound404Component,
   ReportComponent,
   MyReportComponent,

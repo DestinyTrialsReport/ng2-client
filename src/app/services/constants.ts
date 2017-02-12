@@ -14,7 +14,7 @@ export const WEAPON_BUCKETS: any = [BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON
 export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
 export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031];
 
-export const WEAPON_TYPES: string[] = [ "Auto Rifle",
+export const WEAPON_TYPES: Array<string | number> = [ "Auto Rifle",
                                         "Scout Rifle",
                                         "Pulse Rifle",
                                         "Hand Cannon",
@@ -180,7 +180,7 @@ export const HIDDEN_NODES: any = [
 ];
 
 
-export const WEAPON_TYPE_REF: Array<{value: string, text: string}> = [
+export const WEAPON_TYPE_REF: Array<{id: string, statId?: string, text: string}> = [
   {id: "All", text: "All"},
   {id: "Auto Rifle", text: "Auto Rifles"},
   {id: "Scout Rifle", text: "Scout Rifles"},

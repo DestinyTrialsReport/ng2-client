@@ -5,6 +5,7 @@ import { type }       from '../util';
 
 export const ActionTypes = {
   GET_WEAPON_TYPE:            type('[Leaderboard] Get Weapon Type'),
+  GET_SELECTED_TYPE:          type('[Leaderboard] Get Selected Type'),
   FILTER_BY_TIER:             type('[Leaderboard] Filter By Tier'),
   GET_PLAYERS:                type('[Leaderboard] Get Players'),
   SEARCH_PLAYER:              type('[Leaderboard] Search Player'),
@@ -25,7 +26,13 @@ export const ActionTypes = {
 export class GetMedalAction implements Action {
   type = ActionTypes.GET_MEDAL;
 
-  constructor(public payload: {type: string, week: number}) { }
+  constructor(public payload: {type: number | string, week: number}) { }
+}
+
+export class GetSelectedTypeAction implements Action {
+  type = ActionTypes.GET_SELECTED_TYPE;
+
+  constructor(public payload: {type?: any, leaderboard: string, week: number}) { }
 }
 
 export class GetWeaponTypeAction implements Action {
@@ -37,7 +44,7 @@ export class GetWeaponTypeAction implements Action {
 export class GetWeaponListAction implements Action {
   type = ActionTypes.GET_WEAPON_LIST;
 
-  constructor(public payload: {type: string, week: number}) { }
+  constructor(public payload: {type?: string, week: number}) { }
 }
 
 export class SearchPlayerAction implements Action {
@@ -61,7 +68,7 @@ export class GetPlayersAction implements Action {
 export class SetLeaderboardAction implements Action {
   type = ActionTypes.SET_LEADERBOARD_TYPE;
 
-  constructor(public payload: {type: string}) { }
+  constructor(public payload: {type: string, week: number}) { }
 }
 
 export class ChangePageAction implements Action {
@@ -120,6 +127,7 @@ export class LeaderboardRequestFailedAction implements Action {
 
 export type Actions
   = GetWeaponTypeAction
+  | GetSelectedTypeAction
   | GetWeaponListAction
   | GetMedalAction
   | GetPlayersAction

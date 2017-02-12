@@ -12,7 +12,7 @@
               <p class="card__header__title--map" [innerHtml]="(currentMap$ | async)?.activityName"></p>
             </div>
             <div class="col-md center-xs card__header__select">
-              <h2 class="card__header__title--context" [innerHtml]="'Most Kills with Weapon Name Here'"></h2>
+              <h2 class="card__header__title--context" [innerHtml]="leaderboardTitle$ | async"></h2>
               <!--<div class="btn card__header__select&#45;&#45;dropdown">-->
                 <!--<button class="middle-xs btn btn&#45;&#45;icon btn&#45;&#45;ghost" (click)="nextMap()">-->
                   <!--<i class="material-icons">&#xE5CB;</i>-->
@@ -42,39 +42,17 @@
         </div>
         <div class="card__content" *ngIf="!(error$ | async)" [ngClass]="{'loading-container': loading}">
 
-          <leaderboard-weapon-types *ngIf="(leaderboardType$ | async)"
+          <leaderboard-table *ngIf="(leaderboardType$ | async)"
                                     [items]="(items$ | async)"
                                     [leaderboardType]="(leaderboardType$ | async)"
                                     [leaderboardTypes]="leaderboardTypes"
                                     [selectedType]="(selectedType$ | async)"
                                     [selectedFilter]="(selectedFilter$ | async)"
+                                    [typeSelection]="typeSelection$ | async"
                                     [currentWeek]="currentWeek"
                                     [currentPage]="(currentPage$ | async)"
-                                    [itemsPerPage]="10"
-                                    [@loading]="loading$ | async">
-          </leaderboard-weapon-types>
-
-          <leaderboard-search *ngIf="(leaderboardType$ | async) == 'select-leaderboard'"
-                              [weapons]="(playerWeapons$ | async)"
-                              [itemsPerPage]="10"
-                              [searchedPlayer]="(searchedPlayer$ | async)"
-                              [leaderboardType]="(leaderboardType$ | async)"
-                              [leaderboardTypes]="leaderboardTypes"
-                              [currentPage]="(currentPage$ | async)"
-                              [@loading]="loading$ | async">
-          </leaderboard-search>
-
-          <leaderboard-players *ngIf="(leaderboardType$ | async) == 'players'"
-                               [players]="(players$ | async)"
-                               [itemsPerPage]="10"
-                               [selectedWeaponName]="selectedWeaponName$ | async"
-                               [weaponList]="weaponList$ | async"
-                               [currentWeek]="currentWeek"
-                               [currentPage]="(currentPage$ | async)"
-                               [leaderboardType]="(leaderboardType$ | async)"
-                               [leaderboardTypes]="leaderboardTypes"
-                               [@loading]="loading$ | async">
-          </leaderboard-players>
+                                    [loading]="loading$ | async">
+          </leaderboard-table>
 
           <hr>
           <div class="row">

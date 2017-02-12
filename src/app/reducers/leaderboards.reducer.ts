@@ -2,24 +2,20 @@
 import { createSelector } from 'reselect';
 import * as leaderboard from "../actions/leaderboard.actions";
 import {LBWeaponType, LBWeaponPercentage} from "../models/leaderboard.model";
-import {BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, MEDALS_REF} from "../services/constants";
+import {BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, MEDALS_REF, WEAPON_TYPE_REF} from "../services/constants";
 
 
 export interface State {
   items: any[];
   searchedPlayer: string;
   leaderboardType: string;
-  selectedType: string;
+  title: string;
+  selectedType: any;
   selectedFilter: number;
-  selectedMedal: number;
-  selectedWeaponId: number;
-  weapons: LBWeaponType[];
   collection: LBWeaponType[];
   primary: LBWeaponPercentage[];
   special: LBWeaponPercentage[];
-  players: any[];
-  playerWeapons: any[];
-  medals: any[];
+  typeSelection: Array<{id: any, statId?: string, text: string}>;
   weaponList: Array<{id: number, name: string}>;
   currentPage: number;
   loading: boolean;
@@ -33,17 +29,13 @@ const initialState: State = {
   items: [],
   searchedPlayer: null,
   leaderboardType: 'weapon-types',
-  selectedMedal: 1,
+  title: null,
   selectedType: null,
   selectedFilter: 0,
-  selectedWeaponId: null,
-  weapons: [],
   collection: [],
   primary: [],
   special: [],
-  players: [],
-  playerWeapons: [],
-  medals: [],
+  typeSelection: [],
   weaponList: [],
   currentPage: 1,
   loading: false,
@@ -54,7 +46,6 @@ const initialState: State = {
 export function reducer(state = initialState, action: leaderboard.Actions): State {
   switch (action.type) {
 
-    case leaderboard.ActionTypes.GET_PLAYERS:
     case leaderboard.ActionTypes.GET_MEDAL:
     case leaderboard.ActionTypes.GET_WEAPON_LIST:
     case leaderboard.ActionTypes.GET_WEAPON_TYPE: {
@@ -69,9 +60,25 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.SET_LEADERBOARD_TYPE: {
       const payload: any = action.payload;
+      let typeSelection: any = WEAPON_TYPE_REF;
+      if (payload.type === 'medals') {
+        typeSelection = MEDALS_REF;
+      }
+
       return Object.assign({}, state, {
         leaderboardType: payload.type,
+        typeSelection: [...typeSelection],
         queryParams: null,
+      });
+    }
+
+    case leaderboard.ActionTypes.GET_SELECTED_TYPE: {
+      const payload: any = action.payload;
+      let title = `Most Used ${payload.type || 'weapon'}s`;
+      return Object.assign({}, state, {
+        selectedType: payload.type,
+        title: title,
+        loading: true
       });
     }
 
@@ -84,18 +91,19 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.GET_MEDAL_SUCCESS: {
       const payload: any = action.payload;
-      const medalName = state.selectedMedal === 1 ? null : MEDALS_REF
-        .filter(medal => medal.id == state.selectedMedal)
+      const medalId = state.selectedType === 1 ? null : MEDALS_REF
+        .filter(medal => medal.id == state.selectedType)
         .map(medal => medal.statId);
       const currentPage = state.currentPage > 1 ? state.currentPage : null;
+      let title = `Most ${payload.medalName || 'medal'}s medals received`;
 
       return Object.assign({}, state, {
-        items: payload,
+        items: [...payload],
         loading: false,
         error: false,
         leaderboardType: 'medals',
         queryParams: Object.assign({}, {
-          medalName: medalName,
+          medalName: medalId,
           page: currentPage
         })
       });
@@ -155,9 +163,10 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload = action.payload;
 
       return Object.assign({}, state, {
-        weaponList: [...payload],
+        typeSelection: [...payload],
+        items: [],
         loading: false,
-        error: false
+        error: false,
       });
     }
 
@@ -166,6 +175,20 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         searchedPlayer: payload.name,
+        items: [],
+        loading: true,
+        error: false
+      });
+    }
+
+    case leaderboard.ActionTypes.GET_PLAYERS: {
+      const payload: any = action.payload;
+
+      let weapon = state.weaponList.filter(weapon => weapon.id == payload).map(weapon => weapon.name);
+      console.log(weapon);
+
+      return Object.assign({}, state, {
+        selectedType: weapon[0] ? weapon[0] : payload.name,
         items: [],
         loading: true,
         error: false
@@ -194,7 +217,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
         error: false,
         leaderboardType: 'players',
         queryParams: Object.assign({}, {
-          weaponId: state.selectedWeaponId,
+          weaponId: state.selectedType,
           page: currentPage
         })
       });
@@ -220,23 +243,9 @@ export const getPrimary = (state: State) => state.primary;
 
 export const getSpecial = (state: State) => state.special;
 
-export const getWeaponList = (state: State) => state.weaponList;
-
-export const getSelectedWeaponId = (state: State) => state.selectedWeaponId;
-
-export const getPlayers = (state: State) => state.players;
+export const getTypeSelection = (state: State) => state.typeSelection;
 
 export const getItems = (state: State) => state.items;
-
-export const getWeapons = (state: State) => state.weapons;
-
-export const getSearchedPlayer = (state: State) => state.searchedPlayer;
-
-export const getPlayerWeapons = (state: State) => state.playerWeapons;
-
-export const getMedals = (state: State) => state.medals;
-
-export const getSelectedMedal = (state: State) => state.selectedMedal;
 
 export const getSelectedType = (state: State) => state.selectedType;
 
@@ -249,5 +258,7 @@ export const getLoadingStatus = (state: State) => state.loading;
 export const getLeaderboardType = (state: State) => state.leaderboardType;
 
 export const getErrorStatus = (state: State) => state.error;
+
+export const getTitle = (state: State) => state.title;
 
 export const getQueryParams = (state: State) => state.queryParams;

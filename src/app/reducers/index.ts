@@ -58,21 +58,11 @@ export const getMapState = (state: State) => state.map;
 
 export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
 
-export const getLeaderboardWeaponList = createSelector(getLeaderboardState, fromLeaderboards.getWeaponList);
+export const getLeaderboardTypeSelection = createSelector(getLeaderboardState, fromLeaderboards.getTypeSelection);
 
 export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLeaderboards.getSpecial);
 
-export const getLeaderboardPlayers = createSelector(getLeaderboardState, fromLeaderboards.getPlayers);
-
 export const getLeaderboardItems = createSelector(getLeaderboardState, fromLeaderboards.getItems);
-
-export const getLeaderboardWeapons = createSelector(getLeaderboardState, fromLeaderboards.getWeapons);
-
-export const getLeaderboardSearchedPlayer = createSelector(getLeaderboardState, fromLeaderboards.getSearchedPlayer);
-
-export const getLeaderboardPlayerWeapons = createSelector(getLeaderboardState, fromLeaderboards.getPlayerWeapons);
-
-export const getLeaderboardMedals = createSelector(getLeaderboardState, fromLeaderboards.getMedals);
 
 export const getLeaderboardsCurrentPage = createSelector(getLeaderboardState, fromLeaderboards.getCurrentPage);
 
@@ -80,13 +70,11 @@ export const getLeaderboardsLoadingStatus = createSelector(getLeaderboardState, 
 
 export const getLeaderboardsErrorStatus = createSelector(getLeaderboardState, fromLeaderboards.getErrorStatus);
 
-export const getLeaderboardsSelectedWeaponId = createSelector(getLeaderboardState, fromLeaderboards.getSelectedWeaponId);
-
-export const getLeaderboardsSelectedMedal = createSelector(getLeaderboardState, fromLeaderboards.getSelectedMedal);
-
 export const getLeaderboardsSelectedType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedType);
 
 export const getLeaderboardsSelectedFilter = createSelector(getLeaderboardState, fromLeaderboards.getSelectedFilter);
+
+export const getLeaderboardTitle = createSelector(getLeaderboardState, fromLeaderboards.getTitle);
 
 export const getLeaderboardsQueryParams = createSelector(getLeaderboardState, fromLeaderboards.getQueryParams);
 
@@ -106,10 +94,10 @@ export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLea
   return [primary, special];
 });
 
-export const getLeaderboardSelectedWeaponName = createSelector(getLeaderboardWeaponList, getLeaderboardsSelectedWeaponId, (weapons, id) => {
+export const getLeaderboardSelectedWeaponName = createSelector(getLeaderboardTypeSelection, getLeaderboardsSelectedType, (weapons, id) => {
   let weapon = weapons.filter(weapon => weapon.id == id);
   if (weapon[0]) {
-    return weapon[0].name;
+    return weapon[0].text;
   }
 });
 

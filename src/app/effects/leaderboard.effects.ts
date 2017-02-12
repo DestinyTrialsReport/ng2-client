@@ -1,7 +1,7 @@
 /* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Action } from "@ngrx/store";
+import {Action, Store} from "@ngrx/store";
 
 import { of } from 'rxjs/observable/of';
 import { empty } from 'rxjs/observable/empty';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import * as leaderboard from '../actions/leaderboard.actions';
 import * as maps from '../actions/maps.actions';
 import {PlayerService} from "../services/player.service";
-import {YEAR_ONE_DUPLICATES} from "../services/constants";
+import {YEAR_ONE_DUPLICATES, WEAPON_TYPES} from "../services/constants";
 import {ItemDefinitions} from "../models/manifest.model";
 import {LocalStorageService} from "ng2-webstorage";
 
@@ -27,6 +27,44 @@ export class LeaderboardEffects {
     this.itemDefinitions = this.storage.retrieve('manifestItems');
     this.storage.observe('manifestItems').subscribe(definitions => this.itemDefinitions = definitions);
   }
+
+  @Effect()
+  setLeaderboard$: Observable<Action> = this.actions$
+    .ofType(leaderboard.ActionTypes.SET_LEADERBOARD_TYPE)
+    .map((action: leaderboard.SetLeaderboardAction) => action.payload)
+    .switchMap(payload => {
+      return of(new leaderboard.GetSelectedTypeAction({leaderboard: payload.type, week: payload.week}));
+    });
+
+  @Effect()
+  getSelectedType$: Observable<Action> = this.actions$
+    .ofType(leaderboard.ActionTypes.GET_SELECTED_TYPE)
+    .map((action: leaderboard.GetSelectedTypeAction) => action.payload)
+    .delay(200)
+    .switchMap(payload => {
+      let type = payload.type;
+      if (payload) {
+        switch (payload.leaderboard) {
+          case 'medals': {
+            if (!payload.type) {
+              type = 1;
+            }
+            return of(new leaderboard.GetMedalAction({type: type, week: payload.week}));
+          }
+          case 'players': {
+            return of(new leaderboard.GetWeaponListAction({week: payload.week}));
+          }
+          default: {
+            if (!payload.type) {
+              type = 'All';
+            }
+            return of(new leaderboard.GetWeaponTypeAction({type: type, week: payload.week}));
+          }
+        }
+      } else {
+        return empty();
+      }
+    });
 
   @Effect()
   getWeaponType$: Observable<Action> = this.actions$
@@ -49,13 +87,13 @@ export class LeaderboardEffects {
     .map((action: leaderboard.GetMedalAction) => action.payload)
     .delay(200)
     .switchMap(payload => {
-      if (!payload) {
-        return of(new leaderboard.LeaderboardRequestFailedAction(''));
-      }
+      // if (!payload) {
+      //   return of(new leaderboard.LeaderboardRequestFailedAction(''));
+      // }
 
       return this.leaderboardService.getMedal(payload.type, payload.week)
         .map(result => new leaderboard.GetMedalSuccessAction(result))
-        .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
+        // .catch((err) => of(new leaderboard.LeaderboardRequestFailedAction(err)));
     });
 
   @Effect()

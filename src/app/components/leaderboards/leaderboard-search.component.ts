@@ -49,9 +49,9 @@ import * as leaderboardActions  from "../../actions/leaderboard.actions";
         <div class="stat-header">Matches</div>
       </div>
     </div>
-    <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of weapons | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }'>
+    <div class="stat-table__row row row--small-gutter middle-xs" *ngFor='let weapon of weapons | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;'>
      <div class="col-xs-2">
-        <span [innerHtml]="weapon?.place | number:'1.0-0'"></span>
+        <span [innerHtml]="weapon?.rank || ((i + (itemsPerPage * (currentPage - 1))) + 1) | number:'1.0-0'"></span>
       </div>
       <div class="col-xs-2">
         <span [innerHtml]="weapon?.kills | number:'1.0-0'"></span>
