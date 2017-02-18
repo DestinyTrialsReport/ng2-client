@@ -1,6 +1,12 @@
 export interface MapData {
   map_info: MapInfo
   weapon_stats: WeaponUsage[]
+  map_ref: MapRef[]
+}
+
+export interface MapRef {
+  referenceId: string
+  week: string
 }
 
 export interface CurrentMap {
@@ -9,8 +15,12 @@ export interface CurrentMap {
   week: string
   activityName: string
   pgcrImage: string
-  year?: string
-  weekInYear?: number
+  leaderboards: LeaderboardMeta[]
+}
+
+export interface LeaderboardMeta {
+  leaderboard: string
+  updated_at: string
 }
 
 export interface MapInfo {
@@ -24,6 +34,8 @@ export interface MapInfo {
   lighthouse: string;
   kills: string;
   weekText: string;
+  year?: string;
+  weekInYear?: number;
 }
 
 export interface WeaponUsage {

@@ -1,0 +1,107 @@
+<div class="row middle-xs center-xs">
+  <div class="col-xs col-sm" style="text-align: left;">
+    <div class="card__header__controls">
+      <button class="btn btn--icon btn--ghost" [style.opacity]="currentMap?.week > 0 ? 1 : .2"
+              (click)="toWeek(currentMap?.week - 1)">
+        <i class="material-icons" style="color: #666;">&#xE5CB;</i>
+      </button>
+      <div class="stat-label map-nav" [innerHtml]="previousMap?.name"></div>
+    </div>
+  </div>
+
+  <div class="col-xs-shrink selected__weapon-icon" *ngIf="selectedIcon">
+    <img [src]="selectedIcon"
+         class="weapon-icon__medium"
+         *ngIf="leaderboardType !== 'weapons'">
+  </div>
+
+  <div class="col-xs-shrink">
+    <p class="card__header__title--map" [innerHtml]="leaderboardTitle"></p>
+    <span class="card__header__title"
+          [innerHtml]="'TRIALS WEEK ' + currentMap?.weekInYear + ' - ' + currentMap?.year + ' - ' + currentMap?.name"></span>
+  </div>
+
+  <div class="col-xs" style="text-align: right;">
+    <div class="card__header__controls">
+      <button class="btn btn--icon btn--ghost" [style.opacity]="currentMap?.week < maxWeek ? 1 : .2"
+              (click)="toWeek(currentMap?.week - (-1))">
+        <i class="material-icons" style="color: #666;">&#xE5CC;</i>
+      </button>
+      <div class="stat-label map-nav" [innerHtml]="nextMap?.name"></div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12"><hr></div>
+
+<div class="row">
+  <div class="stat-table col-xs-12">
+    <div class="stat-table__row row row--small-gutter">
+      <div class="col-xs-2">
+        <div class="stat-header">Place</div>
+      </div>
+      <div class="col-xs-2">
+        <div class="stat-header" [innerHtml]="leaderboardType === 'medals' ? 'Count' : 'Kills'"></div>
+      </div>
+      <div [ngClass]="{
+               'col-xs-5 col-sm-3': ((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading,
+               'col-xs-6 col-sm-4': leaderboardType == 'weapons' || leaderboardType == 'searched'}">
+        <div class="stat-header" [innerHtml]="leaderboardType === 'weapons' ? 'Weapon' : 'Player'"></div>
+      </div>
+      <div class="col-xs-1" *ngIf="((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading">
+        <div class="stat-header"></div>
+      </div>
+      <div class="hide-stat col-sm-2">
+        <div class="stat-header" *ngIf="leaderboardType !== 'medals'">Headshots</div>
+      </div>
+      <div class="col-xs-2">
+        <div class="stat-header">Matches</div>
+      </div>
+    </div>
+  </div>
+  <div class="stat-table col-xs-12" [ngClass]="{loading__background: loading}">
+
+    <!--<div style="min-height: 30vh;" *ngIf="items?.length === 0"></div>-->
+    <div class="stat-table__row row row--small-gutter middle-xs"
+         *ngFor='let item of items | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;'
+         [@loading]="loading">
+
+      <div class="col-xs-2">
+        #<span [innerHtml]="item?.rank || ((i + (itemsPerPage * (currentPage - 1))) + 1) | number:'1.0-0'"></span>
+      </div>
+
+      <div class="col-xs-2">
+        <span [innerHtml]="(item?.kills || item?.count) | number:'1.0-0'"></span>
+      </div>
+
+
+      <div [ngClass]="{
+               'col-xs-5 col-sm-3': ((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading,
+               'col-xs-6 col-sm-4': leaderboardType == 'weapons' || leaderboardType == 'searched'}">
+
+        <img *ngIf="!selectedIcon && leaderboardType !== 'medals'"
+             [src]="item?.icon"
+             [alt]="item?.name"
+             class="weapon-icon__small">
+
+        <a [innerHtml]="item?.name"
+           [routerLink]="['/']"
+           [queryParams]="(leaderboardType !== 'weapons' && leaderboardType !== 'searched') ? {gamertag: item?.name, platform: item?.platform} : {weaponHash: item?.itemHash || item?.id}"></a>
+      </div>
+
+      <div class="col-xs-1 text-center" *ngIf="((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading">
+        <img [src]="'/assets/img/' + (item?.platform == 1 ? 'xbox.svg' : 'ps.svg')"
+             [alt]="item?.platform == 1 ? 'xbox' : 'psn'"
+             style="height: 1rem;max-width: 1rem;">
+      </div>
+
+      <div class="hide-stat col-sm-2">
+        <span [innerHtml]="item?.headshots | number:'1.0-0'"></span>
+      </div>
+
+      <div class="col-xs-2">
+        <span [innerHtml]="item?.matches | number:'1.0-0'"></span>
+      </div>
+    </div>
+  </div>
+</div>

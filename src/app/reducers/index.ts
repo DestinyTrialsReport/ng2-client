@@ -3,6 +3,10 @@ import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
+import { Observable } from "rxjs";
+import { PGCR } from "../models/pgcr.model";
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { localStorageSync } from "ngrx-store-localstorage";
 import * as fromAuth from './auth.reducer';
 import * as fromMaps from './maps.reducer';
 import * as fromPlayers from './player.reducer';
@@ -13,10 +17,7 @@ import * as fromStats from './stats.reducer';
 import * as fromSearch from './search.reducer';
 import * as fromPGCR from './pgcr.reducer';
 import * as fromLeaderboards from './leaderboards.reducer';
-import {Observable} from "rxjs";
-import {PGCR} from "../models/pgcr.model";
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import {localStorageSync} from "ngrx-store-localstorage";
+import {CRUCIBLE_MAPS} from "../services/constants";
 
 export interface State {
   auth: fromAuth.State;
@@ -60,38 +61,60 @@ export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLea
 
 export const getLeaderboardTypeSelection = createSelector(getLeaderboardState, fromLeaderboards.getTypeSelection);
 
+export const getLeaderboardWeaponList = createSelector(getLeaderboardState, fromLeaderboards.getWeaponList);
+
 export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLeaderboards.getSpecial);
 
-export const getLeaderboardItems = createSelector(getLeaderboardState, fromLeaderboards.getItems);
+export const getLeaderboardItemsUnfiltered = createSelector(getLeaderboardState, fromLeaderboards.getItems);
 
 export const getLeaderboardsCurrentPage = createSelector(getLeaderboardState, fromLeaderboards.getCurrentPage);
 
 export const getLeaderboardsLoadingStatus = createSelector(getLeaderboardState, fromLeaderboards.getLoadingStatus);
 
+export const getLeaderboardsSelectedIcon = createSelector(getLeaderboardState, fromLeaderboards.getSelectedIcon);
+
 export const getLeaderboardsErrorStatus = createSelector(getLeaderboardState, fromLeaderboards.getErrorStatus);
 
 export const getLeaderboardsSelectedType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedType);
 
-export const getLeaderboardsSelectedFilter = createSelector(getLeaderboardState, fromLeaderboards.getSelectedFilter);
+export const getLeaderboardsSelectedTier = createSelector(getLeaderboardState, fromLeaderboards.getSelectedTier);
+
+export const getLeaderboardsSelectedPlatform = createSelector(getLeaderboardState, fromLeaderboards.getSelectedPlatform);
 
 export const getLeaderboardTitle = createSelector(getLeaderboardState, fromLeaderboards.getTitle);
 
 export const getLeaderboardsQueryParams = createSelector(getLeaderboardState, fromLeaderboards.getQueryParams);
 
+export const getLeaderboardType = createSelector(getLeaderboardState, fromLeaderboards.getLeaderboardType);
+
 export const getLeaderboardsQueryString = createSelector(getLeaderboardsQueryParams, (params) => {
   if (params) {
-    let paramsArray = Object.keys(params)
+    let paramsObject = {};
+    Object.keys(params)
       .filter(key => !!params[key])
-      .map(key => `${key}=${params[key]}`);
+      .map(key => paramsObject[key] = params[key]);
 
-    return paramsArray.join('?')
+    return paramsObject
   }
 });
 
-export const getLeaderboardType = createSelector(getLeaderboardState, fromLeaderboards.getLeaderboardType);
 
 export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLeaderboardSpecial, (primary, special) => {
   return [primary, special];
+});
+
+export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered, getLeaderboardsSelectedTier, getLeaderboardsSelectedType,
+                                                  getLeaderboardType, (items, tier, type, leaderboard) => {
+  let filteredItems = items;
+  if (leaderboard !== 'medals') {
+    if (type !== 'All' && tier < 1 && leaderboard !== 'players') {
+      filteredItems = items.filter(c => c.type === type);
+    } else if (tier > 0) {
+      filteredItems = items.filter(c => c.tier === tier);
+    }
+  }
+
+  return filteredItems;
 });
 
 export const getLeaderboardSelectedWeaponName = createSelector(getLeaderboardTypeSelection, getLeaderboardsSelectedType, (weapons, id) => {
@@ -107,8 +130,41 @@ export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollec
 
 export const getCurrentMap = createSelector(getMapState, fromMaps.getCurrentMap);
 
-export const getCurrentWeek = createSelector(getCurrentMap, (map) => {
-  return map.week;
+export const getMap = createSelector(getMapState, fromMaps.getMap);
+
+export const previousMap = createSelector(getMapState, fromMaps.previousMap);
+
+export const nextMap = createSelector(getMapState, fromMaps.nextMap);
+
+export const getUpdatedAt = createSelector(getLeaderboardType, getCurrentMap, (leaderboard, currentMap) => {
+  let meta = currentMap.leaderboards.filter(l => l.leaderboard == leaderboard);
+  if (meta[0]) {
+    // Safari fix
+    let dateString = `${meta[0].updated_at} UTC`.replace(/-/g, "/");
+    let date = new Date(dateString).toString();
+    return date;
+    // return date.split(' ').splice(0, 5).join(' ');
+  }
+});
+
+export const getCurrentWeek = createSelector(getMap, getCurrentMap, (map, currentMap) => {
+  let selectedWeek = currentMap.week;
+  if (map) {
+    selectedWeek = map.week;
+  }
+  return selectedWeek;
+});
+
+export const getPreviousMap = createSelector(previousMap, (map) => {
+  if (map) {
+    return CRUCIBLE_MAPS[map.referenceId];
+  }
+});
+
+export const getNextMap = createSelector(nextMap, (map) => {
+  if (map) {
+    return CRUCIBLE_MAPS[map.referenceId];
+  }
 });
 
 export function getActivityState(state$: Observable<State>) {

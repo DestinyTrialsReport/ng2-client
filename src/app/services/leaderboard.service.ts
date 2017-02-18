@@ -27,7 +27,12 @@ export class LeaderboardService extends RequestBase {
       .map(res => res.json());
   }
 
-  searchPlayer(membershipId: string, week: number): Observable<LBWeaponType[]> {
+  playerWeaponTypes(type: string, week: number): Observable<LBWeaponType[]> {
+    return this.http.get(`${DTR_BASE_URL}/leaderboard/players/types/${week}/${type}/`)
+      .map(res => res.json());
+  }
+
+  searchPlayer(membershipId: string, week: number): Observable<{medals: Array<any>, weapons: Array<any>}> {
     return this.http.get(`${DTR_BASE_URL}/leaderboard/search/${membershipId}/${week}/`)
       .map(res => res.json());
   }
@@ -37,7 +42,7 @@ export class LeaderboardService extends RequestBase {
       .map(res => res.json());
   }
 
-  getWeaponIds(week: number): Observable<string[]> {
+  getWeaponIds(week: number): Observable<Array<{itemHash: any, itemTypeName: any}>> {
     return this.http.get(`${DTR_BASE_URL}/leaderboard/weaponIds/${week}/`)
       .map(res => res.json());
   }

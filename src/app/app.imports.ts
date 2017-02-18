@@ -35,12 +35,12 @@ if (ENV === 'development' && !AOT &&
 ]);
 
 export const APP_IMPORTS = [
+  EffectsModule.run(LeaderboardEffects),
   EffectsModule.run(AuthEffects),
   EffectsModule.run(PlayerEffects),
   EffectsModule.run(ActivityEffects),
   EffectsModule.run(StatsEffects),
   EffectsModule.run(MapEffects),
-  EffectsModule.run(LeaderboardEffects),
   TabsModule.forRoot(),
   TypeaheadModule.forRoot(),
   PopoverModule.forRoot(),

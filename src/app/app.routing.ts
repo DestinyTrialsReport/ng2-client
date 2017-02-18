@@ -13,9 +13,9 @@ export function isSubdomain(name: string): boolean {
 }
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  // { path: '', component: LeaderboardsComponent },
-  { path: 'leaderboards', component: LeaderboardsComponent },
+  // { path: '', component: HomeComponent },
+  { path: '', component: LeaderboardsComponent },
+  // { path: 'leaderboards', component: LeaderboardsComponent },
   // { path: 'ps/:player1', component: isSubdomain('my') ? MyReportComponent : ReportComponent, data: { platform: 2 } },
   { path: 'ps/:player1', component: ReportComponent, data: { platform: 2 } },
   { path: 'xbox/:player1', component: ReportComponent, data: { platform: 1 } },

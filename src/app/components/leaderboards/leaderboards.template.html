@@ -1,60 +1,40 @@
 <div class="leaderboards">
   <main>
-    <div class="maps">
+    <div class="maps" [@animation]="slideMap$ | async">
       <div class="card">
-        <div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + (currentMap$ | async)?.pgcrImage + ')'}">
-          <div class="row bottom-xs">
-            <div class="col-xs-shrink card__header__title">
-              Trials Week
-              <span [innerHtml]="(currentMap$ | async)?.weekInYear"></span>
-              -
-              <span [innerHtml]="(currentMap$ | async)?.year"></span>
-              <p class="card__header__title--map" [innerHtml]="(currentMap$ | async)?.activityName"></p>
-            </div>
-            <div class="col-md center-xs card__header__select">
-              <h2 class="card__header__title--context" [innerHtml]="leaderboardTitle$ | async"></h2>
-              <!--<div class="btn card__header__select&#45;&#45;dropdown">-->
-                <!--<button class="middle-xs btn btn&#45;&#45;icon btn&#45;&#45;ghost" (click)="nextMap()">-->
-                  <!--<i class="material-icons">&#xE5CB;</i>-->
-                <!--</button>-->
-                <!--<select class="data-label" style="width: auto">-->
-                  <!--<option *ngFor='let medal of medalList; let i = index;' value="{{medal.id}}" [innerHtml]="medal.statName"></option>-->
-                <!--</select>-->
-                <!--<button class="middle-xs btn btn&#45;&#45;icon btn&#45;&#45;ghost" (click)="nextMap()">-->
-                  <!--<i class="material-icons">&#xE5CC;</i>-->
-                <!--</button>-->
-              <!--</div>-->
-            </div>
-            <div class="col-xs-shrink">
-              <div class="card__header__controls">
-                <button class="btn btn--icon btn--ghost" [style.opacity]="(mapInfo$ | async)?.week > 1 ? 1 : .2"
-                        (click)="previousMap()">
-                  <i class="material-icons">&#xE5CB;</i>
-                </button>
-                <button class="btn btn--icon btn--ghost" [style.opacity]="(mapInfo$ | async)?.week == maxWeek ? .2 : 1"
-                        (click)="nextMap()">
-                  <i class="material-icons">&#xE5CC;</i>
-                </button>
-              </div>
-              <div class="data-label">Other weeks</div>
-            </div>
-          </div>
-        </div>
-        <div class="card__content" *ngIf="!(error$ | async)" [ngClass]="{'loading-container': loading}">
 
-          <leaderboard-table *ngIf="(leaderboardType$ | async)"
+        <leaderboard-header [currentMap]="(currentMap$ | async)"
+                            [updatedAt]="(updatedAt$ | async)"
+                            [leaderboardType]="(leaderboardType$ | async)"
+                            [leaderboardTypes]="leaderboardTypes"
+                            [selectedType]="(selectedType$ | async)"
+                            [selectedTier]="(selectedTier$ | async)"
+                            [selectedPlatform]="(selectedPlatform$ | async)"
+                            [typeSelection]="typeSelection$ | async"
+                            [weaponList]="weaponList$ | async"
+                            [currentWeek]="currentWeek"
+                            (changeWeek)="goToWeek($event)">
+        </leaderboard-header>
+
+        <div class="card__content" *ngIf="!(error$ | async)">
+
+          <leaderboard-table *ngIf="currentWeek"
                                     [items]="(items$ | async)"
                                     [leaderboardType]="(leaderboardType$ | async)"
-                                    [leaderboardTypes]="leaderboardTypes"
+                                    [leaderboardTitle]="(leaderboardTitle$ | async)"
                                     [selectedType]="(selectedType$ | async)"
-                                    [selectedFilter]="(selectedFilter$ | async)"
-                                    [typeSelection]="typeSelection$ | async"
-                                    [currentWeek]="currentWeek"
+                                    [selectedIcon]="(selectedIcon$ | async)"
                                     [currentPage]="(currentPage$ | async)"
-                                    [loading]="loading$ | async">
+                                    [currentMap]="(currentMap$ | async)"
+                                    [previousMap]="(previousMap$ | async)"
+                                    [nextMap]="(nextMap$ | async)"
+                                    [loading]="loading$ | async"
+                                    [maxWeek]="maxWeek"
+                                    (changeWeek)="goToWeek($event)">
           </leaderboard-table>
 
-          <hr>
+          <div class="col-xs-12"><hr></div>
+
           <div class="row">
             <div class="col-xs-12">
               <div class="text-center">

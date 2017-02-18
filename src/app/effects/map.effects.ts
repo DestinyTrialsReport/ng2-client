@@ -19,7 +19,7 @@ export class MapEffects {
   slide$: Observable<Action> = this.actions$
     .ofType(maps.ActionTypes.SLIDE_MAP)
     .map((action: maps.SlideMapAction) => action.payload)
-    .delay(200)
+    .delay(300)
     .switchMap(payload => {
       if (!payload) {
         return Observable.from([]);
@@ -44,7 +44,7 @@ export class MapEffects {
   weapons$: Observable<Action> = this.actions$
     .ofType(maps.ActionTypes.SEARCH_COMPLETE)
     .map((action: maps.SearchCompleteAction) => action.payload)
-    .delay(200)
+    .delay(300)
     .switchMap(payload => {
       if (!payload) {
         return Observable.from([]);

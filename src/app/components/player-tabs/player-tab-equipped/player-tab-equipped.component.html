@@ -2,9 +2,8 @@
   <div class="row row--small-gutter middle-xs inventory-item inventory-item--weapon" *ngFor="let item of inventory | filterWeapons">
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
-        <!-- TODO: Add light
-        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
         <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+        <span class="inventory-item__light" [innerHtml]="item?.primaryStat?.value"></span>
       </div>
     </div>
     <div class="col-xs">
@@ -22,9 +21,8 @@
   <div class="row row--small-gutter middle-xs inventory-item" *ngFor="let item of inventory | filterArmor">
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
-        <!-- TODO: Add light
-        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
         <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+        <span class="inventory-item__light" [innerHtml]="item?.primaryStat?.value"></span>
       </div>
     </div>
     <div class="col-xs">
@@ -43,8 +41,7 @@
     <!-- TODO: Finish artifact -->
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
-        <!-- TODO: Add light
-        <span class="inventory-item__light" [innerHtml]="item?.damage"></span>-->
+        <span class="inventory-item__light" [innerHtml]="item?.primaryStat?.value"></span>
         <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
       </div>
     </div>

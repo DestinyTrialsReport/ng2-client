@@ -24,19 +24,19 @@ export class AuthEffects {
       Observable.of(window.location.href = `https://www.bungie.net/en/Application/Authorize/10670?state=${state}`)
     );
 
-  @Effect()
-  loadAuth$: Observable<Action> = this.actions$
-    .ofType(Dispatcher.INIT)
-    .withLatestFrom(this.store.select(fromRoot.getAuthState))
-    .map(([ , state ]) => {
-      let currentTimestamp: number = new Date().valueOf();
-      let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(state.authState);
-      let refreshToken: boolean = state.refreshToken && (lastAuthTimeAgo > 1800000);
-      return {
-        action: refreshToken ? new auth.RefreshTokens(state.refreshToken) : new auth.StoreTokenSuccess()
-      }
-    })
-    .mergeMap(({action}) => Observable.of(action));
+  // @Effect()
+  // loadAuth$: Observable<Action> = this.actions$
+  //   .ofType(Dispatcher.INIT)
+  //   .withLatestFrom(this.store.select(fromRoot.getAuthState))
+  //   .map(([ , state ]) => {
+  //     let currentTimestamp: number = new Date().valueOf();
+  //     let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(state.authState);
+  //     let refreshToken: boolean = state.refreshToken && (lastAuthTimeAgo > 1800000);
+  //     return {
+  //       action: refreshToken ? new auth.RefreshTokens(state.refreshToken) : new auth.StoreTokenSuccess()
+  //     }
+  //   })
+  //   .mergeMap(({action}) => Observable.of(action));
 
   // @Effect()
   // storeSuccess: Observable<Action> = this.actions$

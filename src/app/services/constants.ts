@@ -1,5 +1,6 @@
-export const API_KEY = ENV === 'production' ? '6b1563bd89854465ab2a423d033c7ddf' : 'ee5c2bf3759e4219a50fa9fd47d47805';
+export const API_KEY = ENV === 'production' ? 'e4ac9ad9884b412cb452ee3ffec34ecb' : 'ee5c2bf3759e4219a50fa9fd47d47805';
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
+// 6b1563bd89854465ab2a423d033c7ddf <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
@@ -13,16 +14,26 @@ export const BUCKET_HEAVY_WEAPON: any = 953998645;
 export const WEAPON_BUCKETS: any = [BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, BUCKET_HEAVY_WEAPON];
 export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
 export const ARTIFACT_BUCKET: any = 434908299;
-export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031];
+export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031, 434908299];
 
 export const WEAPON_TYPES: Array<string | number> = [ "Auto Rifle",
-                                        "Scout Rifle",
-                                        "Pulse Rifle",
-                                        "Hand Cannon",
-                                        "Sniper Rifle",
-                                        "Fusion Rifle",
-                                        "Shotgun",
-                                        "Sidearm" ];
+                                                      "Scout Rifle",
+                                                      "Pulse Rifle",
+                                                      "Hand Cannon",
+                                                      "Sniper Rifle",
+                                                      "Fusion Rifle",
+                                                      "Shotgun",
+                                                      "Sidearm",
+                                                      'Machine Gun',
+                                                      'Rocket Launcher',
+                                                      'Sword'];
+
+export const WEAPON_TIERS: Array< {value: number, text: string} > = [{value: 0, text: "All"},
+                                                                      {value: 6, text: "Exotic"},
+                                                                      {value: 5, text: "Legendary"},
+                                                                      {value: 4, text: "Rare"},
+                                                                      {value: 3, text: "Uncommon"},
+                                                                      {value: 2, text: "Common"}];
 
 export const TYPE_BUCKETS: any = {
                 'Auto Rifle': 1498876634,
@@ -190,7 +201,10 @@ export const WEAPON_TYPE_REF: Array<{id: string, statId?: string, text: string}>
   {id: "Sniper Rifle", text: "Sniper Rifles"},
   {id: "Fusion Rifle", text: "Fusion Rifles"},
   {id: "Shotgun", text: "Shotguns"},
-  {id: "Sidearm", text: "Sidearms"}
+  {id: "Sidearm", text: "Sidearms"},
+  {id: 'Machine Gun', text: 'Machine Guns'},
+  {id: 'Rocket Launcher', text: 'Rocket Launchers'},
+  {id: 'Sword', text: 'Swords'}
 ];
 
 export const MEDALS_REF: Array<{id: number, statId: string, text: string}> = [

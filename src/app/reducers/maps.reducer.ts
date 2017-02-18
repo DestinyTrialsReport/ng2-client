@@ -1,5 +1,5 @@
 /* tslint:disable: no-switch-case-fall-through */
-import {MapInfo, WeaponUsage, CurrentMap} from "../models/map-stats.model";
+import {MapInfo, WeaponUsage, CurrentMap, MapRef} from "../models/map-stats.model";
 import * as map from "../actions/maps.actions";
 import {CRUCIBLE_MAPS, BUCKET_NAMES, TYPE_BUCKETS} from "../services/constants";
 
@@ -12,6 +12,8 @@ export interface WeaponTotals {
 export interface State {
   currentMap: CurrentMap;
   mapInfo: MapInfo;
+  previousMap: MapRef;
+  nextMap: MapRef;
   weaponStats: WeaponUsage[];
   weaponTotals: {
     primary: WeaponTotals,
@@ -28,9 +30,12 @@ const initialState: State = {
     start_date: '',
     week: '',
     activityName: '',
-    pgcrImage: ''
+    pgcrImage: '',
+    leaderboards: [],
   },
   mapInfo: null,
+  previousMap: null,
+  nextMap: null,
   weaponStats: [],
   weaponTotals: null,
   primaryAvg: [],
@@ -45,15 +50,9 @@ export function reducer(state = initialState, action: map.Actions): State {
       const payload:any = action.payload;
 
       if (!payload) {
-        return {
-          currentMap: state.currentMap,
-          mapInfo: state.mapInfo,
-          weaponStats: state.weaponStats,
-          weaponTotals: state.weaponTotals,
-          primaryAvg: state.primaryAvg,
-          specialAvg: state.specialAvg,
+        return Object.assign({}, state, {
           slideMap: 'idle'
-        };
+        });
       }
 
       return Object.assign({}, state, {
@@ -78,7 +77,6 @@ export function reducer(state = initialState, action: map.Actions): State {
         weekInYear: payload.week > 44 ? payload.week - 44 : payload.week
       });
 
-
       return Object.assign({}, state, {
         currentMap: Object.assign({}, state.currentMap, currentMap),
         slideMap: 'idle'
@@ -87,18 +85,6 @@ export function reducer(state = initialState, action: map.Actions): State {
 
     case map.ActionTypes.LOAD_MAP_DATA: {
       const payload: any = action.payload;
-
-      if (!payload) {
-        return {
-          currentMap: state.currentMap,
-          mapInfo: state.mapInfo,
-          weaponStats: state.weaponStats,
-          weaponTotals: state.weaponTotals,
-          primaryAvg: state.primaryAvg,
-          specialAvg: state.specialAvg,
-          slideMap: state.slideMap
-        };
-      }
 
       const weaponUsage: WeaponUsage[] = payload.weapon_stats
         .map(weapon => {
@@ -143,9 +129,20 @@ export function reducer(state = initialState, action: map.Actions): State {
         });
       });
 
+      let week = parseInt(payload.map_info[0].week);
+
+      const mapInfo = Object.assign({}, payload.map_info[0], CRUCIBLE_MAPS[payload.map_info[0].referenceId], {
+        year: week > 44 ? 'Year 3' : 'Year 2',
+        weekInYear: week > 44 ? week - 44 : week
+      });
+
+      const mapRef: MapRef[] = payload.map_ref;
+
       return Object.assign({}, state, {
         currentMap: state.currentMap,
-        mapInfo: Object.assign({}, payload.map_info[0], CRUCIBLE_MAPS[payload.map_info[0].referenceId]),
+        mapInfo: mapInfo,
+        previousMap: mapRef[week - 2],
+        nextMap: mapRef[week],
         weaponStats: weaponUsage,
         weaponTotals: {
           primary: primary,
@@ -164,3 +161,9 @@ export function reducer(state = initialState, action: map.Actions): State {
 }
 
 export const getCurrentMap = (state: State) => state.currentMap;
+
+export const getMap = (state: State) => state.mapInfo;
+
+export const previousMap = (state: State) => state.previousMap;
+
+export const nextMap = (state: State) => state.nextMap;

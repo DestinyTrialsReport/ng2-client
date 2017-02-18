@@ -16,6 +16,7 @@ export interface Item {
   damage: number,
   bucketHash: number,
   nodes: ItemNode[],
+  primaryStat: PrimaryStat,
   steps?: Step[],
   name?: string,
   icon?: string,
@@ -26,6 +27,10 @@ export interface Item {
   tT?: number,
 }
 
+
+export interface PrimaryStat {
+  value: number
+}
 
 export interface ItemNode {
   isActivated: boolean,

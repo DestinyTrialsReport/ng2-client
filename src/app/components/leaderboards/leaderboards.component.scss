@@ -3,14 +3,19 @@
 @import 'styles/base';
 
 .card__header__title {
-  font-size: .8em;
+  font-size: 1em;
   font-weight: 300;
   font-family: 'Roboto Condensed';
-  color: $text-on-dark;
+  color: $home-aside-color;
   text-transform: uppercase;
 }
 
+.card__header--high {
+  padding-top: 0;
+}
+
 .card__header__title--map {
+  font-size: 1.3em;
   margin: 0;
 }
 
@@ -21,8 +26,13 @@
   text-transform: uppercase;
 }
 
-.loading__background {
+.maps {
   width: 50vw;
+  max-width: 720px;
+}
+
+.loading__background {
+  width: calc(100vw - 2em);
   max-width: 640px;
   background: url('/assets/img/loading.svg') no-repeat center 50%;
   background-size: 2rem;
@@ -60,7 +70,7 @@
   transition: box-shadow ease-in-out .2s;
 
   select {
-    color: $text-on-dark;
+    color: $home-aside-color;
   }
 }
 
@@ -95,11 +105,12 @@ select, input {
   text-align: center;
 }
 
-.loading-container {
-  width: calc(100vw - 2em);
-  max-width: 640px;
-  background: url('/assets/img/loading.svg') no-repeat center 50%;
-  background-size: 2rem;
+.stat-header {
+  margin-bottom: 1em;
+}
+
+.ng2-pagination {
+  padding-left: 0;
 }
 
 @media all and (max-width: $breakpoint-large) {
@@ -112,5 +123,32 @@ select, input {
 @media all and (max-width: $breakpoint-medium) {
   .select-container {
     margin-bottom: 1em;
+  }
+}
+
+@media all and (max-width: $breakpoint-small) {
+  .card__header__title {
+    font-size: .8em;
+  }
+
+  .card__header__title--map {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .map-nav {
+    display: none;
+  }
+
+  .hide-stat {
+    display: none;
+  }
+
+  .col-xs-6 {
+    margin-top: 0;
+  }
+
+  .selected__weapon-icon {
+    display: none;
   }
 }

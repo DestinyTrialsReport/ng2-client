@@ -18,13 +18,15 @@ import { FilterWeapons, FilterSubclass, FilterArmor, FilterArtifact, FilterClass
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
-import { LeaderboardTableComponent } from "./components/leaderboards/leaderboard-table.component";
+import { LeaderboardTableComponent } from "./components/leaderboards/leaderboard-table/leaderboard-table.component";
+import { LeaderboardHeaderComponent } from "./components/leaderboards/leaderboard-header/leaderboard-header.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
   MapsComponent,
   HomeComponent,
   LeaderboardsComponent,
+  LeaderboardHeaderComponent,
   LeaderboardTableComponent,
   NotFound404Component,
   ReportComponent,

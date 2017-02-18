@@ -38,6 +38,7 @@ export function reducer(state = initialState, action: inventory.Actions): State 
           stats: inv.items[0].stats,
           perks: inv.items[0].perks,
           talentGridHash: inv.items[0].talentGridHash,
+          primaryStat: inv.items[0].primaryStat,
           damage: inv.items[0].damage
         }))
         .filter(item => EQUIPPED_BUCKETS.indexOf(item.bucketHash) > -1)

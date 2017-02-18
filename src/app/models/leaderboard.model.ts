@@ -6,6 +6,7 @@ export interface LBWeaponType {
   headshots: string;
   matches: string;
   tier: number;
+  type: number;
 }
 
 export interface LBWeaponPercentage {

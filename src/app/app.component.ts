@@ -30,7 +30,7 @@ import {AuthService} from "./services/auth.service";
 })
 
 export class AppComponent {
-  showMenu: boolean = true;
+  showMenu: boolean = false;
   showAd: boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root

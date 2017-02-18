@@ -2,11 +2,12 @@
 import { Action } from '@ngrx/store';
 import {LBWeaponType, LBWeaponPercentage} from "../models/leaderboard.model";
 import { type }       from '../util';
+import {ItemDefinitions, ItemDefinition} from "../models/manifest.model";
 
 export const ActionTypes = {
   GET_WEAPON_TYPE:            type('[Leaderboard] Get Weapon Type'),
   GET_SELECTED_TYPE:          type('[Leaderboard] Get Selected Type'),
-  FILTER_BY_TIER:             type('[Leaderboard] Filter By Tier'),
+  UPDATE_FILTER:              type('[Leaderboard] update Filter'),
   GET_PLAYERS:                type('[Leaderboard] Get Players'),
   SEARCH_PLAYER:              type('[Leaderboard] Search Player'),
   SEARCH_PLAYER_WEAPONS:      type('[Leaderboard] Search Player Weapons'),
@@ -32,7 +33,7 @@ export class GetMedalAction implements Action {
 export class GetSelectedTypeAction implements Action {
   type = ActionTypes.GET_SELECTED_TYPE;
 
-  constructor(public payload: {type?: any, leaderboard: string, week: number}) { }
+  constructor(public payload: {type?: any, leaderboard: string, week: number, tier?: any}) { }
 }
 
 export class GetWeaponTypeAction implements Action {
@@ -62,13 +63,13 @@ export class SearchPlayerWeaponsAction implements Action {
 export class GetPlayersAction implements Action {
   type = ActionTypes.GET_PLAYERS;
 
-  constructor(public payload: {type: string, week: number}) { }
+  constructor(public payload: {type: string, definition?: any, week: number}) { }
 }
 
 export class SetLeaderboardAction implements Action {
   type = ActionTypes.SET_LEADERBOARD_TYPE;
 
-  constructor(public payload: {type: string, week: number}) { }
+  constructor(public payload: {type: string, selected?: string, week: number, tier?: any}) { }
 }
 
 export class ChangePageAction implements Action {
@@ -77,10 +78,10 @@ export class ChangePageAction implements Action {
   constructor(public payload: number) { }
 }
 
-export class FilterByTierAction implements Action {
-  type = ActionTypes.FILTER_BY_TIER;
+export class UpdateFilterAction implements Action {
+  type = ActionTypes.UPDATE_FILTER;
 
-  constructor(public payload: number) { }
+  constructor(public payload: {tier?: number, type?: string, platform?: number}) { }
 }
 
 export class PlayersSuccessAction implements Action {
@@ -92,7 +93,7 @@ export class PlayersSuccessAction implements Action {
 export class SearchPlayerSuccessAction implements Action {
   type = ActionTypes.SEARCH_PLAYER_SUCCESS;
 
-  constructor(public payload: any[]) { }
+  constructor(public payload: {medals: Array<any>, weapons: Array<any>}) { }
 }
 
 export class WeaponTypeSuccessAction implements Action {
@@ -110,7 +111,7 @@ export class GetMedalSuccessAction implements Action {
 export class WeaponListSuccessAction implements Action {
   type = ActionTypes.WEAPON_LIST_SUCCESS;
 
-  constructor(public payload: Array<{id: number, name: string}>) { }
+  constructor(public payload: any) { }
 }
 
 export class WeaponPercentageSuccessAction implements Action {
@@ -139,7 +140,7 @@ export type Actions
   | PlayersSuccessAction
   | WeaponListSuccessAction
   | GetMedalSuccessAction
-  | FilterByTierAction
+  | UpdateFilterAction
   | LeaderboardRequestFailedAction
   | WeaponTypeSuccessAction
   | WeaponPercentageSuccessAction;
