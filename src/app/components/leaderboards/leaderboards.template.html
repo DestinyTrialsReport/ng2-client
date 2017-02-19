@@ -3,13 +3,9 @@
     <div class="maps" [@animation]="slideMap$ | async">
       <div class="card">
 
-        <leaderboard-header [currentMap]="(currentMap$ | async)"
+        <leaderboard-header [map]="(currentMap$ | async)"
                             [updatedAt]="(updatedAt$ | async)"
-                            [leaderboardType]="(leaderboardType$ | async)"
-                            [leaderboardTypes]="leaderboardTypes"
-                            [selectedType]="(selectedType$ | async)"
-                            [selectedTier]="(selectedTier$ | async)"
-                            [selectedPlatform]="(selectedPlatform$ | async)"
+                            [selected]="(selected$ | async)"
                             [typeSelection]="typeSelection$ | async"
                             [weaponList]="weaponList$ | async"
                             [currentWeek]="currentWeek"
@@ -19,18 +15,13 @@
         <div class="card__content" *ngIf="!(error$ | async)">
 
           <leaderboard-table *ngIf="currentWeek"
-                                    [items]="(items$ | async)"
-                                    [leaderboardType]="(leaderboardType$ | async)"
-                                    [leaderboardTitle]="(leaderboardTitle$ | async)"
-                                    [selectedType]="(selectedType$ | async)"
-                                    [selectedIcon]="(selectedIcon$ | async)"
-                                    [currentPage]="(currentPage$ | async)"
-                                    [currentMap]="(currentMap$ | async)"
-                                    [previousMap]="(previousMap$ | async)"
-                                    [nextMap]="(nextMap$ | async)"
-                                    [loading]="loading$ | async"
-                                    [maxWeek]="maxWeek"
-                                    (changeWeek)="goToWeek($event)">
+                             [items]="(items$ | async)"
+                             [leaderboardTitle]="(leaderboardTitle$ | async)"
+                             [selected]="(selected$ | async)"
+                             [map]="(currentMap$ | async)"
+                             [loading]="loading$ | async"
+                             [maxWeek]="maxWeek"
+                             (changeWeek)="goToWeek($event)">
           </leaderboard-table>
 
           <div class="col-xs-12"><hr></div>

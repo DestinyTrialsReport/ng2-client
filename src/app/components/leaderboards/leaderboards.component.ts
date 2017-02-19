@@ -1,11 +1,12 @@
 import {
-  Component, ChangeDetectionStrategy, animate, transition, style, state, trigger
+  Component, ChangeDetectionStrategy, animate, transition, style, state, trigger, OnInit
 } from '@angular/core';
 import { Store }                from "@ngrx/store";
 import { ActivatedRoute }       from "@angular/router";
 import { Observable }           from "rxjs/Observable";
 import { MapInfo}               from "../../models/map-stats.model";
 import { MEDALS_REF }           from "../../services/constants";
+import { SelectedLeaderboardItems, LeaderboardSelectList } from "../../models/leaderboard.model";
 
 import * as fromRoot            from '../../reducers';
 import * as leaderboardActions  from "../../actions/leaderboard.actions";
@@ -24,77 +25,45 @@ import * as mapActions          from "../../actions/maps.actions";
     ])
   ],
   styleUrls: ['./leaderboards.component.css'],
-  templateUrl: 'leaderboards.template.html',
+  templateUrl: './leaderboards.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LeaderboardsComponent {
-  medalList: Array<{id: number; statId?: string; text: string}> = MEDALS_REF;
   maxWeek: number;
   currentWeek: number;
   updatedAt$: Observable<string>;
   slideMap$: Observable<string>;
-  leaderboardType$: Observable<string>;
-  leaderboardType: string;
   leaderboardTitle$: Observable<string>;
-  selectedIcon$: Observable<string>;
-  currentPage$: Observable<number>;
-  selectedTier$: Observable<number>;
-  selectedPlatform$: Observable<number>;
+  selected$: Observable<SelectedLeaderboardItems>;
+  selectedType: any;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
-  selectedType$: Observable<any>;
-  selectedType: any;
   items$: Observable<any[]>;
-  currentMap$: Observable<MapInfo>;
+  currentMap$: Observable<any>;
   previousMap$: Observable<any>;
   nextMap$: Observable<any>;
-  weaponList$: any;
-  typeSelection$: Observable<{ id: any; statId?: string; text: string; }[]>;
-
-  leaderboardTypes: Array<{value: string, text: string}> = [
-    {value: 'weapons', text: 'Weapons'},
-    {value: 'players', text: 'Players'},
-    {value: 'medals', text: 'Medals'},
-  ];
+  medalList: Array<LeaderboardSelectList> = MEDALS_REF;
+  weaponList$: Observable<Array<LeaderboardSelectList>>;
+  typeSelection$: Observable<Array<LeaderboardSelectList>>;
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute) {
 
-    this.leaderboardType$ = store.select(fromRoot.getLeaderboardType)
-      .distinctUntilChanged();
-
     this.leaderboardTitle$ = store.select(fromRoot.getLeaderboardTitle)
       .distinctUntilChanged();
 
-    this.currentMap$ = store.select(fromRoot.getMap)
+    this.currentMap$ = store.select(fromRoot.getMapInfo)
       .distinctUntilChanged();
 
     this.updatedAt$ = store.select(fromRoot.getUpdatedAt)
       .distinctUntilChanged();
 
-    this.previousMap$ = store.select(fromRoot.getPreviousMap)
-      .distinctUntilChanged();
-
-    this.nextMap$ = store.select(fromRoot.getNextMap)
-      .distinctUntilChanged();
-
-    this.selectedIcon$ = store.select(fromRoot.getLeaderboardsSelectedIcon)
+    this.selected$ = store.select(fromRoot.getLeaderboardsSelected)
       .distinctUntilChanged();
 
     this.items$ = store.select(fromRoot.getLeaderboardItems)
       .distinctUntilChanged();
-
-    this.selectedType$ = store.select(fromRoot.getLeaderboardsSelectedType)
-      .distinctUntilChanged();
-
-    this.selectedTier$ = store.select(fromRoot.getLeaderboardsSelectedTier)
-      .distinctUntilChanged();
-
-    this.selectedPlatform$ = store.select(fromRoot.getLeaderboardsSelectedPlatform)
-      .distinctUntilChanged();
-
-    this.currentPage$ = store.select(fromRoot.getLeaderboardsCurrentPage);
 
     this.slideMap$ = store.select(state => state['map'].slideMap)
       .distinctUntilChanged();
@@ -113,60 +82,40 @@ export class LeaderboardsComponent {
 
     Observable.combineLatest(
       this.store.select(fromRoot.getCurrentWeek),
-      this.route.queryParams,
-      (week, params) => {
-        return {
+      this.route.data,
+      this.route.params,
+      (week, data, params) => {
+        return Object.assign({}, {
           week: week,
-          params: params
-        }
+          board: data['board'],
+          platform: data['platform'],
+          gamertag: params['gamertag'],
+          type: params['type'] || data['type']
+        })
       })
       .subscribe(data => {
-
         this.currentWeek = parseInt(data.week);
         if (!this.maxWeek) {
           this.maxWeek = parseInt(data.week);
         }
 
-        if (data.params['week']) {
-          this.currentWeek = parseInt(data.params['week']);
-          this.store.dispatch(new mapActions.SlideMapAction({
-            direction: 'left',
-            week: this.currentWeek
-          }));
-        }
-
-        let payload = {week: this.currentWeek},
-            board = data.params['board'] ? data.params['board'] : 'weapons',
-            selected,
-            filter;
-
-        this.store.dispatch(new leaderboardActions.GetWeaponListAction(payload));
-
-        if (data.params['gamertag'] && data.params['platform']) {
-
-          this.store.dispatch(new leaderboardActions.SetLeaderboardAction({type: 'searched', week: this.currentWeek}));
-          this.store.dispatch(new leaderboardActions.SearchPlayerAction({
-            name: data.params['gamertag'],
-            week: this.currentWeek,
-            platform: data.params['platform']
-          }));
-
+        // if (data.week) {
+        //   this.currentWeek = parseInt(data.week);
+        //   this.store.dispatch(new mapActions.SlideMapAction({
+        //     direction: 'left',
+        //     week: this.currentWeek
+        //   }));
+        // }
+        if (data.board == 'weapons' && data.type != 'All') {
+          this.store.dispatch(new leaderboardActions.UpdateFilterAction({
+            type: data.type
+          }))
         } else {
-          if (data.params['weaponHash'] || data.params['weaponType']) {
-            selected = data.params['weaponHash'] ? data.params['weaponHash'] : data.params['weaponType'];
-            if (!data.params['board']) {
-              board = data.params['weaponHash'] ? 'players' : 'weapons';
-            }
-          } else if (data.params['medal']) {
-            selected = data.params['medal']
-          }
-          if (data.params['tier']) {
-            filter = {tier: data.params['filter']};
-          }
-          this.store.dispatch(new leaderboardActions.SetLeaderboardAction(Object.assign({}, payload, {type: board, selected: selected}, filter)));
+          let payload = {type: data.board, selected: data.type, gamertag: data.gamertag, week: this.currentWeek};
+          this.store.dispatch(new leaderboardActions.GetWeaponListAction(payload));
+          this.store.dispatch(new leaderboardActions.SetLeaderboardAction(payload));
         }
       });
-
   }
 
   onPageChange(number: number) {

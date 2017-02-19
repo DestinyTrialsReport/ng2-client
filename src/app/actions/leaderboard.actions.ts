@@ -33,7 +33,7 @@ export class GetMedalAction implements Action {
 export class GetSelectedTypeAction implements Action {
   type = ActionTypes.GET_SELECTED_TYPE;
 
-  constructor(public payload: {type?: any, leaderboard: string, week: number, tier?: any}) { }
+  constructor(public payload: {type?: any, leaderboard: string, week: number, gamertag?: string, tier?: any}) { }
 }
 
 export class GetWeaponTypeAction implements Action {
@@ -69,7 +69,7 @@ export class GetPlayersAction implements Action {
 export class SetLeaderboardAction implements Action {
   type = ActionTypes.SET_LEADERBOARD_TYPE;
 
-  constructor(public payload: {type: string, selected?: string, week: number, tier?: any}) { }
+  constructor(public payload: {type: string, selected?: string, week: number, gamertag?: string, tier?: any}) { }
 }
 
 export class ChangePageAction implements Action {

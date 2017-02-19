@@ -1,8 +1,9 @@
-import {Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, OnInit} from '@angular/core';
 import { Store }                          from "@ngrx/store";
 import { TypeaheadMatch }                 from "ng2-bootstrap";
 import { WEAPON_TIERS, WEAPON_TYPES }     from "../../../services/constants";
 import { Router }                         from "@angular/router";
+import {SelectedLeaderboardItems, LeaderboardSelectList}       from "../../../models/leaderboard.model";
 
 import * as fromRoot                      from '../../../reducers';
 import * as leaderboardActions            from "../../../actions/leaderboard.actions";
@@ -14,21 +15,24 @@ import * as leaderboardActions            from "../../../actions/leaderboard.act
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class LeaderboardHeaderComponent {
+export class LeaderboardHeaderComponent implements OnInit {
 
-  @Input() currentMap: any;
+  @Input() map: any;
   @Input() updatedAt: string;
   @Input() currentWeek: number;
-  @Input() selectedType: any;
-  @Input() selectedTier: number;
-  @Input() selectedPlatform: number;
-  @Input() typeSelection: Array<{ id: any; statId?: string; text: string; }>;
-  @Input() weaponList: Array<{ id: any; statId?: string; text: string; }>;
-  @Input() leaderboardType: string;
-  @Input() leaderboardTypes: Array<any>;
+  @Input() selected: SelectedLeaderboardItems;
+  @Input() typeSelection: Array<LeaderboardSelectList>;
+  @Input() weaponList: Array<LeaderboardSelectList>;
+
+  hasSearchBar: boolean = false;
 
   weaponTiers: any = WEAPON_TIERS;
   selectedWeapon: any;
+  leaderboardTypes: Array<{value: string, text: string}> = [
+    {value: 'weapons', text: 'Weapons'},
+    {value: 'players', text: 'Players'},
+    {value: 'medals', text: 'Medals'},
+  ];
   platforms: Array<{value: number, text: string}> = [
     {value: 0, text: 'Both'},
     {value: 1, text: 'XBL'},
@@ -38,51 +42,37 @@ export class LeaderboardHeaderComponent {
   constructor(private store: Store<fromRoot.State>,
               private router: Router) { }
 
-  setLeaderboard(type: string) {
-    this.router.navigate(['/'], {queryParams: {board: type}});
+  ngOnInit() {
+    this.hasSearchBar = this.selected.leaderboard == ('players' || 'searched');
   }
 
-  filterByType(type: string) {
-    if (!type) {
-      type = this.selectedType;
+  filterByType(board: string, type: string) {
+    let isWeaponType = WEAPON_TYPES.indexOf(type) > -1 || type == 'All';
+    let isNumber = parseInt(type) > 0;
+
+    if (isWeaponType && board == 'medals') {
+      type = '1';
+    } else if (isNumber && board != 'medals') {
+      type = 'All';
     }
 
-    let queryParams = {board: this.leaderboardType},
-      options;
-
-    if (WEAPON_TYPES.indexOf(type) > -1 || type == 'All') {
-      options = {weaponType: type};
-    } else if (this.leaderboardType === 'medals') {
-      options = {medal: type};
-    }
-
-    let payload = Object.assign({}, queryParams, options);
-    this.router.navigate(['/'], {queryParams: payload});
+    this.router.navigate([`/${board}`, type || 'All'], {queryParams: {}});
   }
 
   filterByTier(tier: number) {
-    if (!tier) {tier = this.selectedTier}
+    if (!tier) {tier = this.selected.tier}
 
     this.store.dispatch(new leaderboardActions.UpdateFilterAction({
       tier: tier,
-      type: this.selectedType
-    }))
-  }
-
-  filterByPlatform(platform: number) {
-    if (!platform) {platform = this.selectedPlatform}
-
-    this.store.dispatch(new leaderboardActions.UpdateFilterAction({
-      type: this.selectedType,
-      platform: platform,
+      type: this.selected.type
     }))
   }
 
   getPlayerForWeapon(event: TypeaheadMatch) {
     let weapon = event.item;
     if (weapon) {
-      let queryParams = {board: 'players', weaponHash: weapon.id};
-      this.router.navigate(['/'], {queryParams: queryParams});
+      this.router.navigate(['/players', weapon.id], {queryParams: {}});
     }
   }
+
 }

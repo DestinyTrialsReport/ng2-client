@@ -20,6 +20,7 @@ import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
 import { LeaderboardTableComponent } from "./components/leaderboards/leaderboard-table/leaderboard-table.component";
 import { LeaderboardHeaderComponent } from "./components/leaderboards/leaderboard-header/leaderboard-header.component";
+import {LeaderboardRank} from "./pipes/leaderboard-rank.pipe";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
@@ -38,6 +39,7 @@ export const APP_DECLARATIONS = [
   PlayerTabRecentMatchesComponent,
   PlayerTabStatsComponent,
   PlayerFooterComponent,
+  LeaderboardRank,
   WinPercentagePipe,
   SumFlawlessPipe,
   StreakPipe,

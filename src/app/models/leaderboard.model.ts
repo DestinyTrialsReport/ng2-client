@@ -17,3 +17,18 @@ export interface LBWeaponPercentage {
   bucketTypeHash: string;
 }
 
+export interface SelectedLeaderboardItems {
+  leaderboard: string;
+  icon: string;
+  type: any;
+  player: string;
+  platform: number;
+  tier: number;
+  page: number;
+}
+
+export interface LeaderboardSelectList {
+  id: any;
+  statId?: string;
+  text: string;
+}

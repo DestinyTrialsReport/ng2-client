@@ -14,10 +14,16 @@ export function isSubdomain(name: string): boolean {
 
 export const routes: Routes = [
   // { path: '', component: HomeComponent },
-  { path: '', component: LeaderboardsComponent },
+  { path: '', component: LeaderboardsComponent, data: { board: 'weapons', type: 'All' } },
+  { path: 'weapons/:type',  component: LeaderboardsComponent, data: { board: 'weapons' } },
+  { path: 'players/:type',  component: LeaderboardsComponent, data: { board: 'players' } },
+  { path: 'medals/:type',   component: LeaderboardsComponent, data: { board: 'medals' } },
+  { path: 'medals/:type',   component: LeaderboardsComponent, data: { board: 'medals' } },
+  { path: 'ps/:gamertag',   component: LeaderboardsComponent, data: { board: 'searched', type: 'ps' } },
+  { path: 'xbox/:gamertag', component: LeaderboardsComponent, data: { board: 'searched', type: 'xbox' } },
   // { path: 'leaderboards', component: LeaderboardsComponent },
   // { path: 'ps/:player1', component: isSubdomain('my') ? MyReportComponent : ReportComponent, data: { platform: 2 } },
-  { path: 'ps/:player1', component: ReportComponent, data: { platform: 2 } },
-  { path: 'xbox/:player1', component: ReportComponent, data: { platform: 1 } },
+  // { path: 'ps/:player1', component: ReportComponent, data: { platform: 2 } },
+  // { path: 'xbox/:player1', component: ReportComponent, data: { platform: 1 } },
   { path: '**', component: NotFound404Component }
 ];

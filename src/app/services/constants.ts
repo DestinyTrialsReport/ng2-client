@@ -2,10 +2,10 @@ export const API_KEY = ENV === 'production' ? 'e4ac9ad9884b412cb452ee3ffec34ecb'
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
 // 6b1563bd89854465ab2a423d033c7ddf <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
+
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';
 export const GGG_BASE_URL: string = 'https://api.guardian.gg';
 export const BUNGIE_BASE_URL: string = 'https://www.bungie.net/Platform';
-
 
 export const BUCKET_PRIMARY_WEAPON: any = 1498876634;
 export const BUCKET_SPECIAL_WEAPON: any = 2465295065;
@@ -16,134 +16,245 @@ export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
 export const ARTIFACT_BUCKET: any = 434908299;
 export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031, 434908299];
 
-export const WEAPON_TYPES: Array<string | number> = [ "Auto Rifle",
-                                                      "Scout Rifle",
-                                                      "Pulse Rifle",
-                                                      "Hand Cannon",
-                                                      "Sniper Rifle",
-                                                      "Fusion Rifle",
-                                                      "Shotgun",
-                                                      "Sidearm",
-                                                      'Machine Gun',
-                                                      'Rocket Launcher',
-                                                      'Sword'];
+export const WEAPON_TYPES: Array<string | number> = [
+  "Auto Rifle",
+  "Scout Rifle",
+  "Pulse Rifle",
+  "Hand Cannon",
+  "Sniper Rifle",
+  "Fusion Rifle",
+  "Shotgun",
+  "Sidearm",
+  'Machine Gun',
+  'Rocket Launcher',
+  'Sword'
+];
 
-export const WEAPON_TIERS: Array< {value: number, text: string} > = [{value: 0, text: "All"},
-                                                                      {value: 6, text: "Exotic"},
-                                                                      {value: 5, text: "Legendary"},
-                                                                      {value: 4, text: "Rare"},
-                                                                      {value: 3, text: "Uncommon"},
-                                                                      {value: 2, text: "Common"}];
+export const WEAPON_TIERS: Array< {value: number, text: string} > = [
+  {value: 0, text: "All"},
+  {value: 6, text: "Exotic"},
+  {value: 5, text: "Legendary"},
+  {value: 4, text: "Rare"},
+  {value: 3, text: "Uncommon"},
+  {value: 2, text: "Common"}
+];
 
 export const TYPE_BUCKETS: any = {
-                'Auto Rifle': 1498876634,
-                'Hand Cannon': 1498876634,
-                'Pulse Rifle': 1498876634,
-                'Scout Rifle': 1498876634,
-                'Fusion Rifle': 2465295065,
-                'Sniper Rifle': 2465295065,
-                'Shotgun': 2465295065,
-                'Sidearm': 2465295065,
-                'Machine Gun': 953998645,
-                'Rocket Launcher': 953998645,
-                'Sword': 953998645,
-              };
+  'Auto Rifle': 1498876634,
+  'Hand Cannon': 1498876634,
+  'Pulse Rifle': 1498876634,
+  'Scout Rifle': 1498876634,
+  'Fusion Rifle': 2465295065,
+  'Sniper Rifle': 2465295065,
+  'Shotgun': 2465295065,
+  'Sidearm': 2465295065,
+  'Machine Gun': 953998645,
+  'Rocket Launcher': 953998645,
+  'Sword': 953998645,
+};
 
 export const BUCKET_NAMES: any = {
-                1498876634: 'primary',
-                2465295065: 'special',
-                953998645: 'heavy'
-              };
+  1498876634: 'primary',
+  2465295065: 'special',
+  953998645: 'heavy'
+};
 
-export const YEAR_ONE_DUPLICATES: string[] = [
-  '2657648895',
-  '2726256225',
-  '2911036427',
-  '135862170',
-  '3926983632',
-  '1055280513',
-  '3222439399',
-  '2563304568',
-  '2167109420',
-  '1375158428',
-  '1557422751',
-  '3141342998',
-  '2180040613',
-  '4251892203',
-  '2217778941',
-  '160095218',
-  '2278129280',
-  '3800763760',
-  '119482464',
-  '2656589561',
-  '3625835502',
-  '1146059646',
-  '2599394508',
-  '3478790848',
-  '3118679308',
-  '2210820430',
-  '2846692979',
-  '2853794413',
-  '806143008',
-  '3384077431',
-  '335341128',
-  '2344494719',
-  '727840013',
-  '2615561155',
-  '3490486525',
-  '119482466',
-  '2609120348',
-  '2681212685',
-  '1054959830',
-  '3118679309',
-  '67230518',
-  '1221909933',
-  '2352707666',
-  '3906535130',
-  '2563222798',
-  '2834348866',
-  '2612834019',
-  '3947396344',
-  '135862171',
-  '3259091099',
-  '2775854838',
-  '3968437225',
-  '3478790850',
-  '3191797830',
-  '119482465',
-  '106426948',
-  '2344494718',
-  '4046873053',
-  '2530134059',
-  '649076661',
-  '2937600841',
-  '3551403306',
-  '88964023',
-  '1094262007',
-  '2670848871',
-  '4086430879',
-  '879791779',
-  '3104387070',
-  '2835361676',
-  '3028978726',
-  '561587767',
-  '2472321204',
-  '2210820429',
-  '3195303140',
-  '3096129877',
-  '3164616404',
-  '3191797831',
-  '2266591883',
-  '73994448',
-  '4075571038',
-  '3463607706',
-  '3298170796',
-  '260216313',
-  '3982555097',
-  '2176787615',
-  '4026257891',
-  '935317314',
-  '422175840'
+export const YEAR_ONE_DUPLICATES: Array<number> = [
+  2167109420, // Cryptic Dragon
+  2176787615, // Vesta Noblese
+  2180040613, // Efrideet\'s Spear
+  2210820429, // The Revelator
+  2210820430, // Ill Will
+  2217778941, // Eye of Sol
+  2266591883, // Timur\'s Lash
+  2278129280, // Final Rest II
+  2344494718, // The 4th Horseman
+  2344494719, // Lord of Wolves
+  2352707666, // Prestige IV
+  2472321204, // The Messenger
+  2530134059, // The Calming
+  2563222798, // Psi Umbra I
+  2563304568, // Crypt Dweller SR1
+  2583054521, // Psi Umbra I
+  2599394508, // Hide and Seek-42
+  2609120348, // Murmur
+  2609120349, // Murmur
+  2612834019, // Queenbreakers\' Bow
+  2615561155, // Merciless
+  2656589561, // Her Eyes
+  2657648895, // 20/20 AMR7
+  2670848871, // The Culling
+  2681212685, // No Land Beyond
+  2714214735, // Final Rest II
+  2726256225, // Admonisher III
+  2775854838, // Silimar\'s Wrath
+  2834348866, // Purifier VII
+  2835361676, // The Exile\'s Curse
+  2846692979, // Jewel of Osiris
+  2853794413, // Jolder\'s Hammer
+  2911036427, // Astral Horizon
+  2937600841, // The Chosen
+  2943183714, // Eye of Sol
+  3028978726, // The Infinite Theorem
+  3096129877, // THE SWARM
+  3104387070, // The Dreamwaker
+  3118679308, // Ice Breaker
+  3118679309, // Patience and Time
+  3141342998, // Duke Mk. 10
+  3164616404, // Thorn
+  3164616405, // The Last Word
+  3164616407, // Hawkmoon
+  3191797830, // Super Good Advice
+  3191797831, // Thunderlord
+  3195303140, // The Scholar
+  3222439399, // Crusader I
+  3244859508, // Jolder\'s Hammer
+  3259091099, // Red Hand IX
+  3298170796, // Unwilling Soul-09
+  3329309434, // Astral Horizon
+  3384077431, // LDR 5001
+  3458668152, // The Infinite Theorem
+  3463607706, // Two To The Morgue
+  3478790848, // Hopscotch Pilgrim
+  3478790850, // Spare Change.25
+  3487337162, // Red Hand IX
+  3490486525, // MIDA Multi-Tool
+  3547540843, // Silimar\'s Wrath
+  3551403306, // The Comedian
+  3555771261, // Badger CCL
+  3582249030, // Timur\'s Lash
+  3625835502, // Her Right Hand
+  3705198528, // Dragon\'s Breath
+  3711153071, // The Saterienne Rapier
+  3762921122, // The Calming
+  3800763760, // Gheleon\'s Demise
+  3802740362, // Her Eyes
+  3906535130, // Prudence II
+  3926983632, // Broken Truth-LR1
+  3927585417, // Duke Mk. 10
+  3947396344, // Radegast\'s Fury
+  3960996304, // Split Shifter Pro
+  3968437225, // Skorri\'s Revenge
+  3974515892, // Her Right Hand
+  3982555097, // Venation III
+  4026257891, // Wolves\' Bane
+  4046873053, // The Calling
+  4075571038, // Trax Callum I
+  4086430879, // The Cure
+  4158955585, // Crypt Dweller SR1
+  4183608783, // Her Right Hand
+  4233409823, // The Ash Factory
+  4239364924, // Vesta Noblese
+  4251892203, // Exodus Plan RS/1
+  23851077, // The Infinite Theorem
+  27863601, // Trax Callum I
+  32959577, // The Dreamwaker
+  46660196, // Admonisher III
+  46721743, // The Scholar
+  65908013, // Red Hand IX
+  67230518, // Payment VI
+  73994448, // Tomorrow\'s Answer
+  88964023, // The Conduit
+  106426948, // Techeun Force
+  119482464, // Hard Light
+  119482465, // SUROS Regime
+  119482466, // Monte Carlo
+  120524974, // Jewel of Osiris
+  135862170, // Bad Juju
+  135862171, // Red Death
+  136148814, // Jolder\'s Hammer
+  149649367, // The Messenger
+  160095218, // Felwinter\'s Lie
+  260216313, // Vanquisher VIII
+  260913268, // Techeun Force
+  335341128, // Lord High Fixer
+  337037804, // Timur\'s Lash
+  346443851, // Plan C
+  367695658, // Efrideet\'s Spear
+  392274741, // The Exile\'s Curse
+  419995281, // Astral Horizon
+  422175840, // Zombie Apocalypse WF47
+  517324839, // Admonisher III
+  561587767, // The Majestic
+  615137338, // Final Rest II
+  639554741, // Wolves\' Bane
+  649076661, // The Chance
+  681005629, // The Conduit
+  718007268, // Venation III
+  727840013, // Marshal-A
+  753391730, // The Culling
+  757040550, // Tomorrow\'s Answer
+  805224273, // Radegast\'s Fury
+  806143008, // Judgment VI
+  843443257, //
+  855958098, // The Majestic
+  879791779, // The Devil You Know
+  888762562, // Crusader I
+  892062222, // Gheleon\'s Demise
+  906167852, // Exodus Plan RS/1
+  910389904, // Wolves\' Bane
+  926066377, // Tomorrow\'s Answer
+  935317314, // Y-09 Longbow Synthesis
+  985488305, // Unwilling Soul-09
+  996787434, // Radegast\'s Fury
+  1012477903, // Payment VI
+  1054959828, // Matador 64
+  1054959830, // Party Crasher +1
+  1055280512, // Unending Deluge III
+  1055280513, // BTRD-345
+  1094262007, // The Crash
+  1103394591, // The Chosen
+  1128241783, // Techeun Force
+  1143728002, // Judgment VI
+  1146059646, // Hex Caster ARC
+  1146059647, // Grim Citizen III
+  1155155844, // Payment VI
+  1163110499, // The Dreamwaker
+  1204023325, // Prestige IV
+  1221909933, // Perun\'s Fire
+  1236629912, // Merciless
+  1240693320, // The Crash
+  1244530683, // Efrideet\'s Spear
+  1265320643, // Unwilling Soul-09
+  1274330686, // Truth
+  1274330687, // Gjallarhorn
+  1310572989, // Purifier VII
+  1338746190, // Shadow Price
+  1375158428, // Deviant Gravity-A
+  1382627864, // The Culling
+  1389842216, // Invective
+  1389842217, // Universal Remote
+  1398682310, // Two for the Road
+  1415224434, // Exodus Plan RS/1
+  1451703869, // Felwinter\'s Lie
+  1460033860, // The Cure
+  1487387187, // Skorri\'s Revenge
+  1488311144, // Perun\'s Fire
+  1488819370, // The Chance
+  1527467938, // The Calling
+  1550781862, // The Scholar
+  1557422751, // Dreg\'s Promise
+  1566869545, // NL Shadow 701X
+  1590923669, // Hide and Seek-42
+  1610212078, // Steel Oracle Z-11
+  1662109540, // 77 Wizard
+  1683638659, // Broken Truth-LR1
+  1730663491, // Felwinter\'s Lie
+  1752411804, // Marshal-A
+  1768925825, // The Messenger
+  1808167785, // Prudence II
+  1842318150, // Vanquisher VIII
+  1857133658, // BTRD-345
+  1883086571, // Deviant Gravity-A
+  1912750330, // The Conduit
+  1923132366, // Perun\'s Fire
+  1977271615, // Eye of Sol
+  1998842327, // Gheleon\'s Demise
+  2063870188, // The Chosen
+  2106863376, // Jewel of Osiris
+  2115569661, // Silimar\'s Wrath
+  2118236503, // Judgment VI
+  2135112796 // Skorri\'s Revenge
 ];
 
 export const HIDDEN_NODES: any = [
@@ -208,196 +319,196 @@ export const WEAPON_TYPE_REF: Array<{id: string, statId?: string, text: string}>
 ];
 
 export const MEDALS_REF: Array<{id: number, statId: string, text: string}> = [
-    {
-      "id" : 38,
-      "statId" : "medalsAbilityArcLightningKillMulti",
-      "text" : "Storm Bringer"
-    },
-    {
-      "id" : 31,
-      "statId" : "medalsAbilityGhostGunKillMulti",
-      "text" : "Way of the Gun"
-    },
-    {
-      "id" : 33,
-      "statId" : "medalsAbilityHavocKillMulti",
-      "text" : "Cry Havoc"
-    },
-    {
-      "id" : 32,
-      "statId" : "medalsAbilityNovaBombKillMulti",
-      "text" : "Space Magic"
-    },
-    {
-      "id" : 37,
-      "statId" : "medalsAbilityThermalHammerKillMulti",
-      "text" : "Hammer and Tongs"
-    },
-    {
-      "id" : 36,
-      "statId" : "medalsAbilityVoidBowKillMulti",
-      "text" : "Wild Hunt"
-    },
-    {
-      "id" : 35,
-      "statId" : "medalsActivityCompleteCycle",
-      "text" : "The Cycle"
-    },
-    // {
-    //   "id" : 34,
-    //   "statId" : "medalsActivityCompleteLonewolf",
-    //   "text" : "Lone Wolf"
-    // },
-    {
-      "id" : 13,
-      "statId" : "medalsAvenger",
-      "text" : "Avenger"
-    },
-    {
-      "id" : 14,
-      "statId" : "medalsCloseCallTalent",
-      "text" : "Narrow Escape"
-    },
-    {
-      "id" : 15,
-      "statId" : "medalsComebackKill",
-      "text" : "Back in Action"
-    },
-    {
-      "id" : 21,
-      "statId" : "medalsEliminationWipeQuick",
-      "text" : "Ace"
-    },
-    {
-      "id" : 22,
-      "statId" : "medalsEliminationWipeSolo",
-      "text" : "Wrecking Ball"
-    },
-    {
-      "id" : 1,
-      "statId" : "medalsFirstBlood",
-      "text" : "First Blood"
-    },
-    {
-      "id" : 2,
-      "statId" : "medalsGrenadeKillStick",
-      "text" : "Get it Off!"
-    },
-    {
-      "id" : 3,
-      "statId" : "medalsHazardKill",
-      "text" : "Hazard Pay"
-    },
-    {
-      "id" : 4,
-      "statId" : "medalsHunterKillInvisible",
-      "text" : "I See You"
-    },
-    {
-      "id" : 23,
-      "statId" : "medalsKillHeadshot",
-      "text" : "Bullseye"
-    },
-    {
-      "id" : 24,
-      "statId" : "medalsKillMulti2",
-      "text" : "Double Down"
-    },
-    {
-      "id" : 25,
-      "statId" : "medalsKillMulti3",
-      "text" : "Triple Down"
-    },
-    {
-      "id" : 26,
-      "statId" : "medalsKillMulti4",
-      "text" : "Breaker"
-    },
-    // {
-    //   "id" : 27,
-    //   "statId" : "medalsKillMulti5",
-    //   "text" : "Slayer"
-    // },
-    {
-      "id" : 20,
-      "statId" : "medalsKillPostmortem",
-      "text" : "Postmortem"
-    },
-    {
-      "id" : 28,
-      "statId" : "medalsKillSpreeNoDamage",
-      "text" : "Phantom"
-    },
-    {
-      "id" : 8,
-      "statId" : "medalsMeleeKillHunterThrowingKnifeHeadshot",
-      "text" : "Stick Around"
-    },
-    {
-      "id" : 10,
-      "statId" : "medalsPaybackKill",
-      "text" : "Payback"
-    },
-    {
-      "id" : 11,
-      "statId" : "medalsRadianceShutdown",
-      "text" : "...And Stay Down!"
-    },
-    {
-      "id" : 12,
-      "statId" : "medalsRescue",
-      "text" : "Overwatch"
-    },
-    {
-      "id" : 29,
-      "statId" : "medalsTeamKillSpree",
-      "text" : "Strength of the Wolf"
-    },
-    {
-      "id" : 19,
-      "statId" : "orbsDropped",
-      "text" : "Orbs Dropped"
-    },
-    {
-      "id" : 18,
-      "statId" : "resurrectionsPerformed",
-      "text" : "Resurrections"
-    },
-    // {
-    //   "id" : 30,
-    //   "statId" : "score",
-    //   "text" : "Score"
-    // },
-    // {
-    //   "id" : 16,
-    //   "statId" : "secondsPlayed",
-    //   "text" : "Time Played"
-    // },
-    {
-      "id" : 17,
-      "statId" : "suicides",
-      "text" : "Suicides"
-    },
-    {
-      "id" : 5,
-      "statId" : "weaponKillsGrenade",
-      "text" : "Grenade"
-    },
-    {
-      "id" : 6,
-      "statId" : "weaponKillsMelee",
-      "text" : "Melee"
-    },
-    {
-      "id" : 7,
-      "statId" : "weaponKillsSuper",
-      "text" : "Super"
-    },
-    {
-      "id" : 9,
-      "statId" : "zonesCaptured",
-      "text" : "Zones Captured"
-    }];
+  {
+    "id": 38,
+    "statId": "medalsAbilityArcLightningKillMulti",
+    "text": "Storm Bringer"
+  },
+  {
+    "id": 31,
+    "statId": "medalsAbilityGhostGunKillMulti",
+    "text": "Way of the Gun"
+  },
+  {
+    "id": 33,
+    "statId": "medalsAbilityHavocKillMulti",
+    "text": "Cry Havoc"
+  },
+  {
+    "id": 32,
+    "statId": "medalsAbilityNovaBombKillMulti",
+    "text": "Space Magic"
+  },
+  {
+    "id": 37,
+    "statId": "medalsAbilityThermalHammerKillMulti",
+    "text": "Hammer and Tongs"
+  },
+  {
+    "id": 36,
+    "statId": "medalsAbilityVoidBowKillMulti",
+    "text": "Wild Hunt"
+  },
+  {
+    "id": 35,
+    "statId": "medalsActivityCompleteCycle",
+    "text": "The Cycle"
+  },
+  // {
+  //   "id" : 34,
+  //   "statId" : "medalsActivityCompleteLonewolf",
+  //   "text" : "Lone Wolf"
+  // },
+  {
+    "id": 13,
+    "statId": "medalsAvenger",
+    "text": "Avenger"
+  },
+  {
+    "id": 14,
+    "statId": "medalsCloseCallTalent",
+    "text": "Narrow Escape"
+  },
+  {
+    "id": 15,
+    "statId": "medalsComebackKill",
+    "text": "Back in Action"
+  },
+  {
+    "id": 21,
+    "statId": "medalsEliminationWipeQuick",
+    "text": "Ace"
+  },
+  {
+    "id": 22,
+    "statId": "medalsEliminationWipeSolo",
+    "text": "Wrecking Ball"
+  },
+  {
+    "id": 1,
+    "statId": "medalsFirstBlood",
+    "text": "First Blood"
+  },
+  {
+    "id": 2,
+    "statId": "medalsGrenadeKillStick",
+    "text": "Get it Off!"
+  },
+  {
+    "id": 3,
+    "statId": "medalsHazardKill",
+    "text": "Hazard Pay"
+  },
+  {
+    "id": 4,
+    "statId": "medalsHunterKillInvisible",
+    "text": "I See You"
+  },
+  {
+    "id": 23,
+    "statId": "medalsKillHeadshot",
+    "text": "Bullseye"
+  },
+  {
+    "id": 24,
+    "statId": "medalsKillMulti2",
+    "text": "Double Down"
+  },
+  {
+    "id": 25,
+    "statId": "medalsKillMulti3",
+    "text": "Triple Down"
+  },
+  {
+    "id": 26,
+    "statId": "medalsKillMulti4",
+    "text": "Breaker"
+  },
+  // {
+  //   "id" : 27,
+  //   "statId" : "medalsKillMulti5",
+  //   "text" : "Slayer"
+  // },
+  {
+    "id": 20,
+    "statId": "medalsKillPostmortem",
+    "text": "Postmortem"
+  },
+  {
+    "id": 28,
+    "statId": "medalsKillSpreeNoDamage",
+    "text": "Phantom"
+  },
+  {
+    "id": 8,
+    "statId": "medalsMeleeKillHunterThrowingKnifeHeadshot",
+    "text": "Stick Around"
+  },
+  {
+    "id": 10,
+    "statId": "medalsPaybackKill",
+    "text": "Payback"
+  },
+  {
+    "id": 11,
+    "statId": "medalsRadianceShutdown",
+    "text": "...And Stay Down!"
+  },
+  {
+    "id": 12,
+    "statId": "medalsRescue",
+    "text": "Overwatch"
+  },
+  {
+    "id": 29,
+    "statId": "medalsTeamKillSpree",
+    "text": "Strength of the Wolf"
+  },
+  {
+    "id": 19,
+    "statId": "orbsDropped",
+    "text": "Orbs Dropped"
+  },
+  {
+    "id": 18,
+    "statId": "resurrectionsPerformed",
+    "text": "Resurrections"
+  },
+  // {
+  //   "id" : 30,
+  //   "statId" : "score",
+  //   "text" : "Score"
+  // },
+  // {
+  //   "id" : 16,
+  //   "statId" : "secondsPlayed",
+  //   "text" : "Time Played"
+  // },
+  {
+    "id": 17,
+    "statId": "suicides",
+    "text": "Suicides"
+  },
+  {
+    "id": 5,
+    "statId": "weaponKillsGrenade",
+    "text": "Grenade"
+  },
+  {
+    "id": 6,
+    "statId": "weaponKillsMelee",
+    "text": "Melee"
+  },
+  {
+    "id": 7,
+    "statId": "weaponKillsSuper",
+    "text": "Super"
+  },
+  {
+    "id": 9,
+    "statId": "zonesCaptured",
+    "text": "Zones Captured"
+  }];
 
 export const MEDAL_DEFINITIONS: any = {
   "medalsAbilityGhostGunKillMulti": {
@@ -955,148 +1066,148 @@ export const MEDAL_DEFINITIONS: any = {
 export const CRUCIBLE_MAPS: any = {
   "284635225": {
     "name": "The Burning Shrine",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_burning_shrine.jpg",
-      "mapImage": "/assets/img/maps/the_burning_shrine.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_burning_shrine.jpg",
+    "mapImage": "/assets/img/maps/the_burning_shrine.jpg"
   },
-    "443057682": {
+  "443057682": {
     "name": "Skyshock",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_skyshock.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_skyshock.jpg"
   },
-    "469270447": {
+  "469270447": {
     "name": "Memento",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/memento.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/memento.jpg"
   },
-    "637046772": {
+  "637046772": {
     "name": "Thieves' Den",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/thieves_den.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/thieves_den.jpg"
   },
-    "1448094960": {
+  "1448094960": {
     "name": "The Dungeons",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_dungeons.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_dungeons.jpg"
   },
-    "1478347980": {
+  "1478347980": {
     "name": "Campus Martius",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Campus_Martius.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Campus_Martius.jpg"
   },
-    "1709749894": {
+  "1709749894": {
     "name": "Skyline",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/skyline.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/skyline.jpg"
   },
-    "1719392441": {
+  "1719392441": {
     "name": "Crossroads",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crossroads.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crossroads.jpg"
   },
-    "1851417512": {
+  "1851417512": {
     "name": "The Drifter",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_drifter.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/the_drifter.jpg"
   },
-    "2037022373": {
+  "2037022373": {
     "name": "Vertigo",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/vertigo.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/vertigo.jpg"
   },
-    "2082069870": {
+  "2082069870": {
     "name": "The Anomaly",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_anomaly.jpg",
-      "mapImage": "/assets/img/maps/the_anomaly.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_anomaly.jpg",
+    "mapImage": "/assets/img/maps/the_anomaly.jpg"
   },
-    "2243240710": {
+  "2243240710": {
     "name": "Infinite Descent",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Infinite_Descent.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/Infinite_Descent.jpg"
   },
-    "2332037858": {
+  "2332037858": {
     "name": "Widow's Court",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/widows_court.jpg",
-      "mapImage": "/assets/img/maps/widows_court.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/widows_court.jpg",
+    "mapImage": "/assets/img/maps/widows_court.jpg"
   },
-    "2430076725": {
+  "2430076725": {
     "name": "Blind Watch",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_blind_watch.jpg",
-      "mapImage": "/assets/img/maps/blind_watch.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_blind_watch.jpg",
+    "mapImage": "/assets/img/maps/blind_watch.jpg"
   },
-    "2507231345": {
+  "2507231345": {
     "name": "Frontier",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/frontier.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/frontier.jpg"
   },
-    "2680821721": {
+  "2680821721": {
     "name": "The Cauldron",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_cauldron.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_cauldron.jpg"
   },
-    "3053288711": {
+  "3053288711": {
     "name": "Floating Gardens",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/floating_gardens.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/floating_gardens.jpg"
   },
-    "3101475152": {
+  "3101475152": {
     "name": "Firebase Delphi",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg",
-      "mapImage": "/assets/img/maps/firebase_delphi.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_firebase_delphi.jpg",
+    "mapImage": "/assets/img/maps/firebase_delphi.jpg"
   },
-    "3156370656": {
+  "3156370656": {
     "name": "Sector 618",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/sector_618.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/sector_618.jpg"
   },
-    "3277621970": {
+  "3277621970": {
     "name": "The Timekeeper",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/timekeeper.jpg",
-      "mapImage": "/assets/img/maps/the_timekeeper.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/timekeeper.jpg",
+    "mapImage": "/assets/img/maps/the_timekeeper.jpg"
   },
-    "3292667877": {
+  "3292667877": {
     "name": "Asylum",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_asylum.jpg",
-      "mapImage": "/assets/img/maps/asylum.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_asylum.jpg",
+    "mapImage": "/assets/img/maps/asylum.jpg"
   },
-    "3412406993": {
+  "3412406993": {
     "name": "Cathedral of Dusk",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/cathedral_of_dusk.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/cathedral_of_dusk.jpg"
   },
-    "3602734434": {
+  "3602734434": {
     "name": "Bannerfall",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/bannerfall.jpg",
-      "mapImage": "/assets/img/maps/bannerfall.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/bannerfall.jpg",
+    "mapImage": "/assets/img/maps/bannerfall.jpg"
   },
-    "3817155567": {
+  "3817155567": {
     "name": "Twilight Gap",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_twilight_gap_2.jpg",
-      "mapImage": "/assets/img/maps/twilight_gap.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_twilight_gap_2.jpg",
+    "mapImage": "/assets/img/maps/twilight_gap.jpg"
   },
-    "3848655103": {
+  "3848655103": {
     "name": "Black Shield",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/black_shield.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/black_shield.jpg"
   },
-    "3856604751": {
+  "3856604751": {
     "name": "First Light",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_first_light.jpg",
-      "mapImage": "/assets/img/maps/first_light.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_first_light.jpg",
+    "mapImage": "/assets/img/maps/first_light.jpg"
   },
-    "3918359338": {
+  "3918359338": {
     "name": "Icarus",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/icarus.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/icarus.jpg"
   },
-    "4105918304": {
+  "4105918304": {
     "name": "Last Exit",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/last_exit.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/last_exit.jpg"
   },
-    "4107311671": {
+  "4107311671": {
     "name": "Rusted Lands",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_rusted_lands.jpg",
-      "mapImage": "/assets/img/maps/rusted_lands.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_rusted_lands.jpg",
+    "mapImage": "/assets/img/maps/rusted_lands.jpg"
   },
-    "4163254808": {
+  "4163254808": {
     "name": "Shores of Time",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_shores_of_time.jpg",
-      "mapImage": "/assets/img/maps/shores_of_time.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_shores_of_time.jpg",
+    "mapImage": "/assets/img/maps/shores_of_time.jpg"
   },
-    "4200263342": {
+  "4200263342": {
     "name": "Bastion",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_bastion.jpg",
-      "mapImage": "/assets/img/maps/bastion.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_bastion.jpg",
+    "mapImage": "/assets/img/maps/bastion.jpg"
   },
-    "4260139097": {
+  "4260139097": {
     "name": "Pantheon",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_pantheon.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_pantheon.jpg"
   },
-    "4287936726": {
+  "4287936726": {
     "name": "Exodus Blue",
-      "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg",
-      "mapImage": "/assets/img/maps/exodus_blue.jpg"
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_exodus_blue.jpg",
+    "mapImage": "/assets/img/maps/exodus_blue.jpg"
   }
 };

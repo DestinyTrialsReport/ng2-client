@@ -18,7 +18,7 @@ import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from "@angular/r
   styleUrls: ['./menu.component.css'],
 })
 
-export class MenuComponent implements OnInit, AfterViewInit {
+export class MenuComponent implements OnInit {
   currentMap$: Observable<CurrentMap>;
   player1$: Observable<Player>;
   player2$: Observable<Player>;
@@ -51,9 +51,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-  }
-
   searchPlayer() {
     let platform = this.isXbox ? 1 : 2;
     // if (window.location.pathname === '/leaderboards') {
@@ -63,7 +60,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
     //   this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
     // }
     // this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: this.searchedName, playerIndex: 'player1'}));
-      this.router.navigate(['/'], {queryParams: {gamertag: this.searchedName, platform: platform}});
+    this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
   }
 
   togglePlatform(event: Event) {

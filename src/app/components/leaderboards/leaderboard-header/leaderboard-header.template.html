@@ -1,5 +1,5 @@
-<div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + currentMap?.pgcrImage + ')'}">
-  <div class="row top-xs" style="padding-top: 1rem; text-align: right;">
+<div class="card__header card__header--high" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + map?.current?.pgcrImage + ')'}">
+  <div class="row top-xs" style="padding-top: 1rem; text-align: right;" *ngIf="selected?.leaderboard !== 'searched'">
     <div class="col-xs select-container">
       <span class="stat-label" style="color: white;text-shadow: 0 0 20px rgba(0, 0, 0, 1);" [innerHtml]="'updated: ' + (updatedAt | date: 'medium')"></span>
     </div>
@@ -7,7 +7,7 @@
   <div class="row bottom-xs" style="padding-top: 7rem;">
     <div class="col-xs col-sm-shrink select-container">
       <div class="select">
-        <select [ngModel]="leaderboardType" (ngModelChange)="setLeaderboard($event)">
+        <select [ngModel]="selected.leaderboard" (ngModelChange)="filterByType($event, selected.type)">
           <option value="select-leaderboard" disabled>Select Leaderboard</option>
           <option value="{{type.value}}" *ngFor='let type of leaderboardTypes; let i = index;' [innerHtml]="type.text"></option>
         </select>
@@ -17,43 +17,43 @@
 
     <div class="col-xs col-sm-shrink select-container">
       <div class="select">
-        <select [(ngModel)]="selectedType"
-                (ngModelChange)="filterByType($event)"
-                [disabled]="leaderboardType === 'searched'">
+        <select [(ngModel)]="selected.type"
+                (ngModelChange)="filterByType(selected.leaderboard, $event)"
+                [disabled]="selected?.leaderboard === 'searched'">
           <option value="{{type.id}}" *ngFor='let type of typeSelection; let i = index;' [innerHtml]="type.text"></option>
         </select>
       </div>
       <div class="stat-label">Type</div>
     </div>
 
-    <div class="col-xs col-sm-shrink select-container" *ngIf="leaderboardType == ('players' || 'searched')">
+    <div class="col-xs col-sm-shrink select-container" *ngIf="hasSearchBar">
       <div class="select">
-        <input [ngModel]="selectedWeapon"
+        <input [(ngModel)]="selectedWeapon"
                [typeahead]="weaponList"
+               (click)="selectedWeapon = ''"
+               (tap)="selectedWeapon = ''"
                [typeaheadOptionField]="'name'"
                (typeaheadOnSelect)="getPlayerForWeapon($event)"
-               [disabled]="(leaderboardType === 'weapons' || leaderboardType === 'searched')"
-               placeholder="Weapon Name">
+               [placeholder]="selectedWeapon || 'Weapon Name'">
       </div>
       <div class="stat-label">Name</div>
     </div>
 
-    <div class="col-xs col-sm-shrink select-container" *ngIf="leaderboardType == 'weapons'">
+    <div class="col-xs col-sm-shrink select-container" *ngIf="selected?.leaderboard == 'weapons'">
       <div class="select">
-        <select [(ngModel)]="selectedTier"
-                (ngModelChange)="filterByTier($event)"
-                [disabled]="leaderboardType === 'searched'">
+        <select [(ngModel)]="selected.tier"
+                (ngModelChange)="filterByTier($event)">
           <option value="{{type.value}}" *ngFor='let type of weaponTiers; let i = index;' [innerHtml]="type.text"></option>
         </select>
       </div>
       <div class="stat-label">Tier</div>
     </div>
 
-    <!--<div class="col-xs-shrink select-container" *ngIf="leaderboardType == 'medals' || leaderboardType == 'players'">-->
+    <!--<div class="col-xs-shrink select-container" *ngIf="selected?.leaderboard == 'medals' || selected?.leaderboard == 'players'">-->
       <!--<div class="select">-->
         <!--<select [(ngModel)]="selectedPlatform"-->
                 <!--(ngModelChange)="filterByPlatform($event)"-->
-                <!--[disabled]="leaderboardType === 'searched'">-->
+                <!--[disabled]="selected?.leaderboard === 'searched'">-->
           <!--<option value="{{type.value}}" *ngFor='let type of platforms; let i = index;' [innerHtml]="type.text"></option>-->
         <!--</select>-->
       <!--</div>-->

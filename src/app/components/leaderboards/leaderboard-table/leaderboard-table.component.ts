@@ -1,7 +1,8 @@
 import {
   Component, Input, ChangeDetectionStrategy, trigger, state, style, transition,
-  animate, EventEmitter, Output
+  animate, EventEmitter, Output, OnInit
 } from '@angular/core';
+import {SelectedLeaderboardItems} from "../../../models/leaderboard.model";
 
 @Component({
   selector: 'leaderboard-table',
@@ -19,28 +20,46 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class LeaderboardTableComponent {
+export class LeaderboardTableComponent implements OnInit {
 
   @Output() changeWeek:EventEmitter<number> = new EventEmitter<number>();
 
   @Input() loading: boolean;
   @Input() items: any[];
-  @Input() selectedType: any;
-  @Input() currentPage: number;
-  @Input() leaderboardType: string;
-  @Input() selectedIcon: string;
   @Input() leaderboardTitle: string;
-  @Input() currentMap: any;
-  @Input() previousMap: any;
-  @Input() nextMap: any;
+  @Input() selected: SelectedLeaderboardItems;
+  @Input() map: any;
   @Input() maxWeek: number;
 
   itemsPerPage: number = 10;
+  pageParams: any;
+  tableMetric: string;
+  tableHeader: string;
+  hasPlatform: boolean;
 
   constructor() { }
+
+  ngOnInit() {
+    this.pageParams = { itemsPerPage: this.itemsPerPage, currentPage: this.selected.page };
+    this.tableMetric = this.selected.leaderboard === 'medals' ? 'Count' : 'Kills';
+    this.hasPlatform = ((this.selected.leaderboard !== 'weapons' && this.selected.leaderboard !== 'searched')) && !this.loading;
+    this.tableHeader = this.selected.leaderboard === 'weapons' ? 'Weapon' : 'Player';
+  }
 
   toWeek(week: number) {
     this.changeWeek.emit(week);
   }
 
+  getDescription(map: any) {
+    if (map) {
+      return `TRIALS WEEK ${map.weekInYear} - ${map.year}  - ${map.name}`;
+    }
+  }
+
+  getItemUrl(item: any) {
+    let itemId = item.itemHash || item.id;
+    let board = itemId ? 'players' : 'weapons';
+    let platform = item.platform == 1 ? 'xbox' : 'ps';
+    return `/${(item.platform ? platform : board)}/${(itemId || item.name)}`;
+  }
 }

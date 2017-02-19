@@ -1,33 +1,33 @@
 <div class="row middle-xs center-xs">
   <div class="col-xs col-sm" style="text-align: left;">
     <div class="card__header__controls">
-      <button class="btn btn--icon btn--ghost" [style.opacity]="currentMap?.week > 0 ? 1 : .2"
-              (click)="toWeek(currentMap?.week - 1)">
+      <button class="btn btn--icon btn--ghost" [style.opacity]="map?.current?.week > 0 ? 1 : .2"
+              (click)="toWeek(map?.current?.week - 1)">
         <i class="material-icons" style="color: #666;">&#xE5CB;</i>
       </button>
-      <div class="stat-label map-nav" [innerHtml]="previousMap?.name"></div>
+      <div class="stat-label map-nav" [innerHtml]="map?.previous?.name"></div>
     </div>
   </div>
 
-  <div class="col-xs-shrink selected__weapon-icon" *ngIf="selectedIcon">
-    <img [src]="selectedIcon"
+  <div class="col-xs-shrink selected__weapon-icon" *ngIf="selected?.icon">
+    <img [src]="selected?.icon"
          class="weapon-icon__medium"
-         *ngIf="leaderboardType !== 'weapons'">
+         *ngIf="selected?.leaderboard !== 'weapons'">
   </div>
 
   <div class="col-xs-shrink">
     <p class="card__header__title--map" [innerHtml]="leaderboardTitle"></p>
     <span class="card__header__title"
-          [innerHtml]="'TRIALS WEEK ' + currentMap?.weekInYear + ' - ' + currentMap?.year + ' - ' + currentMap?.name"></span>
+          [innerHtml]="getDescription(map?.current)"></span>
   </div>
 
   <div class="col-xs" style="text-align: right;">
     <div class="card__header__controls">
-      <button class="btn btn--icon btn--ghost" [style.opacity]="currentMap?.week < maxWeek ? 1 : .2"
-              (click)="toWeek(currentMap?.week - (-1))">
+      <button class="btn btn--icon btn--ghost" [style.opacity]="map?.current?.week < maxWeek ? 1 : .2"
+              (click)="toWeek(map?.current?.week - (-1))">
         <i class="material-icons" style="color: #666;">&#xE5CC;</i>
       </button>
-      <div class="stat-label map-nav" [innerHtml]="nextMap?.name"></div>
+      <div class="stat-label map-nav" [innerHtml]="map?.next?.name"></div>
     </div>
   </div>
 </div>
@@ -41,18 +41,18 @@
         <div class="stat-header">Place</div>
       </div>
       <div class="col-xs-2">
-        <div class="stat-header" [innerHtml]="leaderboardType === 'medals' ? 'Count' : 'Kills'"></div>
+        <div class="stat-header" [innerHtml]="tableMetric"></div>
       </div>
       <div [ngClass]="{
-               'col-xs-5 col-sm-3': ((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading,
-               'col-xs-6 col-sm-4': leaderboardType == 'weapons' || leaderboardType == 'searched'}">
-        <div class="stat-header" [innerHtml]="leaderboardType === 'weapons' ? 'Weapon' : 'Player'"></div>
+               'col-xs-5 col-sm-3': hasPlatform,
+               'col-xs-6 col-sm-4': !hasPlatform}">
+        <div class="stat-header" [innerHtml]="tableHeader"></div>
       </div>
-      <div class="col-xs-1" *ngIf="((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading">
+      <div class="col-xs-1" *ngIf="hasPlatform">
         <div class="stat-header"></div>
       </div>
       <div class="hide-stat col-sm-2">
-        <div class="stat-header" *ngIf="leaderboardType !== 'medals'">Headshots</div>
+        <div class="stat-header" *ngIf="selected?.leaderboard !== 'medals'">Headshots</div>
       </div>
       <div class="col-xs-2">
         <div class="stat-header">Matches</div>
@@ -60,14 +60,12 @@
     </div>
   </div>
   <div class="stat-table col-xs-12" [ngClass]="{loading__background: loading}">
-
-    <!--<div style="min-height: 30vh;" *ngIf="items?.length === 0"></div>-->
     <div class="stat-table__row row row--small-gutter middle-xs"
-         *ngFor='let item of items | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;'
+         *ngFor='let item of items | paginate: { itemsPerPage: itemsPerPage, currentPage: selected?.page }; let i = index;'
          [@loading]="loading">
 
       <div class="col-xs-2">
-        #<span [innerHtml]="item?.rank || ((i + (itemsPerPage * (currentPage - 1))) + 1) | number:'1.0-0'"></span>
+        #<span [innerHtml]="item?.rank | rank: i:selected?.page:itemsPerPage | number:'1.0-0'"></span>
       </div>
 
       <div class="col-xs-2">
@@ -76,20 +74,19 @@
 
 
       <div [ngClass]="{
-               'col-xs-5 col-sm-3': ((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading,
-               'col-xs-6 col-sm-4': leaderboardType == 'weapons' || leaderboardType == 'searched'}">
+               'col-xs-5 col-sm-3': hasPlatform,
+               'col-xs-6 col-sm-4': !hasPlatform}">
 
-        <img *ngIf="!selectedIcon && leaderboardType !== 'medals'"
+        <img *ngIf="!selected?.icon && selected?.leaderboard !== 'medals'"
              [src]="item?.icon"
              [alt]="item?.name"
              class="weapon-icon__small">
 
         <a [innerHtml]="item?.name"
-           [routerLink]="['/']"
-           [queryParams]="(leaderboardType !== 'weapons' && leaderboardType !== 'searched') ? {gamertag: item?.name, platform: item?.platform} : {weaponHash: item?.itemHash || item?.id}"></a>
+           [routerLink]="[getItemUrl(item)]"></a>
       </div>
 
-      <div class="col-xs-1 text-center" *ngIf="((leaderboardType !== 'weapons' && leaderboardType !== 'searched')) && !loading">
+      <div class="col-xs-1 text-center" *ngIf="hasPlatform">
         <img [src]="'/assets/img/' + (item?.platform == 1 ? 'xbox.svg' : 'ps.svg')"
              [alt]="item?.platform == 1 ? 'xbox' : 'psn'"
              style="height: 1rem;max-width: 1rem;">

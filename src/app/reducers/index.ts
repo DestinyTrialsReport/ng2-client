@@ -67,61 +67,30 @@ export const getLeaderboardSpecial = createSelector(getLeaderboardState, fromLea
 
 export const getLeaderboardItemsUnfiltered = createSelector(getLeaderboardState, fromLeaderboards.getItems);
 
-export const getLeaderboardsCurrentPage = createSelector(getLeaderboardState, fromLeaderboards.getCurrentPage);
-
 export const getLeaderboardsLoadingStatus = createSelector(getLeaderboardState, fromLeaderboards.getLoadingStatus);
 
-export const getLeaderboardsSelectedIcon = createSelector(getLeaderboardState, fromLeaderboards.getSelectedIcon);
+export const getLeaderboardsSelected = createSelector(getLeaderboardState, fromLeaderboards.getSelected);
 
 export const getLeaderboardsErrorStatus = createSelector(getLeaderboardState, fromLeaderboards.getErrorStatus);
 
-export const getLeaderboardsSelectedType = createSelector(getLeaderboardState, fromLeaderboards.getSelectedType);
-
-export const getLeaderboardsSelectedTier = createSelector(getLeaderboardState, fromLeaderboards.getSelectedTier);
-
-export const getLeaderboardsSelectedPlatform = createSelector(getLeaderboardState, fromLeaderboards.getSelectedPlatform);
-
 export const getLeaderboardTitle = createSelector(getLeaderboardState, fromLeaderboards.getTitle);
-
-export const getLeaderboardsQueryParams = createSelector(getLeaderboardState, fromLeaderboards.getQueryParams);
-
-export const getLeaderboardType = createSelector(getLeaderboardState, fromLeaderboards.getLeaderboardType);
-
-export const getLeaderboardsQueryString = createSelector(getLeaderboardsQueryParams, (params) => {
-  if (params) {
-    let paramsObject = {};
-    Object.keys(params)
-      .filter(key => !!params[key])
-      .map(key => paramsObject[key] = params[key]);
-
-    return paramsObject
-  }
-});
-
 
 export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLeaderboardSpecial, (primary, special) => {
   return [primary, special];
 });
 
-export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered, getLeaderboardsSelectedTier, getLeaderboardsSelectedType,
-                                                  getLeaderboardType, (items, tier, type, leaderboard) => {
+export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered, getLeaderboardsSelected, (items, selected) => {
   let filteredItems = items;
-  if (leaderboard !== 'medals') {
-    if (type !== 'All' && tier < 1 && leaderboard !== 'players') {
-      filteredItems = items.filter(c => c.type === type);
-    } else if (tier > 0) {
-      filteredItems = items.filter(c => c.tier === tier);
+  if (selected.leaderboard == 'weapons') {
+    if (selected.type !== 'All') {
+      filteredItems = items.filter(c => c.type === selected.type);
+      if (selected.tier > 0) {
+        filteredItems = filteredItems.filter(c => c.tier === selected.tier);
+      }
     }
   }
 
   return filteredItems;
-});
-
-export const getLeaderboardSelectedWeaponName = createSelector(getLeaderboardTypeSelection, getLeaderboardsSelectedType, (weapons, id) => {
-  let weapon = weapons.filter(weapon => weapon.id == id);
-  if (weapon[0]) {
-    return weapon[0].text;
-  }
 });
 
 export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
@@ -136,15 +105,21 @@ export const previousMap = createSelector(getMapState, fromMaps.previousMap);
 
 export const nextMap = createSelector(getMapState, fromMaps.nextMap);
 
-export const getUpdatedAt = createSelector(getLeaderboardType, getCurrentMap, (leaderboard, currentMap) => {
-  let meta = currentMap.leaderboards.filter(l => l.leaderboard == leaderboard);
+export const getUpdatedAt = createSelector(getLeaderboardsSelected, getCurrentMap, (selected, currentMap) => {
+  let meta = currentMap.leaderboards.filter(l => l.leaderboard == selected.leaderboard);
   if (meta[0]) {
     // Safari fix
     let dateString = `${meta[0].updated_at} UTC`.replace(/-/g, "/");
-    let date = new Date(dateString).toString();
-    return date;
-    // return date.split(' ').splice(0, 5).join(' ');
+    return new Date(dateString).toString();
   }
+});
+
+export const getMapInfo = createSelector(getMap, previousMap, nextMap, (current, previous, next) => {
+  return {
+    current: current,
+    previous: previous,
+    next: next
+  };
 });
 
 export const getCurrentWeek = createSelector(getMap, getCurrentMap, (map, currentMap) => {

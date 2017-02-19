@@ -1,51 +1,43 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { createSelector } from 'reselect';
 import * as leaderboard from "../actions/leaderboard.actions";
-import { LBWeaponPercentage } from "../models/leaderboard.model";
+import {LBWeaponPercentage, SelectedLeaderboardItems, LeaderboardSelectList} from "../models/leaderboard.model";
 import {
   BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, MEDALS_REF, WEAPON_TYPE_REF, WEAPON_TIERS,
-  MEDAL_DEFINITIONS
+  MEDAL_DEFINITIONS, YEAR_ONE_DUPLICATES
 } from "../services/constants";
 
 
 export interface State {
   items: any[];
-  searchedPlayer: string;
-  leaderboardType: string;
   title: string;
-  selectedIcon: string;
-  selectedType: any;
-  selectedPlatform: number;
-  selectedTier: number;
+  selected: SelectedLeaderboardItems;
   primary: LBWeaponPercentage[];
   special: LBWeaponPercentage[];
-  typeSelection: Array<{id: any, statId?: string, text: string}>;
-  weaponList: Array<{id: any, statId?: string, name: string}>;
-  currentPage: number;
+  typeSelection: Array<LeaderboardSelectList>;
+  weaponList: Array<LeaderboardSelectList>;
   loading: boolean;
   error: boolean;
-  queryParams: {
-    [id:string]: string
-  }
 }
 
 const initialState: State = {
   items: [],
-  searchedPlayer: null,
-  leaderboardType: 'weapons',
   title: null,
-  selectedIcon: null,
-  selectedType: null,
-  selectedPlatform: 0,
-  selectedTier: 0,
+  selected: {
+    leaderboard: 'weapons',
+    icon: null,
+    type: null,
+    player: null,
+    platform: 0,
+    tier: 0,
+    page: 1,
+  },
   primary: [],
   special: [],
   typeSelection: [],
   weaponList: [],
-  currentPage: 1,
   loading: false,
   error: false,
-  queryParams: null,
 };
 
 export function reducer(state = initialState, action: leaderboard.Actions): State {
@@ -57,7 +49,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload = action.payload;
 
       return Object.assign({}, state, {
-        selectedType: payload.type || state.selectedType,
+        selected: Object.assign({}, state.selected, {
+          type: payload.type || state.selected.type
+        }),
         loading: true,
       });
     }
@@ -70,7 +64,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       }
 
       return Object.assign({}, state, {
-        leaderboardType: payload.type,
+        selected: Object.assign({}, state.selected, {
+          leaderboard: payload.type
+        }),
         typeSelection: [...typeSelection],
         loading: true,
       });
@@ -80,7 +76,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload: any = action.payload;
       let title = `Most Used ${payload.type || 'Weapon'}s`;
       return Object.assign({}, state, {
-        selectedType: payload.type,
+        selected: Object.assign({}, state.selected, {
+          type: payload.type
+        }),
         title: title,
         loading: true
       });
@@ -95,7 +93,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.GET_MEDAL_SUCCESS: {
       const payload: any = action.payload;
-      const medal = MEDALS_REF.filter(medal => medal.id == state.selectedType);
+      const medal = MEDALS_REF.filter(medal => medal.id == state.selected.type);
       const medalId = medal.map(medal => medal.statId);
       const medalName = medal.map(medal => medal.text);
       const definition = MEDAL_DEFINITIONS[String(medalId)];
@@ -104,9 +102,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         items: [...payload],
-        leaderboardType: 'medals',
         title: title,
-        selectedIcon: icon,
+        selected: Object.assign({}, state.selected, {
+          leaderboard: 'medals',
+          icon: icon
+        }),
         loading: false,
       });
     }
@@ -116,7 +116,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         items: [...payload],
-        selectedIcon: null,
+        selected: Object.assign({}, state.selected, {
+          icon: null
+        }),
         loading: false,
       });
     }
@@ -125,8 +127,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload = action.payload;
       const tier = (payload.tier > 0 && payload.tier < 7) ? payload.tier : 0;
       const types = WEAPON_TYPE_REF.map(weapon => weapon.id);
-      const type = types.indexOf(payload.type) > -1 ? payload.type : state.selectedType;
-      // const platform = payload.platform > 0 ? payload.platform : 0;
+      const type = types.indexOf(payload.type) > -1 ? payload.type : state.selected.type;
 
       let tierName = WEAPON_TIERS
         .filter(t => t.value == tier)
@@ -143,9 +144,10 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       }
 
       return Object.assign({}, state, {
-        selectedTier: tier,
-        selectedType: type,
-        // selectedPlatform: platform,
+        selected: Object.assign({}, state.selected, {
+          tier: tier,
+          type: type
+        }),
         title: title
       });
     }
@@ -175,9 +177,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       let title = `This Week's Rankings for ${payload.name}`;
 
       return Object.assign({}, state, {
-        searchedPlayer: payload.name,
-        selectedIcon: null,
-        leaderboardType: 'searched',
+        selected: Object.assign({}, state.selected, {
+          leaderboard: 'searched',
+          player: payload.name,
+          icon: null
+        }),
         title: title,
         loading: true,
         error: false
@@ -189,9 +193,10 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       let weapon, icon, title;
 
       if (payload.definition) {
+        let isDuplicate = YEAR_ONE_DUPLICATES.indexOf(payload.definition.h) > -1;
         weapon = payload.definition.n;
         icon = `https://www.bungie.net/common/destiny_content/icons/${payload.definition.i}`;
-        title = `Most ${weapon} Kills`;
+        title = `Most ${isDuplicate ? weapon + ' (Year 1)' : weapon} Kills`;
       } else if (payload.type == 'All') {
         title = `Most Kills`;
       } else {
@@ -200,8 +205,10 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         title: title,
-        selectedType: payload.type,
-        selectedIcon: icon,
+        selected: Object.assign({}, state.selected, {
+          icon: icon,
+          type: payload.type
+        }),
         loading: true,
         error: false
       });
@@ -211,7 +218,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       const payload: number = action.payload;
 
       return Object.assign({}, state, {
-        currentPage: payload,
+        selected: Object.assign({}, state.selected, {
+          page: payload
+        }),
       });
     }
 
@@ -220,9 +229,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         items: [...payload],
-        selectedTier: 0,
+        selected: Object.assign({}, state.selected, {
+          leaderboard: 'players',
+          tier: 0
+        }),
         loading: false,
-        leaderboardType: 'players',
       });
     }
 
@@ -253,22 +264,10 @@ export const getWeaponList = (state: State) => state.weaponList;
 
 export const getItems = (state: State) => state.items;
 
-export const getSelectedType = (state: State) => state.selectedType;
-
-export const getSelectedTier = (state: State) => state.selectedTier;
-
-export const getSelectedPlatform = (state: State) => state.selectedPlatform;
-
-export const getCurrentPage = (state: State) => state.currentPage;
+export const getSelected = (state: State) => state.selected;
 
 export const getLoadingStatus = (state: State) => state.loading;
-
-export const getSelectedIcon = (state: State) => state.selectedIcon;
-
-export const getLeaderboardType = (state: State) => state.leaderboardType;
 
 export const getErrorStatus = (state: State) => state.error;
 
 export const getTitle = (state: State) => state.title;
-
-export const getQueryParams = (state: State) => state.queryParams;

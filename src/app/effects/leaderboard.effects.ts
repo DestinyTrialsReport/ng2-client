@@ -13,7 +13,6 @@ import { ItemDefinitions } from "../models/manifest.model";
 import { LocalStorageService } from "ng2-webstorage";
 
 import * as leaderboard from '../actions/leaderboard.actions';
-import * as maps from '../actions/maps.actions';
 
 @Injectable()
 export class LeaderboardEffects {
@@ -37,6 +36,7 @@ export class LeaderboardEffects {
         leaderboard: payload.type,
         type: payload.selected,
         week: payload.week,
+        gamertag: payload.gamertag,
         tier: payload.tier
       })
     ));
@@ -46,9 +46,8 @@ export class LeaderboardEffects {
     .ofType(leaderboard.ActionTypes.GET_SELECTED_TYPE)
     .map((action: leaderboard.GetSelectedTypeAction) => action.payload)
     .switchMap(payload => {
-      let type = payload.type;
+      let type = payload.type || 'All';
       let tier;
-      if (!type) {type = "All"}
       if (tier) {tier = {tier: payload.tier}}
       if (payload) {
         switch (payload.leaderboard) {
@@ -62,13 +61,19 @@ export class LeaderboardEffects {
             let actionParams = {type: type, week: payload.week};
             let definition = this.itemDefinitions[parseInt(type)];
             if (definition) {
-              return of(new leaderboard.GetPlayersAction(Object.assign({}, actionParams, {definition: definition}, tier)));
+              return of(new leaderboard.GetPlayersAction(Object.assign({}, actionParams, {
+                definition: Object.assign({}, definition, {
+                  h: parseInt(type)
+                })
+              }, tier)));
             } else {
               return of(new leaderboard.GetPlayersAction(Object.assign({}, actionParams, tier)));
             }
           }
           case 'searched': {
-            return empty();
+            if (!payload.gamertag) {return empty();}
+
+            return of(new leaderboard.SearchPlayerAction({name: payload.gamertag, platform: (type === 'ps' ? 2 : 1), week: payload.week}));
           }
           default: {
             let actionParams = {type: type, week: payload.week};
@@ -167,11 +172,12 @@ export class LeaderboardEffects {
         .map(res => {
           const weapons = res
             .map(weapon => {
-              let definition = this.itemDefinitions[parseInt(weapon.itemHash)];
+              let itemHash = parseInt(weapon.itemHash);
+              let definition = this.itemDefinitions[itemHash];
               if (definition) {
-                let isDuplicate = YEAR_ONE_DUPLICATES.indexOf(weapon.itemHash) > -1;
+                let isDuplicate = YEAR_ONE_DUPLICATES.indexOf(itemHash) > -1;
                 return {
-                  id: parseInt(weapon.itemHash),
+                  id: itemHash,
                   name: isDuplicate ? definition.n + ' (Year 1)' : definition.n,
                   itemType: weapon.itemTypeName
                 }
