@@ -31,12 +31,14 @@ export class LeaderboardEffects {
   setLeaderboard$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.SET_LEADERBOARD_TYPE)
     .map((action: leaderboard.SetLeaderboardAction) => action.payload)
+    .do(a => console.log(a))
     .switchMap(payload => of(
       new leaderboard.GetSelectedTypeAction({
         leaderboard: payload.type,
         type: payload.selected,
         week: payload.week,
         gamertag: payload.gamertag,
+        platform: payload.platform,
         tier: payload.tier
       })
     ));
@@ -73,11 +75,18 @@ export class LeaderboardEffects {
           case 'searched': {
             if (!payload.gamertag) {return empty();}
 
-            return of(new leaderboard.SearchPlayerAction({name: payload.gamertag, platform: (type === 'ps' ? 2 : 1), week: payload.week}));
+            return of(new leaderboard.SearchPlayerAction({
+              name: payload.gamertag,
+              platform: (payload.platform == 'ps' ? 2 : 1),
+              week: payload.week
+            }));
           }
-          default: {
+          case 'weapons': {
             let actionParams = {type: type, week: payload.week};
             return of(new leaderboard.GetWeaponTypeAction(Object.assign({}, actionParams, tier)));
+          }
+          default: {
+            return empty();
           }
         }
       } else {
@@ -103,7 +112,7 @@ export class LeaderboardEffects {
   getMedal$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.GET_MEDAL)
     .map((action: leaderboard.GetMedalAction) => action.payload)
-    .mergeMap(payload => {
+    .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
@@ -117,7 +126,7 @@ export class LeaderboardEffects {
   getPlayers$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.GET_PLAYERS)
     .map((action: leaderboard.GetPlayersAction) => action.payload)
-    .mergeMap(payload => {
+    .switchMap(payload => {
       if (!payload.type) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       } else if (!payload.definition) {
@@ -135,7 +144,7 @@ export class LeaderboardEffects {
   searchPlayer$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.SEARCH_PLAYER)
     .map((action: leaderboard.SearchPlayerAction) => action.payload)
-    .mergeMap(payload => {
+    .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
@@ -149,7 +158,7 @@ export class LeaderboardEffects {
   searchPlayerWeapons$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.SEARCH_PLAYER_WEAPONS)
     .map((action: leaderboard.SearchPlayerWeaponsAction) => action.payload)
-    .mergeMap(payload => {
+    .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }
@@ -163,7 +172,7 @@ export class LeaderboardEffects {
   getWeaponIds$: Observable<Action> = this.actions$
     .ofType(leaderboard.ActionTypes.GET_WEAPON_LIST)
     .map((action: leaderboard.GetWeaponListAction) => action.payload)
-    .mergeMap(payload => {
+    .switchMap(payload => {
       if (!payload) {
         return of(new leaderboard.LeaderboardRequestFailedAction(''));
       }

@@ -35,19 +35,23 @@ export class LeaderboardTableComponent implements OnInit {
   pageParams: any;
   tableMetric: string;
   tableHeader: string;
-  hasPlatform: boolean;
+  // hasPlatform: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.pageParams = { itemsPerPage: this.itemsPerPage, currentPage: this.selected.page };
     this.tableMetric = this.selected.leaderboard === 'medals' ? 'Count' : 'Kills';
-    this.hasPlatform = ((this.selected.leaderboard !== 'weapons' && this.selected.leaderboard !== 'searched')) && !this.loading;
+    // this.hasPlatform = ((this.selected.leaderboard !== 'weapons' && this.selected.leaderboard !== 'searched')) && !this.loading;
     this.tableHeader = this.selected.leaderboard === 'weapons' ? 'Weapon' : 'Player';
   }
 
   toWeek(week: number) {
     this.changeWeek.emit(week);
+  }
+
+  hasPlatform(board: string, loading: boolean) {
+    return ((board !== 'weapons' && board !== 'searched')) && !loading;
   }
 
   getDescription(map: any) {

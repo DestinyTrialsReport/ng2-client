@@ -84,12 +84,11 @@ export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered,
   if (selected.leaderboard == 'weapons') {
     if (selected.type !== 'All') {
       filteredItems = items.filter(c => c.type === selected.type);
-      if (selected.tier > 0) {
-        filteredItems = filteredItems.filter(c => c.tier === selected.tier);
-      }
+    }
+    if (selected.tier > 0) {
+      filteredItems = filteredItems.filter(c => c.tier === selected.tier);
     }
   }
-
   return filteredItems;
 });
 

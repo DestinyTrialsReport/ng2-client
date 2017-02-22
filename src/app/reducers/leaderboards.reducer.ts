@@ -50,7 +50,8 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         selected: Object.assign({}, state.selected, {
-          type: payload.type || state.selected.type
+          type: payload.type || state.selected.type,
+          player: null,
         }),
         loading: true,
       });
@@ -74,12 +75,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.GET_SELECTED_TYPE: {
       const payload: any = action.payload;
-      let title = `Most Used ${payload.type || 'Weapon'}s`;
       return Object.assign({}, state, {
         selected: Object.assign({}, state.selected, {
-          type: payload.type
+          type: payload.type,
+          page: 1
         }),
-        title: title,
         loading: true
       });
     }
@@ -104,7 +104,6 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
         items: [...payload],
         title: title,
         selected: Object.assign({}, state.selected, {
-          leaderboard: 'medals',
           icon: icon
         }),
         loading: false,
@@ -113,9 +112,13 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.WEAPON_TYPE_SUCCESS: {
       let payload = action.payload;
+      let selectedType = state.selected.type;
+
+      let title = `Most Used ${selectedType == 'All' ? 'Weapons' : selectedType}`;
 
       return Object.assign({}, state, {
         items: [...payload],
+        title: title,
         selected: Object.assign({}, state.selected, {
           icon: null
         }),
@@ -178,7 +181,6 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         selected: Object.assign({}, state.selected, {
-          leaderboard: 'searched',
           player: payload.name,
           icon: null
         }),
@@ -207,7 +209,8 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
         title: title,
         selected: Object.assign({}, state.selected, {
           icon: icon,
-          type: payload.type
+          type: payload.type,
+          player: null,
         }),
         loading: true,
         error: false
@@ -226,11 +229,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.PLAYERS_SUCCESS: {
       const payload:any[] = action.payload;
+      let selectedType = state.selected.type;
 
       return Object.assign({}, state, {
         items: [...payload],
         selected: Object.assign({}, state.selected, {
-          leaderboard: 'players',
           tier: 0
         }),
         loading: false,

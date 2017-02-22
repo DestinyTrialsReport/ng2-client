@@ -1,16 +1,15 @@
 import {
-  Component, ChangeDetectionStrategy, animate, transition, style, state, trigger, OnInit
+  Component, ChangeDetectionStrategy, animate, transition, style, state, trigger, OnDestroy
 } from '@angular/core';
 import { Store }                from "@ngrx/store";
-import { ActivatedRoute }       from "@angular/router";
+import {ActivatedRoute, Router}       from "@angular/router";
 import { Observable }           from "rxjs/Observable";
-import { MapInfo}               from "../../models/map-stats.model";
-import { MEDALS_REF }           from "../../services/constants";
 import { SelectedLeaderboardItems, LeaderboardSelectList } from "../../models/leaderboard.model";
 
 import * as fromRoot            from '../../reducers';
 import * as leaderboardActions  from "../../actions/leaderboard.actions";
 import * as mapActions          from "../../actions/maps.actions";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'leaderboards',
@@ -29,21 +28,21 @@ import * as mapActions          from "../../actions/maps.actions";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class LeaderboardsComponent {
+export class LeaderboardsComponent implements OnDestroy {
   maxWeek: number;
   currentWeek: number;
+  selectedWeek: number;
+  selectedBoard: string;
+  selectedType: string;
   updatedAt$: Observable<string>;
   slideMap$: Observable<string>;
   leaderboardTitle$: Observable<string>;
   selected$: Observable<SelectedLeaderboardItems>;
-  selectedType: any;
   loading$: Observable<boolean>;
   error$: Observable<boolean>;
   items$: Observable<any[]>;
   currentMap$: Observable<any>;
-  previousMap$: Observable<any>;
-  nextMap$: Observable<any>;
-  medalList: Array<LeaderboardSelectList> = MEDALS_REF;
+  paramSubscription$: Subscription;
   weaponList$: Observable<Array<LeaderboardSelectList>>;
   typeSelection$: Observable<Array<LeaderboardSelectList>>;
 
@@ -80,38 +79,43 @@ export class LeaderboardsComponent {
     this.weaponList$ = store.select(fromRoot.getLeaderboardWeaponList)
       .distinctUntilChanged();
 
-    Observable.combineLatest(
-      this.store.select(fromRoot.getCurrentWeek),
+    this.paramSubscription$ = Observable.combineLatest(
+      this.store.select(fromRoot.getCurrentMap),
+      this.store.select(fromRoot.getMap),
       this.route.data,
       this.route.params,
-      (week, data, params) => {
+      (currentMap, selectedMap, data, params) => {
+        let week;
+        if (selectedMap) {week = selectedMap.week;}
         return Object.assign({}, {
-          week: week,
+          maxWeek: currentMap.week,
+          selectedWeek: week,
           board: data['board'],
           platform: data['platform'],
           gamertag: params['gamertag'],
-          type: params['type'] || data['type']
+          type: params['type']
         })
       })
+      .distinctUntilChanged()
       .subscribe(data => {
-        this.currentWeek = parseInt(data.week);
-        if (!this.maxWeek) {
-          this.maxWeek = parseInt(data.week);
-        }
+        this.maxWeek = parseInt(data.maxWeek);
 
-        // if (data.week) {
-        //   this.currentWeek = parseInt(data.week);
-        //   this.store.dispatch(new mapActions.SlideMapAction({
-        //     direction: 'left',
-        //     week: this.currentWeek
-        //   }));
-        // }
-        if (data.board == 'weapons' && data.type != 'All') {
-          this.store.dispatch(new leaderboardActions.UpdateFilterAction({
-            type: data.type
-          }))
-        } else {
-          let payload = {type: data.board, selected: data.type, gamertag: data.gamertag, week: this.currentWeek};
+        if ((data.board != this.selectedBoard) ||
+            (data.type != this.selectedType) ||
+            (data.selectedWeek != this.selectedWeek)) {
+
+          this.selectedWeek = data.selectedWeek ? parseInt(data.selectedWeek) : this.maxWeek;
+          this.selectedBoard = data.board;
+          this.selectedType = data.type;
+
+          let payload = {
+            type: data.board,
+            selected: data.type,
+            gamertag: data.gamertag,
+            platform: data.platform,
+            week: this.selectedWeek
+          };
+
           this.store.dispatch(new leaderboardActions.GetWeaponListAction(payload));
           this.store.dispatch(new leaderboardActions.SetLeaderboardAction(payload));
         }
@@ -124,10 +128,14 @@ export class LeaderboardsComponent {
 
   goToWeek(week: number) {
     if (week > 44 && week< this.maxWeek + 1) {
-      let direction = (week < this.currentWeek) ? 'left' : 'right';
-      this.currentWeek = week;
-      this.store.dispatch(new mapActions.SlideMapAction({direction: direction, week: this.currentWeek}));
+      let direction = (week < this.selectedWeek) ? 'left' : 'right';
+      // this.selectedWeek = week;
+      this.store.dispatch(new mapActions.SlideMapAction({direction: direction, week: week}));
     }
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription$.unsubscribe();
   }
 
 }

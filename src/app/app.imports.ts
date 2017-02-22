@@ -48,7 +48,7 @@ export const APP_IMPORTS = [
   ReactiveFormsModule,
   Ng2PaginationModule,
   IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
-  RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: IdlePreload }),
+  RouterModule.forRoot(routes, { useHash: true, preloadingStrategy: IdlePreload }),
   AdsenseModule.forRoot({
     adClient: 'ca-pub-7408805581120581',
     adSlot: 8795722555

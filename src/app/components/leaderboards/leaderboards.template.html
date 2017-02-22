@@ -8,14 +8,13 @@
                             [selected]="(selected$ | async)"
                             [typeSelection]="typeSelection$ | async"
                             [weaponList]="weaponList$ | async"
-                            [currentWeek]="currentWeek"
+                            [selectedWeek]="selectedWeek"
                             (changeWeek)="goToWeek($event)">
         </leaderboard-header>
 
         <div class="card__content" *ngIf="!(error$ | async)">
 
-          <leaderboard-table *ngIf="currentWeek"
-                             [items]="(items$ | async)"
+          <leaderboard-table [items]="(items$ | async)"
                              [leaderboardTitle]="(leaderboardTitle$ | async)"
                              [selected]="(selected$ | async)"
                              [map]="(currentMap$ | async)"

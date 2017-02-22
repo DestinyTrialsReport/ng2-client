@@ -19,7 +19,7 @@ export class LeaderboardHeaderComponent implements OnInit {
 
   @Input() map: any;
   @Input() updatedAt: string;
-  @Input() currentWeek: number;
+  @Input() selectedWeek: number;
   @Input() selected: SelectedLeaderboardItems;
   @Input() typeSelection: Array<LeaderboardSelectList>;
   @Input() weaponList: Array<LeaderboardSelectList>;
@@ -54,9 +54,13 @@ export class LeaderboardHeaderComponent implements OnInit {
       type = '1';
     } else if (isNumber && board != 'medals') {
       type = 'All';
+    } else {
+      if (!isWeaponType && !isNumber) {
+        type = null;
+      }
     }
 
-    this.router.navigate([`/${board}`, type || 'All'], {queryParams: {}});
+    this.router.navigate([`/${board}`, (type || 'All')], {queryParams: {}});
   }
 
   filterByTier(tier: number) {
