@@ -2,7 +2,6 @@ import { MapsService } from "./services/maps.service";
 import { ManifestService } from "./services/manifest.service";
 import { PlayerService } from "./services/player.service";
 import { APP_INITIALIZER } from "@angular/core";
-import { AuthService } from "./services/auth.service";
 import { LeaderboardService } from "./services/leaderboard.service";
 import { PopoverConfig } from 'ng2-bootstrap/popover';
 
@@ -20,7 +19,7 @@ export function getPopoverConfig(): PopoverConfig {
 }
 
 export const APP_PROVIDERS = [
-  AuthService,
+  // AuthService,
   MapsService,
   LeaderboardService,
   PlayerService,

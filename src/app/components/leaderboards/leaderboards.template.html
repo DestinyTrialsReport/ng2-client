@@ -33,17 +33,24 @@
             </div>
           </div>
         </div>
-        <div class="card__content" *ngIf="(error$ | async)">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="text-center">
-                <p style="color: #F44336;font-size: 1.2em;font-weight: bold;">Request Failed</p>
-                <span>Please check gamertag and try again.</span>
-              </div>
-            </div>
-          </div>
-
+        <div class="not-found"  *ngIf="(error$ | async)">
+          <img class="not-found__icon" draggable="false" src="/assets/img/sadface-white.png" title="Sad face">
+          <h1 class="not-found__title">Player not found</h1>
+          <p>Check the spelling and try again</p>
+          <a routerLink="/" title="Back to safety">Back to safety</a>
         </div>
+
+        <!--<div class="card__content">-->
+          <!--<div class="row">-->
+            <!--<div class="col-xs-12">-->
+              <!--<div class="text-center">-->
+                <!--<p style="color: #F44336;font-size: 1.2em;font-weight: bold;">Request Failed</p>-->
+                <!--<span>Please check gamertag and try again.</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+
+        <!--</div>-->
       </div>
     </div>
   </main>

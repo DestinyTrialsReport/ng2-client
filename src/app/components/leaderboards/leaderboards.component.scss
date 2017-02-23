@@ -113,6 +113,21 @@ select, input {
   padding-left: 0;
 }
 
+.not-found {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.not-found__icon {
+  width: 125px;
+  height: 125px;
+}
+
+.not-found__title {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
 @media all and (max-width: $breakpoint-large) {
   .maps {
     width: 95vw;
