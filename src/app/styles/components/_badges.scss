@@ -13,6 +13,13 @@
   color: #00C853;
 }
 
+.badge--artifact,
+.badge--hazard {
+  background: $hazard-color;
+  text-shadow: none;
+  color: #ffffff;
+}
+
 .badge--blank {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid $gray-main-color;

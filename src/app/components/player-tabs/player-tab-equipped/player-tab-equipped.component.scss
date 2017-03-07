@@ -17,3 +17,7 @@
   background-color: #78909C;
   margin-right: .5rem;
 }
+
+.badge--artifact + .badge--blank {
+  display: none;
+}

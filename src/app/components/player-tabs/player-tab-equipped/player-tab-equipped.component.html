@@ -38,16 +38,26 @@
     </div>
   </div>
   <div class="row row--small-gutter middle-xs inventory-item" *ngFor="let item of inventory | filterArtifact">
-    <!-- TODO: Finish artifact -->
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
-        <span class="inventory-item__light" [innerHtml]="item?.primaryStat?.value"></span>
         <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + item?.i" [alt]="item?.n">
+        <span class="inventory-item__light" [innerHtml]="item?.primaryStat?.value"></span>
       </div>
     </div>
     <div class="col-xs">
       <div class="inventory-item__title">
         <span [innerHtml]="item?.n"></span>
+      </div>
+      <div class="inventory-item__badges">
+        <!-- TODO: There's probably a better solution for this but I guess this works for now -->
+        <span *ngIf="item?.itemHash === 2672107536" class="badge badge--artifact">Sword deflects rockets</span>
+        <span *ngIf="item?.itemHash === 2672107537" class="badge badge--artifact">Highlights low health/full super</span>
+        <span *ngIf="item?.itemHash === 2672107538" class="badge badge--artifact">Faster super recharge</span>
+        <span *ngIf="item?.itemHash === 2672107540" class="badge badge--artifact">No super, increased everything else</span>
+        <span *ngIf="item?.itemHash === 2672107541" class="badge badge--artifact">Resists damage over time</span>
+        <span *ngIf="item?.itemHash === 2672107542" class="badge badge--artifact">No sprint cooldown</span>
+        <span *ngIf="item?.itemHash === 2672107551" class="badge badge--artifact">Detailed radar</span>
+        <span class="badge badge--blank">Harmless artifact</span>
       </div>
     </div>
   </div>

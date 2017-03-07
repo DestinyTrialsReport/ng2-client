@@ -3,6 +3,7 @@
   height: $inventory-item-image-size;
   border-radius: .5em;
   overflow: hidden;
+  position: relative;
 
   img {
     width: 100%;
@@ -21,13 +22,28 @@
   }
 }
 
+.inventory-item__light {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: rgba(255, 255, 255, .8);
+  background: rgba(0, 0, 0, .33);
+  font-size: .8em;
+  font-weight: 400;
+  padding: .1em .3em;
+  border-top-right-radius: .5em;
+}
+
 .inventory-item__title {
   white-space: normal;
 }
 
-.inventory-item__title + .inventory-item__perks,
-.inventory-item__badges {
+.inventory-item__title + .inventory-item__perks {
   margin-top: .5rem;
+}
+
+.inventory-item__badges {
+  margin-top: .3rem;
 }
 
 .inventory-item--small {
