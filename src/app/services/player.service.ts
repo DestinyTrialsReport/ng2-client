@@ -36,7 +36,7 @@ export class PlayerService extends RequestBase {
   }
 
   dtrStats(membershipId: string): Observable<DTRStats> {
-    return this.http.get(`${DTR_BASE_URL}/player/${membershipId}/`)
+    return this.http.get(`${DTR_BASE_URL}/v2/player/${membershipId}/`)
       .map(res => res.json()[0]);
   }
 

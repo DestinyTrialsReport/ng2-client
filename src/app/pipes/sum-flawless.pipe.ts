@@ -4,12 +4,14 @@ import { DTRStats } from "../models/stats.model";
 @Pipe({ name: 'sumFlawless' })
 export class SumFlawlessPipe implements PipeTransform {
   transform(stats: DTRStats) {
-    if (stats && stats.flawless && stats.flawless.years) {
+    if (stats) {
       let total:number = 0;
-      let years: any[] = Object.keys(stats.flawless.years);
+      let years: any[] = [1,2,3];
       years.forEach((year: any) => {
-        let data:any = stats.flawless.years[year];
-        total += data.count;
+        let data:any = stats[`year${year}`];
+        if (data) {
+          total += data.flawless;
+        }
       });
       return total;
     }

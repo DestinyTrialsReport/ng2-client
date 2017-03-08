@@ -45,6 +45,8 @@ export const reducers = {
   leaderboard: fromLeaderboards.reducer
 };
 
+export const getSearchState = (state: State, index: string) => state.search[index];
+
 export const getPgcrState = (state: State) => state.pgcr;
 
 export const getMyPlayerState = (state: State) => state.characters;
@@ -56,6 +58,23 @@ export const getAuthState = (state: State) => state.auth;
 export const getLeaderboardState = (state: State) => state.leaderboard;
 
 export const getMapState = (state: State) => state.map;
+
+
+// export function playerIsLoaded(playerIndex: string) {
+//   return createSelector(getSearchState, fromSearch.getPlayer);
+// };
+
+export function playerIsLoaded(index: string) {
+  return createSelector(
+    getSearchState, (searchState) => {
+      const player = searchState[index];
+      if (player) {
+        return player.player
+      }
+    }
+  );
+}
+
 
 export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
 
@@ -93,6 +112,8 @@ export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered,
 });
 
 export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
+
+export const getRefreshToken = createSelector(getAuthState, fromAuth.getRefreshToken);
 
 export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
 

@@ -24,19 +24,19 @@ export class AuthEffects {
       Observable.of(window.location.href = `https://www.bungie.net/en/Application/Authorize/10670?state=${state}`)
     );
 
-  // @Effect()
-  // loadAuth$: Observable<Action> = this.actions$
-  //   .ofType(Dispatcher.INIT)
-  //   .withLatestFrom(this.store.select(fromRoot.getAuthState))
-  //   .map(([ , state ]) => {
-  //     let currentTimestamp: number = new Date().valueOf();
-  //     let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(state.authState);
-  //     let refreshToken: boolean = state.refreshToken && (lastAuthTimeAgo > 1800000);
-  //     return {
-  //       action: refreshToken ? new auth.RefreshTokens(state.refreshToken) : new auth.StoreTokenSuccess()
-  //     }
-  //   })
-  //   .mergeMap(({action}) => Observable.of(action));
+  @Effect()
+  loadAuth$: Observable<Action> = this.actions$
+    .ofType(Dispatcher.INIT)
+    .withLatestFrom(this.store.select(fromRoot.getAuthState))
+    .map(([ , state ]) => {
+      let currentTimestamp: number = new Date().valueOf();
+      let lastAuthTimeAgo: number = parseInt(currentTimestamp.toString()) - parseInt(state.authState);
+      let refreshToken: boolean = state.refreshToken && (lastAuthTimeAgo > 1800000);
+      return {
+        action: refreshToken ? new auth.RefreshTokens(state.refreshToken) : new auth.StoreTokenSuccess()
+      }
+    })
+    .mergeMap(({action}) => Observable.of(action));
 
   // @Effect()
   // storeSuccess: Observable<Action> = this.actions$
@@ -53,18 +53,22 @@ export class AuthEffects {
     .map(([payload, state]) => {
       return {
         payload: payload,
-        authState: state.authState
+        authState: state.authState,
+        refreshToken: state.refreshToken
       }
     })
     .mergeMap(response => {
       if (response.authState === response.payload.state) {
         return this.authService.getTokensFromCode(response.payload.code)
-          .map(tokens => new auth.StoreToken({
-            authState: response.authState,
-            accessToken: tokens.accessToken.value,
-            refreshToken: tokens.refreshToken.value
-          }))
-          .catch((err) => Observable.of(new auth.ValidateFailed(err)));
+          .map(res => {
+            return new auth.StoreToken({
+              authState: response.authState,
+              accessToken: res.accessToken.value,
+              refreshToken: res.refreshToken.value
+            })
+          })
+          // .catch((err) => Observable.of(new auth.ValidateFailed(err)));
+          .catch((err) => Observable.of(new auth.RefreshTokens(response.refreshToken)));
       } else {
         return Observable.from([]);
       }

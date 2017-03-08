@@ -1,10 +1,6 @@
-import {Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit} from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MOBILE } from './services/constants';
-import { Store } from "@ngrx/store";
-import * as fromRoot      from './reducers';
-import * as auth from './actions/auth.actions';
-import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'trials-report',
@@ -16,8 +12,6 @@ import {AuthService} from "./services/auth.service";
         <menu></menu>
       </div>
       <main class="body__content">
-      <!--<a target="_blank" (click)="getAuthorization()">Auth With Bungo</a>-->
-      <!--<a target="_blank" (click)="getAccount()">Get Account</a>-->
         <router-outlet></router-outlet>
       </main>
       <button class="body__control btn btn--icon btn--fab" (click)="toggleMenu()">

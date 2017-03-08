@@ -50,6 +50,10 @@ export class ReportComponent {
   constructor(public  route: ActivatedRoute,
               private store: Store<fromRoot.State>) {
 
+    // this.playerOneLoaded = this.store.select(fromRoot.playerIsLoaded);
+    // this.playerTwoLoaded = this.store.select(s => s.search);
+    // this.playerTwoLoaded = this.store.select(s => s.search);
+
     this.players = this.store.select(s => s.search)
       .distinctUntilChanged()
       .share();

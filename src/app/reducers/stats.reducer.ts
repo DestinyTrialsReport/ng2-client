@@ -1,5 +1,5 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { BNGStats, DTRStats, GGGStats, StatValue, Flawless } from "../models/stats.model";
+import {BNGStats, DTRStats, GGGStats, StatValue, Flawless, SummarizedStats} from "../models/stats.model";
 import * as stats from "../actions/stats.actions";
 
 export interface State {
@@ -32,15 +32,23 @@ const bngInitial: any = {
   killsDeathsRatio: bngValuesInitial
 };
 
+
+const SummarizedStatsInitial: SummarizedStats = {
+  flawless: 0,
+  matches: 0,
+  losses: 0,
+  kills: 0,
+  deaths: 0,
+};
+
 const trialsInitial: DTRStats = {
   membershipId: '',
-  flawless: {
-    years: {
-      1: trialsFlawlessInitial,
-      2: trialsFlawlessInitial,
-      3: trialsFlawlessInitial
-    }
-  }
+  streak: 0,
+  flawless: 0,
+  year2: SummarizedStatsInitial,
+  year3: SummarizedStatsInitial,
+  currentWeek: SummarizedStatsInitial,
+  currentMap: SummarizedStatsInitial
 };
 
 const guardianInitial: GGGStats = {
@@ -74,9 +82,7 @@ export function reducer(state = initialState, action: stats.Actions): State {
       const playerId: string = action.payload[1];
 
       const updated: State = Object.assign({}, state[playerId], {
-        bungie: bngStats,
-        trials: state[playerId].trials,
-        guardian: state[playerId].guardian
+        bungie: bngStats
       });
 
       return Object.assign({}, state, {
@@ -87,16 +93,11 @@ export function reducer(state = initialState, action: stats.Actions): State {
     }
 
     case stats.ActionTypes.DTR_STATS: {
-      const dtrStats: DTRStats = {
-        membershipId: action.payload[0].membershipId,
-        flawless: action.payload[0].flawless
-      };
+      const dtrStats: DTRStats = action.payload[0];
       const playerId: string = action.payload[1];
 
       const updated: State = Object.assign({}, state[playerId], {
-        bungie: state[playerId].bungie,
         trials: dtrStats,
-        guardian: state[playerId].guardian
       });
 
       return Object.assign({}, state, {
@@ -115,8 +116,6 @@ export function reducer(state = initialState, action: stats.Actions): State {
       const playerId: string = action.payload[1];
 
       const updated: State = Object.assign({}, state[playerId], {
-        bungie: state[playerId].bungie,
-        trials: state[playerId].trials,
         guardian: gggStats
       });
 

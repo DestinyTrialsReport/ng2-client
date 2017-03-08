@@ -1,12 +1,19 @@
 export interface DTRStats {
   membershipId: string,
-  flawless: {
-    years: {
-      1: Flawless,
-      2: Flawless,
-      3: Flawless
-    }
-  }
+  streak: number,
+  flawless: number,
+  year2: SummarizedStats,
+  year3: SummarizedStats,
+  currentWeek: SummarizedStats,
+  currentMap: SummarizedStats,
+}
+
+export interface SummarizedStats {
+  flawless?: number,
+  matches: number,
+  losses: number,
+  kills: number,
+  deaths: number,
 }
 
 export interface Flawless {

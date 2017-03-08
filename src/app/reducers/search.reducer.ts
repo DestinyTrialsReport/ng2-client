@@ -112,3 +112,7 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
     }
   }
 }
+
+// export function getPlayer(state: State,index: string) {
+//   return state[index].player;
+// }
