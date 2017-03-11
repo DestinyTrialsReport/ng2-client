@@ -1,3 +1,8 @@
+@import '../../styles/helpers/all';
+
+@import 'styles/challenge';
+@import 'styles/medals';
+
 .maps {
   width: calc(100vw - 2em);
   max-width: 640px;

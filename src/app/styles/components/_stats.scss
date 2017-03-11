@@ -26,6 +26,11 @@
   @extend .data-label;
   font-weight: normal;
   color: $dark-main-color;
+
+  > i {
+    font-size: 1.2em;
+    vertical-align: -.2em;
+  }
 }
 
 .stat-header {
@@ -54,4 +59,8 @@
 
 .stat-progress > .col-xs:not(:first-child) {
   margin-left: .15rem;
+}
+
+.stat-row__divider {
+  margin-top: .6rem;
 }

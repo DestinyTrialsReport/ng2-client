@@ -1,0 +1,96 @@
+.challenge-none {
+  text-align: center;
+}
+
+.challenge-none__image {
+  max-width: 5rem;
+}
+
+.challenge-none__label {
+  color: $light-secondary-color;
+  font-size: .8em;
+}
+
+.challenge-done__highlight {
+  font-weight: bold;
+  color: $challenge-color;
+}
+
+.challenge-winner {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.challenge-winner__name {
+  margin: .5em 0;
+
+  a {
+    color: inherit;
+  }
+}
+
+.challenge-winner__result {
+  font-size: 1.1em;
+}
+
+.challenge-intro {
+  border: 1px solid $challenge-color;
+  background-color: transparentize($challenge-color, .9);
+  background-image: url('/assets/img/variks.png');
+  background-repeat: no-repeat;
+  background-position: -3em bottom;
+  background-size: 15em auto;
+  padding: .8rem 1rem;
+  border-radius: .25rem;
+  padding-left: 12.5em;
+}
+
+.challenge-intro__leader {
+  text-transform: uppercase;
+  color: $challenge-color;
+  font-size: .8em;
+  font-weight: 400;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.challenge-intro__challenge {
+  margin-top: .5rem;
+  font-size: 1.1em;
+}
+
+.challenge-intro__details {
+  font-size: .9em;
+  margin-top: .5em;
+}
+
+.challenge-intro__reward {
+  margin-top: 1rem;
+  color: $challenge-color;
+}
+
+.challenge-leaderboard {
+  margin-top: 1.5em;
+}
+
+.challenge-leaderboard__place {
+  font-size: .8em;
+  width: 1.5rem;
+  position: relative;
+
+  .medal {
+    position: absolute;
+    top: -.75em;
+    left: .2em;
+    height: 1.5em;
+    width: 1.5em;
+  }
+}
+
+@media all and (max-width: 512px) {
+  .challenge-intro {
+    padding-left: 1em;
+    padding-bottom: 10em;
+    background-size: auto 9em;
+    background-position: center bottom;
+  }
+}

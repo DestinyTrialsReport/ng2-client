@@ -1,0 +1,41 @@
+.medal {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  text-align: center;
+}
+
+.medal__place {
+  sup {
+    top: 0;
+    text-transform: uppercase;
+    font-size: .6em;
+    vertical-align: .2em;
+  }
+}
+
+.medal--first {
+  background-image: url('/assets/img/laurel-gold.svg');
+}
+
+.medal--second {
+  background-image: url('/assets/img/laurel-silver.svg');
+
+  &.medal--big {
+    background-size: auto 95%;
+  }
+}
+
+.medal--third {
+  background-image: url('/assets/img/laurel-bronze.svg');
+
+  &.medal--big {
+    background-size: auto 90%;
+  }
+}
+
+.medal--big .medal__place {
+  padding: 1.5rem 0;
+  font-size: 1.3em;
+}
