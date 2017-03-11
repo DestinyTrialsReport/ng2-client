@@ -28,6 +28,7 @@ export class LeaderboardTableComponent implements OnInit {
   @Input() items: any[];
   @Input() leaderboardTitle: string;
   @Input() selected: SelectedLeaderboardItems;
+  @Input() selectedWeek: number;
   @Input() map: any;
   @Input() maxWeek: number;
 
@@ -56,7 +57,9 @@ export class LeaderboardTableComponent implements OnInit {
 
   getDescription(map: any) {
     if (map) {
-      return `TRIALS WEEK ${map.weekInYear} - ${map.year}  - ${map.name}`;
+      let weekText = `TRIALS WEEK ${map.weekInYear} -`;
+      if (this.selectedWeek > 99) {weekText = `ALL TRIALS WEEKS IN`};
+      return `${weekText} ${map.year} - ${map.name}`;
     }
   }
 

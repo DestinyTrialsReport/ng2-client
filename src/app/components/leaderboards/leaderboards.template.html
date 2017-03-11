@@ -9,6 +9,8 @@
                             [typeSelection]="typeSelection$ | async"
                             [weaponList]="weaponList$ | async"
                             [selectedWeek]="selectedWeek"
+                            [selectedYear]="selectedYear"
+                            [maxWeek]="maxWeek"
                             (changeWeek)="goToWeek($event)">
         </leaderboard-header>
 
@@ -17,6 +19,7 @@
           <leaderboard-table [items]="(items$ | async)"
                              [leaderboardTitle]="(leaderboardTitle$ | async)"
                              [selected]="(selected$ | async)"
+                             [selectedWeek]="selectedWeek"
                              [map]="(currentMap$ | async)"
                              [loading]="loading$ | async"
                              [maxWeek]="maxWeek"

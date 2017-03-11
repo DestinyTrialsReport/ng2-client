@@ -61,6 +61,17 @@ export function reducer(state = initialState, action: map.Actions): State {
     }
 
     case map.ActionTypes.SEARCH_COMPLETE: {
+      const payload = action.payload;
+
+      if (payload > 99) {
+        return Object.assign({}, state, {
+          slideMap: 'idle',
+          mapInfo: Object.assign({}, state.mapInfo, {
+            week: payload
+          })
+        });
+      }
+
       return Object.assign({}, state, {
         currentMap: state.currentMap,
         mapInfo: state.mapInfo,

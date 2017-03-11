@@ -93,12 +93,13 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.GET_MEDAL_SUCCESS: {
       const payload: any = action.payload;
-      const medal = MEDALS_REF.filter(medal => medal.id == state.selected.type);
+      const type = parseInt(state.selected.type);
+      const medal = MEDALS_REF.filter(medal => medal.id == type);
       const medalId = medal.map(medal => medal.statId);
       const medalName = medal.map(medal => medal.text);
       const definition = MEDAL_DEFINITIONS[String(medalId)];
       const icon = definition && definition['iconImage'] ? `https://www.bungie.net/${definition['iconImage']}` : null;
-      let title = `Most ${medalName} Medals Received`;
+      let title = type > 0 ? `Most ${medalName} Medals Received` : 'Total Medals Received';
 
       return Object.assign({}, state, {
         items: [...payload],
@@ -242,11 +243,12 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.SEARCH_PLAYER_SUCCESS: {
       const payload = action.payload;
+      const allKills = [...payload.allKills];
       const medals = [...payload.medals];
       const weapons = [...payload.weapons];
 
       return Object.assign({}, state, {
-        items: [...weapons, ...medals],
+        items: [...allKills, ...weapons, ...medals],
         loading: false,
       });
     }

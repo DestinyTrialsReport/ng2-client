@@ -53,6 +53,7 @@ export class MenuComponent implements OnInit {
 
   searchPlayer() {
     let platform = this.isXbox ? 1 : 2;
+    let gamertag = this.searchedName.trim();
     // if (window.location.pathname === '/leaderboards') {
       // this.store.dispatch(new leaderboardActions.SearchPlayerAction({name: this.searchedName, week: this.currentWeek, platform: platform}));
       // this.router.navigate(['/leaderboards'], {queryParams: {gamertag: this.searchedName, platform: platform}});
@@ -60,7 +61,9 @@ export class MenuComponent implements OnInit {
     //   this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
     // }
     // this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: this.searchedName, playerIndex: 'player1'}));
-    this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
+    if (gamertag.length > 0) {
+      this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
+    }
   }
 
   togglePlatform(event: Event) {

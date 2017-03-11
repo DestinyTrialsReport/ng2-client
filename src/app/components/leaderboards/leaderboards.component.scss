@@ -2,6 +2,10 @@
 
 @import 'styles/base';
 
+.mobile-padding {
+  display: none;
+}
+
 .card__header__title {
   font-size: 1em;
   font-weight: 300;
@@ -161,6 +165,18 @@ select, input {
 
   .col-xs-6 {
     margin-top: 0;
+  }
+
+  .col-xs-shrink {
+    flex-grow: 1;
+  }
+
+  .card__header:before {
+    height: 20rem;
+  }
+
+  .mobile-padding {
+    display: block;
   }
 
   .selected__weapon-icon {

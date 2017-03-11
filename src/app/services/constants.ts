@@ -320,6 +320,11 @@ export const WEAPON_TYPE_REF: Array<{id: string, statId?: string, text: string}>
 
 export const MEDALS_REF: Array<{id: number, statId: string, text: string}> = [
   {
+    "id": 0,
+    "statId": "medalsAll",
+    "text": "All"
+  },
+  {
     "id": 38,
     "statId": "medalsAbilityArcLightningKillMulti",
     "text": "Storm Bringer"

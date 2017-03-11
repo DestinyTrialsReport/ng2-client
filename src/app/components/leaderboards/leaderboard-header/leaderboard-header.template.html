@@ -5,17 +5,36 @@
     </div>
   </div>
   <div class="row bottom-xs" style="padding-top: 7rem;">
-    <div class="col-xs col-sm-shrink select-container">
+
+    <div class="col-xs-shrink select-container">
+      <div class="select">
+        <select [ngModel]="selectedYear" (ngModelChange)="toWeek(selectedWeek, $event)">
+          <option value="{{year.value}}" *ngFor='let year of leaderboardYears; let i = index;' [innerHtml]="year.text"></option>
+        </select>
+      </div>
+      <div class="stat-label">Year</div>
+    </div>
+
+    <div class="col-xs-shrink select-container">
+      <div class="select">
+        <select [ngModel]="selectedWeek" (ngModelChange)="toWeek($event, selectedYear)">
+          <option value="{{week.value}}" *ngFor='let week of ((selectedWeek < 45 || selectedWeek == 200) ? YearTwoWeeks : YearThreeWeeks); let i = index;' [innerHtml]="week.text"></option>
+        </select>
+      </div>
+      <div class="stat-label">Week</div>
+    </div>
+
+    <div class="select-container" [ngClass]="{'col-xs-shrink': (hasSearchBar || selected?.leaderboard == 'weapons'), 'col-xs': (!hasSearchBar && selected?.leaderboard !== 'weapons')}">
       <div class="select">
         <select [ngModel]="selected.leaderboard" (ngModelChange)="filterByType($event, selected.type)">
-          <option value="select-leaderboard" disabled>Select Leaderboard</option>
+          <!--<option value="select-leaderboard" disabled>Select Leaderboard</option>-->
           <option value="{{type.value}}" *ngFor='let type of leaderboardTypes; let i = index;' [innerHtml]="type.text"></option>
         </select>
       </div>
       <div class="stat-label">Leaderboard</div>
     </div>
 
-    <div class="col-xs col-sm-shrink select-container">
+    <div class="select-container" [ngClass]="{'col-xs-shrink': (hasSearchBar || selected?.leaderboard == 'weapons'), 'col-xs': (!hasSearchBar && selected?.leaderboard !== 'weapons')}">
       <div class="select">
         <select [(ngModel)]="selected.type"
                 (ngModelChange)="filterByType(selected.leaderboard, $event)"
@@ -26,7 +45,7 @@
       <div class="stat-label">Type</div>
     </div>
 
-    <div class="col-xs col-sm-shrink select-container" *ngIf="hasSearchBar">
+    <div class="col-xs select-container" *ngIf="hasSearchBar">
       <div class="select">
         <input [(ngModel)]="selectedWeapon"
                [typeahead]="weaponList"
@@ -39,7 +58,7 @@
       <div class="stat-label">Name</div>
     </div>
 
-    <div class="col-xs col-sm-shrink select-container" *ngIf="selected?.leaderboard == 'weapons'">
+    <div class="col-xs select-container" *ngIf="selected?.leaderboard == 'weapons'">
       <div class="select">
         <select [(ngModel)]="selected.tier"
                 (ngModelChange)="filterByTier($event)">

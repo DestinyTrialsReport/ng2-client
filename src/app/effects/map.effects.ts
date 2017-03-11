@@ -50,6 +50,10 @@ export class MapEffects {
         return Observable.from([]);
       }
 
+      if (payload > 99) {
+        return Observable.from([]);
+      }
+
       return this.mapService.onWeek(payload)
         .map(searched => new maps.LoadMapDataAction(searched))
         .catch((err) => of(new maps.SearchFailedAction(err)));

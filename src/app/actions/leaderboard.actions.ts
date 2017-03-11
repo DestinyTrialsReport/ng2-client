@@ -93,7 +93,7 @@ export class PlayersSuccessAction implements Action {
 export class SearchPlayerSuccessAction implements Action {
   type = ActionTypes.SEARCH_PLAYER_SUCCESS;
 
-  constructor(public payload: {medals: Array<any>, weapons: Array<any>}) { }
+  constructor(public payload: {allKills: Array<any>, medals: Array<any>, weapons: Array<any>}) { }
 }
 
 export class WeaponTypeSuccessAction implements Action {

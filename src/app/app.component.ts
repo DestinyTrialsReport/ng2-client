@@ -30,7 +30,7 @@ import {AuthService} from "./services/auth.service";
 })
 
 export class AppComponent {
-  showMenu: boolean = false;
+  showMenu: boolean = true;
   showAd: boolean = true;
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
@@ -43,7 +43,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.route.queryParams
+    this.route.params
       .subscribe(params => {
         if (params && params['gamertag']) {
           this.showMenu = false;
