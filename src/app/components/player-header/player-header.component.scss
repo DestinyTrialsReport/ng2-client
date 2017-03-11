@@ -35,7 +35,16 @@
 .player-header__subtext {
   font-size: .8em;
 
+  .badge {
+    text-shadow: none;
+  }
+
   > img {
     height: .8em;
   }
+}
+
+.player-header__subclass {
+  display: inline-block;
+  margin-right: .3rem;
 }

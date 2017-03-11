@@ -7,16 +7,20 @@
   font-weight: 400;
 }
 
+.badge-overview {
+  .badge {
+    border: 1px solid currentColor;
+  }
+}
+
 .badge--donator {
   background: #fff;
-  text-shadow: none;
   color: #00C853;
 }
 
 .badge--artifact,
 .badge--hazard {
   background: $hazard-color;
-  text-shadow: none;
   color: #ffffff;
 }
 
@@ -29,4 +33,24 @@
 .badge--challenge {
   color: $challenge-color;
   background: white;
+}
+
+.badge--charity {
+  color: #651FFF;
+  background: white;
+}
+
+.badge--developer {
+  color: #2196F3;
+  background: white;
+}
+
+.badge--twitter {
+  color: #4099FF;
+  background: white;
+}
+
+.badge--overflow {
+  background: rgba(255, 255, 255, 0.5);
+  color: white;
 }

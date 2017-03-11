@@ -6,7 +6,48 @@
     <div class="col-xs row row--small-gutter middle-xs">
       <div class="col-xs player-info">
         <h2 class="player-header__title" [innerText]="playerObs?.displayName"></h2>
-        <div class="player-header__subtext" [innerText]="subclass?.n"></div>
+        <div class="player-header__subtext">
+          <span class="player-header__subclass" [innerText]="subclass?.n"></span>
+          <span class="badge badge--developer" placement="bottom" popover="Hello! We made this site, so we're more than likely looking into you too...">
+            Developer
+          </span>
+          <span class="badge badge--charity" placement="bottom" [popover]="badgeTemplate01">
+            Amazing
+            <template #badgeTemplate01>
+              Placeholder 1
+            </template>
+          </span>
+          <span class="badge badge--donator" placement="bottom" popover="Part of an amazing few that help to keep this site running">
+            Donator
+          </span>
+          <span class="badge badge--overflow" placement="bottom" [popover]="badgeOverflowPopoverTemplate">
+            +2
+            <template #badgeOverflowPopoverTemplate>
+              <div class="badge-overview">
+                <div class="row row--small-gutter">
+                  <div class="col-xs-3">
+                    <span class="badge badge--donator">
+                      Donator
+                    </span>
+                  </div>
+                  <div class="col-xs-9">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed sapien quam. Sed dapibus est id enim facilisis, at posuere turpis adipiscing. Quisque sit amet dui dui.
+                  </div>
+                </div>
+                <div class="row row--small-gutter">
+                  <div class="col-xs-3">
+                    <span class="badge badge--charity">
+                      Amazing
+                    </span>
+                  </div>
+                  <div class="col-xs-9">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed sapien quam. Sed dapibus est id enim facilisis, at posuere turpis adipiscing. Quisque sit amet dui dui.
+                  </div>
+                </div>
+              </div>
+            </template>
+          </span>
+        </div>
         <!--<div ng-repeat="hazard in player.nonHazard track by $index" ng-bind="hazard" class="player-hazard">-->
         <!--</div>-->
         <!--<div ng-repeat="hazard in player.nonHazardCharity track by $index" ng-bind="hazard.status" class="player-hazard player-hazard&#45;&#45;charity1"-->

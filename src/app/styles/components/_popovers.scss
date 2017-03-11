@@ -52,3 +52,16 @@
     transform: translate3d(-$popover-arrow-size, -$popover-arrow-size, 0);
   }
 }
+
+.popover-bottom {
+  margin-top: #{$popover-arrow-size + .25rem};
+
+  & > .arrow {
+    bottom: auto;
+    top: -$popover-arrow-size;
+
+    &:after {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

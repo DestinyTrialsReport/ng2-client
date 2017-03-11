@@ -13,6 +13,11 @@
   }
 }
 
+.stat-number__seperator {
+  font-size: .9em;
+  color: $light-secondary-color;
+}
+
 .stat-label {
   @extend .data-label;
   display: block;
