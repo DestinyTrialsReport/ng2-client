@@ -1,8 +1,9 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Item } from "../models/inventory.model";
-import * as inventory from "../actions/inventory.actions";
 import { EQUIPPED_BUCKETS, HIDDEN_NODES } from "../services/constants";
 import { Talent, ItemDefinition, ItemDefinitions, TalentDefinitions, StepsDefinitions } from "../models/manifest.model";
+
+import * as inventory from "../actions/inventory.actions";
 
 export interface State {
   player1: Item[];

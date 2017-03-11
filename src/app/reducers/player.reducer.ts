@@ -22,17 +22,26 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
 
     case myPlayer.ActionTypes.SEARCH_MY_COMPLETE:
     case player.ActionTypes.SEARCH_COMPLETE: {
-      const playerId: string = action.payload[1];
-      const player: Player = action.payload[0];
+      const playerId = action.payload[1];
+      const player = action.payload[0];
       if (!player) {
         return state;
       }
 
-      return Object.assign({}, state, {
-        player1: playerId == 'player1' ? player : state.player1,
-        player2: playerId == 'player2' ? player : state.player2,
-        player3: playerId == 'player3' ? player : state.player3
-      });
+      // if (playerId == 'player1') {
+      //   return Object.assign({}, state, {
+      //     player1: player,
+      //     player2: playerId == 'player2' ? player : null,
+      //     player3: playerId == 'player3' ? player : null
+      //   });
+      // }
+      // else {
+        return Object.assign({}, state, {
+          player1: playerId == 'player1' ? player : state.player1,
+          player2: playerId == 'player2' ? player : state.player2,
+          player3: playerId == 'player3' ? player : state.player3
+        });
+      // }
     }
 
     case player.ActionTypes.SEARCH_ACCOUNT: {

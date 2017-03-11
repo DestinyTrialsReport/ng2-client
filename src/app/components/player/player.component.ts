@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import {Component, ChangeDetectionStrategy, ElementRef, OnDestroy} from '@angular/core';
 import { Player }       from "../../models/player.model";
 import { Store }        from "@ngrx/store";
 import { Observable }   from 'rxjs/Observable';
@@ -9,6 +9,7 @@ import * as fromSearch  from '../../reducers/search.reducer';
 import * as fromStats   from '../../reducers/stats.reducer';
 import * as fromPgcr    from '../../reducers/pgcr.reducer';
 import * as pgcrActions from "../../actions/pgcr.actions";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'player',
@@ -16,7 +17,8 @@ import * as pgcrActions from "../../actions/pgcr.actions";
   styleUrls: ['./player.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlayerComponent {
+export class PlayerComponent implements OnDestroy {
+  paramSubscription$: Subscription;
   player$:        Observable<Player>;
   activities$:    Observable<Activity[]>;
   stats$:         Observable<fromStats.Stats>;
@@ -50,7 +52,7 @@ export class PlayerComponent {
       .distinctUntilChanged()
       .share();
 
-    this.store.let(fromRoot.getRecentActivities(this.el.nativeElement.id, 3))
+    this.paramSubscription$ = this.store.let(fromRoot.getRecentActivities(this.el.nativeElement.id, 3))
       .subscribe((activities: Activity[]) => {
         this.recentMatches = activities.map(a => {
           return {
@@ -77,5 +79,9 @@ export class PlayerComponent {
         });
     }
   };
+
+  ngOnDestroy() {
+    this.paramSubscription$.unsubscribe();
+  }
 
 }

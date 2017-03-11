@@ -8,7 +8,6 @@
      [statsDtr]="(stats$ | async)?.trials"
      [statsBng]="(stats$ | async)?.bungie"
      [statsGgg]="(stats$ | async)?.guardian"
-     [statsBng]="(stats$ | async)?.bungie"
      [activities]="(activities$ | async)">
   </player-intro>
 
@@ -21,6 +20,7 @@
       <div class="tab tab--style-one">
         <div class="tab__content">
           <player-tab-equipped
+            [loaded]="(loaded$ | async)?.inventory"
             [inventory]="(inventory$ | async)"
             [stats]="(player$ | async)?.characterBase?.stats">
           </player-tab-equipped>

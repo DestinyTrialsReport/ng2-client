@@ -12,6 +12,7 @@ import { ClassStat }      from "../../../models/player.model";
 
 export class PlayerTabEquippedComponent {
   armorBuckets: number[] = ARMOR_BUCKETS;
+  @Input() loaded: boolean;
   @Input() stats: ClassStat[];
   @Input() inventory: Item[];
 }

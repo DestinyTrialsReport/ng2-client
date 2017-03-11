@@ -1,4 +1,4 @@
-<div class="player__block tab__section">
+<div class="player__block tab__section" *ngIf="loaded">
   <div class="row row--small-gutter middle-xs inventory-item inventory-item--weapon" *ngFor="let item of inventory | filterWeapons">
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
@@ -17,7 +17,7 @@
     </div>
   </div>
 </div>
-<div class="player__block tab__section">
+<div class="player__block tab__section" *ngIf="loaded">
   <div class="row row--small-gutter middle-xs inventory-item" *ngFor="let item of inventory | filterArmor">
     <div class="col-xs-shrink">
       <div class="inventory-item__image">
@@ -63,7 +63,7 @@
   </div>
 </div>
 
-<div class="player__block tab__section">
+<div class="player__block tab__section" *ngIf="loaded">
   <div class="row" *ngFor="let subclass of (inventory | filterSubclass)">
     <template ngFor let-node [ngForOf]="subclass?.steps">
       <div class="subclass-perk col-xs-6" *ngIf="([5, 7].indexOf(node.c) < 0) && !([2, 3, 4].indexOf(node.c) > -1 && node.r == 0)">
@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<div class="player__block tab__section">
+<div class="player__block tab__section" *ngIf="loaded">
   <div class="row">
     <div class="col-xs-4" *ngFor="let stat of stats | filterClassStats">
       <div class="row row--no-gutter stat-progress">

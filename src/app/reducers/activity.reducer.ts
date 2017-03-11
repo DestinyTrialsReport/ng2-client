@@ -1,9 +1,8 @@
 /* tslint:disable: no-switch-case-fall-through */
 import 'rxjs/add/observable/of';
 import { Activity } from "../models/activity.model";
+import { Observable } from "rxjs";
 import * as activity from "../actions/activity.actions";
-import {Observable} from "rxjs";
-
 
 export interface State {
   player1: Activity[];

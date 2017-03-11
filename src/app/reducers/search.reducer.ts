@@ -46,6 +46,7 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: player.Actions | myPlayer.Actions | activity.Actions | inventory.Actions): State {
   switch (action.type) {
+
     case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
 
@@ -57,11 +58,26 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
         stats: false,
       });
 
-      return Object.assign({}, state, {
-        player1: playerId == 'player1' ? newState : state.player1,
-        player2: playerId == 'player2' ? newState : state.player2,
-        player3: playerId == 'player3' ? newState : state.player3
-      });
+      const clearState = {
+        player: false,
+        account: false,
+        activities: false,
+        inventory: false,
+        stats: false,
+      };
+
+      if (playerId == 'player1') {
+        return Object.assign({}, state, {
+          player1: newState,
+          player2: clearState,
+          player3: clearState
+        });
+      } else {
+        return Object.assign({}, state, {
+          player2: playerId == 'player2' ? newState : state.player2,
+          player3: playerId == 'player3' ? newState : state.player3
+        });
+      }
     }
 
     case myPlayer.ActionTypes.SEARCH_MY_ACCOUNT:

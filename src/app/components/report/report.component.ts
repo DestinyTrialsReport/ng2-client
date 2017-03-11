@@ -1,6 +1,9 @@
-import { Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component, style, state, animate, transition, trigger, ChangeDetectionStrategy, ViewChild, ElementRef,
+  OnDestroy
+} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { Observable }     from "rxjs/Rx";
+import {Observable, Subscription}     from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
 import * as fromRoot      from '../../reducers';
 import * as fromSearch    from '../../reducers/search.reducer';
@@ -40,8 +43,9 @@ import * as playerActions from '../../actions/player.actions';
   styleUrls: ['./report.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportComponent {
+export class ReportComponent implements OnDestroy {
   players: Observable<fromSearch.State>;
+  paramSubscription$: Subscription;
   focusOnPlayer: number = 1;
   panActive: boolean = false;
   panStartX: number;
@@ -58,7 +62,7 @@ export class ReportComponent {
       .distinctUntilChanged()
       .share();
 
-    Observable.combineLatest(
+    this.paramSubscription$ = Observable.combineLatest(
       this.route.params,
       this.route.data,
       (params, data) => {
@@ -111,5 +115,9 @@ export class ReportComponent {
       this.shiftPlayerFocus(-1);
     }
     this.panActive = false;
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription$.unsubscribe();
   }
 }
