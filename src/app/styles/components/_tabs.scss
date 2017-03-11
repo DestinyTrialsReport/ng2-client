@@ -101,3 +101,23 @@
     background-image: linear-gradient(to bottom, $tab-style-three-color, darken($tab-style-three-color, 5%));
   }
 }
+
+.tab--style-four {
+  &.nav-item.active {
+    background: $tab-style-four-color;
+  }
+
+  &.tab {
+    background-image: linear-gradient(to bottom, $tab-style-four-color, darken($tab-style-four-color, 5%));
+  }
+}
+
+.tab--style-five {
+  &.nav-item.active {
+    background: $tab-style-five-color;
+  }
+
+  &.tab {
+    background-image: linear-gradient(to bottom, $tab-style-five-color, darken($tab-style-five-color, 5%));
+  }
+}
