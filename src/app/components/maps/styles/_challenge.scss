@@ -70,6 +70,10 @@
 
 .challenge-leaderboard {
   margin-top: 1.5em;
+
+  a {
+    color: inherit;
+  }
 }
 
 .challenge-leaderboard__place {
