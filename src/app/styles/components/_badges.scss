@@ -53,4 +53,10 @@
 .badge--overflow {
   background: rgba(255, 255, 255, 0.5);
   color: white;
+  cursor: pointer;
+
+  &:hover {
+    color: #333;
+    background: white;
+  }
 }
