@@ -62,6 +62,10 @@
   }
 }
 
+.stat-table__row--faded {
+  opacity: .25;
+}
+
 .stat-progress > .col-xs:not(:first-child) {
   margin-left: .15rem;
 }

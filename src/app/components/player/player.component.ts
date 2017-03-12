@@ -9,8 +9,8 @@ import * as fromSearch  from '../../reducers/search.reducer';
 import * as fromStats   from '../../reducers/stats.reducer';
 import * as fromPgcr    from '../../reducers/pgcr.reducer';
 import * as pgcrActions from "../../actions/pgcr.actions";
-import {Subscription} from "rxjs";
-import {SummarizedStats} from "../../models/stats.model";
+import { Subscription } from "rxjs";
+import { SummarizedStats } from "../../models/stats.model";
 
 @Component({
   selector: 'player',
@@ -18,6 +18,7 @@ import {SummarizedStats} from "../../models/stats.model";
   styleUrls: ['./player.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class PlayerComponent implements OnDestroy {
   paramSubscription$: Subscription;
   player$:        Observable<Player>;
@@ -97,5 +98,4 @@ export class PlayerComponent implements OnDestroy {
       return `${wins} <span class="stat-number__seperator">/</span> ${stats.losses}`;
     }
   }
-
 }
