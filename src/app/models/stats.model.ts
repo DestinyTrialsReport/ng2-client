@@ -8,12 +8,20 @@ export interface DTRStats {
   currentMap: SummarizedStats,
 }
 
+export interface SummarizedWeapons {
+  itemTypeName: string,
+  sum_kills: number,
+  sum_headshots: number,
+  file_name: string,
+}
+
 export interface SummarizedStats {
-  flawless?: number,
-  matches: number,
-  losses: number,
-  kills: number,
-  deaths: number,
+flawless?: number,
+matches: number,
+losses: number,
+kills: number,
+deaths: number,
+weapons: SummarizedWeapons[],
 }
 
 export interface Flawless {

@@ -1,5 +1,5 @@
 /* tslint:disable: no-switch-case-fall-through */
-import {MapInfo, WeaponUsage, CurrentMap, MapRef} from "../models/map-stats.model";
+import {MapInfo, WeaponUsage, CurrentMap, MapRef, WeeklyChallenge} from "../models/map-stats.model";
 import * as map from "../actions/maps.actions";
 import {CRUCIBLE_MAPS, BUCKET_NAMES, TYPE_BUCKETS} from "../services/constants";
 
@@ -21,6 +21,7 @@ export interface State {
   }
   primaryAvg: WeaponUsage[];
   specialAvg: WeaponUsage[];
+  challenge: WeeklyChallenge;
   slideMap: string;
 }
 
@@ -40,6 +41,7 @@ const initialState: State = {
   weaponTotals: null,
   primaryAvg: [],
   specialAvg: [],
+  challenge: null,
   slideMap: 'idle'
 };
 
@@ -138,6 +140,8 @@ export function reducer(state = initialState, action: map.Actions): State {
 
       const mapRef: MapRef[] = payload.map_ref;
 
+      const challenge = payload.challenge.length > 0 ? payload.challenge[0] : payload.challenge;
+
       return Object.assign({}, state, {
         currentMap: state.currentMap,
         mapInfo: mapInfo,
@@ -150,6 +154,7 @@ export function reducer(state = initialState, action: map.Actions): State {
         },
         primaryAvg: primaryAvg,
         specialAvg: specialAvg,
+        challenge: challenge,
         slideMap: 'idle'
       });
     }

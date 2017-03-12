@@ -1,5 +1,5 @@
 import { Component, style, state, animate, transition, trigger }  from '@angular/core';
-import { WeaponUsage }    from "../../models/map-stats.model";
+import {WeaponUsage, WeeklyChallenge}    from "../../models/map-stats.model";
 import { Store }          from "@ngrx/store";
 import { Observable }     from "rxjs/Observable";
 import { MapInfo }        from "../../models/map-stats.model";
@@ -27,6 +27,7 @@ export class MapsComponent {
   onWeek: number;
   slideMap$: Observable<string>;
   mapInfo$: Observable<MapInfo>;
+  challenge$: Observable<WeeklyChallenge>;
   primary$: Observable<WeaponUsage[]>;
   special$: Observable<WeaponUsage[]>;
   weapons$: Observable<Array<any>>;
@@ -49,6 +50,7 @@ export class MapsComponent {
     });
 
     this.mapInfo$ = store.select(state => state['map'].mapInfo);
+    this.challenge$ = store.select(state => state['map'].challenge);
     this.primary$ = store.select(state => state['map'].primaryAvg);
     this.special$ = store.select(state => state['map'].specialAvg);
 

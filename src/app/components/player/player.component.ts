@@ -10,6 +10,7 @@ import * as fromStats   from '../../reducers/stats.reducer';
 import * as fromPgcr    from '../../reducers/pgcr.reducer';
 import * as pgcrActions from "../../actions/pgcr.actions";
 import {Subscription} from "rxjs";
+import {SummarizedStats} from "../../models/stats.model";
 
 @Component({
   selector: 'player',
@@ -82,6 +83,19 @@ export class PlayerComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.paramSubscription$.unsubscribe();
+  }
+
+  getKillDeathRatio(stats: SummarizedStats) {
+    if (stats) {
+      return stats.kills / stats.deaths;
+    }
+  }
+
+  getWinLoss(stats: SummarizedStats) {
+    if (stats) {
+      let wins = stats.matches - stats.losses;
+      return `${wins} <span class="stat-number__seperator">/</span> ${stats.losses}`;
+    }
   }
 
 }

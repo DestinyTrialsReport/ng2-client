@@ -23,6 +23,21 @@ export interface LeaderboardMeta {
   updated_at: string
 }
 
+export interface ChallengeLeaderboards {
+  leaderboard: string
+  updated_at: string
+}
+
+export interface WeeklyChallenge {
+  week: string
+  duringTitle: string
+  afterTitle: string
+  hasKills: string
+  hasMultiplier: string
+  details: string
+  leaderboard: ChallengeLeaderboards[]
+}
+
 export interface MapInfo {
   week: string;
   referenceId: string;

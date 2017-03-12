@@ -39,6 +39,26 @@ const SummarizedStatsInitial: SummarizedStats = {
   losses: 0,
   kills: 0,
   deaths: 0,
+  weapons: [
+    {
+      itemTypeName: "Sniper Rifle",
+      sum_kills: 0,
+      sum_headshots: 0,
+      file_name: "sniper-rifle.svg"
+    },
+    {
+      itemTypeName: "Sidearm",
+      sum_kills: 0,
+      sum_headshots: 0,
+      file_name: "sidearm.svg"
+    },
+    {
+      itemTypeName: "Auto Rifle",
+      sum_kills: 0,
+      sum_headshots: 0,
+      file_name: "auto-rifle.svg"
+    }
+  ]
 };
 
 const trialsInitial: DTRStats = {

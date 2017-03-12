@@ -150,15 +150,15 @@
             Challenge of the week
           </h3>
         </div>
-        <div class="col-xs-12 col-sm-10" *ngIf="false">
+        <div class="col-xs-12 col-sm-10" *ngIf="!(challenge$ | async)">
           <div class="challenge-none">
             <img class="challenge-none__image" src="/assets/img/sadface-white.png">
             <div class="challenge-none__label">No challenge this week. Sorry!</div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-10" *ngIf="false">
+        <div class="col-xs-12 col-sm-10" *ngIf="!(challenge$ | async)">
           <p>
-            The top 3 Guardians with the <span class="challenge-done__highlight">most Matador 64 kills</span> this week:
+            <!--The top 3 Guardians with the <span class="challenge-done__highlight">most Matador 64 kills</span> this week:-->
           </p>
           <div class="row row--small-gutter">
             <div class="col-xs-4 challenge-winner">
@@ -208,142 +208,44 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-10" *ngIf="true">
+        <div class="col-xs-12 col-sm-10" *ngIf="(challenge$ | async)">
           <div class="challenge-intro">
             <div class="challenge-intro__leader">
               You are challenged, in the ways of old
             </div>
-            <div class="challenge-intro__challenge">
-              Deadly accuracy is needed this week Guardian. Your headshot percentage with primaries in your first 25 matches across all characters counts, yeeeessss?
-            </div>
-            <div class="challenge-intro__details">
-              Make at least 50 kills in those matches for it to count. The tiebreaker is the amount of kills
-            </div>
+            <div class="challenge-intro__challenge" [innerHtml]="(challenge$ | async)?.duringTitle"></div>
+            <div class="challenge-intro__details" [innerHtml]="(challenge$ | async)?.details"></div>
             <div class="challenge-intro__reward">
               Be among the three best challengers to earn a <span class="badge badge--challenge">Challenger</span> badge
             </div>
           </div>
           <div class="challenge-leaderboard">
             <div class="row">
-              <div class="stat-table col-xs-12 col-sm-6">
-                <div class="stat-table__row row row--small-gutter middle-xs">
+              <div class="stat-table col-xs-12 col-sm-6"  *ngFor="let leader of (challenge$ | async)?.leaderboard; let i = index;">
+                <div class="stat-table__row row row--small-gutter middle-xs" *ngIf="i < 5">
                   <div class="challenge-leaderboard__place col-xs-shrink">
-                    <div class="medal medal--first">
-                      1
-                    </div>
+                    <div class="medal" [ngClass]="{'medal--first': i === 0, 'medal--second': i === 1, 'medal--third': i === 2}" [innerHtml]="i + 1"></div>
                   </div>
                   <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
+                    <a href="#">{{leader?.displayName}}
+                      <img class="platform-icon" [src]="'/assets/img/' + (leader?.membershipType == 1 ? 'xbox' : 'ps') + '.svg'">
+                    </a>
                   </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    <div class="medal medal--second">
-                      2
-                    </div>
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    <div class="medal medal--third">
-                      3
-                    </div>
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    4
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    5
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
+                  <div class="col-xs-shrink" [innerHtml]="leader?.score | number:'1.0-0'"></div>
                 </div>
               </div>
               <div class="col-xs-12 col-sm-hidden stat-row__divider"></div>
-              <div class="stat-table col-xs-12 col-sm-6">
-                <div class="stat-table__row row row--small-gutter middle-xs">
+              <div class="stat-table col-xs-12 col-sm-6"  *ngFor="let leader of (challenge$ | async)?.leaderboard; let i = index;">
+                <div class="stat-table__row row row--small-gutter middle-xs" *ngIf="i > 4">
                   <div class="challenge-leaderboard__place col-xs-shrink">
-                    6
+                    <div class="medal" [ngClass]="{'medal--first': i === 0, 'medal--second': i === 1, 'medal--third': i === 2}" [innerHtml]="i + 1"></div>
                   </div>
                   <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
+                    <a href="#">{{leader?.displayName}}
+                      <img class="platform-icon" [src]="'/assets/img/' + (leader?.membershipType == 1 ? 'xbox' : 'ps') + '.svg'">
+                    </a>
                   </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    7
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    8
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    9
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/xbox.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
-                </div>
-                <div class="stat-table__row row row--small-gutter middle-xs">
-                  <div class="challenge-leaderboard__place col-xs-shrink">
-                    10
-                  </div>
-                  <div class="col-xs">
-                    <a href="#">Marruk <img class="platform-icon" src="/assets/img/ps.svg"></a>
-                  </div>
-                  <div class="col-xs-shrink">
-                    3,321
-                  </div>
+                  <div class="col-xs-shrink" [innerHtml]="leader?.score | number:'1.0-0'"></div>
                 </div>
               </div>
             </div>
