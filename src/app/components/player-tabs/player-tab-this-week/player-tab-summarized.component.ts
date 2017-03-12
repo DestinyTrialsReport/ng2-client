@@ -2,12 +2,12 @@ import { Component, Input, ChangeDetectionStrategy, style, state, animate, trans
 import { SummarizedStats, SummarizedWeapons } from "../../../models/stats.model";
 
 @Component({
-  selector: 'player-tab-this-week',
-  templateUrl: './player-tab-this-week.component.html',
+  selector: 'player-tab-summarized',
+  templateUrl: './player-tab-summarized.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class PlayerTabThisWeekComponent {
+export class PlayerTabSummarized {
   @Input() stats: SummarizedStats;
   defaultWeapons: SummarizedWeapons[];
 

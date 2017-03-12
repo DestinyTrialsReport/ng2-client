@@ -17,59 +17,18 @@
     <tab heading="This week" customClass="tab__nav tab--style-four">
       <div class="tab tab--style-four">
         <div class="tab__content">
-          <player-tab-this-week
+          <player-tab-summarized
             [stats]="(stats$ | async)?.trials?.currentWeek">
-          </player-tab-this-week>
+          </player-tab-summarized>
         </div>
       </div>
     </tab>
     <tab heading="This map" customClass="tab__nav tab--style-five">
       <div class="tab tab--style-five">
         <div class="tab__content">
-          <div class="player__block tab__section">
-            <div class="stat-table__row row row--small-gutter" *ngFor="let weapon of (stats$ | async)?.trials?.currentMap?.weapons">
-              <div class="col-xs-6">
-                <img class="weapon-type-icon" [src]="'/assets/img/weapon-icons/' + weapon?.file_name">
-              </div>
-              <div class="col-xs-3" [innerHtml]="weapon?.sum_kills | number:'1.0-0'"></div>
-              <div class="col-xs-3" [innerHtml]="weapon?.sum_headshots | number:'1.0-0'"></div>
-            </div>
-            <div class="stat-table__row row row--small-gutter">
-              <div class="col-xs-6">
-                <div class="stat-header">Most used weapon types</div>
-              </div>
-              <div class="col-xs-3">
-                <div class="stat-label">Kills</div>
-              </div>
-              <div class="col-xs-3">
-                <div class="stat-label">Headshots</div>
-              </div>
-            </div>
-          </div>
-          <div class="player__block tab__section">
-            <div class="row row--tiny-gutter">
-              <div class="col-xs-2">
-                <div class="stat-number" [innerHtml]="getKillDeathRatio((stats$ | async)?.trials?.currentMap) | number"></div>
-                <div class="stat-label">K/D</div>
-              </div>
-              <div class="col-xs-4">
-                <div class="stat-number">
-                  {{(stats$ | async)?.trials?.currentMap?.kills | number:'1.0-0'}}
-                  <span class="stat-number__seperator">/</span>
-                  {{(stats$ | async)?.trials?.currentMap?.deaths | number:'1.0-0'}}
-                </div>
-                <div class="stat-label">Kills / Deaths</div>
-              </div>
-              <div class="col-xs-3">
-                <div class="stat-number" [innerHtml]="(stats$ | async)?.trials?.currentMap?.matches | number:'1.0-0'"></div>
-                <div class="stat-label">Matches</div>
-              </div>
-              <div class="col-xs-3">
-                <div class="stat-number" [innerHtml]="getWinLoss((stats$ | async)?.trials?.currentMap)"></div>
-                <div class="stat-label">Won / Lost</div>
-              </div>
-            </div>
-          </div>
+          <player-tab-summarized
+            [stats]="(stats$ | async)?.trials?.currentMap">
+          </player-tab-summarized>
         </div>
       </div>
     </tab>
