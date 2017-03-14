@@ -6,7 +6,7 @@ import { NotFound404Component } from "./components/notfound404/notfound404.compo
 import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
-import { PlayerTabSummarized } from "./components/player-tabs/player-tab-this-week/player-tab-summarized.component";
+import { PlayerTabSummarized } from "./components/player-tabs/player-tab-summarized/player-tab-summarized.component";
 import { PlayerTabEquippedComponent } from "./components/player-tabs/player-tab-equipped/player-tab-equipped.component";
 import { PlayerTabRecentMatchesComponent } from "./components/player-tabs/player-tab-recent-matches/player-tab-recent-matches.component";
 import { PlayerTabStatsComponent } from "./components/player-tabs/player-tab-stats/player-tab-stats.component";
