@@ -3,6 +3,7 @@ import { MapsComponent } from "./components/maps/maps.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ReportComponent } from "./components/report/report.component";
 import { NotFound404Component } from "./components/notfound404/notfound404.component";
+import { ErrorComponent } from "./components/error/error.component";
 import { PlayerComponent } from "./components/player/player.component";
 import { PlayerHeaderComponent } from "./components/player-header/player-header.component";
 import { PlayerIntroComponent } from "./components/player-intro/player-intro.component";
@@ -30,6 +31,7 @@ export const APP_DECLARATIONS = [
   LeaderboardsComponent,
   LeaderboardHeaderComponent,
   LeaderboardTableComponent,
+  ErrorComponent,
   NotFound404Component,
   ReportComponent,
   MyReportComponent,

@@ -1,0 +1,15 @@
+<div class="content">
+  <div class="error">
+    <img class="error__icon" draggable="false" src="/assets/img/sadface-white.png" title="Sad face">
+    <h1 class="error__title color-error">
+      <i class="material-icons">error_outline</i>
+      <span [innerHtml]="message || 'Uh-oh'"></span>
+    </h1>
+    <p [innerHtml]="description" *ngIf="description"></p>
+    <p *ngIf="!description">
+      Something went wrong, sorry about that.<br>
+      If it happens again let us know by <a href="mailto:destinytrialsreport@gmail.com" target=_blank>email</a> or <a href="https://twitter.com/TrialsReport" target="_blank">Twitter</a>!
+    </p>
+    <a routerLink="/" title="Back to safety">Back to safety</a>
+  </div>
+</div>

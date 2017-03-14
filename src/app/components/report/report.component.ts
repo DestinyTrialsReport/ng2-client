@@ -3,7 +3,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import {Observable, Subscription}     from "rxjs/Rx";
+import { Observable, Subscription } from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
 import * as fromRoot      from '../../reducers';
 import * as fromSearch    from '../../reducers/search.reducer';
