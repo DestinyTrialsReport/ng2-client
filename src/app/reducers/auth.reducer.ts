@@ -7,12 +7,14 @@ export interface State {
   accessToken: string;
   refreshToken: string;
   authState: string;
+  currentUser: any;
 }
 
 const initialState: State = {
   accessToken: '',
   refreshToken: '',
-  authState: ''
+  authState: '',
+  currentUser: null
 };
 
 export function reducer(state = initialState, action: auth.Actions): State {
@@ -25,6 +27,23 @@ export function reducer(state = initialState, action: auth.Actions): State {
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         authState: authState
+      });
+    }
+
+    case auth.ActionTypes.STORE_CURRENT_USER: {
+      const body = action.payload;
+
+      const accountsByLastPlayed = body.destinyAccounts
+        .sort((accountA: any, accountB: any) => {
+          let dateA: any = new Date(accountA.lastPlayed);
+          let dateB: any = new Date(accountB.lastPlayed);
+          return dateA - dateB;
+        })[0];
+
+      return Object.assign({}, state, {
+        currentUser: Object.assign({}, accountsByLastPlayed, {
+          bungieNetUser: body.bungieNetUser
+        })
       });
     }
 

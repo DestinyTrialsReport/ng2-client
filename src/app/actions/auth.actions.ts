@@ -5,6 +5,7 @@ import { type }         from '../util';
 export const ActionTypes = {
   REDIRECT_TO_AUTH:     type('[Auth] Redirect'),
   LOAD_TOKENS:          type('[Auth] Load Tokens'),
+  STORE_CURRENT_USER:   type('[Auth] Store Current User'),
   REFRESH_TOKENS:       type('[Auth] Refresh Tokens'),
   STORE_TOKEN:          type('[Auth] Store Tokens'),
   STORE_TOKEN_SUCCESS:  type('[Auth] Store Token Success'),
@@ -22,6 +23,12 @@ export class LoadTokens implements Action {
   type = ActionTypes.LOAD_TOKENS;
 
   constructor() { }
+}
+
+export class StoreCurrentUser implements Action {
+  type = ActionTypes.STORE_CURRENT_USER;
+
+  constructor(public payload: any) { }
 }
 
 export class RefreshTokens implements Action {
@@ -62,6 +69,7 @@ export type Actions
   = LoadTokens
   | RedirectToAuth
   | StoreToken
+  | StoreCurrentUser
   | RefreshTokens
   | StoreTokenSuccess
   | ValidateToken

@@ -23,6 +23,8 @@ export class PlayerComponent implements OnDestroy {
   paramSubscription$: Subscription;
   player$:        Observable<Player>;
   activities$:    Observable<Activity[]>;
+  // settings$:      Observable<{[name:string]: boolean}>;
+  settings$:      Observable<any>;
   stats$:         Observable<fromStats.Stats>;
   inventory$:     Observable<Item[]>;
   loaded$:        Observable<fromSearch.State>;
@@ -31,6 +33,15 @@ export class PlayerComponent implements OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private el:ElementRef) {
+
+    // this.settings$ = store
+    //   .select(fromRoot.getStatsSettings)
+    //   .distinctUntilChanged()
+    //   .share();
+
+    store
+      .select(fromRoot.getStatsSettings)
+      .subscribe(state => console.log(state));
 
     this.player$ = store
       .select(s => s.players[el.nativeElement.id])

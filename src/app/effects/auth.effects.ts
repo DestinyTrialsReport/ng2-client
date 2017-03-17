@@ -21,7 +21,7 @@ export class AuthEffects {
     .ofType(auth.ActionTypes.REDIRECT_TO_AUTH)
     .map((action: auth.RedirectToAuth) => action.payload)
     .switchMap(state =>
-      Observable.of(window.location.href = `https://www.bungie.net/en/Application/Authorize/10670?state=${state}`)
+      Observable.of(window.location.href = `https://www.bungie.net/en/Application/Authorize/11608?state=${state}`)
     );
 
   @Effect()
@@ -46,6 +46,17 @@ export class AuthEffects {
   //   );
 
   @Effect()
+  getCurrentUser: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.STORE_TOKEN)
+    .switchMap(res => {
+      return this.authService.getCurrentBnetUser()
+        .map(res => {
+          return new auth.StoreCurrentUser(res);
+        })
+        .catch((err) => Observable.of(new auth.ValidateFailed(err)));
+    });
+
+  @Effect()
   validateTokens$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.VALIDATE_TOKEN)
     .map((action: auth.ValidateToken) => action.payload)
@@ -54,7 +65,8 @@ export class AuthEffects {
       return {
         payload: payload,
         authState: state.authState,
-        refreshToken: state.refreshToken
+        refreshToken: state.refreshToken,
+        accessToken: state.accessToken
       }
     })
     .mergeMap(response => {
@@ -63,8 +75,8 @@ export class AuthEffects {
           .map(res => {
             return new auth.StoreToken({
               authState: response.authState,
-              accessToken: res.accessToken.value,
-              refreshToken: res.refreshToken.value
+              accessToken: res ? res.accessToken.value : response.accessToken,
+              refreshToken: res ? res.refreshToken.value : response.refreshToken
             })
           })
           // .catch((err) => Observable.of(new auth.ValidateFailed(err)));

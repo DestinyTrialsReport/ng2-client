@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 import { PGCR } from "../models/pgcr.model";
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { localStorageSync } from "ngrx-store-localstorage";
+import * as fromSettings from './settings.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromMaps from './maps.reducer';
 import * as fromPlayers from './player.reducer';
@@ -20,6 +21,7 @@ import * as fromLeaderboards from './leaderboards.reducer';
 import {CRUCIBLE_MAPS} from "../services/constants";
 
 export interface State {
+  settings: fromSettings.State;
   auth: fromAuth.State;
   map: fromMaps.State;
   search: fromSearch.State;
@@ -33,6 +35,7 @@ export interface State {
 }
 
 export const reducers = {
+  settings: fromSettings.reducer,
   auth: fromAuth.reducer,
   map: fromMaps.reducer,
   search: fromSearch.reducer,
@@ -44,6 +47,8 @@ export const reducers = {
   pgcr: fromPGCR.reducer,
   leaderboard: fromLeaderboards.reducer
 };
+
+export const getSettingsState = (state: State) => state.settings;
 
 export const getSearchState = (state: State, index: string) => state.search[index];
 
@@ -75,6 +80,8 @@ export function playerIsLoaded(index: string) {
   );
 }
 
+
+export const getStatsSettings = createSelector(getSettingsState, fromSettings.getStats);
 
 export const getLeaderboardPrimary = createSelector(getLeaderboardState, fromLeaderboards.getPrimary);
 
@@ -211,7 +218,7 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth', 'settings'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 // const productionReducer = combineReducers(reducers);
 

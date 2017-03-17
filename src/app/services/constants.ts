@@ -1,4 +1,4 @@
-export const API_KEY = ENV === 'production' ? 'e4ac9ad9884b412cb452ee3ffec34ecb' : 'ee5c2bf3759e4219a50fa9fd47d47805';
+export const API_KEY = ENV === 'production' ? 'e4ac9ad9884b412cb452ee3ffec34ecb' : '172482c8636949cfa438cc828bec8396';
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
 // 6b1563bd89854465ab2a423d033c7ddf <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;

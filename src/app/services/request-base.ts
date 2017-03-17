@@ -17,6 +17,5 @@ export class RequestBase {
   constructor(public http: Http) {
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('X-Api-key', API_KEY);
-    this.headers.append('Content-Type', 'text/plain');
   }
 }
