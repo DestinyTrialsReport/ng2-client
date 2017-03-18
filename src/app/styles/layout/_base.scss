@@ -43,6 +43,15 @@
   width: 100%;
 }
 
+router-outlet + * {
+  animation-duration: 500ms;
+  opacity: 0;
+  animation-delay: 100ms;
+  animation-name: pageEnter;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(.55,0,.1,1);
+}
+
 @media all and (max-width: $breakpoint-large) {
   .body {
     display: block;

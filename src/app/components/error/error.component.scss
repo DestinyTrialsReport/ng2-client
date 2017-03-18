@@ -1,0 +1,15 @@
+@import '../../styles/helpers/all';
+
+.error {
+  text-align: center;
+}
+
+.error__icon {
+  width: 125px;
+  height: 125px;
+}
+
+.error__title {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
