@@ -10,7 +10,21 @@ export interface Player {
   },
   emblemPath: string,
   backgroundPath: string,
+  badges: Badge[],
+  opponents: Opponent[],
   characters: Character[]
+}
+
+export interface Badge {
+  status: string,
+  description: string,
+  icon: string
+}
+
+export interface Opponent {
+  membershipId: string,
+  instanceId: string,
+  standing: string
 }
 
 export interface Character {

@@ -54,14 +54,15 @@
         <div class="search__player" *ngIf="(player2$ | async)?.displayName && !(myReport$ | async)">
           <div class="row middle-xs">
             <div class="col-xs">
-              <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
-                   [placeholder]="(player2$ | async)?.displayName">
+              <input type="text" class="form-control" [(ngModel)]="searchedTeammate1"
+                     autocorrect="off" autocomplete="off" spellcheck="false"
+                     [placeholder]="(player2$ | async)?.displayName || 'Enter gamertag'"
+                     (keyup.enter)="searchTeammate(searchedTeammate1, 'player2')">
             </div>
             <div class="col-xs-shrink">
               <button class="btn btn--icon btn--ghost"
                       type="submit"
-                      (click)="searchPlayer()">
-                      <!-- TODO: Make this button work -->
+                      (click)="searchTeammate(searchedTeammate1, 'player2')">
                 <i class="material-icons">&#xE163;</i>
               </button>
             </div>
@@ -70,14 +71,15 @@
         <div class="search__player" *ngIf="(player3$ | async)?.displayName && !(myReport$ | async)">
           <div class="row middle-xs">
             <div class="col-xs">
-              <input type="text" class="form-control" autocorrect="off" autocomplete="off" spellcheck="false"
-                   [placeholder]="(player3$ | async)?.displayName">
+              <input type="text" class="form-control" [(ngModel)]="searchedTeammate2"
+                     autocorrect="off" autocomplete="off" spellcheck="false"
+                     [placeholder]="(player3$ | async)?.displayName || 'Enter gamertag'"
+                     (keyup.enter)="searchTeammate(searchedTeammate2, 'player3')">
             </div>
             <div class="col-xs-shrink">
               <button class="btn btn--icon btn--ghost"
                       type="submit"
-                      (click)="searchPlayer()">
-                      <!-- TODO: Make this button work -->
+                      (click)="searchTeammate(searchedTeammate2, 'player3')">
                 <i class="material-icons">&#xE163;</i>
               </button>
             </div>

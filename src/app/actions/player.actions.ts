@@ -1,5 +1,5 @@
 /* tslint:disable: member-ordering */
-import {Player, Character} from '../models/player.model';
+import {Player, Character, Opponent} from '../models/player.model';
 import { Action }     from '@ngrx/store';
 import { type }       from '../util';
 
@@ -7,6 +7,8 @@ export const ActionTypes = {
   SEARCH_PLAYER:    type('[Player] Search Player'),
   SEARCH_COMPLETE:  type('[Player] Search Player Complete'),
   SEARCH_ACCOUNT:   type('[Player] Search Account'),
+  SEARCH_OPPONENT:   type('[Player] Search Opponent'),
+  OPPONENTS_FOUND:   type('[Player] Opponent Found'),
   SEARCH_FAILED:    type('[Player] Search Players Failed'),
   SEARCH_PLAYER_FAILED:    type('[Player] Search Player Failed'),
   SEARCH_TEAMMATES: type('[Player] Search Teammates'),
@@ -22,6 +24,18 @@ export class SearchCompleteAction implements Action {
   type = ActionTypes.SEARCH_COMPLETE;
 
   constructor(public payload: [Player, string]) { }
+}
+
+export class SearchOpponentAction implements Action {
+  type = ActionTypes.SEARCH_OPPONENT;
+
+  constructor(public payload: [string[], string]) { }
+}
+
+export class OpponentsFoundAction implements Action {
+  type = ActionTypes.OPPONENTS_FOUND;
+
+  constructor(public payload: [Opponent[], string]) { }
 }
 
 export class SearchAccount implements Action {
@@ -52,5 +66,7 @@ export type Actions
   = SearchPlayer
   | SearchAccount
   | SearchFailed
+  | SearchOpponentAction
+  | OpponentsFoundAction
   | SearchCompleteAction
   | SearchTeammates;

@@ -39,12 +39,16 @@
       </div>
       <div class="stat-label">Kills / Deaths</div>
     </div>
-    <div class="col-xs-3">
+    <div class="col-xs-2">
       <div class="stat-number" [innerHtml]="stats?.matches | number:'1.0-0'"></div>
       <div class="stat-label">Matches</div>
     </div>
-    <div class="col-xs-3">
-      <div class="stat-number" [innerHtml]="getWinLoss(stats)"></div>
+    <div class="col-xs-4">
+      <div class="stat-number">
+        {{(stats?.matches - stats?.losses) || 0 | number:'1.0-0'}}
+        <span class="stat-number__seperator">/</span>
+        {{stats?.losses || 0 | number:'1.0-0'}}
+      </div>
       <div class="stat-label">Won / Lost</div>
     </div>
   </div>

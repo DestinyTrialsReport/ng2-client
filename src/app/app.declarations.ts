@@ -16,7 +16,10 @@ import { WinPercentagePipe } from "./pipes/win-percentage.pipe";
 import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
-import { FilterWeapons, FilterSubclass, FilterArmor, FilterArtifact, FilterClassStats, FilterClassArmor } from "./pipes/filter-items.pipe";
+import {
+  FilterWeapons, FilterSubclass, FilterArmor, FilterArtifact, FilterClassStats, FilterClassArmor,
+  OrderByPipe
+} from "./pipes/filter-items.pipe";
 import { TimeAgo } from "./pipes/time-ago.pipe";
 import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
@@ -55,5 +58,6 @@ export const APP_DECLARATIONS = [
   FilterArtifact,
   FilterClassStats,
   FilterClassArmor,
+  OrderByPipe,
   TimeAgo
 ];

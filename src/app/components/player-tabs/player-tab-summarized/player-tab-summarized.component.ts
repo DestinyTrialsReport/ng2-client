@@ -41,11 +41,4 @@ export class PlayerTabSummarized {
       return 0;
     }
   }
-
-  getWinLoss(stats: SummarizedStats) {
-    if (stats) {
-      let wins = stats.matches - stats.losses;
-      return `${wins} <span class="stat-number__seperator">/</span> ${stats.losses}`;
-    }
-  }
 }

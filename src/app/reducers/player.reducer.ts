@@ -1,8 +1,10 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { Player, Character } from "../models/player.model";
+import {Player, Character, Opponent} from "../models/player.model";
 import * as myPlayer from "../actions/my-player.actions";
 import * as player from "../actions/player.actions";
+import * as stats from "../actions/stats.actions";
 import {Observable} from "rxjs";
+import {DTRStats} from "../models/stats.model";
 
 
 export interface State {
@@ -17,7 +19,7 @@ const initialState: State = {
   player3: null
 };
 
-export function reducer(state = initialState, action: player.Actions | myPlayer.Actions): State {
+export function reducer(state = initialState, action: player.Actions | myPlayer.Actions | stats.Actions): State {
   switch (action.type) {
 
     case myPlayer.ActionTypes.SEARCH_MY_COMPLETE:
@@ -44,6 +46,36 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
       // }
     }
 
+    case player.ActionTypes.OPPONENTS_FOUND: {
+      const playerId = action.payload[1];
+      const opponents = action.payload[0];
+      if (!player) {
+        return state;
+      }
+
+      const newOpponents = opponents.filter(opponent => !state[playerId].opponents[opponent.membershipId]);
+
+      const newOpponentIds = newOpponents.map(opponent => opponent.membershipId);
+      const newOpponentEntities = newOpponents.reduce((entities: { [id: string]: Opponent }, opponent: Opponent) => {
+        return Object.assign(entities, {
+          [opponent.membershipId]: opponent
+        });
+      }, {});
+
+      return Object.assign({}, state, {
+        player1: playerId == 'player1' ? Object.assign({}, state.player1, {
+          opponents: newOpponentEntities
+        }) : state.player1,
+        player2: playerId == 'player2' ? Object.assign({}, state.player2, {
+          opponents: newOpponentEntities
+        }) : state.player2,
+        player3: playerId == 'player3' ? Object.assign({}, state.player3, {
+          opponents: newOpponentEntities
+        }) : state.player3
+      });
+      // }
+    }
+
     case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];
       const character: Character = action.payload[0];
@@ -61,6 +93,21 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
         membershipId: character.membershipId ? character.membershipId : state[playerId].membershipId,
         membershipType: character.membershipType ? character.membershipType : state[playerId].membershipType,
         displayName: character.displayName ? character.displayName : state[playerId].displayName
+      });
+
+      return Object.assign({}, state, {
+        player1: playerId == 'player1' ? updated : state.player1,
+        player2: playerId == 'player2' ? updated : state.player2,
+        player3: playerId == 'player3' ? updated : state.player3
+      });
+    }
+
+    case stats.ActionTypes.DTR_STATS: {
+      const dtrStats: DTRStats = action.payload[0];
+      const playerId: string = action.payload[1];
+
+      const updated: State = Object.assign({}, state[playerId], {
+        badges: dtrStats.badges,
       });
 
       return Object.assign({}, state, {

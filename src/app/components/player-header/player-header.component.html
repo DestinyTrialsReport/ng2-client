@@ -8,45 +8,33 @@
         <h2 class="player-header__title" [innerText]="playerObs?.displayName"></h2>
         <div class="player-header__subtext">
           <span class="player-header__subclass" [innerText]="subclass?.n"></span>
-          <span class="badge badge--developer" placement="bottom" popover="Hello! We made this site, so we're more than likely looking into you too...">
-            Developer
-          </span>
-          <span class="badge badge--charity" placement="bottom" [popover]="badgeTemplate01">
-            Amazing
-            <template #badgeTemplate01>
-              Placeholder 1
-            </template>
-          </span>
-          <span class="badge badge--donator" placement="bottom" popover="Part of an amazing few that help to keep this site running">
-            Donator
-          </span>
-          <span class="badge badge--overflow" placement="bottom" [popover]="badgeOverflowPopoverTemplate">
-            +2
+          <template ngFor let-badge [ngForOf]="playerObs?.badges" let-i="index">
+            <span *ngIf="i < 2"
+                  [class]="'badge badge--' + (badge?.class ? badge.class : badge?.status.toLowerCase())"
+                  placement="bottom"
+                  [popover]="badge?.description"
+                  [innerHtml]="badge?.status"></span>
+          </template>
+
+          <span *ngIf="playerObs?.badges?.length > 2"
+                class="badge badge--overflow"
+                placement="bottom"
+                [popover]="badgeOverflowPopoverTemplate"
+                [innerHtml]="'+' + (playerObs?.badges?.length - 2).toString()">
             <template #badgeOverflowPopoverTemplate>
               <div class="badge-overview">
-                <div class="row row--small-gutter">
-                  <div class="col-xs-3">
-                    <span class="badge badge--donator">
-                      Donator
-                    </span>
+                <template ngFor let-badge [ngForOf]="playerObs?.badges" let-i="index">
+                  <div class="row row--small-gutter" *ngIf="i > 1">
+                    <div class="col-xs-3">
+                      <span [class]="'badge badge--' + (badge?.class ? badge.class : badge?.status.toLowerCase())" [innerHtml]="badge?.status"></span>
+                    </div>
+                    <div class="col-xs-9" [innerHtml]="badge?.description"></div>
                   </div>
-                  <div class="col-xs-9">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed sapien quam. Sed dapibus est id enim facilisis, at posuere turpis adipiscing. Quisque sit amet dui dui.
-                  </div>
-                </div>
-                <div class="row row--small-gutter">
-                  <div class="col-xs-3">
-                    <span class="badge badge--charity">
-                      Amazing
-                    </span>
-                  </div>
-                  <div class="col-xs-9">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed sapien quam. Sed dapibus est id enim facilisis, at posuere turpis adipiscing. Quisque sit amet dui dui.
-                  </div>
-                </div>
+                </template>
               </div>
             </template>
           </span>
+
         </div>
         <!--<div ng-repeat="hazard in player.nonHazard track by $index" ng-bind="hazard" class="player-hazard">-->
         <!--</div>-->

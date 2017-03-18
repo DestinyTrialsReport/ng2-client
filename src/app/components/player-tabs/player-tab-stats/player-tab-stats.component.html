@@ -55,7 +55,7 @@
     </div>
   </div>
   <!-- TODO: Sort this on descending kills -->
-  <div class="stat-table__row row row--small-gutter" *ngFor="let key of weaponKills; let i = index;">
+  <div class="stat-table__row row row--small-gutter" *ngFor="let key of (weaponKills | orderBy:stats); let i = index;">
     <div class="col-xs-4">
       <img class="weapon-type-icon" [src]="keyToWeaponIcon(key)">
     </div>

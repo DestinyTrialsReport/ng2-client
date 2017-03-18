@@ -2,10 +2,17 @@ export interface DTRStats {
   membershipId: string,
   streak: number,
   flawless: number,
+  badges: Badge[],
   year2: SummarizedStats,
   year3: SummarizedStats,
   currentWeek: SummarizedStats,
   currentMap: SummarizedStats,
+}
+
+export interface Badge {
+  status: string,
+  description: string,
+  icon: string
 }
 
 export interface SummarizedWeapons {

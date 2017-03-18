@@ -93,3 +93,21 @@ export class FilterClassArmor implements PipeTransform {
     return filtered;
   }
 }
+
+@Pipe({ name: 'orderBy' })
+export class OrderByPipe implements PipeTransform{
+  transform(arr, stats){
+    if(arr === undefined){return null;}
+    return arr.sort((a, b) => {
+      if (stats[a] && stats[a].basic) {
+        if (stats[a].basic.value < stats[b].basic.value) {
+          return 1;
+        }
+        if (stats[a].basic.value > stats[b].basic.value) {
+          return -1;
+        }
+      }
+      return 0;
+    });
+  }
+}

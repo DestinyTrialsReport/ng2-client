@@ -26,6 +26,8 @@ export class MenuComponent implements OnInit {
   myReport$: Observable<boolean>;
   showAd: boolean = true;
   searchedName: string;
+  searchedTeammate1: string;
+  searchedTeammate2: string;
   currentWeek: number;
   isXbox: boolean;
   @Input() query: string = '';
@@ -52,15 +54,13 @@ export class MenuComponent implements OnInit {
   }
 
   searchPlayer() {
+    let platform = this.isXbox ? '/xbox' : '/ps';
+    this.router.navigate([platform, this.searchedName]);
+  }
+
+  searchTeammate(name, index) {
     let platform = this.isXbox ? 1 : 2;
-    // if (window.location.pathname === '/leaderboards') {
-      // this.store.dispatch(new leaderboardActions.SearchPlayerAction({name: this.searchedName, week: this.currentWeek, platform: platform}));
-      // this.router.navigate(['/leaderboards'], {queryParams: {gamertag: this.searchedName, platform: platform}});
-    // } else {
-    //   this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
-    // }
-    // this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: this.searchedName, playerIndex: 'player1'}));
-    this.router.navigate([this.isXbox ? '/xbox' : '/ps', this.searchedName]);
+    this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: name, playerIndex: index}));
   }
 
   togglePlatform(event: Event) {

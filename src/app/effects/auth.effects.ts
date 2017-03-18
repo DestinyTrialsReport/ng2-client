@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from "../services/auth.service";
 import * as auth from '../actions/auth.actions';
 import * as fromRoot      from '../reducers';
+import {AUTH_URL} from "../services/constants";
 
 @Injectable()
 
@@ -21,7 +22,7 @@ export class AuthEffects {
     .ofType(auth.ActionTypes.REDIRECT_TO_AUTH)
     .map((action: auth.RedirectToAuth) => action.payload)
     .switchMap(state =>
-      Observable.of(window.location.href = `https://www.bungie.net/en/Application/Authorize/11608?state=${state}`)
+      Observable.of(window.location.href = `${AUTH_URL}?state=${state}`)
     );
 
   @Effect()
@@ -73,11 +74,15 @@ export class AuthEffects {
       if (response.authState === response.payload.state) {
         return this.authService.getTokensFromCode(response.payload.code)
           .map(res => {
-            return new auth.StoreToken({
-              authState: response.authState,
-              accessToken: res ? res.accessToken.value : response.accessToken,
-              refreshToken: res ? res.refreshToken.value : response.refreshToken
-            })
+            if (res && res.accessToken) {
+              return new auth.StoreToken({
+                authState: response.authState,
+                accessToken: res ? res.accessToken.value : response.accessToken,
+                refreshToken: res ? res.refreshToken.value : response.refreshToken
+              })
+            } else {
+              return Observable.from([]);
+            }
           })
           // .catch((err) => Observable.of(new auth.ValidateFailed(err)));
           .catch((err) => Observable.of(new auth.RefreshTokens(response.refreshToken)));

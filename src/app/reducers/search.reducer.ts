@@ -47,6 +47,27 @@ const initialState: State = {
 export function reducer(state = initialState, action: player.Actions | myPlayer.Actions | activity.Actions | inventory.Actions): State {
   switch (action.type) {
 
+    case player.ActionTypes.SEARCH_PLAYER: {
+      const payload = action.payload;
+
+      const clearState = {
+        player: false,
+        account: false,
+        activities: false,
+        inventory: false,
+        stats: false,
+      };
+
+      if (payload.playerIndex != 'player1') {
+        return Object.assign({}, state, {
+          player2: payload.playerIndex == 'player2' ? clearState : state.player2,
+          player3: payload.playerIndex == 'player3' ? clearState : state.player3
+        });
+      } else {
+        return state;
+      }
+    }
+
     case player.ActionTypes.SEARCH_COMPLETE: {
       const playerId: string = action.payload[1];
 

@@ -1,4 +1,5 @@
-export const API_KEY = ENV === 'production' ? 'e4ac9ad9884b412cb452ee3ffec34ecb' : '172482c8636949cfa438cc828bec8396';
+export const API_KEY = ENV === 'production' ? '6b1563bd89854465ab2a423d033c7ddf' : '172482c8636949cfa438cc828bec8396';
+export const AUTH_URL = ENV === 'production' ? 'https://www.bungie.net/en/Application/Authorize/10709' : 'https://www.bungie.net/en/Application/Authorize/11608';
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
 // 6b1563bd89854465ab2a423d033c7ddf <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
