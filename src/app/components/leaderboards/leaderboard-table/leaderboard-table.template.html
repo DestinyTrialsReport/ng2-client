@@ -54,7 +54,7 @@
       <div class="hide-stat col-xs-1">
         <div class="stat-header"></div>
       </div>
-      <div class="col-xs-5 col-sm-3">
+      <div class="col-xs-3" [ngClass]="{'col-xs-4': ([100,200,300].indexOf(selectedWeek) > -1 && selected?.leaderboard == 'players')}">
         <div class="stat-header" [innerHtml]="tableHeader" *ngIf="selected?.type != 0"></div>
         <div class="stat-header" [innerHtml]="'Medal'" *ngIf="selected?.type == 0 && selected?.leaderboard == 'medals'"></div>
       </div>
@@ -65,7 +65,7 @@
         <div class="stat-header" *ngIf="selected?.leaderboard !== 'medals'">Headshots</div>
       </div>
       <div class="col-xs-1 mobile-padding"></div>
-      <div class="col-xs-2">
+      <div class="col-xs-2" *ngIf="!([100,200,300].indexOf(selectedWeek) > -1 && selected?.leaderboard == 'players')">
         <div class="stat-header" *ngIf="selected?.leaderboard == 'medals' && selected?.type == 0">Players</div>
         <div class="stat-header" *ngIf="selected?.type != 0">Matches</div>
       </div>
@@ -82,19 +82,19 @@
 
       <div class="col-xs-1 text-center">
         <img *ngIf="item?.platform"
-             [src]="'/assets/img/' + (item?.platform == 1 ? 'xbox.svg' : 'ps.svg')"
+              [src]="'/assets/img/' + (item?.platform == 1 ? 'xbox.svg' : 'ps.svg')"
              [alt]="item?.platform == 1 ? 'xbox' : 'psn'"
              style="height: 1rem;max-width: 1rem;">
       </div>
 
       <div class="hide-stat col-xs-1 text-center">
-        <img *ngIf="!selected?.icon && item?.icon"
+        <img *ngIf="!selected?.icon && item?.icon?.length > 0 && item?.icon != 'https://www.bungie.netNULL'"
              [src]="item?.icon"
              [alt]="item?.name"
              class="weapon-icon__small">
       </div>
 
-      <div class="col-xs-5 col-sm-3">
+      <div class="col-xs-3" [ngClass]="{'col-xs-4': ([100,200,300].indexOf(selectedWeek) > -1 && selected?.leaderboard == 'players')}">
         <a [innerHtml]="item?.name"
            [routerLink]="[getItemUrl(item)]"></a>
       </div>
@@ -109,7 +109,7 @@
 
       <div class="col-xs-1 mobile-padding"></div>
 
-      <div class="col-xs-2">
+      <div class="col-xs-2" *ngIf="!([100,200,300].indexOf(selectedWeek) > -1 && selected?.leaderboard == 'players')">
         <span [innerHtml]="item?.matches || item?.players | number:'1.0-0'"></span>
       </div>
     </div>

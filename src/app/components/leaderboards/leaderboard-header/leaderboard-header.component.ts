@@ -33,10 +33,12 @@ export class LeaderboardHeaderComponent implements OnInit {
   selectedWeapon: any;
   YearThreeWeeks: Array<{value: number, text: string}>;
   YearTwoWeeks: Array<{value: number, text: string}>;
+  YearOneWeeks: Array<{value: number, text: string}>;
 
   leaderboardYears: Array<{value: number, text: string}> = [
     {value: 3, text: '3'},
-    {value: 2, text: '2'}
+    {value: 2, text: '2'},
+    {value: 1, text: '1'}
   ];
 
   leaderboardTypes: Array<{value: string, text: string}> = [
@@ -56,23 +58,34 @@ export class LeaderboardHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.hasSearchBar = this.selected.leaderboard == ('players' || 'searched');
-    let yearThree = [], yearTwo = [];
+    let yearThree = [], yearTwo = [], yearOne = [];
     for(let i = 1; i <= this.maxWeek; i++){
       if (i > 44) {
         yearThree.push({value: i, text: `${(i - 44)}`});
       } else {
         yearTwo.push({value: i, text: `${i}`});
+        if (i < 17) {
+          yearOne.push({value: i + 100, text: `${i}`});
+        }
       }
     }
     yearThree.push({value: 300, text: 'All'});
     yearTwo.push({value: 200, text: 'All'});
+    yearOne.push({value: 100, text: 'All'});
     this.YearThreeWeeks = yearThree.reverse();
     this.YearTwoWeeks = yearTwo.reverse();
+    this.YearOneWeeks = yearOne.reverse();
   }
 
   toWeek(week: number, year: number) {
     if (year !== this.selectedYear) {
-      this.selectedWeek = year > 2 ? this.YearThreeWeeks[1].value : this.YearTwoWeeks[1].value;
+      if (year == 1) {
+        this.selectedWeek = this.YearOneWeeks[1].value;
+      } else if (year == 2) {
+        this.selectedWeek = this.YearTwoWeeks[1].value;
+      } else {
+        this.selectedWeek = this.YearThreeWeeks[1].value;
+      }
       week = this.selectedWeek;
     }
     this.changeWeek.emit(week);
@@ -82,7 +95,7 @@ export class LeaderboardHeaderComponent implements OnInit {
     let isWeaponType = WEAPON_TYPES.indexOf(type) > -1 || type == 'All';
     let isNumber = parseInt(type) >= 0;
 
-    if (isWeaponType && board == 'medals') {
+    if ((isWeaponType || parseInt(type) > 100) && board == 'medals') {
       type = '0';
     } else if (isNumber && board != 'medals') {
       type = 'All';

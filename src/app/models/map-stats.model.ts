@@ -35,6 +35,7 @@ export interface MapInfo {
   kills: string;
   weekText: string;
   year?: string;
+  isYearOne?: string;
   weekInYear?: number;
 }
 

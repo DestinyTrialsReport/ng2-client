@@ -57,16 +57,17 @@ export class LeaderboardTableComponent implements OnInit {
 
   getDescription(map: any) {
     if (map) {
-      let weekText = `TRIALS WEEK ${map.weekInYear} -`;
-      if (this.selectedWeek > 99) {weekText = `ALL TRIALS WEEKS IN`};
-      return `${weekText} ${map.year} - ${map.name}`;
+      let weekText = `TRIALS WEEK ${map.weekInYear} - ${map.year} - ${map.name}`;
+      if (this.selectedWeek > 199 || this.selectedWeek == 100) {weekText = `ALL TRIALS WEEKS IN ${map.year}`;}
+      return weekText;
     }
   }
 
   getItemUrl(item: any) {
     let itemId = item.itemHash || item.id;
-    let board = itemId ? 'players' : 'weapons';
+    let medalId = item.medalId;
+    let board = itemId ? 'players' : (medalId ? 'medals' : 'weapons');
     let platform = item.platform == 1 ? 'xbox' : 'ps';
-    return `/${(item.platform ? platform : board)}/${(itemId || item.name)}`;
+    return `/${(item.platform ? platform : board)}/${(medalId || itemId || item.name)}`;
   }
 }

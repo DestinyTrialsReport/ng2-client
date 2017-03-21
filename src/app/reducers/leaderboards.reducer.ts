@@ -115,7 +115,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       let payload = action.payload;
       let selectedType = state.selected.type;
 
-      let title = `Most Used ${selectedType == 'All' ? 'Weapons' : selectedType}`;
+      let title = `Most Used ${(selectedType == 'All') ? 'Weapons' : selectedType}`;
 
       return Object.assign({}, state, {
         items: [...payload],

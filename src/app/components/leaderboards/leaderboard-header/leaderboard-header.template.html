@@ -18,7 +18,7 @@
     <div class="col-xs-shrink select-container">
       <div class="select">
         <select [ngModel]="selectedWeek" (ngModelChange)="toWeek($event, selectedYear)">
-          <option value="{{week.value}}" *ngFor='let week of ((selectedWeek < 45 || selectedWeek == 200) ? YearTwoWeeks : YearThreeWeeks); let i = index;' [innerHtml]="week.text"></option>
+          <option value="{{week.value}}" *ngFor='let week of ((selectedWeek < 45 || selectedWeek == 200) ? YearTwoWeeks : ((selectedWeek > 99 && selectedWeek < 200) ? YearOneWeeks : YearThreeWeeks)); let i = index;' [innerHtml]="week.text"></option>
         </select>
       </div>
       <div class="stat-label">Week</div>

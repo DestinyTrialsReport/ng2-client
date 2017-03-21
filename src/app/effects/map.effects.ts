@@ -50,7 +50,7 @@ export class MapEffects {
         return Observable.from([]);
       }
 
-      if (payload > 99) {
+      if (payload > 116 || payload == 100) {
         return Observable.from([]);
       }
 

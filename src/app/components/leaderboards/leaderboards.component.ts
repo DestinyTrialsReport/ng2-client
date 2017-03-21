@@ -107,7 +107,9 @@ export class LeaderboardsComponent implements OnDestroy {
             (data.selectedWeek != this.selectedWeek)) {
 
           this.selectedWeek = data.selectedWeek ? parseInt(data.selectedWeek) : this.maxWeek;
-          if (this.selectedWeek < 99) {
+          if (this.selectedWeek > 99 && this.selectedWeek < 200) {
+            this.selectedYear = 1;
+          } else if (this.selectedWeek < 99) {
             this.selectedYear = this.selectedWeek > 44 ? 3 : 2;
           } else {
             this.selectedYear = this.selectedWeek == 300 ? 3 : 2;
@@ -134,7 +136,7 @@ export class LeaderboardsComponent implements OnDestroy {
   }
 
   goToWeek(week: number) {
-    if ((week > 0 && week < this.maxWeek + 1) || (week == 200 || week == 300)) {
+    if ((week > 0 && week < 117) || (week == 200 || week == 300)) {
       let direction = (week < this.selectedWeek) ? 'left' : 'right';
       // if (week > 99) {
       //   direction = 'idle';
