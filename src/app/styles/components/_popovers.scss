@@ -65,3 +65,19 @@
     }
   }
 }
+
+.popover-left {
+  margin-top: 0;
+  margin-left: -#{$popover-arrow-size + .5rem};
+
+  & > .arrow {
+    bottom: auto;
+    top: 50%;
+    left: 100%;
+    transform: translate3d(-50%, -50%, 0) rotate(45deg);
+
+    &:after {
+      transform: translate3d(-$popover-arrow-size, 0, 0);
+    }
+  }
+}

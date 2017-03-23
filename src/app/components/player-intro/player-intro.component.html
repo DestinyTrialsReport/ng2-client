@@ -26,7 +26,34 @@
         <div class="stat-label">Recent Matches</div>
       </div>
       <div class="col-xs-shrink kd__stat">
-        <div class="stat-number">
+        <div class="stat-number"
+          placement="left"
+          [popover]="kdDetailsPopover">
+          <template #kdDetailsPopover>
+            <div class="row stat-title">
+              <div class="col-xs">
+                Account-wide K/D's
+              </div>
+            </div>
+            <div class="row row--small-margin">
+              <div class="col-xs">
+                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+                <div class="stat-label">Weekly</div>
+              </div>
+              <div class="col-xs">
+                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+                <div class="stat-label">Year 3</div>
+              </div>
+              <div class="col-xs">
+                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+                <div class="stat-label">Year 2</div>
+              </div>
+              <div class="col-xs">
+                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+                <div class="stat-label">Year 1</div>
+              </div>
+            </div>
+          </template>
           <span [innerHtml]="statsBng?.killsDeathsRatio.basic.value | number : '1.2-2'"></span>
         </div>
         <div class="stat-label">K/D</div>
