@@ -221,8 +221,8 @@
           </div>
           <div class="challenge-leaderboard">
             <div class="row">
-              <div class="stat-table col-xs-12 col-sm-6"  *ngFor="let leader of (challenge$ | async)?.leaderboard; let i = index;">
-                <div class="stat-table__row row row--small-gutter middle-xs" *ngIf="i < 5">
+              <div class="stat-table col-xs-12 col-sm-6" >
+                <div class="stat-table__row row row--small-gutter middle-xs" *ngFor="let leader of (challenge$ | async)?.leaderboard | slice:0:5; let i = index;">
                   <div class="challenge-leaderboard__place col-xs-shrink">
                     <div class="medal" [ngClass]="{'medal--first': i === 0, 'medal--second': i === 1, 'medal--third': i === 2}" [innerHtml]="i + 1"></div>
                   </div>
@@ -235,10 +235,10 @@
                 </div>
               </div>
               <div class="col-xs-12 col-sm-hidden stat-row__divider"></div>
-              <div class="stat-table col-xs-12 col-sm-6"  *ngFor="let leader of (challenge$ | async)?.leaderboard; let i = index;">
-                <div class="stat-table__row row row--small-gutter middle-xs" *ngIf="i > 4">
+              <div class="stat-table col-xs-12 col-sm-6">
+                <div class="stat-table__row row row--small-gutter middle-xs" *ngFor="let leader of (challenge$ | async)?.leaderboard | slice:5:10; let i = index;">
                   <div class="challenge-leaderboard__place col-xs-shrink">
-                    <div class="medal" [ngClass]="{'medal--first': i === 0, 'medal--second': i === 1, 'medal--third': i === 2}" [innerHtml]="i + 1"></div>
+                    <div class="medal" [innerHtml]="i + 6"></div>
                   </div>
                   <div class="col-xs">
                     <a href="#">{{leader?.displayName}}
