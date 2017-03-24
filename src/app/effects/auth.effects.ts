@@ -4,6 +4,7 @@ import { Action, Store, Dispatcher } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from "../services/auth.service";
+import { empty } from 'rxjs/observable/empty';
 import * as auth from '../actions/auth.actions';
 import * as fromRoot      from '../reducers';
 import {AUTH_URL} from "../services/constants";
@@ -49,7 +50,7 @@ export class AuthEffects {
   @Effect()
   getCurrentUser: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.STORE_TOKEN)
-    .switchMap(res => {
+    .mergeMap(res => {
       return this.authService.getCurrentBnetUser()
         .map(res => {
           return new auth.StoreCurrentUser(res);
@@ -81,7 +82,7 @@ export class AuthEffects {
                 refreshToken: res ? res.refreshToken.value : response.refreshToken
               })
             } else {
-              return Observable.from([]);
+              return empty();
             }
           })
           // .catch((err) => Observable.of(new auth.ValidateFailed(err)));

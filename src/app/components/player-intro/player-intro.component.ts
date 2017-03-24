@@ -22,4 +22,11 @@ export class PlayerIntroComponent {
     }
     return standing === 0; //? 'match--win' : 'match--loss'
   }
+
+  getKdRatio(year): number {
+    let kills:number = year.kills;
+    let deaths:number = Math.max(1, year.deaths);
+
+    return kills / deaths;
+  }
 }

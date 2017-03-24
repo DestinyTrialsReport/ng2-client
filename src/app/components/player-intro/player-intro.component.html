@@ -36,20 +36,20 @@
               </div>
             </div>
             <div class="row row--small-margin">
-              <div class="col-xs">
-                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="statsDtr?.currentWeek?.kills">
+                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.currentWeek) | number : '1.2-2'"></div>
                 <div class="stat-label">Weekly</div>
               </div>
-              <div class="col-xs">
-                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="statsDtr?.year3?.kills">
+                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year3) | number : '1.2-2'"></div>
                 <div class="stat-label">Year 3</div>
               </div>
-              <div class="col-xs">
-                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="statsDtr?.year2?.kills">
+                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year2) | number : '1.2-2'"></div>
                 <div class="stat-label">Year 2</div>
               </div>
-              <div class="col-xs">
-                <div class="stat-number" [innerHtml]="5.4 | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="statsDtr?.year1?.kills">
+                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year1) | number : '1.2-2'"></div>
                 <div class="stat-label">Year 1</div>
               </div>
             </div>

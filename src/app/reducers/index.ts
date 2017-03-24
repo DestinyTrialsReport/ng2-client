@@ -218,7 +218,7 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth', 'settings'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['settings'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 // const productionReducer = combineReducers(reducers);
 

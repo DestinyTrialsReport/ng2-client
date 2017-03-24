@@ -5,15 +5,14 @@ import { DTRStats } from "../models/stats.model";
 export class SumFlawlessPipe implements PipeTransform {
   transform(stats: DTRStats) {
     if (stats) {
-      let total:number = 0;
-      let years: any[] = [1,2,3];
-      years.forEach((year: any) => {
-        let data:any = stats[`year${year}`];
-        if (data) {
-          total += data.flawless;
+      return ['year1', 'year2', 'year3'].reduce((total, current) => {
+        let data:any = stats[current];
+        let flawless:number = 0;
+        if (data && data.flawless) {
+          flawless = data.flawless;
         }
-      });
-      return total;
+        return total + flawless;
+      }, 0);
     }
   }
 }

@@ -3,6 +3,7 @@ export interface DTRStats {
   streak: number,
   flawless: number,
   badges: Badge[],
+  year1: SummarizedStats,
   year2: SummarizedStats,
   year3: SummarizedStats,
   currentWeek: SummarizedStats,

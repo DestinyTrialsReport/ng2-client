@@ -5,6 +5,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { of } from 'rxjs/observable/of';
+import { empty } from 'rxjs/observable/empty';
 import { LocalStorageService } from "ng2-webstorage";
 import { PlayerService } from '../services/player.service';
 
@@ -43,7 +44,7 @@ export class PlayerEffects {
     .map((action: player.SearchPlayer) => action.payload)
     .mergeMap(query => {
       if (query.name === '') {
-        return Observable.from([]);
+       return empty();
       }
 
       return this.playerService.search(query.platform, query.name)
@@ -63,7 +64,7 @@ export class PlayerEffects {
     .map((action: player.SearchCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
-        return Observable.from([]);
+       return empty();
       }
 
       return this.playerService.account(payload[0].membershipType, payload[0].membershipId)
@@ -77,7 +78,7 @@ export class PlayerEffects {
     .map((action: myPlayer.SearchMyCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload[1] || payload[1] !== 'player1') {
-        return Observable.from([]);
+       return empty();
       }
 
       return this.playerService.account(payload[0].membershipType, payload[0].membershipId)

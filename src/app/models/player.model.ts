@@ -10,8 +10,8 @@ export interface Player {
   },
   emblemPath: string,
   backgroundPath: string,
-  badges: Badge[],
-  opponents: Opponent[],
+  badges?: Badge[],
+  opponents?: Opponent[],
   characters: Character[]
 }
 

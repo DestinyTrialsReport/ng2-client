@@ -12,6 +12,7 @@ import * as player from '../actions/player.actions';
 import * as myPlayer from '../actions/my-player.actions';
 import * as stats from '../actions/stats.actions';
 import * as fromRoot      from '../reducers';
+import { empty } from 'rxjs/observable/empty';
 
 @Injectable()
 
@@ -41,7 +42,7 @@ export class StatsEffects {
     .map((action: player.SearchCompleteAction) => action.payload)
     .mergeMap(payload => {
       if (!payload || !payload[0]) {
-        return Observable.from([]);
+        return empty();
       }
 
       return this.playerService.gggStats(payload[0].membershipId)

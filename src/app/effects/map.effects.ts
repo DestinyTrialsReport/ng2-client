@@ -7,6 +7,7 @@ import { of } from 'rxjs/observable/of';
 import { MapsService } from '../services/maps.service';
 import { Observable } from 'rxjs/Observable';
 import * as maps from '../actions/maps.actions';
+import { empty } from 'rxjs/observable/empty';
 
 @Injectable()
 
@@ -22,7 +23,7 @@ export class MapEffects {
     .delay(300)
     .switchMap(payload => {
       if (!payload) {
-        return Observable.from([]);
+        return empty();
       }
 
       return of(new maps.SearchCompleteAction(payload.week));

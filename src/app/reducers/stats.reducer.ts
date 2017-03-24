@@ -66,6 +66,7 @@ const trialsInitial: DTRStats = {
   streak: 0,
   flawless: 0,
   badges: [],
+  year1: SummarizedStatsInitial,
   year2: SummarizedStatsInitial,
   year3: SummarizedStatsInitial,
   currentWeek: SummarizedStatsInitial,

@@ -46,35 +46,35 @@ export function reducer(state = initialState, action: player.Actions | myPlayer.
       // }
     }
 
-    case player.ActionTypes.OPPONENTS_FOUND: {
-      const playerId = action.payload[1];
-      const opponents = action.payload[0];
-      if (!player) {
-        return state;
-      }
-
-      const newOpponents = opponents.filter(opponent => !state[playerId].opponents[opponent.membershipId]);
-
-      const newOpponentIds = newOpponents.map(opponent => opponent.membershipId);
-      const newOpponentEntities = newOpponents.reduce((entities: { [id: string]: Opponent }, opponent: Opponent) => {
-        return Object.assign(entities, {
-          [opponent.membershipId]: opponent
-        });
-      }, {});
-
-      return Object.assign({}, state, {
-        player1: playerId == 'player1' ? Object.assign({}, state.player1, {
-          opponents: newOpponentEntities
-        }) : state.player1,
-        player2: playerId == 'player2' ? Object.assign({}, state.player2, {
-          opponents: newOpponentEntities
-        }) : state.player2,
-        player3: playerId == 'player3' ? Object.assign({}, state.player3, {
-          opponents: newOpponentEntities
-        }) : state.player3
-      });
-      // }
-    }
+    // case player.ActionTypes.OPPONENTS_FOUND: {
+    //   const playerId = action.payload[1];
+    //   const opponents = action.payload[0];
+    //   if (!player) {
+    //     return state;
+    //   }
+    //
+    //   const newOpponents = opponents.filter(opponent => !state[playerId].opponents[opponent.membershipId]);
+    //
+    //   const newOpponentIds = newOpponents.map(opponent => opponent.membershipId);
+    //   const newOpponentEntities = newOpponents.reduce((entities: { [id: string]: Opponent }, opponent: Opponent) => {
+    //     return Object.assign(entities, {
+    //       [opponent.membershipId]: opponent
+    //     });
+    //   }, {});
+    //
+    //   return Object.assign({}, state, {
+    //     player1: playerId == 'player1' ? Object.assign({}, state.player1, {
+    //       opponents: newOpponentEntities
+    //     }) : state.player1,
+    //     player2: playerId == 'player2' ? Object.assign({}, state.player2, {
+    //       opponents: newOpponentEntities
+    //     }) : state.player2,
+    //     player3: playerId == 'player3' ? Object.assign({}, state.player3, {
+    //       opponents: newOpponentEntities
+    //     }) : state.player3
+    //   });
+    //   // }
+    // }
 
     case player.ActionTypes.SEARCH_ACCOUNT: {
       const playerId: string = action.payload[1];

@@ -15,6 +15,7 @@ import {Action, Store} from "@ngrx/store";
 import * as fromRoot      from '../reducers';
 import {LocalStorageService} from "ng2-webstorage";
 import {ItemDefinitions} from "../models/manifest.model";
+import { empty } from 'rxjs/observable/empty';
 
 @Injectable()
 
