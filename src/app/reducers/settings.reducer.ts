@@ -8,8 +8,15 @@ export interface State {
 
 const initialState: State = {
   stats: {
+    overview: false,
     weeklyStats: true,
-    mapStats: false
+    kd: false,
+    weeklyWeapons: false,
+    mapStats: false,
+    mapWeapons: false,
+    lastMatchesTab: false,
+    statsTab: false,
+    equippedTab: false
   }
 };
 
@@ -23,7 +30,9 @@ export function reducer(state = initialState, action: settings.Actions): State {
         [payload.name]: payload.value
       });
 
-      return Object.assign({}, state, newSettings);
+      return Object.assign({}, state, {
+        stats: newSettings
+      });
     }
     default: {
       return state;

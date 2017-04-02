@@ -5,6 +5,7 @@
    </player-header>
 
    <player-intro
+     [settings]="(settings$ | async)"
      [statsDtr]="(stats$ | async)?.trials"
      [statsBng]="(stats$ | async)?.bungie"
      [statsGgg]="(stats$ | async)?.guardian"

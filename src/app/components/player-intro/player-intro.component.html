@@ -61,7 +61,7 @@
     </div>
   </div>
   <hr class="hr--no-margin">
-  <div class="player__block">
+  <div class="player__block" *ngIf="settings?.overview">
     <div class="row row--no-gutter">
       <div class="col-xs-3">
         <div class="stat-number" [innerHtml]="(statsBng | winPercentage | number:'1.0-0') + '%'"></div>

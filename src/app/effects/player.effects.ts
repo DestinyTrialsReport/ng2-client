@@ -79,6 +79,8 @@ export class PlayerEffects {
     .mergeMap(payload => {
       if (!payload[1] || payload[1] !== 'player1') {
        return empty();
+      } else if (!payload[0]) {
+        return of(new player.SearchPlayerFailed(new Error('searching player failed')))
       }
 
       return this.playerService.account(payload[0].membershipType, payload[0].membershipId)
@@ -94,16 +96,18 @@ export class PlayerEffects {
     .map(([payload, userId]) => {
       return {
         userId: userId,
-        opponentId: payload[0].membershipId,
+        opponent: payload[0],
         playerIndex: payload[1]
       }
     })
     .mergeMap(payload => {
       if (!payload.userId || !payload.playerIndex) {
         return empty();
+      } else if (!payload.opponent) {
+        return of(new player.SearchPlayerFailed(new Error('searching player failed')))
       }
 
-      return this.playerService.getOpponentHistory(payload.userId, payload.opponentId)
+      return this.playerService.getOpponentHistory(payload.userId, payload.opponent.membershipId)
         .map(res => new player.OpponentsFoundAction([res, payload.playerIndex]))
         .catch((err) => of(new player.SearchFailed(err)));
     });

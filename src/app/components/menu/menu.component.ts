@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy, OnInit, AfterViewInit} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, OnInit, AfterViewInit, OnDestroy} from '@angular/core';
 import { Store }                from "@ngrx/store";
 import { CurrentMap }           from "../../models/map-stats.model";
 import { Observable }           from "rxjs/Observable";
@@ -6,8 +6,10 @@ import { Player }               from "../../models/player.model";
 
 import * as fromRoot            from '../../reducers';
 import * as playerActions       from '../../actions/player.actions';
+import * as settingsActions     from '../../actions/settings.actions';
 import * as leaderboardActions  from '../../actions/leaderboard.actions';
 import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'menu',
@@ -18,20 +20,24 @@ import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from "@angular/r
   styleUrls: ['./menu.component.css'],
 })
 
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   currentMap$: Observable<CurrentMap>;
   player1$: Observable<Player>;
   player2$: Observable<Player>;
   player3$: Observable<Player>;
   myReport$: Observable<boolean>;
+  settings$: Observable<any>;
   showAd: boolean = true;
   searchedName: string;
   searchedTeammate1: string;
   searchedTeammate2: string;
   currentWeek: number;
   isXbox: boolean;
+  settingsOverview: boolean;
   @Input() query: string = '';
   @Input() searching = false;
+  mapSubscription$: Subscription;
+  settingSubscription$: Subscription;
 
   constructor(private store: Store<fromRoot.State>,
               public  router: Router) {
@@ -40,6 +46,10 @@ export class MenuComponent implements OnInit {
     this.player2$ = store.select(state => state.players.player2);
     this.player3$ = store.select(state => state.players.player3);
     this.myReport$ = store.select(state => state.characters.loaded);
+    this.settings$ = store
+      .select(fromRoot.getStatsSettings)
+      .distinctUntilChanged()
+      .share();
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.showAd = !this.showAd;
@@ -48,14 +58,22 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentMap$.subscribe(map => {
+    this.mapSubscription$ = this.currentMap$.subscribe(map => {
       this.currentWeek = parseInt(map.week);
     });
+    this.settingSubscription$ = this.settings$.subscribe(settings => {
+      this.settingsOverview = settings.overview;
+    });
+  }
+
+  ngOnDestroy() {
+    this.mapSubscription$.unsubscribe();
   }
 
   searchPlayer() {
     let platform = this.isXbox ? '/xbox' : '/ps';
     this.router.navigate([platform, this.searchedName]);
+    this.searchedName = null;
   }
 
   searchTeammate(name, index) {
@@ -65,5 +83,9 @@ export class MenuComponent implements OnInit {
 
   togglePlatform(event: Event) {
     console.log(event)
+  }
+
+  toggleSettings(event: Event) {
+    this.store.dispatch(new settingsActions.ToggleSettingsAction({name: 'overview', value: this.settingsOverview}));
   }
 }

@@ -34,14 +34,14 @@ export class PlayerComponent implements OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private el:ElementRef) {
 
-    // this.settings$ = store
-    //   .select(fromRoot.getStatsSettings)
-    //   .distinctUntilChanged()
-    //   .share();
-
-    store
+    this.settings$ = store
       .select(fromRoot.getStatsSettings)
-      .subscribe(state => console.log(state));
+      .distinctUntilChanged()
+      .share();
+
+    // store
+    //   .select(fromRoot.getStatsSettings)
+    //   .subscribe(state => console.log(state));
 
     this.player$ = store
       .select(s => s.players[el.nativeElement.id])

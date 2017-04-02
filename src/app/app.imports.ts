@@ -15,6 +15,7 @@ import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 import { TabsModule } from "ng2-bootstrap/tabs";
 import { PopoverModule } from "ng2-bootstrap/popover";
 import { ProgressbarModule } from "ng2-bootstrap/progressbar";
+import { ModalModule } from 'ng2-bootstrap/modal';
 import { ActivityEffects } from "./effects/activity.effects";
 import { StatsEffects } from "./effects/stats.effects";
 import { AuthEffects } from "./effects/auth.effects";
@@ -45,6 +46,7 @@ export const APP_IMPORTS = [
   TypeaheadModule.forRoot(),
   PopoverModule.forRoot(),
   ProgressbarModule.forRoot(),
+  ModalModule.forRoot(),
   ReactiveFormsModule,
   Ng2PaginationModule,
   IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once

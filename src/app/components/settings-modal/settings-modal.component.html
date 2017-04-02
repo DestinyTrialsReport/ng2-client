@@ -1,0 +1,132 @@
+<!--<button class="settings-bar__btn btn btn&#45;&#45;ghost btn&#45;&#45;block btn&#45;&#45;on-dark" (click)="staticModal.show()">-->
+<button class="settings-bar__btn btn btn--ghost btn--block btn--on-dark" (click)="showChildModal()">
+  <i class="material-icons icon--small">&#xE8B8;</i> Language &amp; Settings
+</button>
+
+<div bsModal #childModal="bs-modal" class="modal modal--white"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-wrapper">
+    <div class="modal-dialog">
+      <div class="settings-modal modal-content">
+        <div class="modal-hero modal-hero--small">
+          <div class="modal-close"><i class="material-icons">&#xE14C;</i></div>
+          <!--<div class="modal-hero__title" [innerHtml]="settingsLabels['SETTINGS']"></div>-->
+        </div>
+        <div class="modal-text">
+          <div class="row">
+            <div class="col-xs-12 col-sm-2">
+              <!--<h3 class="stat-header" [innerHtml]="settingsLabels['LANGUAGE']"></h3>-->
+            </div>
+            <div class="col-xs-12 col-sm-10">
+              <div class="select">
+                <select >
+                  <option value="en">English</option>
+                  <option value="es">Español</option>
+                  <option value="de">Deutsch</option>
+                  <option value="fr">Français</option>
+                  <option value="it">Italiano</option>
+                  <option value="pt-br">Português</option>
+                  <option value="ja">日本語</option>
+                  <option value="tr">Türkçe</option>
+                </select>
+              </div>
+              <hr class="hr--faded">
+              <!--<p class="faded text-center" [innerHtml]="settingsLabels['TRANSLATEEMAIL']"></p>-->
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-2">
+              <!--<h3 class="stat-header" [innerHtml]="settingsLabels['CUSTOMISE']"></h3>-->
+              <span data-content="Decide what you want to see after searching for a player by hiding certain sections" bs-popover>
+              <i class="material-icons icon--small info">&#xE8FD;</i>
+            </span>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+              <div class="row">
+                <template ngFor let-setting [ngForOf]="customizeSettings" let-i="index">
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="setting">
+                      <div class="togglebutton">
+                        <label class="toggle toggle--gray col-xs-shrink">
+                          <input type="checkbox" [(ngModel)]="setting.active" (ngModelChange)="toggleSettings(setting.name, $event)">
+                          <span class="toggle__btn"></span>
+                        </label>
+                      </div>
+                      <label [innerHtml]="setting.label"></label>
+                      <span [innerHtml]="setting.description"></span>
+                    </div>
+                    <hr class="visible-xs hr--faded">
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <!--<div class="row" ng-class="{'is-disabled': !$storage.visibility.equipped.tab}">-->
+            <!--<div class="col-xs-12 col-sm-2">-->
+              <!--<h3 class="stat-header faded" [innerHtml]="settingsLabels['EQTAB']"></h3>-->
+            <!--</div>-->
+            <!--<div class="col-xs-12 col-sm-10">-->
+              <!--<div class="row">-->
+                <!--<div class="col-xs-12 col-sm-4">-->
+                  <!--<div class="setting">-->
+                    <!--<div class="togglebutton">-->
+                      <!--<label>-->
+                        <!--<input type="checkbox"-->
+                        <!--&gt;-->
+                      <!--</label>-->
+                    <!--</div>-->
+                    <!--<label [innerHtml]="settingsLabels['EQWEAPONS']"></label>-->
+                  <!--</div>-->
+                  <!--<hr class="visible-xs hr&#45;&#45;faded">-->
+                <!--</div>-->
+                <!--<div class="col-xs-12 col-sm-4">-->
+                  <!--<div class="setting">-->
+                    <!--<div class="togglebutton">-->
+                      <!--<label>-->
+                        <!--<input type="checkbox"-->
+                        <!--&gt;-->
+                      <!--</label>-->
+                    <!--</div>-->
+                    <!--<label [innerHtml]="settingsLabels['EQARMOR']"></label>-->
+                  <!--</div>-->
+                  <!--<hr class="visible-xs hr&#45;&#45;faded">-->
+                <!--</div>-->
+                <!--<div class="col-xs-12 col-sm-4">-->
+                  <!--<div class="setting">-->
+                    <!--<div class="togglebutton">-->
+                      <!--<label>-->
+                        <!--<input type="checkbox"-->
+                        <!--&gt;-->
+                      <!--</label>-->
+                    <!--</div>-->
+                    <!--<label [innerHtml]="settingsLabels['ARMORSTATS']"></label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<hr class="hr&#45;&#45;minor">-->
+              <!--<div class="row">-->
+                <!--<div class="col-xs-12 col-sm-4">-->
+                  <!--<div class="setting">-->
+                    <!--<div class="togglebutton">-->
+                      <!--<label>-->
+                        <!--<input type="checkbox"-->
+                        <!--&gt;-->
+                      <!--</label>-->
+                    <!--</div>-->
+                    <!--<label [innerHtml]="settingsLabels['CHARPERKS']"></label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

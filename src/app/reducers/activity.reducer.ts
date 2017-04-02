@@ -1,6 +1,6 @@
 /* tslint:disable: no-switch-case-fall-through */
 import 'rxjs/add/observable/of';
-import { Activity } from "../models/activity.model";
+import {Activity, ActivityValue} from "../models/activity.model";
 import { Observable } from "rxjs";
 import * as activity from "../actions/activity.actions";
 
@@ -10,12 +10,37 @@ export interface State {
   player3: Activity[];
 }
 
+const initialValue: ActivityValue = {
+  statId: null,
+  basic: {
+    value: null,
+    displayValue: null
+  }
+};
+
+const initialActivity: Activity =  {
+  id: null,
+  period: null,
+  activityDetails: {
+    referenceId: null,
+    instanceId: null,
+    mode: null
+  },
+  values: {
+    assists: initialValue,
+    kills: initialValue,
+    deaths: initialValue,
+    team: initialValue,
+    standing: initialValue
+  }
+};
 
 const initialState: State = {
-  player1: [],
-  player2: [],
-  player3: []
+  player1: [initialActivity],
+  player2: [initialActivity],
+  player3: [initialActivity]
 };
+
 
 export function reducer(state = initialState, action: activity.Actions): State {
   switch (action.type) {
@@ -23,6 +48,10 @@ export function reducer(state = initialState, action: activity.Actions): State {
     case activity.ActionTypes.SEARCH_ACTIVITY: {
 
       const playerId: string = action.payload[1];
+
+      if (!action.payload[0]) {
+        return state;
+      }
 
       const activities = action.payload[0]
         .map(activity => Object.assign({}, {

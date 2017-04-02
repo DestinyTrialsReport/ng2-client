@@ -105,22 +105,20 @@
       </div>
       <!-- TODO: Make this work -->
       <div class="settings-bar row row--no-gutter middle-xs">
-        <!--<div class="col-xs">-->
-          <!--<button class="settings-bar__btn btn btn&#45;&#45;ghost btn&#45;&#45;block btn&#45;&#45;on-dark">-->
-            <!--<i class="material-icons icon&#45;&#45;small">&#xE8B8;</i> Language &amp; Settings-->
-          <!--</button>-->
-        <!--</div>-->
-        <!--<div class="col-xs-shrink">-->
-          <!--<div class="settings-bar__switch">-->
-            <!--<div class="row row&#45;&#45;small-gutter middle-xs">-->
-              <!--<label class="col-xs">Ignore custom<br>card settings</label>-->
-              <!--<label class="toggle toggle&#45;&#45;gray col-xs-shrink">-->
-                <!--<input type="checkbox">-->
-                <!--<span class="toggle__btn"></span>-->
-              <!--</label>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+        <div class="col-xs">
+          <settings-modal></settings-modal>
+        </div>
+        <div class="col-xs-shrink">
+          <div class="settings-bar__switch">
+            <div class="row row--small-gutter middle-xs">
+              <label class="col-xs">Ignore custom<br>card settings</label>
+              <label class="toggle toggle--gray col-xs-shrink">
+                <input type="checkbox" [(ngModel)]="settingsOverview" (ngModelChange)="toggleSettings($event)">
+                <span class="toggle__btn"></span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>

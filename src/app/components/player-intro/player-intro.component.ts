@@ -13,6 +13,7 @@ export class PlayerIntroComponent {
   @Input() statsDtr: DTRStats;
   @Input() statsGgg: GGGStats;
   @Input() statsBng: BNGStats;
+  @Input() settings: any;
   @Input() activities: Activity[];
 
   activityStanding(activity): boolean {
