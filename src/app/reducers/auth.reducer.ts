@@ -73,3 +73,5 @@ export function reducer(state = initialState, action: auth.Actions): State {
 export const getAuthState = (state: State) => state.authState;
 
 export const getRefreshToken = (state: State) => state.refreshToken;
+
+export const getUser = (state: State) => state.currentUser;

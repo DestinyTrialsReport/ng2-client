@@ -11,7 +11,7 @@ export interface Player {
   emblemPath: string,
   backgroundPath: string,
   badges?: Badge[],
-  opponents?: Opponent[],
+  opponentHistory?: opponentHistory,
   characters: Character[]
 }
 
@@ -21,10 +21,23 @@ export interface Badge {
   icon: string
 }
 
+export interface opponentHistory {
+  matches: number,
+  instanceIds: string[],
+  losses: number,
+  wins: number,
+  playerKd: number,
+  opponentKd: number
+}
+
 export interface Opponent {
   membershipId: string,
   instanceId: string,
-  standing: string
+  standing: string,
+  pkills: string,
+  pdeaths: string,
+  okills: string,
+  odeaths: string,
 }
 
 export interface Character {

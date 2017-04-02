@@ -121,3 +121,7 @@
     background-image: linear-gradient(to bottom, $tab-style-five-color, darken($tab-style-five-color, 5%));
   }
 }
+
+.tab--style-hide {
+  display: none !important;
+}

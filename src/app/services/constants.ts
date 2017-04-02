@@ -1,7 +1,7 @@
-export const API_KEY = ENV === 'production' ? '6b1563bd89854465ab2a423d033c7ddf' : '172482c8636949cfa438cc828bec8396';
-export const AUTH_URL = ENV === 'production' ? 'https://www.bungie.net/en/Application/Authorize/10709' : 'https://www.bungie.net/en/Application/Authorize/11608';
+export const API_KEY = ENV === 'production' ? '99400e4d2bef4851b2bc399ce3a9a0e9' : '172482c8636949cfa438cc828bec8396';
+export const AUTH_URL = ENV === 'production' ? 'https://www.bungie.net/en/Application/Authorize/11629' : 'https://www.bungie.net/en/Application/Authorize/11608';
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
-// 6b1563bd89854465ab2a423d033c7ddf <- staging key
+// 99400e4d2bef4851b2bc399ce3a9a0e9 <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
 
 export const DTR_BASE_URL: string = 'https://api.destinytrialsreport.com';

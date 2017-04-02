@@ -55,4 +55,11 @@ export class PlayerService extends RequestBase {
       .map(res => res.json().Response.data);
   }
 
+  getOpponentHistory(userId: string, opponentId: string): Observable<any> {
+    return this.http.get(`${DTR_BASE_URL}/v2/player/${userId}/opponents/${opponentId}/`)
+      .map(res => {
+        return res.json()
+      })
+  }
+
 }

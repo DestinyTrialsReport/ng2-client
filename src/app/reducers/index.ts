@@ -120,6 +120,8 @@ export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered,
 
 export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
 
+export const getAuthCurrentUser = createSelector(getAuthState, fromAuth.getUser);
+
 export const getRefreshToken = createSelector(getAuthState, fromAuth.getRefreshToken);
 
 export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
@@ -147,6 +149,12 @@ export const getMapInfo = createSelector(getMap, previousMap, nextMap, (current,
     previous: previous,
     next: next
   };
+});
+
+export const getAuthUser = createSelector(getAuthCurrentUser, (user) => {
+  if (user && user.userInfo && user.userInfo.membershipId) {
+    return user.userInfo.membershipId;
+  }
 });
 
 export const getCurrentWeek = createSelector(getMap, getCurrentMap, (map, currentMap) => {
@@ -218,8 +226,8 @@ if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file 
 }
 
 // const developmentReducer = compose(...DEV_REDUCERS, combineReducers)(reducers);
-const developmentReducer: ActionReducer<State> = compose(localStorageSync(['settings'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
-const productionReducer: ActionReducer<State> = combineReducers(reducers);
+const developmentReducer: ActionReducer<State> = compose(localStorageSync(['auth','settings'], true), storeFreeze, storeLogger(), combineReducers)(reducers);
+const productionReducer: ActionReducer<State> = compose(localStorageSync(['auth','settings'], true), combineReducers)(reducers);
 // const productionReducer = combineReducers(reducers);
 
 export function reducer(state: any, action: any) {

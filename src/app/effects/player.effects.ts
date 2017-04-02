@@ -87,6 +87,28 @@ export class PlayerEffects {
     });
 
   @Effect()
+  opponentHistory: Observable<Action> = this.actions$
+    .ofType(player.ActionTypes.SEARCH_COMPLETE)
+    .map((action: player.SearchCompleteAction) => action.payload)
+    .withLatestFrom(this.store.select(fromRoot.getAuthUser))
+    .map(([payload, userId]) => {
+      return {
+        userId: userId,
+        opponentId: payload[0].membershipId,
+        playerIndex: payload[1]
+      }
+    })
+    .mergeMap(payload => {
+      if (!payload.userId || !payload.playerIndex) {
+        return empty();
+      }
+
+      return this.playerService.getOpponentHistory(payload.userId, payload.opponentId)
+        .map(res => new player.OpponentsFoundAction([res, payload.playerIndex]))
+        .catch((err) => of(new player.SearchFailed(err)));
+    });
+
+  @Effect()
   teammates$: Observable<Action> = this.actions$
     .ofType(player.ActionTypes.SEARCH_TEAMMATES)
     .withLatestFrom(this.store)
