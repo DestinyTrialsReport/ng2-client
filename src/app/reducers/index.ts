@@ -3,33 +3,27 @@ import { compose } from '@ngrx/core/compose';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
-import { Observable } from "rxjs";
-import { PGCR } from "../models/pgcr.model";
-import { combineLatest } from 'rxjs/observable/combineLatest';
 import { localStorageSync } from "ngrx-store-localstorage";
+
 import * as fromSettings from './settings.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromMaps from './maps.reducer';
-import * as fromPlayers from './player.reducer';
+import * as fromPlayer from './player.reducer';
 import * as fromMyPlayers from './my-player.reducer';
-import * as fromActivities from './activity.reducer';
-import * as fromInventories from './inventory.reducer';
-import * as fromStats from './stats.reducer';
-import * as fromSearch from './search.reducer';
 import * as fromPGCR from './pgcr.reducer';
 import * as fromLeaderboards from './leaderboards.reducer';
-import {CRUCIBLE_MAPS} from "../services/constants";
+import * as fromStatus from './status.reducer';
+import {PlayerHeader} from "../models/player.model";
 
 export interface State {
   settings: fromSettings.State;
   auth: fromAuth.State;
   map: fromMaps.State;
-  search: fromSearch.State;
-  players: fromPlayers.State;
+  player1: fromPlayer.State;
+  player2: fromPlayer.State;
+  player3: fromPlayer.State;
+  status: fromStatus.State;
   characters: fromMyPlayers.State;
-  activities: fromActivities.State;
-  inventory: fromInventories.State;
-  stats: fromStats.State;
   pgcr: fromPGCR.State;
   leaderboard: fromLeaderboards.State;
 }
@@ -38,25 +32,20 @@ export const reducers = {
   settings: fromSettings.reducer,
   auth: fromAuth.reducer,
   map: fromMaps.reducer,
-  search: fromSearch.reducer,
-  players: fromPlayers.reducer,
+  player1: fromPlayer.createPlayerWithIndex('PLAYER1'),
+  player2: fromPlayer.createPlayerWithIndex('PLAYER2'),
+  player3: fromPlayer.createPlayerWithIndex('PLAYER3'),
+  status: fromStatus.reducer,
   characters: fromMyPlayers.reducer,
-  activities: fromActivities.reducer,
-  inventory: fromInventories.reducer,
-  stats: fromStats.reducer,
   pgcr: fromPGCR.reducer,
   leaderboard: fromLeaderboards.reducer
 };
 
 export const getSettingsState = (state: State) => state.settings;
 
-export const getSearchState = (state: State, index: string) => state.search[index];
+export const getStatusState = (state: State) => state.status;
 
 export const getPgcrState = (state: State) => state.pgcr;
-
-export const getMyPlayerState = (state: State) => state.characters;
-
-export const getPlayerState = (state: State) => state.players;
 
 export const getAuthState = (state: State) => state.auth;
 
@@ -64,22 +53,62 @@ export const getLeaderboardState = (state: State) => state.leaderboard;
 
 export const getMapState = (state: State) => state.map;
 
+export const getPlayerStatus = createSelector(getStatusState, fromStatus.getPlayerStatus);
+export const getInventoryStatus = createSelector(getStatusState, fromStatus.getInventoryStatus);
+export const getIntroStatus = createSelector(getStatusState, fromStatus.getIntroStatus);
 
-// export function playerIsLoaded(playerIndex: string) {
-//   return createSelector(getSearchState, fromSearch.getPlayer);
-// };
-
-export function playerIsLoaded(index: string) {
+function playerSelectorFactory(index) {
   return createSelector(
-    getSearchState, (searchState) => {
-      const player = searchState[index];
-      if (player) {
-        return player.player
-      }
-    }
+    (state: State) => state,
+    state => state[`player${index}`]
   );
 }
 
+export const getPlayerPgcr = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(getPgcrState, fromPGCR.pgcrSelectorFactory(index));
+};
+
+export const getPlayerLastMatches = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getLastMatches);
+};
+
+export const getPlayerName = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getName);
+};
+
+export const getPlayerHeader = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getHeader);
+};
+
+export const getPlayerIntro = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getIntro);
+};
+
+export const getPlayerSummarized = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getSummarized);
+};
+
+export const getPlayerEquipped = (player: string) => {
+  const index = player.match(/\d/g);
+  return createSelector(playerSelectorFactory(index), fromPlayer.getEquipped);
+};
+
+export function getStatusForPlayer(player: string) {
+  return createSelector(
+    getInventoryStatus, getIntroStatus, (inventory, intro) => {
+      return {
+        inventory: inventory[player],
+        intro: intro[player]
+      };
+    }
+  );
+}
 
 export const getStatsSettings = createSelector(getSettingsState, fromSettings.getStats);
 
@@ -120,12 +149,6 @@ export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered,
 
 export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthState);
 
-export const getAuthCurrentUser = createSelector(getAuthState, fromAuth.getUser);
-
-export const getRefreshToken = createSelector(getAuthState, fromAuth.getRefreshToken);
-
-export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
-
 export const getCurrentMap = createSelector(getMapState, fromMaps.getCurrentMap);
 
 export const getMap = createSelector(getMapState, fromMaps.getMap);
@@ -150,65 +173,6 @@ export const getMapInfo = createSelector(getMap, previousMap, nextMap, (current,
     next: next
   };
 });
-
-export const getAuthUser = createSelector(getAuthCurrentUser, (user) => {
-  if (user && user.userInfo && user.userInfo.membershipId) {
-    return user.userInfo.membershipId;
-  }
-});
-
-export const getCurrentWeek = createSelector(getMap, getCurrentMap, (map, currentMap) => {
-  let selectedWeek = currentMap.week;
-  if (map) {
-    selectedWeek = map.week;
-  }
-  return selectedWeek;
-});
-
-export const getPreviousMap = createSelector(previousMap, (map) => {
-  if (map) {
-    return CRUCIBLE_MAPS[map.referenceId];
-  }
-});
-
-export const getNextMap = createSelector(nextMap, (map) => {
-  if (map) {
-    return CRUCIBLE_MAPS[map.referenceId];
-  }
-});
-
-export function getActivityState(state$: Observable<State>) {
-  return state$.select(s => s.activities);
-}
-
-export const getRecentActivities = function (playerIndex: string, amount: number) {
-  return (state$: Observable<State>) => {
-    return state$.let(compose(fromActivities.getActivities(playerIndex, amount), getActivityState));
-  }
-};
-
-export const getCharacter = function (playerIndex: string) {
-  return (state$: Observable<State>) => {
-    return state$.let(compose(fromPlayers.getCharacter(playerIndex), getPlayerState));
-  }
-};
-
-export const getPgcrFromRecent = function (playerIndex: string, amount: number) {
-  return (state$: Observable<State>) => {
-    return combineLatest<{ [id: string]: PGCR }, string[]>(
-      state$.select(getPgcrCollection),
-      state$.let(compose(fromActivities.getActivities(playerIndex, amount), getActivityState))
-    )
-      .map(([ collection, ids ]) => ids.map(id => collection[id]));
-  }
-};
-
-export const getNewMatches = function (matches: string[]) {
-  return (state$: Observable<State>) => {
-      return state$.select(getPgcrCollection)
-        .map(collection => matches.filter(instanceId => !collection[instanceId]));
-  }
-};
 
 // Generate a reducer to set the root state in dev mode for HMR
 function stateSetter(reducer: ActionReducer<any>): ActionReducer<any> {

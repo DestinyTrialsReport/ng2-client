@@ -4,19 +4,19 @@
       <div class="col-xs kd__graph">
         <div class="kd__matches">
           <i class="match-icon"
-             *ngFor="let activity of activities"
+             *ngFor="let activity of intro?.matches"
              [ngClass]="activityStanding(activity) ? 'match-icon--win' : 'match-icon--loss'"
-             [ngStyle]="activity | activityGraph: statsBng?.killsDeathsRatio.basic.value"
+             [ngStyle]="activity | activityGraph: intro?.kd?.bungie"
              [popover]="activityDetailsPopover"
              [popoverTitle]="activity.period | timeAgo">
              <template #activityDetailsPopover>
                <div class="row row--small-margin">
                  <div class="col-xs">
-                   <div class="stat-number" [innerHtml]="activity?.values?.kills.basic.value / activity?.values?.deaths.basic.value | number : '1.2-2'"></div>
+                   <div class="stat-number" [innerHtml]="activity?.kills / activity?.deaths | number : '1.2-2'"></div>
                    <div class="stat-label">K/D</div>
                  </div>
                  <div class="col-xs">
-                   <div class="stat-number" [innerHtml]="activity?.values?.kills.basic.value"></div>
+                   <div class="stat-number" [innerHtml]="activity?.kills"></div>
                    <div class="stat-label">Kills</div>
                  </div>
                </div>
@@ -36,48 +36,47 @@
               </div>
             </div>
             <div class="row row--small-margin">
-              <div class="col-xs" *ngIf="statsDtr?.currentWeek?.kills">
-                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.currentWeek) | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="intro?.kd?.week">
+                <div class="stat-number" [innerHtml]="intro?.kd?.week | number : '1.2-2'"></div>
                 <div class="stat-label">Weekly</div>
               </div>
-              <div class="col-xs" *ngIf="statsDtr?.year3?.kills">
-                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year3) | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="intro?.kd?.year3">
+                <div class="stat-number" [innerHtml]="intro?.kd?.year3 | number : '1.2-2'"></div>
                 <div class="stat-label">Year 3</div>
               </div>
-              <div class="col-xs" *ngIf="statsDtr?.year2?.kills">
-                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year2) | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="intro?.kd?.year2">
+                <div class="stat-number" [innerHtml]="intro?.kd?.year2 | number : '1.2-2'"></div>
                 <div class="stat-label">Year 2</div>
               </div>
-              <div class="col-xs" *ngIf="statsDtr?.year1?.kills">
-                <div class="stat-number" [innerHtml]="getKdRatio(statsDtr?.year1) | number : '1.2-2'"></div>
+              <div class="col-xs" *ngIf="intro?.kd?.year1">
+                <div class="stat-number" [innerHtml]="intro?.kd?.year1 | number : '1.2-2'"></div>
                 <div class="stat-label">Year 1</div>
               </div>
             </div>
           </template>
-          <span [innerHtml]="statsBng?.killsDeathsRatio.basic.value | number : '1.2-2'"></span>
+          <span [innerHtml]="intro?.kd?.bungie | number : '1.2-2'"></span>
         </div>
         <div class="stat-label">K/D</div>
       </div>
     </div>
   </div>
   <hr class="hr--no-margin">
-  <div class="player__block" *ngIf="settings?.overview">
+  <div class="player__block" *ngIf="settings?.overview || !settings">
     <div class="row row--no-gutter">
       <div class="col-xs-3">
-        <div class="stat-number" [innerHtml]="(statsBng | winPercentage | number:'1.0-0') + '%'"></div>
-        <div class="stat-number" *ngIf="!statsBng">N/A</div>
+        <div class="stat-number" [innerHtml]="(intro?.winPercentage | number:'1.0-0') + '%'"></div>
         <div class="stat-label">Wins</div>
       </div>
       <div class="col-xs-3">
         <div class="stat-number">
-          <span [innerHtml]="(activities | streak) || 'N/A'"></span>
-          <span class="match-icon" [ngClass]="activities | streakIcon"></span>
+          <span [innerHtml]="(formatStreak(intro?.streak?.current)) || 'N/A'"></span>
+          <span class="match-icon" [ngClass]="{'match-icon--loss': intro?.streak?.current < 0, 'match-icon--win': intro?.streak?.current >= 0}"></span>
         </div>
         <div class="stat-label">Streak</div>
       </div>
       <div class="col-xs-4">
         <div class="stat-number">
-          <span [innerHtml]="(statsGgg?.elo | number:'1.0-0') || 'N/A'"></span>
+          <span [innerHtml]="(intro?.elo?.rating | number:'1.0-0') || 'N/A'"></span>
           <span>
             <a href="https://guardian.gg/en/faq" target="_blank">
               <i class="material-icons">&#xE8FD;</i>
@@ -87,9 +86,9 @@
         <div class="stat-label">Elo Rating</div>
       </div>
       <div class="col-xs-2">
-        <div class="stat-number" [ngClass]="{'color-success': (statsDtr | sumFlawless) > 0, 'color-error': (statsDtr | sumFlawless) === 0}">
-          <i *ngIf="!(statsDtr | sumFlawless)" class="material-icons color-error">&#xE14C;</i>
-          <span *ngIf="(statsDtr | sumFlawless)" [innerHtml]="(statsDtr | sumFlawless) + 'x'"></span>
+        <div class="stat-number" [ngClass]="{'color-success': (intro?.flawless | sumFlawless) > 0, 'color-error': (intro?.flawless | sumFlawless) === 0}">
+          <i *ngIf="!(intro?.flawless | sumFlawless)" class="material-icons color-error">&#xE14C;</i>
+          <span *ngIf="(intro?.flawless | sumFlawless)" [innerHtml]="(intro?.flawless | sumFlawless) + 'x'"></span>
         </div>
         <div class="stat-label">Flawless</div>
       </div>

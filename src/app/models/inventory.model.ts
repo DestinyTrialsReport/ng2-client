@@ -1,51 +1,53 @@
+import {Talent} from "./manifest.model";
 export interface Inventory {
-  bucketHash: number,
-  weapons:    Item[],
-  armor:      Item[],
-  subclass:   Item,
-  items:      Item[]
+  bucketHash: number;
+  weapons:    Item[];
+  armor:      Item[];
+  subclass:   Item;
+  items:      Item[];
 }
 
 export interface Item {
-  tierType: number,
-  itemHash: number,
-  itemLevel: number,
-  stats: any,
-  perks: any,
-  talentGridHash: number,
-  damage: number,
-  bucketHash: number,
-  nodes: ItemNode[],
-  primaryStat: PrimaryStat,
-  steps?: Step[],
-  name?: string,
-  icon?: string,
-  description?: string,
-  tier?: number,
-  n?: string,
-  i?: string,
-  tT?: number,
+  tierType: number;
+  itemHash: number;
+  itemLevel: number;
+  stats: any;
+  perks: any;
+  talentGridHash: number;
+  damage: number;
+  bucketHash: number;
+  nodes: ItemNode[];
+  primaryStat: PrimaryStat;
+  steps?: Step[];
+  name?: string;
+  icon?: string;
+  description?: string;
+  tier?: number;
+  n?: string;
+  i?: string;
+  tT?: number;
+  talentTree?: Talent;
 }
 
 
 export interface PrimaryStat {
-  value: number
+  value: number;
 }
 
 export interface ItemNode {
-  isActivated: boolean,
-  stepIndex: number,
-  nodeHash: number
+  isActivated: boolean;
+  stepIndex: number;
+  nodeHash: number;
 }
 
 export interface Step {
-  n:  string,
-  h:  number,
-  d:  string,
-  i:  string,
-  p:  number[],
-  pr: number,
-  g:  number,
-  c:  number,
+  n:  string;
+  h:  number;
+  d:  string;
+  i:  string;
+  p:  number[];
+  pr: number;
+  g:  number;
+  c:  number;
   r:  number
 }

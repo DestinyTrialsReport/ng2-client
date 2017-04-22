@@ -6,8 +6,9 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable, Subscription } from "rxjs/Rx";
 import { Store }          from "@ngrx/store";
 import * as fromRoot      from '../../reducers';
-import * as fromSearch    from '../../reducers/search.reducer';
 import * as playerActions from '../../actions/player.actions';
+import {StepsDefinitions, TalentDefinitions, ItemDefinitions} from "../../models/manifest.model";
+import {ManifestService} from "../../services/manifest.service";
 
 @Component({
   selector: 'report',
@@ -44,23 +45,27 @@ import * as playerActions from '../../actions/player.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportComponent implements OnDestroy {
-  players: Observable<fromSearch.State>;
   paramSubscription$: Subscription;
+  weapons: ItemDefinitions;
+  armor: ItemDefinitions;
+  subclass: ItemDefinitions;
+  steps: StepsDefinitions;
+  talents: TalentDefinitions;
+  status$:        Observable<any>;
   focusOnPlayer: number = 1;
   panActive: boolean = false;
   panStartX: number;
   @ViewChild('playersContainer') playersContainer: ElementRef;
 
   constructor(public  route: ActivatedRoute,
-              private store: Store<fromRoot.State>) {
-
-    // this.playerOneLoaded = this.store.select(fromRoot.playerIsLoaded);
-    // this.playerTwoLoaded = this.store.select(s => s.search);
-    // this.playerTwoLoaded = this.store.select(s => s.search);
-
-    this.players = this.store.select(s => s.search)
-      .distinctUntilChanged()
-      .share();
+              private store: Store<fromRoot.State>,
+              public manifestService: ManifestService) {
+    this.steps = JSON.parse(this.manifestService.get('steps'));
+    this.talents = JSON.parse(this.manifestService.get('talents'));
+    this.weapons = JSON.parse(this.manifestService.get('weapons'));
+    this.armor = JSON.parse(this.manifestService.get('armor'));
+    this.subclass = JSON.parse(this.manifestService.get('subclass'));
+    this.status$ = store.select(fromRoot.getPlayerStatus).share();
 
     this.paramSubscription$ = Observable.combineLatest(
       this.route.params,
@@ -73,11 +78,8 @@ export class ReportComponent implements OnDestroy {
           }
         }
       })
-      .subscribe(data => this.store.dispatch(new playerActions.SearchPlayer({platform: data.platform, name: data.player, playerIndex: 'player1'})));
-  }
-
-  search(platform: number, name: string) {
-    this.store.dispatch(new playerActions.SearchPlayer({platform: platform, name: name, playerIndex: 'player1'}));
+      .distinctUntilChanged()
+      .subscribe(data => this.store.dispatch(new playerActions[`SearchPlayer1Action`]({platform: data.platform, name: data.player})));
   }
 
   shiftPlayerFocus(direction: number) {

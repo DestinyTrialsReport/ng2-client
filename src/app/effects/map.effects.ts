@@ -21,7 +21,7 @@ export class MapEffects {
     .ofType(maps.ActionTypes.SLIDE_MAP)
     .map((action: maps.SlideMapAction) => action.payload)
     .delay(300)
-    .switchMap(payload => {
+    .mergeMap(payload => {
       if (!payload) {
         return empty();
       }
@@ -33,7 +33,7 @@ export class MapEffects {
   search$: Observable<Action> = this.actions$
     .ofType(maps.ActionTypes.SAVE_CURRENT_MAP)
     .map((action: maps.SaveCurrentMapAction) => action.payload)
-    .switchMap(payload => {
+    .mergeMap(payload => {
       if (!payload) {
         return Observable.from([]);
       }
@@ -46,9 +46,9 @@ export class MapEffects {
     .ofType(maps.ActionTypes.SEARCH_COMPLETE)
     .map((action: maps.SearchCompleteAction) => action.payload)
     .delay(300)
-    .switchMap(payload => {
+    .mergeMap(payload => {
       if (!payload) {
-        return Observable.from([]);
+        return empty();
       }
 
       return this.mapService.onWeek(payload)

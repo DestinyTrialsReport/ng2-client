@@ -1,5 +1,18 @@
 export const API_KEY = ENV === 'production' ? '99400e4d2bef4851b2bc399ce3a9a0e9' : '172482c8636949cfa438cc828bec8396';
 export const AUTH_URL = ENV === 'production' ? 'https://www.bungie.net/en/Application/Authorize/11629' : 'https://www.bungie.net/en/Application/Authorize/11608';
+
+export const API_KEYS = {
+  "player1": '99400e4d2bef4851b2bc399ce3a9a0e9',
+  "player2": '99400e4d2bef4851b2bc399ce3a9a0e9',
+  "player3": '99400e4d2bef4851b2bc399ce3a9a0e9',
+};
+
+// export const API_KEYS = {
+//   "player1": '172482c8636949cfa438cc828bec8396',
+//   "player2": 'ee5c2bf3759e4219a50fa9fd47d47805',
+//   "player3": '6c2735cbc36c41a287720ebeb0d1b9b0',
+// };
+
 // e4ac9ad9884b412cb452ee3ffec34ecb <- leadeboards key
 // 99400e4d2bef4851b2bc399ce3a9a0e9 <- staging key
 export const MOBILE = (typeof window !== 'undefined') ? (window.screen.availWidth < 800) : true;
@@ -13,9 +26,9 @@ export const BUCKET_SPECIAL_WEAPON: any = 2465295065;
 export const BUCKET_HEAVY_WEAPON: any = 953998645;
 
 export const WEAPON_BUCKETS: any = [BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, BUCKET_HEAVY_WEAPON];
-export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954];
+export const ARMOR_BUCKETS: any = [3448274439, 14239492, 3551918588, 20886954, 434908299];
 export const ARTIFACT_BUCKET: any = 434908299;
-export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031, 434908299];
+export const EQUIPPED_BUCKETS: any = [...WEAPON_BUCKETS, ...ARMOR_BUCKETS, 3284755031];
 
 export const WEAPON_TYPES: Array<string | number> = [
   "Auto Rifle",
@@ -59,6 +72,99 @@ export const BUCKET_NAMES: any = {
   2465295065: 'special',
   953998645: 'heavy'
 };
+
+export const EXOTIC_ARMOR: Array<number> = [
+  2217280774, // Shinobu's Vow
+  2217280775, // Sealed Ahamkara Grasps
+  2272644374, // Crest of Alpha Lupi
+  2272644375, // The Armamentarium
+  2275132880, // Transversive Steps
+  2335332317, // Sunbreakers
+  2449500440, // ACD/0 Feedback Fence
+  2479526175, // Dunemarchers
+  2591213943, // Ruin Wings
+  2661471738, // Crest of Alpha Lupi
+  2661471739, // The Armamentarium
+  2771018500, // Skull of Dire Ahamkara
+  2771018501, // Apotheosis Veil
+  2771018502, // Light Beyond Nemesis
+  2778128366, // Astrocyte Verse
+  2778128367, // THE STAG
+  2882684152, // Crest of Alpha Lupi
+  2882684153, // Lucky Raspberry
+  2898542650, // Alchemist's Raiment
+  2927156752, // Claws of Ahamkara
+  2994845057, // An Insurmountable Skullfort
+  2994845058, // Helm of Inmost Light
+  2994845059, // Helm of Saint-14
+  3050633443, // Nothing Manacles
+  3055446324, // ACD/0 Feedback Fence
+  3055446326, // No Backup Plans
+  3055446327, // Ruin Wings
+  3455371673, // Obsidian Mind
+  3574778420, // Purifier Robes
+  3574778421, // Starfire Protocol
+  3574778422, // Voidfang Vestments
+  3574778423, // Heart of the Praxic Fire
+  3577254054, // The Glasshouse
+  3921595523, // Twilight Garrison
+  4132383826, // No Backup Plans
+  4146057409, // Don't Touch Me
+  4267828624, // Mk. 44 Stand Asides
+  4267828625, // Peregrine Greaves
+  78421062, // Young Ahamkara's Spine
+  94883184, // ATS/8 ARACHNID
+  104781337, // Mk. 44 Stand Asides
+  105485105, // ATS/8 Tarantella
+  144553853, // Mask of the Third Man
+  144553854, // Achlyophage Symbiote
+  144553855, // Knucklehead Radar
+  155374076, // Thagomizers
+  155374077, // Immolation Fists
+  287395896, // Starfire Protocol
+  499191786, // Crest of Alpha Lupi
+  499191787, // Lucky Raspberry
+  591060260, // Empyrean Bellicose
+  591060261, // The Taikonaut
+  813361818, // The Ram
+  838428205, // Purifier Robes
+  838933125, // Celestial Nighthawk
+  909225554, // Peregrine Greaves
+  921478195, // Radiant Dance Machines
+  941890987, // Eternal Warrior
+  941890988, // The Glasshouse
+  941890989, // An Insurmountable Skullfort
+  941890990, // Helm of Inmost Light
+  941890991, // Helm of Saint-14
+  1054763958, // Skyburners Annex
+  1054763959, // Graviton Forfeit
+  1062853750, // The Impossible Machines
+  1062853751, // Ophidian Aspect
+  1275480032, // Claws of Ahamkara
+  1275480033, // Sunbreakers
+  1275480035, // Nothing Manacles
+  1394543945, // Fr0st-EE5
+  1398023010, // Voidfang Vestments
+  1398023011, // Heart of the Praxic Fire
+  1458254032, // Young Ahamkara's Spine
+  1458254033, // Don't Touch Me
+  1458254034, // Khepri's Sting
+  1519376144, // Skull of Dire Ahamkara
+  1519376145, // Apotheosis Veil
+  1519376146, // Light Beyond Nemesis
+  1519376147, // Obsidian Mind
+  1519376148, // The Ram
+  1520434776, // Achlyophage Symbiote
+  1520434777, // Knucklehead Radar
+  1520434778, // ATS/8 ARACHNID
+  1520434779, // Mask of the Third Man
+  1520434781, // Celestial Nighthawk
+  1611580929, // Eternal Warrior
+  1619609940, // Khepri's Sting
+  1775312682, // Radiant Dance Machines
+  1775312683, // Bones of Eao
+  1865771870, // Bones of Eao
+];
 
 export const YEAR_ONE_DUPLICATES: Array<number> = [
   2167109420, // Cryptic Dragon

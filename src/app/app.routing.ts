@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from "./components/home/home.component";
 import { NotFound404Component } from './components/notfound404/notfound404.component';
 import { ReportComponent } from "./components/report/report.component";
-import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
 
 export function isSubdomain(name: string): boolean {

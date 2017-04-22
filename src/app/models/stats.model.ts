@@ -1,43 +1,62 @@
 export interface DTRStats {
-  membershipId: string,
-  streak: number,
-  flawless: number,
-  badges: Badge[],
-  year1: SummarizedStats,
-  year2: SummarizedStats,
-  year3: SummarizedStats,
-  currentWeek: SummarizedStats,
-  currentMap: SummarizedStats,
+  membershipId: string;
+  membershipType: number;
+  displayName: string;
+  streak: number;
+  flawless: number;
+  badges: Badge[];
+  recentMatches: Match[];
+  year1: SummarizedStats;
+  year2: SummarizedStats;
+  year3: SummarizedStats;
+  currentWeek: SummarizedStats;
+  currentMap: SummarizedStats;
+  recentTeammates: Teammate[];
+}
+
+export interface Teammate {
+  membershipId: string;
+  displayName: string;
+  membershipType: number;
+}
+
+export interface Match {
+  characterId: string;
+  instanceId: string;
+  period: string;
+  standing: number;
+  kills: number;
+  deaths: number;
 }
 
 export interface Badge {
-  status: string,
-  description: string,
-  icon: string
+  status: string;
+  description: string;
+  icon: string;
 }
 
 export interface SummarizedWeapons {
-  itemTypeName: string,
-  sum_kills: number,
-  sum_headshots: number,
-  file_name: string,
+  itemTypeName: string;
+  sum_kills: number;
+  sum_headshots: number;
+  file_name: string;
 }
 
 export interface SummarizedStats {
-flawless?: number,
-matches: number,
-losses: number,
-kills: number,
-deaths: number,
-weapons: SummarizedWeapons[],
+  flawless?: number;
+  matches: number;
+  losses: number;
+  kills: number;
+  deaths: number;
+  weapons: SummarizedWeapons[];
 }
 
 export interface Flawless {
-  count: number
+  count: number;
 }
 
 export interface GGGStats {
-  elo: number,
+  elo: number;
   rank: number
 }
 
@@ -110,10 +129,10 @@ export interface BNGStats {
 }
 
 export interface StatValue {
-  statId: string,
+  statId: string;
   basic: {
-    value: number,
-    displayValue: string
+    value: number;
+    displayValue: string;
   }
 }
 

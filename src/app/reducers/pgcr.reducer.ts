@@ -1,13 +1,11 @@
 /* tslint:disable: no-switch-case-fall-through */
+import { createSelector } from 'reselect';
 import {
-  PGCR, ExtendedWeapons, WeaponValue, Medal, ValuesR, WeaponValueR, MatchPayload,
-  Team
+  PGCR, ExtendedWeapons, WeaponValue, Medal, ValuesR, WeaponValueR
 } from "../models/pgcr.model";
-import * as pgcr from "../actions/pgcr.actions";
-import {Observable} from "rxjs";
 import {MEDAL_DEFINITIONS} from "../services/constants";
-import {ItemDefinitions} from "../models/manifest.model";
 
+import * as pgcr from "../actions/pgcr.actions";
 
 export interface State {
   collection: { [instanceId: string]: PGCR };
@@ -62,20 +60,23 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
   switch (action.type) {
 
     case pgcr.ActionTypes.STORE_PGCR: {
-      const teams: Team[] = action.payload['teams'];
-      const match: MatchPayload = action.payload['match'];
-      const playerId: string = action.payload['player'];
-      const entry: any = action.payload['entry'];
-      const definitions: ItemDefinitions = action.payload['definitions'];
-      const basicValues: any = entry.values;
-      const extendedValues: any = entry.extended.values;
-      const extendedWeapons: any = entry.extended.weapons;
+      const match = action.payload['match'];
+      const playerId = action.payload['pIndex'].toLowerCase();
+      const payload = action.payload.pgcr;
+      const teams = payload['teams'];
+      const entry = payload['entries'].find(entry => entry.characterId === action.payload.characterId);
+      const basicValues = entry.values;
+      const extendedValues = entry.extended.values;
+      const extendedWeapons = entry.extended.weapons;
+      const playerTeam = basicValues.team.basic.value;
+      const teamScore = teams.find(teams => teams.teamId == playerTeam);
+      const enemyScore = teams.find(teams => teams.teamId != playerTeam);
 
       const summary =  Object.assign({}, state[playerId].summary, {
-        standing: match.standing,
-        teamScore: teams.filter(teams => teams.teamId == match.team).map(team => team.score.basic.value).shift(),
-        enemyScore: teams.filter(teams => teams.teamId != match.team).map(team => team.score.basic.value).shift(),
-        period: match.period
+        standing: entry.standing,
+        teamScore: teamScore ? teamScore.score.basic.value : 0,
+        enemyScore: enemyScore ? enemyScore.score.basic.value : 0,
+        period: payload.period
       });
 
       const values = Object.assign({}, {
@@ -87,8 +88,8 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
           deaths: basicValues.deaths.basic.value + state[playerId].values.deaths,
           killsDeathsAssists: basicValues.killsDeathsAssists.basic.value + state[playerId].values.killsDeathsAssists,
           killsDeathsRatio: basicValues.killsDeathsRatio.basic.value + state[playerId].values.killsDeathsRatio,
-          precisionKills: (extendedValues.precisionKills ? extendedValues.precisionKills.basic.value : 0) + state[playerId].values.precisionKills,
-          resurrectionsPerformed: (extendedValues.resurrectionsPerformed ? extendedValues.resurrectionsPerformed.basic.value : 0) + state[playerId].values.resurrectionsPerformed,
+          // precisionKills: (extendedValues.precisionKills ? extendedValues.precisionKills.basic.value : 0) + state[playerId].values.precisionKills,
+          // resurrectionsPerformed: (extendedValues.resurrectionsPerformed ? extendedValues.resurrectionsPerformed.basic.value : 0) + state[playerId].values.resurrectionsPerformed,
           averageLifespan: (extendedValues.averageLifespan ? extendedValues.averageLifespan.basic.value : 0) + state[playerId].values.averageLifespan,
       });
 
@@ -96,8 +97,6 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
         const weaponInState = state[playerId].weapons[weapon.referenceId];
         return Object.assign(weaponsUsed, {
           [weapon.referenceId]: {
-            name: definitions[weapon.referenceId].n,
-            icon: definitions[weapon.referenceId].i,
             uniqueWeaponKills: weapon.values.uniqueWeaponKills.basic.value + (weaponInState ? weaponInState.uniqueWeaponKills : 0),
             uniqueWeaponKillsPrecisionKills: weapon.values.uniqueWeaponKillsPrecisionKills.basic.value + (weaponInState ? weaponInState.uniqueWeaponKillsPrecisionKills : 0),
             uniqueWeaponPrecisionKills: weapon.values.uniqueWeaponPrecisionKills.basic.value + (weaponInState ? weaponInState.uniqueWeaponPrecisionKills : 0),
@@ -136,9 +135,7 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
       });
 
       return Object.assign({}, state, {
-        player1: playerId == 'player1' ? updated : state.player1,
-        player2: playerId == 'player2' ? updated : state.player2,
-        player3: playerId == 'player3' ? updated : state.player3
+        [playerId]: updated
       });
     }
 
@@ -148,4 +145,9 @@ export function reducer(state = initialState, action: pgcr.Actions): State {
   }
 }
 
-export const getCollection = (state: State) => state.collection;
+export function pgcrSelectorFactory(index) {
+  return createSelector(
+    (state: State) => state,
+    state => state[`player${index}`]
+  );
+}

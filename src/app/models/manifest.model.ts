@@ -13,7 +13,8 @@ export interface StepsDefinitions {
 export interface ItemDefinition {
   n: string,
   i: string,
-  tT: number
+  tT: number,
+  hazard: string
 }
 
 export interface Talent {

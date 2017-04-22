@@ -1,10 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SummarizedStats, SummarizedWeapons } from "../../../models/stats.model";
 
 @Component({
   selector: 'player-tab-summarized',
-  templateUrl: './player-tab-summarized.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './player-tab-summarized.component.html'
 })
 
 export class PlayerTabSummarized {

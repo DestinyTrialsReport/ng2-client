@@ -16,7 +16,6 @@ import { TabsModule } from "ng2-bootstrap/tabs";
 import { PopoverModule } from "ng2-bootstrap/popover";
 import { ProgressbarModule } from "ng2-bootstrap/progressbar";
 import { ModalModule } from 'ng2-bootstrap/modal';
-import { ActivityEffects } from "./effects/activity.effects";
 import { StatsEffects } from "./effects/stats.effects";
 import { AuthEffects } from "./effects/auth.effects";
 import { LeaderboardEffects } from "./effects/leaderboard.effects";
@@ -36,10 +35,9 @@ if (ENV === 'development' && !AOT &&
 ]);
 
 export const APP_IMPORTS = [
-  EffectsModule.run(LeaderboardEffects),
+  // EffectsModule.run(LeaderboardEffects),
   EffectsModule.run(AuthEffects),
   EffectsModule.run(PlayerEffects),
-  EffectsModule.run(ActivityEffects),
   EffectsModule.run(StatsEffects),
   EffectsModule.run(MapEffects),
   TabsModule.forRoot(),

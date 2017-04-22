@@ -1,13 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Activity } from "../models/activity.model";
+import { Match } from "../models/stats.model";
 
 @Pipe({ name: 'activityGraph' })
 export class ActivityGraphPipe implements PipeTransform {
-  transform(activity: Activity, kdRatio: number) {
-    if (kdRatio && activity && activity.values && activity.values) {
-      let kills:number = activity.values.kills.basic.value;
-      let deaths:number = Math.max(1, activity.values.deaths.basic.value);
-      let matchKd:number = kills/deaths;
+  transform(activity: Match, kdRatio: number) {
+    if (kdRatio && activity) {
+      let matchKd: number = activity.kills/Math.max(1, activity.deaths);
 
       let x:number = 0;
       let playerKd:number = kdRatio; //this.kd;

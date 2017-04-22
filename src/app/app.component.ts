@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MOBILE } from './services/constants';
+import {ManifestService} from "./services/manifest.service";
 
 @Component({
   selector: 'trials-report',
@@ -32,11 +33,13 @@ export class AppComponent {
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              public manifestService: ManifestService) {
 
   }
 
   ngOnInit() {
+    this.manifestService.init();
     this.route.queryParams
       .subscribe(params => {
         if (params && params['gamertag']) {

@@ -1,15 +1,9 @@
 <div class="player card">
-   <player-header
-     [playerObs]="(player$ | async)"
-     [subclass]="(inventory$ | async | filterSubclass)[0]">
-   </player-header>
+   <player-header [header]="(header$ | async)"></player-header>
 
-   <player-intro
+   <player-intro *ngIf="(status$ | async)?.intro"
      [settings]="(settings$ | async)"
-     [statsDtr]="(stats$ | async)?.trials"
-     [statsBng]="(stats$ | async)?.bungie"
-     [statsGgg]="(stats$ | async)?.guardian"
-     [activities]="(activities$ | async)">
+     [intro]="(intro$ | async)">
   </player-intro>
 
   <hr class="hr--no-margin">
@@ -18,7 +12,7 @@
       <div class="tab tab--style-four">
         <div class="tab__content">
           <player-tab-summarized
-            [stats]="(stats$ | async)?.trials?.currentWeek">
+            [stats]="(summarized$ | async)?.week">
           </player-tab-summarized>
         </div>
       </div>
@@ -27,67 +21,67 @@
       <div class="tab tab--style-five">
         <div class="tab__content">
           <player-tab-summarized
-            [stats]="(stats$ | async)?.trials?.currentMap">
+            [stats]="(summarized$ | async)?.map">
           </player-tab-summarized>
         </div>
       </div>
     </tab>
-    <tab heading="Opponent history" [customClass]="(player$ | async)?.opponentHistory ? 'tab__nav tab--style-five' : 'tab--style-hide'">
-      <div class="tab tab--style-five">
-        <div class="tab__content">
-          <div class="player__block tab__section">
-            <div class="stat-table__row row row--small-gutter" *ngFor="let instance of (player$ | async)?.opponentHistory?.instanceIds">
-              <div class="col-xs-4" [innerHtml]="instance.standing"></div>
-              <div class="col-xs-4">
-                <a [href]="'http://destinytracker.com/dg/' + instance.id" target="_blank">
-                  DestinyTracker
-                </a>
-              </div>
-              <div class="col-xs-4">
-                <a [href]="'http://guardian.gg/en/pgcr/' + instance.id" target="_blank">
-                  Guardian.gg
-                </a>
-              </div>
-            </div>
-            <div class="stat-table__row row row--small-gutter">
-              <div class="col-xs-4">
-                <div class="stat-header">Standing</div>
-              </div>
-              <div class="col-xs-4">
-                <div class="stat-label">PGCR link</div>
-              </div>
-              <div class="col-xs-4">
-                <div class="stat-label">PGCR link</div>
-              </div>
-            </div>
-          </div>
-          <div class="player__block tab__section">
-            <div class="row row--tiny-gutter">
-              <div class="col-xs-3">
-                <div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.playerKd | number : '1.2-2'"></div>
-                <div class="stat-label">Your K/D</div>
-              </div>
-              <div class="col-xs-3">
-                <div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.opponentKd | number : '1.2-2'"></div>
-                <div class="stat-label">Their K/D</div>
-              </div>
-              <div class="col-xs-2">
-                <div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.matches | number:'1.0-0'"></div>
-                <div class="stat-label">Matches</div>
-              </div>
-              <div class="col-xs-4">
-                <div class="stat-number">
-                  {{((player$ | async)?.opponentHistory?.wins || 0) | number:'1.0-0'}}
-                  <span class="stat-number__seperator">/</span>
-                  {{((player$ | async)?.opponentHistory?.losses || 0) | number:'1.0-0'}}
-                </div>
-                <div class="stat-label">Won / Lost</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </tab>
+    <!--<tab heading="Opponent history" [customClass]="(player$ | async)?.opponentHistory ? 'tab__nav tab&#45;&#45;style-five' : 'tab&#45;&#45;style-hide'">-->
+      <!--<div class="tab tab&#45;&#45;style-five">-->
+        <!--<div class="tab__content">-->
+          <!--<div class="player__block tab__section">-->
+            <!--<div class="stat-table__row row row&#45;&#45;small-gutter" *ngFor="let instance of (player$ | async)?.opponentHistory?.instanceIds">-->
+              <!--<div class="col-xs-4" [innerHtml]="instance.standing"></div>-->
+              <!--<div class="col-xs-4">-->
+                <!--<a [href]="'http://destinytracker.com/dg/' + instance.id" target="_blank">-->
+                  <!--DestinyTracker-->
+                <!--</a>-->
+              <!--</div>-->
+              <!--<div class="col-xs-4">-->
+                <!--<a [href]="'http://guardian.gg/en/pgcr/' + instance.id" target="_blank">-->
+                  <!--Guardian.gg-->
+                <!--</a>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="stat-table__row row row&#45;&#45;small-gutter">-->
+              <!--<div class="col-xs-4">-->
+                <!--<div class="stat-header">Standing</div>-->
+              <!--</div>-->
+              <!--<div class="col-xs-4">-->
+                <!--<div class="stat-label">PGCR link</div>-->
+              <!--</div>-->
+              <!--<div class="col-xs-4">-->
+                <!--<div class="stat-label">PGCR link</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="player__block tab__section">-->
+            <!--<div class="row row&#45;&#45;tiny-gutter">-->
+              <!--<div class="col-xs-3">-->
+                <!--<div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.playerKd | number : '1.2-2'"></div>-->
+                <!--<div class="stat-label">Your K/D</div>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.opponentKd | number : '1.2-2'"></div>-->
+                <!--<div class="stat-label">Their K/D</div>-->
+              <!--</div>-->
+              <!--<div class="col-xs-2">-->
+                <!--<div class="stat-number" [innerHtml]="(player$ | async)?.opponentHistory?.matches | number:'1.0-0'"></div>-->
+                <!--<div class="stat-label">Matches</div>-->
+              <!--</div>-->
+              <!--<div class="col-xs-4">-->
+                <!--<div class="stat-number">-->
+                  <!--{{((player$ | async)?.opponentHistory?.wins || 0) | number:'1.0-0'}}-->
+                  <!--<span class="stat-number__seperator">/</span>-->
+                  <!--{{((player$ | async)?.opponentHistory?.losses || 0) | number:'1.0-0'}}-->
+                <!--</div>-->
+                <!--<div class="stat-label">Won / Lost</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</tab>-->
   </tabset>
 
   <tabset class="tabs">
@@ -95,9 +89,16 @@
       <div class="tab tab--style-one">
         <div class="tab__content">
           <player-tab-equipped
-            [loaded]="(loaded$ | async)?.inventory"
-            [inventory]="(inventory$ | async)"
-            [stats]="(player$ | async)?.characterBase?.stats">
+            *ngIf="(status$ | async)?.inventory"
+            [steps]="steps"
+            [talents]="talents"
+            [armorDefinitions]="armor"
+            [weaponDefinitions]="weapons"
+            [weapons]="(equipped$ | async)?.weapons"
+            [armor]="(equipped$ | async)?.armor"
+            [artifact]="(equipped$ | async)?.artifact"
+            [subclass]="(equipped$ | async)?.subclass"
+            [classStats]="(equipped$ | async)?.classStats">
           </player-tab-equipped>
         </div>
       </div>
@@ -114,9 +115,9 @@
     <tab heading="Stats" customClass="player-tab--stats" customClass="tab__nav tab--style-three">
       <div class="tab tab--style-three">
         <div class="tab__content">
-          <player-tab-stats
-            [stats]="(stats$ | async)?.bungie">
-          </player-tab-stats>
+          <!--<player-tab-stats-->
+            <!--[stats]="(stats$ | async)?.bungie">-->
+          <!--</player-tab-stats>-->
         </div>
       </div>
     </tab>

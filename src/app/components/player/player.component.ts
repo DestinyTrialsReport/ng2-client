@@ -1,16 +1,13 @@
-import {Component, ChangeDetectionStrategy, ElementRef, OnDestroy} from '@angular/core';
-import { Player }       from "../../models/player.model";
+import {Component, ChangeDetectionStrategy, ElementRef, OnDestroy, Input} from '@angular/core';
+import { Player, PlayerIntro, PlayerHeader, EquippedItems }       from "../../models/player.model";
+import { SummarizedStats, Match } from "../../models/stats.model";
 import { Store }        from "@ngrx/store";
+import { Subscription } from "rxjs/Subscription";
 import { Observable }   from 'rxjs/Observable';
-import { Activity }     from "../../models/activity.model";
-import { Item }         from "../../models/inventory.model";
 import * as fromRoot    from '../../reducers';
-import * as fromSearch  from '../../reducers/search.reducer';
-import * as fromStats   from '../../reducers/stats.reducer';
 import * as fromPgcr    from '../../reducers/pgcr.reducer';
 import * as pgcrActions from "../../actions/pgcr.actions";
-import { Subscription } from "rxjs";
-import { SummarizedStats } from "../../models/stats.model";
+import {StepsDefinitions, TalentDefinitions, ItemDefinitions} from "../../models/manifest.model";
 
 @Component({
   selector: 'player',
@@ -20,81 +17,69 @@ import { SummarizedStats } from "../../models/stats.model";
 })
 
 export class PlayerComponent implements OnDestroy {
-  paramSubscription$: Subscription;
-  player$:        Observable<Player>;
-  activities$:    Observable<Activity[]>;
-  // settings$:      Observable<{[name:string]: boolean}>;
+  @Input() steps: StepsDefinitions;
+  @Input() talents: TalentDefinitions;
+  @Input() armor: ItemDefinitions;
+  @Input() weapons: ItemDefinitions;
+  @Input() subclass: ItemDefinitions;
+  matchesSubscription$: Subscription;
   settings$:      Observable<any>;
-  stats$:         Observable<fromStats.Stats>;
-  inventory$:     Observable<Item[]>;
-  loaded$:        Observable<fromSearch.State>;
+  status$:        Observable<any>;
+  summarized$:    Observable<any>;
+  header$:        Observable<PlayerHeader>;
+  intro$:         Observable<PlayerIntro>;
+  equipped$:      Observable<EquippedItems>;
   pgcr$:          Observable<fromPgcr.State>;
   recentMatches:  any[];
 
   constructor(private store: Store<fromRoot.State>,
               private el:ElementRef) {
 
-    this.settings$ = store
-      .select(fromRoot.getStatsSettings)
-      .distinctUntilChanged()
-      .share();
+    // this.settings$ = store.select(fromRoot.getStatsSettings)
+    //   .distinctUntilChanged()
+    //   .share();
+    //
 
-    // store
-    //   .select(fromRoot.getStatsSettings)
-    //   .subscribe(state => console.log(state));
+    this.status$ = store.select(fromRoot.getStatusForPlayer(el.nativeElement.id.toLowerCase()));
 
-    this.player$ = store
-      .select(s => s.players[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
+    this.header$ = store.select(fromRoot.getPlayerHeader(el.nativeElement.id));
+    this.summarized$ = store.select(fromRoot.getPlayerSummarized(el.nativeElement.id));
+    this.intro$ = store.select(fromRoot.getPlayerIntro(el.nativeElement.id));
+    this.equipped$ = store.select(fromRoot.getPlayerEquipped(el.nativeElement.id));
 
-    this.activities$ = store
-      .select(s => s.activities[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
+    this.pgcr$ = store.select(fromRoot.getPlayerPgcr(el.nativeElement.id));
 
-    this.stats$ = store.select(s => s.stats[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
-
-    this.loaded$ = store.select(s => s.search[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
-
-    this.inventory$ = store.select(s => s.inventory[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
-
-    this.paramSubscription$ = this.store.let(fromRoot.getRecentActivities(this.el.nativeElement.id, 3))
-      .subscribe((activities: Activity[]) => {
-        this.recentMatches = activities.map(a => {
-          return {
-            instanceId: a.activityDetails.instanceId,
-            standing: a.values.standing.basic.value,
-            team: a.values.team.basic.value,
-            period: a.period
-          }
-        });
-      });
-
-    this.pgcr$ = store.select(s => s.pgcr[el.nativeElement.id])
-      .distinctUntilChanged()
-      .share();
+    // this.matchesSubscription$ = store.select(fromRoot.getRecentActivities(this.el.nativeElement.id, 3))
+    //   .subscribe((activities: Match[]) => {
+    //     if (activities) {
+    //       this.recentMatches = activities.map(a => {
+    //         return {
+    //           instanceId: a.instanceId,
+    //           standing: a.standing,
+    //           team: 0,
+    //           period: a.period
+    //         }
+    //       });
+    //     }
+    //   });
+    //
   }
 
-  public getMatchHistory():void {
-    if (this.recentMatches) {
-      this.store.select(s => s.pgcr[this.el.nativeElement.id])
-        .subscribe(state => {
-          if (state.summary.length < 1) {
-            this.recentMatches.map(match => this.store.dispatch(new pgcrActions.SearchPGCR({match: match, player: this.el.nativeElement.id})));
-          }
-        });
-    }
+  getMatchHistory() {
+    this.store.select(fromRoot.getPlayerLastMatches(this.el.nativeElement.id))
+      .subscribe(matches => {
+        if (matches.length > 0) {
+          matches.map(match =>
+            this.store.dispatch(new pgcrActions.SearchPGCR({
+              instanceId: match.instanceId,
+              characterId: match.characterId,
+              pIndex: this.el.nativeElement.id
+            })));
+        }});
   };
 
   ngOnDestroy() {
-    this.paramSubscription$.unsubscribe();
+    this.matchesSubscription$.unsubscribe();
   }
 
   getKillDeathRatio(stats: SummarizedStats) {

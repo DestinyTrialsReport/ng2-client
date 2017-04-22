@@ -1,11 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PGCR } from "../../../models/pgcr.model";
 
 @Component({
   selector: 'player-tab-recent-matches',
   templateUrl: './player-tab-recent-matches.component.html',
-  styleUrls: ['./player-tab-recent-matches.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./player-tab-recent-matches.component.css']
 })
 
 export class PlayerTabRecentMatchesComponent {

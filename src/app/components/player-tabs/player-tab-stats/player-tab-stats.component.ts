@@ -1,11 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy, style, state, animate, transition, trigger } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BNGStats } from "../../../models/stats.model";
 
 @Component({
   selector: 'player-tab-stats',
   templateUrl: './player-tab-stats.component.html',
-  styleUrls: ['./player-tab-stats.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./player-tab-stats.component.css']
 })
 
 export class PlayerTabStatsComponent {

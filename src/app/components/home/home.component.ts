@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
-import {AuthService} from "../../services/auth.service";
 
 import * as fromRoot      from '../../reducers';
 import * as auth from '../../actions/auth.actions';
@@ -17,8 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   paramSubscription$: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private store: Store<fromRoot.State>,
-              private authService: AuthService) { }
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.paramSubscription$ = this.route.queryParams

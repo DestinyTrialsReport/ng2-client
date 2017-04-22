@@ -1,14 +1,14 @@
-<div class="player-header" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + playerObs?.backgroundPath + ')'}">
+<div class="player-header" [ngStyle]="{'background-image': 'url(https://www.bungie.net' + header?.background + ')'}" *ngIf="header?.background">
   <div class="row row--no-gutter middle-xs">
     <div class="col-xs-shrink">
-      <img class="player-header__emblem" alt="Emblem" [src]="'https://www.bungie.net' + playerObs?.emblemPath">
+      <img class="player-header__emblem" alt="Emblem" [src]="'https://www.bungie.net' + header?.emblem" *ngIf="header?.emblem">
     </div>
     <div class="col-xs row row--small-gutter middle-xs">
       <div class="col-xs player-info">
-        <h2 class="player-header__title" [innerText]="playerObs?.displayName"></h2>
+        <h2 class="player-header__title" [innerText]="header?.name"></h2>
         <div class="player-header__subtext">
-          <span class="player-header__subclass" [innerText]="subclass?.n"></span>
-          <template ngFor let-badge [ngForOf]="playerObs?.badges" let-i="index">
+          <span class="player-header__subclass" [innerText]="header?.subclass?.n"></span>
+          <template ngFor let-badge [ngForOf]="header?.badges" let-i="index">
             <span *ngIf="i < 2"
                   [class]="'badge badge--' + (badge?.class ? badge.class : badge?.status.toLowerCase())"
                   placement="bottom"
@@ -16,14 +16,14 @@
                   [innerHtml]="badge?.status"></span>
           </template>
 
-          <span *ngIf="playerObs?.badges?.length > 2"
+          <span *ngIf="header?.badges?.length > 2"
                 class="badge badge--overflow"
                 placement="bottom"
                 [popover]="badgeOverflowPopoverTemplate"
-                [innerHtml]="'+' + (playerObs?.badges?.length - 2).toString()">
+                [innerHtml]="'+' + (header?.badges?.length - 2).toString()">
             <template #badgeOverflowPopoverTemplate>
               <div class="badge-overview">
-                <template ngFor let-badge [ngForOf]="playerObs?.badges" let-i="index">
+                <template ngFor let-badge [ngForOf]="header?.badges" let-i="index">
                   <div class="row row--small-gutter" *ngIf="i > 1">
                     <div class="col-xs-3">
                       <span [class]="'badge badge--' + (badge?.class ? badge.class : badge?.status.toLowerCase())" [innerHtml]="badge?.status"></span>
@@ -38,10 +38,10 @@
       </div>
       <div class="col-xs-shrink">
         <div class="player-header__light highlight">
-          &#10022; <span [innerText]="playerObs?.characterBase?.powerLevel"></span>
+          &#10022; <span [innerText]="header?.level"></span>
         </div>
         <div class="player-header__subtext player-header__grimoire">
-          <img src="/assets/img/grimoire.png" alt="Grimoire"> <span [innerText]="playerObs?.characterBase?.grimoireScore"></span>
+          <img src="/assets/img/grimoire.png" alt="Grimoire"> <span [innerText]="header?.grimoire"></span>
         </div>
       </div>
     </div>

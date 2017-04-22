@@ -65,7 +65,7 @@
       <div class="row row--tiny-gutter middle-xs inventory-item inventory-item--small">
         <div class="col-xs-shrink">
           <div class="inventory-item__image">
-            <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + weapon?.icon" [alt]="weapon.name">
+            <img [src]="'https://www.bungie.net/common/destiny_content/icons/' + weapon?.icon" [alt]="weapon.name" *ngIf="weapon?.icon">
           </div>
         </div>
         <div class="col-xs inventory-item__title">

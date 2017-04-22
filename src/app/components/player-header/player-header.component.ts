@@ -1,17 +1,14 @@
-import { Component, Input, ChangeDetectionStrategy, trigger, state, animate, transition, style } from '@angular/core';
-import { Player } from "../../models/player.model";
-import { Item } from "../../models/inventory.model";
+import { Component, Input } from '@angular/core';
+import { PlayerHeader } from "../../models/player.model";
 
 @Component({
   selector: 'player-header',
   templateUrl: './player-header.component.html',
-  styleUrls: ['./player-header.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./player-header.component.css']
 })
 
 export class PlayerHeaderComponent {
-  @Input() playerObs: Player;
-  @Input() subclass: Item;
+  @Input() header: PlayerHeader;
 
   constructor() { }
 }

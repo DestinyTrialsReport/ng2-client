@@ -1,6 +1,5 @@
 import {
-  FilterWeapons, FilterSubclass, FilterArmor, FilterArtifact, FilterClassStats, FilterClassArmor,
-  OrderByPipe
+  FilterClassStats, FilterClassArmor, OrderByPipe
 } from "./pipes/filter-items.pipe";
 import { MenuComponent } from "./components/menu/menu.component";
 import { MapsComponent } from "./components/maps/maps.component";
@@ -21,15 +20,18 @@ import { SumFlawlessPipe } from "./pipes/sum-flawless.pipe";
 import { StreakPipe, StreakIconPipe } from "./pipes/streak.pipe";
 import { ActivityGraphPipe } from "./pipes/activity-graph.pipe";
 import { TimeAgo } from "./pipes/time-ago.pipe";
-import { MyReportComponent } from "./components/my-report/my-report.component";
 import { LeaderboardsComponent } from "./components/leaderboards/leaderboards.component";
 import { LeaderboardTableComponent } from "./components/leaderboards/leaderboard-table/leaderboard-table.component";
 import { LeaderboardHeaderComponent } from "./components/leaderboards/leaderboard-header/leaderboard-header.component";
 import { LeaderboardRank } from "./pipes/leaderboard-rank.pipe";
 import { SettingsModalComponent } from "./components/settings-modal/settings-modal.component";
+import { SafeHtml } from "./pipes/safe-html.pipe";
+import {EquippedItemComponent} from "./components/player-tabs/player-tab-equipped/equipped-item.component";
+import {MenuSearchComponent} from "./components/menu/menu-search.component";
 
 export const APP_DECLARATIONS = [
   MenuComponent,
+  MenuSearchComponent,
   SettingsModalComponent,
   MapsComponent,
   HomeComponent,
@@ -39,11 +41,11 @@ export const APP_DECLARATIONS = [
   ErrorComponent,
   NotFound404Component,
   ReportComponent,
-  MyReportComponent,
   PlayerComponent,
   PlayerHeaderComponent,
   PlayerIntroComponent,
   PlayerTabSummarized,
+  EquippedItemComponent,
   PlayerTabEquippedComponent,
   PlayerTabRecentMatchesComponent,
   PlayerTabStatsComponent,
@@ -54,12 +56,9 @@ export const APP_DECLARATIONS = [
   StreakPipe,
   StreakIconPipe,
   ActivityGraphPipe,
-  FilterSubclass,
-  FilterWeapons,
-  FilterArmor,
-  FilterArtifact,
   FilterClassStats,
   FilterClassArmor,
   OrderByPipe,
-  TimeAgo
+  TimeAgo,
+  SafeHtml
 ];
