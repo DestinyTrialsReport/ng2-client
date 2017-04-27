@@ -24,17 +24,17 @@
       <div class="stat-label">Week</div>
     </div>
 
-    <div class="select-container" [ngClass]="{'col-xs-shrink': (hasSearchBar || selected?.leaderboard == 'weapons'), 'col-xs': (!hasSearchBar && selected?.leaderboard !== 'weapons')}">
+    <div class="col-xs-shrink select-container">
       <div class="select">
         <select [ngModel]="selected.leaderboard" (ngModelChange)="filterByType($event, selected.type)">
-          <!--<option value="select-leaderboard" disabled>Select Leaderboard</option>-->
+          <option value="select-leaderboard" disabled>Select One</option>
           <option value="{{type.value}}" *ngFor='let type of leaderboardTypes; let i = index;' [innerHtml]="type.text"></option>
         </select>
       </div>
       <div class="stat-label">Leaderboard</div>
     </div>
 
-    <div class="select-container" [ngClass]="{'col-xs-shrink': (hasSearchBar || selected?.leaderboard == 'weapons'), 'col-xs': (!hasSearchBar && selected?.leaderboard !== 'weapons')}">
+    <div class="col-xs select-container">
       <div class="select">
         <select [(ngModel)]="selected.type"
                 (ngModelChange)="filterByType(selected.leaderboard, $event)"
@@ -43,6 +43,16 @@
         </select>
       </div>
       <div class="stat-label">Type</div>
+    </div>
+
+    <div class="col-xs select-container" *ngIf="selected?.leaderboard == 'weapons'">
+      <div class="select">
+        <select [(ngModel)]="selected.tier"
+                (ngModelChange)="filterByTier($event)">
+          <option value="{{type.value}}" *ngFor='let type of weaponTiers; let i = index;' [innerHtml]="type.text"></option>
+        </select>
+      </div>
+      <div class="stat-label">Tier</div>
     </div>
 
     <div class="col-xs select-container" *ngIf="hasSearchBar">
@@ -58,25 +68,26 @@
       <div class="stat-label">Name</div>
     </div>
 
-    <div class="col-xs select-container" *ngIf="selected?.leaderboard == 'weapons'">
+    <div class="col-xs select-container" *ngIf="map?.current?.multiple == '1'">
       <div class="select">
-        <select [(ngModel)]="selected.tier"
-                (ngModelChange)="filterByTier($event)">
-          <option value="{{type.value}}" *ngFor='let type of weaponTiers; let i = index;' [innerHtml]="type.text"></option>
+        <select [(ngModel)]="selected.map"
+                (ngModelChange)="filterByMap($event)">
+          <option value="0">All</option>
+          <option value="{{map}}" *ngFor='let map of map?.current?.maps; let i = index;' [innerHtml]="getMapNameFromId(map)"></option>
         </select>
       </div>
-      <div class="stat-label">Tier</div>
+      <div class="stat-label">Map</div>
     </div>
 
     <!--<div class="col-xs-shrink select-container" *ngIf="selected?.leaderboard == 'medals' || selected?.leaderboard == 'players'">-->
-      <!--<div class="select">-->
-        <!--<select [(ngModel)]="selectedPlatform"-->
-                <!--(ngModelChange)="filterByPlatform($event)"-->
-                <!--[disabled]="selected?.leaderboard === 'searched'">-->
-          <!--<option value="{{type.value}}" *ngFor='let type of platforms; let i = index;' [innerHtml]="type.text"></option>-->
-        <!--</select>-->
-      <!--</div>-->
-      <!--<div class="stat-label">Tier</div>-->
+    <!--<div class="select">-->
+    <!--<select [(ngModel)]="selectedPlatform"-->
+    <!--(ngModelChange)="filterByPlatform($event)"-->
+    <!--[disabled]="selected?.leaderboard === 'searched'">-->
+    <!--<option value="{{type.value}}" *ngFor='let type of platforms; let i = index;' [innerHtml]="type.text"></option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--<div class="stat-label">Tier</div>-->
     <!--</div>-->
   </div>
 </div>

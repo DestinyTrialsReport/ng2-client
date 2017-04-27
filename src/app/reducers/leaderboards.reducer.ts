@@ -1,10 +1,10 @@
 /* tslint:disable: no-switch-case-fall-through */
-import { createSelector } from 'reselect';
 import * as leaderboard from "../actions/leaderboard.actions";
+import * as map from "../actions/maps.actions";
 import {LBWeaponPercentage, SelectedLeaderboardItems, LeaderboardSelectList} from "../models/leaderboard.model";
 import {
   BUCKET_PRIMARY_WEAPON, BUCKET_SPECIAL_WEAPON, MEDALS_REF, WEAPON_TYPE_REF, WEAPON_TIERS,
-  MEDAL_DEFINITIONS, YEAR_ONE_DUPLICATES
+  MEDAL_DEFINITIONS, YEAR_ONE_DUPLICATES, CRUCIBLE_MAPS
 } from "../services/constants";
 
 
@@ -28,6 +28,7 @@ const initialState: State = {
     icon: null,
     type: null,
     player: null,
+    map: '0',
     platform: 0,
     tier: 0,
     page: 1,
@@ -40,8 +41,18 @@ const initialState: State = {
   error: false,
 };
 
-export function reducer(state = initialState, action: leaderboard.Actions): State {
+export function reducer(state = initialState, action: leaderboard.Actions | map.Actions): State {
   switch (action.type) {
+
+    case map.ActionTypes.SLIDE_MAP: {
+      const payload = action.payload;
+
+      return Object.assign({}, state, {
+        selected: Object.assign({}, state.selected, {
+          map: '0'
+        })
+      });
+    }
 
     case leaderboard.ActionTypes.GET_MEDAL:
     case leaderboard.ActionTypes.GET_WEAPON_LIST:
@@ -93,13 +104,17 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
     case leaderboard.ActionTypes.GET_MEDAL_SUCCESS: {
       const payload: any = action.payload;
-      const type = parseInt(state.selected.type);
-      const medal = MEDALS_REF.filter(medal => medal.id == type);
+      const medal = MEDALS_REF.filter(medal => medal.id == state.selected.type);
       const medalId = medal.map(medal => medal.statId);
       const medalName = medal.map(medal => medal.text);
       const definition = MEDAL_DEFINITIONS[String(medalId)];
       const icon = definition && definition['iconImage'] ? `https://www.bungie.net/${definition['iconImage']}` : null;
-      let title = type > 0 ? `Most ${medalName} Medals Received` : 'Total Medals Received';
+      let title = `Most ${medalName} Medals `;
+
+      if (state.selected.map && state.selected.map != '0') {
+        let mapName:string = CRUCIBLE_MAPS[state.selected.map].name;
+        title = title.split(' on ')[0] + ' on ' + mapName;
+      }
 
       return Object.assign({}, state, {
         items: [...payload],
@@ -115,7 +130,12 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
       let payload = action.payload;
       let selectedType = state.selected.type;
 
-      let title = `Most Used ${(selectedType == 'All') ? 'Weapons' : selectedType}`;
+      let title = `Most Used ${selectedType == 'All' ? 'Weapons' : selectedType}`;
+
+      if (state.selected.map && state.selected.map != '0') {
+        let mapName:string = CRUCIBLE_MAPS[state.selected.map].name;
+        title = title.split(' on ')[0] + ' on ' + mapName;
+      }
 
       return Object.assign({}, state, {
         items: [...payload],
@@ -130,6 +150,7 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
     case leaderboard.ActionTypes.UPDATE_FILTER: {
       const payload = action.payload;
       const tier = (payload.tier > 0 && payload.tier < 7) ? payload.tier : 0;
+      const map = payload.map;
       const types = WEAPON_TYPE_REF.map(weapon => weapon.id);
       const type = types.indexOf(payload.type) > -1 ? payload.type : state.selected.type;
 
@@ -137,20 +158,29 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
         .filter(t => t.value == tier)
         .map(obj => obj.text);
 
-      let title = 'Most Used ';
+      let title = state.title;
 
-      if (type !== 'All' && tier < 1) {
-        title = title + type + 's';
-      } else if (tier > 0 && type === 'All') {
-        title = title + tierName + 's ';
-      } else {
-        title = title + tierName + ' ' + type + 's';
+      if (state.selected.leaderboard == 'weapons') {
+        let title = 'Most Used ';
+        if (type !== 'All' && tier < 1) {
+          title = title + type + 's';
+        } else if (tier > 0 && type === 'All') {
+          title = title + tierName + 's ';
+        } else if (tier > 0 && type !== 'All') {
+          title = title + tierName + ' ' + type + 's';
+        }
+      }
+
+      if (payload.map && payload.map != '0') {
+        let mapName:string = CRUCIBLE_MAPS[payload.map].name;
+        title = title.split(' on ')[0] + ' on ' + mapName;
       }
 
       return Object.assign({}, state, {
         selected: Object.assign({}, state.selected, {
           tier: tier,
-          type: type
+          type: type,
+          map: map
         }),
         title: title
       });
@@ -206,6 +236,11 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
         title = `Most ${payload.type} Kills`;
       }
 
+      if (state.selected.map && state.selected.map != '0') {
+        let mapName:string = CRUCIBLE_MAPS[state.selected.map].name;
+        title = title.split(' on ')[0] + ' on ' + mapName;
+      }
+
       return Object.assign({}, state, {
         title: title,
         selected: Object.assign({}, state.selected, {
@@ -249,6 +284,9 @@ export function reducer(state = initialState, action: leaderboard.Actions): Stat
 
       return Object.assign({}, state, {
         items: [...allKills, ...weapons, ...medals],
+        selected: Object.assign({}, state.selected, {
+          map: '0'
+        }),
         loading: false,
       });
     }

@@ -1,9 +1,9 @@
 import { Component, Input, ChangeDetectionStrategy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Store }                          from "@ngrx/store";
 import { TypeaheadMatch }                 from "ng2-bootstrap";
-import { WEAPON_TIERS, WEAPON_TYPES }     from "../../../services/constants";
+import {WEAPON_TIERS, WEAPON_TYPES, CRUCIBLE_MAPS}     from "../../../services/constants";
 import { Router }                         from "@angular/router";
-import { SelectedLeaderboardItems, LeaderboardSelectList }       from "../../../models/leaderboard.model";
+import {SelectedLeaderboardItems, LeaderboardSelectList}       from "../../../models/leaderboard.model";
 
 import * as fromRoot                      from '../../../reducers';
 import * as leaderboardActions            from "../../../actions/leaderboard.actions";
@@ -29,6 +29,7 @@ export class LeaderboardHeaderComponent implements OnInit {
   @Input() weaponList: Array<LeaderboardSelectList>;
 
   hasSearchBar: boolean = false;
+
   weaponTiers: any = WEAPON_TIERS;
   selectedWeapon: any;
   YearThreeWeeks: Array<{value: number, text: string}>;
@@ -113,6 +114,17 @@ export class LeaderboardHeaderComponent implements OnInit {
 
     this.store.dispatch(new leaderboardActions.UpdateFilterAction({
       tier: tier,
+      map: this.selected.map,
+      type: this.selected.type
+    }))
+  }
+
+  filterByMap(map: string) {
+    if (!map) {map = this.selected.map}
+
+    this.store.dispatch(new leaderboardActions.UpdateFilterAction({
+      map: map,
+      tier: this.selected.tier,
       type: this.selected.type
     }))
   }
@@ -122,6 +134,11 @@ export class LeaderboardHeaderComponent implements OnInit {
     if (weapon) {
       this.router.navigate(['/players', weapon.id], {queryParams: {}});
     }
+  }
+
+  getMapNameFromId(id: string) {
+    if (!CRUCIBLE_MAPS[id]) { return ""; }
+    return CRUCIBLE_MAPS[id].name;
   }
 
 }

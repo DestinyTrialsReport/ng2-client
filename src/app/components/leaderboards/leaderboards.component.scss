@@ -2,6 +2,13 @@
 
 @import 'styles/base';
 
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .mobile-padding {
   display: none;
 }

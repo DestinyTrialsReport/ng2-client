@@ -7,6 +7,10 @@ export interface LBWeaponType {
   matches: string;
   tier: number;
   type: number;
+  count?: string;
+  medalId?: string;
+  players?: string;
+  map?: string;
 }
 
 export interface LBWeaponPercentage {
@@ -25,6 +29,7 @@ export interface SelectedLeaderboardItems {
   platform: number;
   tier: number;
   page: number;
+  map?: string;
 }
 
 export interface LeaderboardSelectList {

@@ -18,6 +18,8 @@ import * as fromSearch from './search.reducer';
 import * as fromPGCR from './pgcr.reducer';
 import * as fromLeaderboards from './leaderboards.reducer';
 import {CRUCIBLE_MAPS} from "../services/constants";
+import {Item} from "../models/inventory.model";
+import {LBWeaponType} from "../models/leaderboard.model";
 
 export interface State {
   auth: fromAuth.State;
@@ -79,14 +81,80 @@ export const getPrimaryAndSpecial = createSelector(getLeaderboardPrimary, getLea
   return [primary, special];
 });
 
-export const getLeaderboardItems = createSelector(getLeaderboardItemsUnfiltered, getLeaderboardsSelected, (items, selected) => {
+export const getMap = createSelector(getMapState, fromMaps.getMap);
+
+export const getLeaderboardItems = createSelector(getMap, getLeaderboardItemsUnfiltered, getLeaderboardsSelected, (map, items, selected) => {
   let filteredItems = items;
+
+  if (parseInt(map.multiple) > 0 && selected.map == '0' && selected.leaderboard != 'searched') {
+    if (selected.leaderboard == 'players') {
+      const grouped = items.reduce((items: { [name: string]: LBWeaponType }, item: LBWeaponType) => {
+        return Object.assign(items, {
+          [item.name]: items[item.name] ? Object.assign({}, item, {
+            rank: null,
+            kills: parseInt(item.kills) + parseInt(items[item.name].kills),
+            headshots: parseInt(item.headshots) + parseInt(items[item.name].headshots),
+            matches: parseInt(item.matches) + parseInt(items[item.name].matches),
+          }) : item
+        });
+      }, {});
+
+      filteredItems = Object.keys(grouped).map(key => grouped[key]).sort((a, b) => {
+        if (parseInt(a.kills) < parseInt(b.kills)) return 1;
+        else if (parseInt(a.kills) > parseInt(b.kills)) return -1;
+        else return 0;
+      });
+    } else if (selected.leaderboard == 'weapons') {
+      const grouped = items.reduce((items: { [id: string]: LBWeaponType }, item: LBWeaponType) => {
+        return Object.assign(items, {
+          [item.id]: items[item.id] ? Object.assign({}, item, {
+            kills: parseInt(item.kills) + parseInt(items[item.id].kills),
+            headshots: parseInt(item.headshots) + parseInt(items[item.id].headshots),
+            matches: parseInt(item.matches) + parseInt(items[item.id].matches),
+          }) : item
+        });
+      }, {});
+
+      filteredItems = Object.keys(grouped).map(key => grouped[key]).sort((a, b) => {
+        if (parseInt(a.kills) < parseInt(b.kills)) return 1;
+        else if (parseInt(a.kills) > parseInt(b.kills)) return -1;
+        else return 0;
+      });
+    } else if (selected.leaderboard == 'medals') {
+      const grouped = items.reduce((items: { [name: string]: LBWeaponType }, item: LBWeaponType) => {
+        return Object.assign(items, {
+          [item.name]: items[item.name] ? Object.assign({}, item, {
+            rank: null,
+            count: parseInt(item.count) + parseInt(items[item.name].count),
+            matches: parseInt(item.matches) + parseInt(items[item.name].matches),
+          }) : item
+        });
+      }, {});
+
+      filteredItems = Object.keys(grouped).map(key => grouped[key]).sort((a, b) => {
+        if (parseInt(a.count) < parseInt(b.count)) return 1;
+        else if (parseInt(a.count) > parseInt(b.count)) return -1;
+        else return 0;
+      });
+    }
+  }
+
   if (selected.leaderboard == 'weapons') {
     if (selected.type !== 'All') {
-      filteredItems = items.filter(c => c.type === selected.type);
+      filteredItems = filteredItems.filter(c => c.type === selected.type);
     }
     if (selected.tier > 0) {
       filteredItems = filteredItems.filter(c => c.tier === selected.tier);
+    }
+  }
+
+  if (selected.map !== '0') {
+    if (selected.leaderboard == 'players') {
+      filteredItems = items.filter(c => c.map === selected.map).map(item => Object.assign({}, item, {
+        rank: null
+      }));
+    } else {
+      filteredItems = filteredItems.filter(c => c.map === selected.map);
     }
   }
   return filteredItems;
@@ -97,8 +165,6 @@ export const getAuthAuthState = createSelector(getAuthState, fromAuth.getAuthSta
 export const getPgcrCollection = createSelector(getPgcrState, fromPGCR.getCollection);
 
 export const getCurrentMap = createSelector(getMapState, fromMaps.getCurrentMap);
-
-export const getMap = createSelector(getMapState, fromMaps.getMap);
 
 export const previousMap = createSelector(getMapState, fromMaps.previousMap);
 

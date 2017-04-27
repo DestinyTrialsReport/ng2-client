@@ -1,26 +1,28 @@
 export interface MapData {
-  map_info: MapInfo
-  weapon_stats: WeaponUsage[]
-  map_ref: MapRef[]
+  map_info: MapInfo;
+  weapon_stats: WeaponUsage[];
+  map_ref: MapRef[];
 }
 
 export interface MapRef {
-  referenceId: string
-  week: string
+  referenceId: string;
+  week: string;
 }
 
 export interface CurrentMap {
-  referenceId: string
-  start_date: string
-  week: string
-  activityName: string
-  pgcrImage: string
-  leaderboards: LeaderboardMeta[]
+  referenceId: string;
+  start_date: string;
+  week: string;
+  activityName: string;
+  pgcrImage: string;
+  multiple?: string;
+  maps?: string[];
+  leaderboards: LeaderboardMeta[];
 }
 
 export interface LeaderboardMeta {
-  leaderboard: string
-  updated_at: string
+  leaderboard: string;
+  updated_at: string;
 }
 
 export interface MapInfo {
@@ -37,6 +39,8 @@ export interface MapInfo {
   year?: string;
   isYearOne?: string;
   weekInYear?: number;
+  multiple?: string;
+  maps?: string[];
 }
 
 export interface WeaponUsage {

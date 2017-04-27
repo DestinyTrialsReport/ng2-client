@@ -81,7 +81,7 @@ export class ChangePageAction implements Action {
 export class UpdateFilterAction implements Action {
   type = ActionTypes.UPDATE_FILTER;
 
-  constructor(public payload: {tier?: number, type?: string, platform?: number}) { }
+  constructor(public payload: {tier?: number, type?: string, platform?: number, map?: string}) { }
 }
 
 export class PlayersSuccessAction implements Action {

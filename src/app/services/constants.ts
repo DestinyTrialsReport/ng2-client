@@ -1069,6 +1069,10 @@ export const MEDAL_DEFINITIONS: any = {
 };
 
 export const CRUCIBLE_MAPS: any = {
+  "0": {
+    "name": "Rotating Maps",
+    "pgcrImage": "/img/theme/destiny/bgs/pgcrs/TrialsDefault.jpg"
+  },
   "284635225": {
     "name": "The Burning Shrine",
     "pgcrImage": "/img/theme/destiny/bgs/pgcrs/crucible_the_burning_shrine.jpg",

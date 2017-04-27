@@ -88,7 +88,6 @@ export class LeaderboardsComponent implements OnDestroy {
       (currentMap, selectedMap, data, params) => {
         let week;
         if (selectedMap) {week = selectedMap.week;}
-        // if (params['week']) {this.goToWeek(params['week'])}
         return Object.assign({}, {
           maxWeek: currentMap.week,
           selectedWeek: week,
@@ -103,8 +102,8 @@ export class LeaderboardsComponent implements OnDestroy {
         this.maxWeek = parseInt(data.maxWeek);
 
         if ((data.board != this.selectedBoard) ||
-            (data.type != this.selectedType) ||
-            (data.selectedWeek != this.selectedWeek)) {
+          (data.type != this.selectedType) ||
+          (data.selectedWeek != this.selectedWeek)) {
 
           this.selectedWeek = data.selectedWeek ? parseInt(data.selectedWeek) : this.maxWeek;
           if (this.selectedWeek > 99 && this.selectedWeek < 200) {
@@ -137,11 +136,13 @@ export class LeaderboardsComponent implements OnDestroy {
 
   goToWeek(week: number) {
     if ((week > 0 && week < 117) || (week == 200 || week == 300)) {
-      let direction = (week < this.selectedWeek) ? 'left' : 'right';
-      // if (week > 99) {
-      //   direction = 'idle';
-      // }
-      this.store.dispatch(new mapActions.SlideMapAction({direction: direction, week: week}));
+      if (week <= this.maxWeek || week > 99) {
+        let direction = (week < this.selectedWeek) ? 'left' : 'right';
+        // if (week > 99) {
+        //   direction = 'idle';
+        // }
+        this.store.dispatch(new mapActions.SlideMapAction({direction: direction, week: week}));
+      }
     }
   }
 

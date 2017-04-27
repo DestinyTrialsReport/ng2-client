@@ -85,11 +85,17 @@ export function reducer(state = initialState, action: map.Actions): State {
       const payload: any = action.payload;
       const currentMap:CurrentMap = Object.assign({}, payload, {
         year: payload.week < 45 ? 'Year 2' : (payload.week > 99 ? 'Year 1' : 'Year 3'),
-        weekInYear: (payload.week > 44 && payload.week < 99) ? payload.week - 44 : payload.week
+        weekInYear: (payload.week > 44 && payload.week < 99) ? payload.week - 44 : payload.week,
+        maps: payload.maps ? [...payload.maps.split(',')] : [],
+      });
+      const mapInfo:MapInfo = Object.assign({}, state.mapInfo, {
+        multiple: currentMap.multiple,
+        maps: currentMap.maps,
       });
 
       return Object.assign({}, state, {
         currentMap: Object.assign({}, state.currentMap, currentMap),
+        mapInfo: mapInfo,
         slideMap: 'idle'
       });
     }
@@ -145,7 +151,8 @@ export function reducer(state = initialState, action: map.Actions): State {
 
       const mapInfo = Object.assign({}, payload.map_info[0], CRUCIBLE_MAPS[payload.map_info[0].referenceId], {
         year: isYearOne && isYearOne == 1 ? 'Year 1' : (week > 44 ? 'Year 3' : 'Year 2'),
-        weekInYear: (week > 44 && week < 99) ? week - 44 : week
+        weekInYear: (week > 44 && week < 99) ? week - 44 : week,
+        maps: payload.map_info[0].maps ? [...payload.map_info[0].maps.split(',')] : [],
       });
 
       const mapRef: MapRef[] = payload.map_ref;
